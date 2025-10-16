@@ -1,1 +1,13 @@
-<p>documents works!</p>
+<div class="documents-wrapper">
+    @for(item of items.data; track item.id) {
+        <img
+            nz-image
+            class="documents-wrapper-img"
+            width="150px"
+            height="150px"
+            [nzSrc]="item.path"
+            [nzFallback]="fallback"
+            alt=""
+            />
+    }
+</div>

@@ -1,0 +1,10 @@
+.documents-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 10px;
+    .documents-wrapper-img {
+        margin: 10px 10px 0 0;
+        cursor: pointer;
+    }
+}
