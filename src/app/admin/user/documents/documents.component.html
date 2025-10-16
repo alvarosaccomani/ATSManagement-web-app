@@ -1,13 +1,43 @@
 <div class="documents-wrapper">
-    @for(item of items.data; track item.id) {
-        <img
-            nz-image
-            class="documents-wrapper-img"
-            width="150px"
-            height="150px"
-            [nzSrc]="item.path"
-            [nzFallback]="fallback"
-            alt=""
-            />
+    @for (item of items.data; track item.id) {
+        <div class="document-card">
+            @switch (getFileType(item.path)) {
+                @case ('image') {
+                <img
+                    nz-image
+                    class="documents-wrapper-img"
+                    width="150px"
+                    height="150px"
+                    [nzSrc]="item.path"
+                    [nzFallback]="fallback"
+                    alt="Imagen"
+                />
+                }
+                @case ('pdf') {
+                    <div class="preview-pdf" (click)="openPdfPreview(item.path)">
+                        <i nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                }
+                @case ('doc') {
+                    <div class="preview-doc" (click)="openDocPreview(item.path)">
+                        <i nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc"></i>
+                        <span>DOC</span>
+                    </div>
+                }
+                @case ('xls') {
+                    <div class="preview-xls" (click)="openDocPreview(item.path)">
+                        <i nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls"></i>
+                        <span>XLS</span>
+                    </div>
+                }
+                @default {
+                    <div class="preview-other">
+                        <i nz-icon nzType="file" nzTheme="outline" class="file-icon other"></i>
+                        <span>Archivo</span>
+                    </div>
+                }
+            }
+        </div>
     }
 </div>
