@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
@@ -10,5 +11,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   styleUrl: './pdf-viewer.component.scss'
 })
 export class PdfViewerComponent {
-  @Input() base64Data!: string; // debe incluir "data:application/pdf;base64,..."
+  constructor(
+    @Inject(NZ_MODAL_DATA) public modalData: { base64Data: string }
+  ) {
+    console.info(this.modalData);
+  }
 }
