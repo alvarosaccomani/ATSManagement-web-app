@@ -52,12 +52,26 @@
                 {{imageContent}}
             </p>
         </nz-collapse-panel>
+        <nz-collapse-panel 
+            nzName="analysis" 
+            [nzHeader]="(analisys != '' ? 'Texto Ya Analizado' : 'Texto Sin Analizar')" 
+            [nzActive]="(analisys != '')" 
+            [nzDisabled]="false"
+            (nzActiveChange)="onCollapseChange($any($event), 'text')">
+            <p>
+                {{analisys | json}}
+            </p>
+        </nz-collapse-panel>
     </nz-collapse>
 </div>
 <div class="drawer-footer">
-    <button nz-button nzType="primary" (click)="readImage()">
+    <button nz-button nzType="primary" (click)="readImage()" class="read-button">
         <nz-icon nzType="eye" nzTheme="outline" />
         Leer
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isLoadingAnalisys" nz-button nzType="primary" (click)="getJsonDocument()">
+        <nz-icon nzType="file-search" nzTheme="outline" />
+        Analizar
     </button>
 </div>
 

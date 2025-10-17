@@ -6,6 +6,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { Page, createWorker, recognize } from 'tesseract.js';
 import { OcrService } from '../../../core/services/ocr.service';
+import { AiService } from '../../../core/services/ai.service';
 
 export interface PageWithWords extends Page {
   words?: Array<{
@@ -37,10 +38,13 @@ export class FileDetailComponent {
   public loadingPercentage!: number;
   public cx!: CanvasRenderingContext2D;
   public imageContent: string = '';
+  public analisys: string = '';
+  public isLoadingAnalisys: boolean = false;
 
   constructor(
     @Inject(NZ_DRAWER_DATA) public drawerData: any,
-    private ocrService: OcrService
+    private ocrService: OcrService,
+    private _ai: AiService
   ) { }
 
   public onCollapseChange(activeKeys: string[], name: string): void {
@@ -139,5 +143,28 @@ export class FileDetailComponent {
 
   public readImage(): void {
     this.initSetup();
+  }
+
+  public getJsonDocument(): void {
+    this.isLoadingAnalisys = true;
+    let chat = {
+      model: "qwen/qwen3-4b:free",
+      message: `decime de que pude ser el texto que te paso: ${this.imageContent}`
+    }
+    this._ai.chatModel(chat).subscribe(
+      response => {
+        this.isLoadingAnalisys = false;
+        console.info(response);
+        this.analisys = response;
+      },
+      error =>{
+          this.isLoadingAnalisys = false;
+          let errorMessage = <any>error;
+          console.log(errorMessage);
+          if(errorMessage != null) {
+              //this.showMessage("Error", errorMessage.error.error);
+          }
+      }
+    )
   }
 }
