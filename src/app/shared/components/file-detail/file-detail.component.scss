@@ -1,0 +1,14 @@
+.file-detail-wrapper-body {
+    
+}
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.drawer-footer {
+    margin-top: auto;
+    padding-top: 16px;
+    text-align: right;
+    border-top: 1px solid #f0f0f0;
+}

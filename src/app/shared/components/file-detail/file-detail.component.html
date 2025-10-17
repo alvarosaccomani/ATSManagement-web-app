@@ -1,1 +1,18 @@
-<p>file-detail works!</p>
+<div class="file-detail-wrapper-body">
+    <h3>
+        Detalles del archivo
+    </h3>
+    <p>
+        <strong>Nombre:</strong> {{ drawerData.name }}
+    </p>
+    <p>
+        <strong>ID:</strong> {{ drawerData.id }}
+    </p>
+    <!-- Puedes agregar más info, preview, etc. -->
+</div>
+<div class="drawer-footer">
+    <button nz-button nzType="primary">
+        <nz-icon nzType="eye" nzTheme="outline" />
+        Leer
+    </button>
+</div>
