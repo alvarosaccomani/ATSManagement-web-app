@@ -1,18 +1,72 @@
 <div class="file-detail-wrapper-body">
-    <h3>
-        Detalles del archivo
-    </h3>
-    <p>
-        <strong>Nombre:</strong> {{ drawerData.name }}
-    </p>
-    <p>
-        <strong>ID:</strong> {{ drawerData.id }}
-    </p>
-    <!-- Puedes agregar más info, preview, etc. -->
+    <nz-collapse>
+        <nz-collapse-panel
+            nzName="detail" 
+            nzHeader="Detalles del archivo" 
+            [nzActive]="true" 
+            [nzDisabled]="false"
+            (nzActiveChange)="onCollapseChange($any($event), 'detail')">
+            <p style="margin:0;">
+            </p>
+            <h3>
+                Detalles del archivo
+            </h3>
+            <p>
+                <strong>Nombre:</strong> {{ drawerData.name }}
+            </p>
+            <p>
+                <strong>ID:</strong> {{ drawerData.id }}
+            </p>
+        </nz-collapse-panel>
+        <nz-collapse-panel 
+            nzName="image" 
+            nzHeader="Imagen" 
+            [nzActive]="false" 
+            [nzDisabled]="!imageLoaded"
+            (nzActiveChange)="onCollapseChange($any($event), 'image')">
+            <!-- Puedes agregar más info, preview, etc. -->
+            <div class="wrapper-sections">
+                <div class="in-wrapper">
+                    @if(true) {
+                        <ng-container>
+                            @if(imageVisible) {
+                                <canvas #outputImage class="canvas-overlay"></canvas>
+                            }
+                            <img 
+                                (load)="loadedImage()" 
+                                #inputImage 
+                                class="input-image" 
+                                [src]="drawerData.path" alt="">
+                        </ng-container>
+                    }
+                </div>
+            </div>
+        </nz-collapse-panel>
+        <nz-collapse-panel 
+            nzName="text" 
+            [nzHeader]="(imageContent != '' ? 'Contenido Ya Leido' : 'Contenido Sin Leer')" 
+            [nzActive]="(imageContent != '')" 
+            [nzDisabled]="false"
+            (nzActiveChange)="onCollapseChange($any($event), 'text')">
+            <p>
+                {{imageContent}}
+            </p>
+        </nz-collapse-panel>
+    </nz-collapse>
 </div>
 <div class="drawer-footer">
-    <button nz-button nzType="primary">
+    <button nz-button nzType="primary" (click)="readImage()">
         <nz-icon nzType="eye" nzTheme="outline" />
         Leer
     </button>
 </div>
+
+<ng-template #loadingTpl>
+    @if(loadingPercentage > 0) {
+        <div class="loading">
+            <div class="in">
+                Analizando el texto de la imagen {{loadingPercentage | number:'1.2-2'}}% .....
+            </div>
+        </div>
+    }
+</ng-template>
