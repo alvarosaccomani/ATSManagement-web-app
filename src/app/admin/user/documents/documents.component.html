@@ -1,39 +1,44 @@
 <div class="documents-wrapper">
+    <!-- Truco: Referencia oculta para que Angular sepa que PdfViewerComponent se usa -->
+    @if(false) {
+        <ng-container>
+            <app-pdf-viewer></app-pdf-viewer>
+        </ng-container>
+    }
     @for (item of items.data; track item.id) {
         <div class="document-card">
-            @switch (getFileType(item.path)) {
+            @switch (getFileType(item)) {
                 @case ('image') {
                 <img
                     nz-image
-                    class="documents-wrapper-img"
+                    [nzSrc]="normalizePath(item)"
+                    [nzFallback]="fallback"
                     width="150px"
                     height="150px"
-                    [nzSrc]="item.path"
-                    [nzFallback]="fallback"
                     alt="Imagen"
                 />
                 }
                 @case ('pdf') {
-                    <div class="preview-pdf" (click)="openPdfPreview(item.path)">
-                        <i nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf"></i>
-                        <span>PDF</span>
-                    </div>
+                <div class="preview-pdf" (click)="openPdfPreview(item)">
+                    <nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf"/>
+                    <span>PDF</span>
+                </div>
                 }
                 @case ('doc') {
-                    <div class="preview-doc" (click)="openDocPreview(item.path)">
-                        <i nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc"></i>
+                    <div class="preview-doc" (click)="downloadFile(item)">
+                        <nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc"/>
                         <span>DOC</span>
                     </div>
                 }
                 @case ('xls') {
-                    <div class="preview-xls" (click)="openDocPreview(item.path)">
-                        <i nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls"></i>
+                    <div class="preview-xls" (click)="downloadFile(item)">
+                        <nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls"/>
                         <span>XLS</span>
                     </div>
                 }
-                @default {
-                    <div class="preview-other">
-                        <i nz-icon nzType="file" nzTheme="outline" class="file-icon other"></i>
+                    @default {
+                    <div class="preview-other" (click)="downloadFile(item)">
+                        <nz-icon nzType="file" nzTheme="outline" class="file-icon other"/>
                         <span>Archivo</span>
                     </div>
                 }
