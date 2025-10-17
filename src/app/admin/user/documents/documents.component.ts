@@ -4,8 +4,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PdfViewerComponent } from '../../../shared/components/pdf-viewer/pdf-viewer.component'
+import { FileDetailComponent } from '../../../shared/components/file-detail/file-detail.component'
 import { DocumentInterface } from '../../../core/interfaces/document.interface';
 
 @Component({
@@ -16,7 +19,9 @@ import { DocumentInterface } from '../../../core/interfaces/document.interface';
     NzUploadModule,
     NzImageModule,
     NzModalModule,
-    PdfViewerComponent
+    NzDrawerModule,
+    PdfViewerComponent,
+    FileDetailComponent
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'
@@ -28,7 +33,8 @@ export class DocumentsComponent {
   public fileList: NzUploadFile[] = [];
 
   constructor(
-    private modal: NzModalService
+    private modal: NzModalService,
+    private drawerService: NzDrawerService
   ) 
   { }
 
@@ -218,5 +224,14 @@ export class DocumentsComponent {
     link.href = item.path; // debe ser data URL válida
     link.download = item.name || 'documento';
     link.click();
+  }
+
+  public viewFile(item: DocumentInterface): void {
+    this.drawerService.create({
+      nzTitle: 'Detalles del archivo',
+      nzContent: FileDetailComponent,
+      nzData: item,
+      nzWidth: '700px'
+    });
   }
 }

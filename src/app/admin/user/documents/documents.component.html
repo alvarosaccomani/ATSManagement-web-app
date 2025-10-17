@@ -3,6 +3,7 @@
     @if(false) {
         <ng-container>
             <app-pdf-viewer></app-pdf-viewer>
+            <app-file-detail></app-file-detail>
         </ng-container>
     }
     <div class="documents-wrapper-top">
@@ -16,42 +17,48 @@
     <div class="documents-wrapper-bottom">
         @for (item of items.data; track item.id) {
             <div class="document-card">
-                @switch (getFileType(item)) {
-                    @case ('image') {
-                    <img
-                        nz-image
-                        [nzSrc]="normalizePath(item)"
-                        [nzFallback]="fallback"
-                        width="150px"
-                        height="150px"
-                        alt="Imagen"
-                    />
-                    }
-                    @case ('pdf') {
-                    <div class="preview-pdf" (click)="openPdfPreview(item)">
-                        <nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf"/>
-                        <span>PDF</span>
-                    </div>
-                    }
-                    @case ('doc') {
-                        <div class="preview-doc" (click)="downloadFile(item)">
-                            <nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc"/>
-                            <span>DOC</span>
+                <div class="file-view">
+                    @switch (getFileType(item)) {
+                        @case ('image') {
+                        <img
+                            nz-image
+                            [nzSrc]="normalizePath(item)"
+                            [nzFallback]="fallback"
+                            width="150px"
+                            height="150px"
+                            alt="Imagen"
+                        />
+                        }
+                        @case ('pdf') {
+                        <div class="preview-pdf" (click)="openPdfPreview(item)">
+                            <nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf"/>
+                            <span>PDF</span>
                         </div>
+                        }
+                        @case ('doc') {
+                            <div class="preview-doc" (click)="downloadFile(item)">
+                                <nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc"/>
+                                <span>DOC</span>
+                            </div>
+                        }
+                        @case ('xls') {
+                            <div class="preview-xls" (click)="downloadFile(item)">
+                                <nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls"/>
+                                <span>XLS</span>
+                            </div>
+                        }
+                            @default {
+                            <div class="preview-other" (click)="downloadFile(item)">
+                                <nz-icon nzType="file" nzTheme="outline" class="file-icon other"/>
+                                <span>Archivo</span>
+                            </div>
+                        }
                     }
-                    @case ('xls') {
-                        <div class="preview-xls" (click)="downloadFile(item)">
-                            <nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls"/>
-                            <span>XLS</span>
-                        </div>
-                    }
-                        @default {
-                        <div class="preview-other" (click)="downloadFile(item)">
-                            <nz-icon nzType="file" nzTheme="outline" class="file-icon other"/>
-                            <span>Archivo</span>
-                        </div>
-                    }
-                }
+                </div>
+                <!-- Nombre del archivo debajo -->
+                <div class="file-name" (click)="viewFile(item)">
+                    {{ item.name || 'Sin nombre' }}
+                </div>
             </div>
         }
     </div>
