@@ -231,7 +231,14 @@ export class DocumentsComponent {
       nzTitle: 'Detalles del archivo',
       nzContent: FileDetailComponent,
       nzData: item,
-      nzWidth: '700px'
+      nzWidth: '700px',
+      nzBodyStyle: {
+        padding: '0',
+        height: 'calc(100vh - 110px)', // ajusta según tu diseño (header + footer ≈ 110px)
+        overflow: 'hidden', // el scroll lo maneja el contenedor interno
+        display: 'flex',
+        flexDirection: 'column'
+      }
     });
   }
 }
