@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NzSplitterModule } from 'ng-zorro-antd/splitter';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
@@ -14,6 +15,7 @@ import { DocumentInterface } from '../../../core/interfaces/document.interface';
 @Component({
   selector: 'app-documents',
   imports: [
+    NzSplitterModule,
     NzIconModule,
     NzButtonModule,
     NzUploadModule,
@@ -35,8 +37,7 @@ export class DocumentsComponent {
   constructor(
     private modal: NzModalService,
     private drawerService: NzDrawerService
-  ) 
-  { }
+  ) { }
 
   ngOnInit(): void {
     this.items = {
@@ -84,16 +85,16 @@ export class DocumentsComponent {
 
       this.items.data.push({
         id: this.items.data.length + 1,
-        path: base64String, 
+        path: base64String,
         name: file.name
       });
-      
+
       // Si necesitas solo el contenido sin el prefijo:
       // const pureBase64 = base64String.split(',')[1];
     };
-    
+
     reader.readAsDataURL(file as any); // FileReader espera un Blob/File
-    
+
     this.fileList = this.fileList.concat(file);
     // Devuelve `false` para evitar que nz-upload intente subirlo
     return false;
