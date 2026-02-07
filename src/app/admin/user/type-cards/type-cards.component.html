@@ -1,1 +1,82 @@
-<p>type-cards works!</p>
+<div class="card-type-list-container">
+  <div class="header">
+    <h2>Tipos de Tarjetas</h2>
+    <button nz-button nzType="primary" (click)="createTypeCard()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Tipo
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando tipos de tarjetas..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && typeCards.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay tipos de tarjetas registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && typeCards.length > 0) {
+    <nz-table
+      [nzData]="typeCards"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (typeCard of typeCards; track typeCard.tycrd_uuid) {
+          <tr>
+            <td>{{ typeCard.tycrd_uuid }}</td>
+            <td><strong>{{ typeCard.tycrd_name }}</strong></td>
+            <td>{{ typeCard.tycrd_description }}</td>
+            <td>{{ typeCard.tycrd_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ typeCard.tycrd_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(typeCard)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editTypeCard(typeCard)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deleteTypeCard(typeCard)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
