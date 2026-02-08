@@ -1,1 +1,117 @@
-<p>cards works!</p>
+<div class="card-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="credit-card" nzTheme="outline"></i>
+      Tarjetas
+    </h2>
+    <button nz-button nzType="primary" (click)="createCard()">
+      <i nz-icon nzType="plus"></i>
+      Nueva Tarjeta
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando tarjetas..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && cards.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay tarjetas registradas"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && cards.length > 0) {
+    <nz-table
+      [nzData]="cards"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (card of cards; track card.crd_uuid) {
+          <tr>
+            <td>{{ card.crd_uuid }}</td>
+            <td>
+              <div class="card-number">
+                <i nz-icon nzType="credit-card" nzTheme="outline"></i>
+                {{ formatCardNumber(card.crd_last4digits) }}
+              </div>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getCardTypeColor(card.tycrd.tycrd_name)">
+                {{ card.tycrd.tycrd_name }}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getCardBrandColor(card.brcrd.brcrd_name)">
+                {{ card.brcrd.brcrd_name }}
+              </nz-tag>
+            </td>
+            <td>{{ card.ban.ban_name }}</td>
+            <td>
+              <nz-tag [nzColor]="isExpired(card.crd_expirationdate) ? 'red' : 'default'">
+                {{ formatExpirationDate(card.crd_expirationdate) }}
+              </nz-tag>
+            </td>
+            <td>{{ formatCreditLimit(card.crd_creditlimit) }}</td>
+            <td>
+              @if (card.crd_active) {
+                <nz-tag nzColor="success">
+                  <i nz-icon nzType="check-circle" nzTheme="fill"></i>
+                  Activa
+                </nz-tag>
+              } @else {
+                <nz-tag nzColor="error">
+                  <i nz-icon nzType="close-circle" nzTheme="fill"></i>
+                  Inactiva
+                </nz-tag>
+              }
+            </td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(card)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editCard(card)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deleteCard(card)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
