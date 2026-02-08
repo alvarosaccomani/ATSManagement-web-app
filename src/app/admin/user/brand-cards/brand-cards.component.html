@@ -1,1 +1,82 @@
-<p>brand-cards works!</p>
+<div class="card-brand-list-container">
+  <div class="header">
+    <h2>Marcas de Tarjetas</h2>
+    <button nz-button nzType="primary" (click)="createBrandCard()">
+      <i nz-icon nzType="plus"></i>
+      Nueva Marca
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando marcas de tarjetas..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && brandCards.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay marcas de tarjetas registradas"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && brandCards.length > 0) {
+    <nz-table
+      [nzData]="brandCards"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (brandCard of brandCards; track brandCard.brcrd_uuid) {
+          <tr>
+            <td>{{ brandCard.brcrd_uuid }}</td>
+            <td><strong>{{ brandCard.brcrd_name }}</strong></td>
+            <td>{{ brandCard.brcrd_description }}</td>
+            <td>{{ brandCard.brcrd_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ brandCard.brcrd_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(brandCard)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editBrandCard(brandCard)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deleteBrandCard(brandCard)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
