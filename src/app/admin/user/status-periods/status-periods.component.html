@@ -1,1 +1,95 @@
-<p>status-periods works!</p>
+<div class="period-status-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="calendar" nzTheme="outline"></i>
+      Estados de Período
+    </h2>
+    <button nz-button nzType="primary" (click)="createPeriodStatus()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Estado
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando estados de período..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && periodStatuses.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay estados de período registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && periodStatuses.length > 0) {
+    <nz-table
+      [nzData]="periodStatuses"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (status of periodStatuses; track status.sper_uuid) {
+          <tr>
+            <td>{{ status.sper_uuid }}</td>
+            <td>
+              <nz-tag [nzColor]="getStatusColor(status.sper_name)">
+                <strong>{{ status.sper_name }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              @if (status.sper_description) {
+                {{ status.sper_description }}
+              } @else {
+                <span class="no-description">Sin descripción</span>
+              }
+            </td>
+            <td>{{ status.sper_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ status.sper_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(status)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editPeriodStatus(status)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deletePeriodStatus(status)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
