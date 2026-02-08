@@ -1,0 +1,61 @@
+.period-list-container {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #13c2c2; // Turquesa para períodos
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .loading-container,
+  .empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    padding: 24px;
+  }
+
+  nz-table {
+    margin-top: 16px;
+
+    nz-tag {
+      margin-right: 4px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .actions {
+      button {
+        margin-right: 8px;
+        
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .text-center {
+    text-align: center;
+    padding: 24px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}

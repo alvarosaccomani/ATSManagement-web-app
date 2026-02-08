@@ -1,1 +1,104 @@
-<p>periods works!</p>
+<div class="period-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="calendar" nzTheme="outline"></i>
+      Períodos
+    </h2>
+    <button nz-button nzType="primary" (click)="createPeriod()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Período
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando períodos..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && periods.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay períodos registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && periods.length > 0) {
+    <nz-table
+      [nzData]="periods"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (period of periods; track period.per_uuid) {
+          <tr>
+            <td>{{ period.per_uuid }}</td>
+            <td>
+              <strong>{{ formatPeriodNumber(period.per_periodnumber) }}</strong>
+            </td>
+            <td>{{ formatDate(period.per_startdate) }}</td>
+            <td>{{ formatDate(period.per_enddate) }}</td>
+            <td>
+              <nz-tag [nzColor]="getDueDateStatus(period.per_duedate).color">
+                {{ formatDate(period.per_duedate) }}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getStatusColor(period.sper.sper_name)">
+                <strong>{{ period.sper.sper_name }}</strong>
+              </nz-tag>
+            </td>
+            <td>{{ formatAmount(period.per_previousbalance) }}</td>
+            <td>{{ formatAmount(period.per_interest) }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(period)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editPeriod(period)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              @if (period.sper.sper_name.toLowerCase() === 'abierto') {
+                <button nz-button nzSize="small" nzType="link" (click)="closePeriod(period)">
+                  <i nz-icon nzType="lock" nzTheme="outline"></i>
+                  Cerrar
+                </button>
+              }
+              <button nz-button nzSize="small" nzDanger (click)="deletePeriod(period)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
