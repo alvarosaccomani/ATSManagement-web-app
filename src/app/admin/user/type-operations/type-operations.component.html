@@ -1,0 +1,96 @@
+<div class="operation-type-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="transaction" nzTheme="outline"></i>
+      Tipos de Operaciones
+    </h2>
+    <button nz-button nzType="primary" (click)="createTypeOperation()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Tipo
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando tipos de operaciones..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && typeOperations.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay tipos de operaciones registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && typeOperations.length > 0) {
+    <nz-table
+      [nzData]="typeOperations"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (opType of typeOperations; track opType.tyop_uuid) {
+          <tr>
+            <td>{{ opType.tyop_uuid }}</td>
+            <td>
+              <nz-tag [nzColor]="getTypeOperationColor(opType.tyop_name)">
+                <i nz-icon [nzType]="getTypeOperationIcon(opType.tyop_name)" nzTheme="outline"></i>
+                <strong>{{ formatTypeOperationName(opType.tyop_name) }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              @if (opType.tyop_description) {
+                {{ opType.tyop_description }}
+              } @else {
+                <span class="no-description">Sin descripción</span>
+              }
+            </td>
+            <td>{{ opType.tyop_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ opType.tyop_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(opType)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editTypeOperation(opType)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deleteTypeOperation(opType)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
