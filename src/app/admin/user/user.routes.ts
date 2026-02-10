@@ -10,6 +10,7 @@ import { StatusPeriodsComponent } from './status-periods/status-periods.componen
 import { PeriodsComponent } from './periods/periods.component';
 import { TypeOperationsComponent } from './type-operations/type-operations.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
+import { VouchersFeeStatusComponent } from './vouchers-fee-status/vouchers-fee-status.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -24,7 +25,8 @@ export const USER_ROUTES: Routes = [
             { path: 'status-periods', component: StatusPeriodsComponent},
             { path: 'periods', component: PeriodsComponent},
             { path: 'type-operations', component: TypeOperationsComponent},
-            { path: 'vouchers', component: VouchersComponent}
+            { path: 'vouchers', component: VouchersComponent},
+            { path: 'vouchers-fee-status', component: VouchersFeeStatusComponent}
         ]
     }
 ];
