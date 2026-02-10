@@ -9,6 +9,7 @@ import { CardsComponent } from './cards/cards.component';
 import { StatusPeriodsComponent } from './status-periods/status-periods.component';
 import { PeriodsComponent } from './periods/periods.component';
 import { TypeOperationsComponent } from './type-operations/type-operations.component';
+import { VouchersStatesComponent } from './vouchers-states/vouchers-states.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VouchersFeeStatusComponent } from './vouchers-fee-status/vouchers-fee-status.component';
 
@@ -25,6 +26,7 @@ export const USER_ROUTES: Routes = [
             { path: 'status-periods', component: StatusPeriodsComponent},
             { path: 'periods', component: PeriodsComponent},
             { path: 'type-operations', component: TypeOperationsComponent},
+            { path: 'vouchers-states', component: VouchersStatesComponent},
             { path: 'vouchers', component: VouchersComponent},
             { path: 'vouchers-fee-status', component: VouchersFeeStatusComponent}
         ]
