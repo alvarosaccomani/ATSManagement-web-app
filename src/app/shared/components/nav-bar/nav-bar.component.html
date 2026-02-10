@@ -40,28 +40,9 @@
                 <li nz-menu-item [routerLink]="['/admin/user/vouchers-fee-status']">Estados de Cuotas de Comprobantes</li>
             </ul>
             </li>
-            <li nz-menu-group nzTitle="Item 2">
+            <li nz-menu-group nzTitle="Configuracion Pagos">
                 <ul>
-                <li nz-menu-item>Option 3</li>
-                <li nz-menu-item>Option 4</li>
-                <li nz-submenu nzTitle="Sub Menu">
-                    <ul>
-                    <li nz-menu-item nzDisabled>Option 5</li>
-                    <li nz-menu-item>Option 6</li>
-                    </ul>
-                </li>
-                <li nz-submenu nzTitle="Click me" [nzTriggerSubMenuAction]="'click'">
-                    <ul>
-                    <li nz-menu-item nzDisabled>Option 5</li>
-                    <li nz-menu-item>Option 6</li>
-                    </ul>
-                </li>
-                <li nz-submenu nzDisabled nzTitle="Disabled Sub Menu">
-                    <ul>
-                    <li nz-menu-item>Option 5</li>
-                    <li nz-menu-item>Option 6</li>
-                    </ul>
-                </li>
+                <li nz-menu-item  [routerLink]="['/admin/user/payment-periods-status']">Estados</li>
                 </ul>
             </li>
         </ul>
