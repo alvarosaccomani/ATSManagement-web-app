@@ -1,1 +1,96 @@
-<p>vouchers-fee-status works!</p>
+<div class="voucher-installment-status-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="schedule" nzTheme="outline"></i>
+      Estados de Cuotas de Comprobantes
+    </h2>
+    <button nz-button nzType="primary" (click)="createInstallmentStatus()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Estado
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando estados de cuotas..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && installmentStatuses.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay estados de cuotas registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && installmentStatuses.length > 0) {
+    <nz-table
+      [nzData]="installmentStatuses"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (status of installmentStatuses; track status.voufs_uuid) {
+          <tr>
+            <td>{{ status.voufs_uuid }}</td>
+            <td>
+              <nz-tag [nzColor]="getStatusColor(status.voufs_name)">
+                <i nz-icon [nzType]="getStatusIcon(status.voufs_name)" nzTheme="fill"></i>
+                <strong>{{ formatStatusName(status.voufs_name) }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              @if (status.voufs_description) {
+                {{ status.voufs_description }}
+              } @else {
+                <span class="no-description">Sin descripción</span>
+              }
+            </td>
+            <td>{{ status.voufs_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ status.voufs_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(status)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editInstallmentStatus(status)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deleteInstallmentStatus(status)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
