@@ -1,1 +1,117 @@
-<p>vouchers-fees works!</p>
+<div class="voucher-installment-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="reconciliation" nzTheme="outline"></i>
+      Cuotas de Comprobantes
+    </h2>
+    <button nz-button nzType="primary" (click)="createInstallment()">
+      <i nz-icon nzType="plus"></i>
+      Nueva Cuota
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando cuotas..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && installments.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay cuotas registradas"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && installments.length > 0) {
+    <nz-table
+      [nzData]="installments"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (installment of installments; track installment.vouf_uuid) {
+          <tr>
+            <td>{{ installment.vouf_uuid }}</td>
+            <td>
+              <nz-tag nzColor="blue">
+                <strong>Cuota {{ installment.vouf_quotanumber }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              <strong class="amount">{{ formatAmount(installment.vouf_quotaamount) }}</strong>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getDaysLeft(installment.vouf_quotaduedate).color">
+                {{ formatDate(installment.vouf_quotaduedate) }}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getStatusColor(installment.voufs.voufs_name)">
+                <i nz-icon [nzType]="getStatusIcon(installment.voufs.voufs_name)" nzTheme="fill"></i>
+                <strong>{{ formatStatusName(installment.voufs.voufs_name) }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getDaysLeft(installment.vouf_quotaduedate).color">
+                {{ getDaysLeft(installment.vouf_quotaduedate).text }}
+              </nz-tag>
+            </td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(installment)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editInstallment(installment)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              @if (installment.voufs.voufs_name.toLowerCase() === 'pendiente') {
+                <button nz-button nzSize="small" nzType="link" (click)="markAsPaid(installment)">
+                  <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+                  Pagar
+                </button>
+              }
+              @if (installment.voufs.voufs_name.toLowerCase() === 'pagado') {
+                <button nz-button nzSize="small" nzType="link" nzDanger (click)="markAsPending(installment)">
+                  <i nz-icon nzType="rollback" nzTheme="outline"></i>
+                  Revertir
+                </button>
+              }
+              <button nz-button nzSize="small" nzDanger (click)="deleteInstallment(installment)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
