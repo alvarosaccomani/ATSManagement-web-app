@@ -1,1 +1,129 @@
-<p>vouchers works!</p>
+<div class="voucher-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="file-text" nzTheme="outline"></i>
+      Vouchers (Comprobantes)
+    </h2>
+    <button nz-button nzType="primary" (click)="createVoucher()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Voucher
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando vouchers..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && vouchers.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay vouchers registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && vouchers.length > 0) {
+    <nz-table
+      [nzData]="vouchers"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (voucher of vouchers; track voucher.vou_uuid) {
+          <tr>
+            <td>{{ voucher.vou_uuid }}</td>
+            <td>
+              <div class="transaction-info">
+                <div class="auth-number">
+                  <small>Autorización:</small>
+                  <strong>{{ voucher.vou_authorizationnumber }}</strong>
+                </div>
+                <div class="txn-number">
+                  <small>Transacción:</small>
+                  {{ voucher.vou_transactionnumber }}
+                </div>
+              </div>
+            </td>
+            <td>{{ formatDateTime(voucher.vou_datetime) }}</td>
+            <td>
+              <strong class="amount">{{ formatAmount(voucher.vou_amount, voucher.vou_currency) }}</strong>
+            </td>
+            <td>
+              <div class="commerce-info">
+                <div><strong>{{ voucher.vou_commercename }}</strong></div>
+                <div class="category">{{ voucher.vou_commercecategory }}</div>
+              </div>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getOperationTypeColor(voucher.tyop.tyop_name)">
+                <i nz-icon [nzType]="getOperationTypeIcon(voucher.tyop.tyop_name)" nzTheme="outline"></i>
+                {{ formatOperationTypeName(voucher.tyop.tyop_name) }}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="voucher.vou_installments ? 'orange' : 'default'">
+                {{ formatInstallments(voucher) }}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getVoucherStatusColor(voucher.vous.vous_name)">
+                <strong>{{ formatVoucherStatusName(voucher.vous.vous_name) }}</strong>
+              </nz-tag>
+            </td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(voucher)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editVoucher(voucher)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              @if (voucher.vous.vous_name.toLowerCase() === 'pendiente') {
+                <button nz-button nzSize="small" nzType="link" nzDanger (click)="rejectVoucher(voucher)">
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+                  Rechazar
+                </button>
+                <button nz-button nzSize="small" nzType="link" (click)="confirmVoucher(voucher)">
+                  <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+                  Confirmar
+                </button>
+              }
+              <button nz-button nzSize="small" nzDanger (click)="deleteVoucher(voucher)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
