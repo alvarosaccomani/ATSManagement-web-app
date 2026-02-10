@@ -1,1 +1,96 @@
-<p>vouchers-states works!</p>
+<div class="voucher-status-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="file-done" nzTheme="outline"></i>
+      Estados de Comprobantes
+    </h2>
+    <button nz-button nzType="primary" (click)="createVoucherStatus()">
+      <i nz-icon nzType="plus"></i>
+      Nuevo Estado
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando estados de comprobantes..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && voucherStatuses.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay estados de comprobantes registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && voucherStatuses.length > 0) {
+    <nz-table
+      [nzData]="voucherStatuses"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (status of voucherStatuses; track status.vous_uuid) {
+          <tr>
+            <td>{{ status.vous_uuid }}</td>
+            <td>
+              <nz-tag [nzColor]="getStatusColor(status.vous_name)">
+                <i nz-icon [nzType]="getStatusIcon(status.vous_name)" nzTheme="fill"></i>
+                <strong>{{ formatStatusName(status.vous_name) }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              @if (status.vous_description) {
+                {{ status.vous_description }}
+              } @else {
+                <span class="no-description">Sin descripción</span>
+              }
+            </td>
+            <td>{{ status.vous_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ status.vous_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(status)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editVoucherStatus(status)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              <button nz-button nzSize="small" nzDanger (click)="deleteVoucherStatus(status)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
