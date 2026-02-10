@@ -12,6 +12,7 @@ import { TypeOperationsComponent } from './type-operations/type-operations.compo
 import { VouchersStatesComponent } from './vouchers-states/vouchers-states.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VouchersFeeStatusComponent } from './vouchers-fee-status/vouchers-fee-status.component';
+import { VouchersFeesComponent } from './vouchers-fees/vouchers-fees.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -28,7 +29,8 @@ export const USER_ROUTES: Routes = [
             { path: 'type-operations', component: TypeOperationsComponent},
             { path: 'vouchers-states', component: VouchersStatesComponent},
             { path: 'vouchers', component: VouchersComponent},
-            { path: 'vouchers-fee-status', component: VouchersFeeStatusComponent}
+            { path: 'vouchers-fee-status', component: VouchersFeeStatusComponent},
+            { path: 'vouchers-fees', component: VouchersFeesComponent}
         ]
     }
 ];
