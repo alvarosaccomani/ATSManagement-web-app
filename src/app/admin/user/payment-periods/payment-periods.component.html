@@ -1,1 +1,121 @@
-<p>payment-periods works!</p>
+<div class="payment-list-container">
+  <div class="header">
+    <h2>
+      <i nz-icon nzType="pay-circle" nzTheme="outline"></i>
+      Pagos de Períodos
+    </h2>
+    <button nz-button nzType="primary" (click)="createPayment()">
+      <i nz-icon nzType="plus"></i>
+      Registrar Pago
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando pagos..."></nz-spin>
+    </div>
+  }
+
+  @if (!loading && payments.length === 0) {
+    <div class="empty-container">
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="No hay pagos registrados"
+        nzNotFoundFooter=""
+      ></nz-empty>
+    </div>
+  }
+
+  @if (!loading && payments.length > 0) {
+    <nz-table
+      [nzData]="payments"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[10, 20, 30]"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      nzBordered
+      nzTableLayout="fixed"
+    >
+      <thead>
+        <tr>
+          @for (column of listOfColumns; track column.key) {
+            <th [nzWidth]="column.width">
+              {{ column.title }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (payment of payments; track payment.payp_uuid) {
+          <tr>
+            <td>{{ payment.payp_uuid }}</td>
+            <td>
+              <nz-tag nzColor="blue">
+                {{ formatDateTime(payment.payp_paymentdate) }}
+              </nz-tag>
+            </td>
+            <td>
+              <strong class="amount">{{ formatAmount(payment.payp_amountpaid) }}</strong>
+            </td>
+            <td>
+              <nz-tag [nzColor]="getMethodColor(payment.paym.paym_name)">
+                <i nz-icon [nzType]="getMethodIcon(payment.paym.paym_name)" nzTheme="outline"></i>
+                {{ formatMethodName(payment.paym.paym_name) }}
+              </nz-tag>
+            </td>
+            <td>
+              @if (payment.payp_paymentreference) {
+                <div class="reference">
+                  <small>{{ payment.payp_paymentreference }}</small>
+                </div>
+              } @else {
+                <span class="no-reference">Sin referencia</span>
+              }
+            </td>
+            <td>
+              <nz-tag [nzColor]="getStatusColor(payment.payps.payps_name)">
+                <i nz-icon [nzType]="getStatusIcon(payment.payps.payps_name)" nzTheme="fill"></i>
+                <strong>{{ formatStatusName(payment.payps.payps_name) }}</strong>
+              </nz-tag>
+            </td>
+            <td>{{ formatDateTime(payment.payp_createdat) }}</td>
+            <td class="actions">
+              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(payment)">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                Ver
+              </button>
+              <button nz-button nzSize="small" nzType="link" (click)="editPayment(payment)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Editar
+              </button>
+              @if (payment.payps.payps_name.toLowerCase() === 'procesado') {
+                <button nz-button nzSize="small" nzType="link" nzDanger (click)="rejectPayment(payment)">
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+                  Rechazar
+                </button>
+                <button nz-button nzSize="small" nzType="link" (click)="confirmPayment(payment)">
+                  <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+                  Confirmar
+                </button>
+              }
+              <button nz-button nzSize="small" nzDanger (click)="deletePayment(payment)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [colSpan]="listOfColumns.length" class="text-center">
+              No hay datos disponibles
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>
