@@ -15,6 +15,7 @@ import { VouchersFeeStatusComponent } from './vouchers-fee-status/vouchers-fee-s
 import { VouchersFeesComponent } from './vouchers-fees/vouchers-fees.component';
 import { PaymentPeriodsStatusComponent } from './payment-periods-status/payment-periods-status.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
+import { PaymentPeriodsComponent } from './payment-periods/payment-periods.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -34,7 +35,9 @@ export const USER_ROUTES: Routes = [
             { path: 'vouchers-fee-status', component: VouchersFeeStatusComponent},
             { path: 'vouchers-fees', component: VouchersFeesComponent},
             { path: 'payment-periods-status', component: PaymentPeriodsStatusComponent},
-            { path: 'payment-methods', component: PaymentMethodsComponent}
+            { path: 'payment-methods', component: PaymentMethodsComponent},
+            { path: 'payment-periods', component: PaymentPeriodsComponent}
+
         ]
     }
 ];
