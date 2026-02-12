@@ -1,1 +1,91 @@
-<p>bank works!</p>
+<div class="bank-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="bank" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Banco' : 'Nuevo Banco' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando datos..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label nzFor="ban_uuid" nzSpan="24" nzMdSpan="6">
+          ID
+        </nz-form-label>
+        <nz-form-control nzSpan="24" nzMdSpan="18">
+          <input nz-input formControlName="ban_uuid" placeholder="ID autogenerado" readonly />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="ban_name" nzSpan="24" nzMdSpan="6" nzRequired>
+          Nombre
+        </nz-form-label>
+        <nz-form-control 
+          nzSpan="24" 
+          nzMdSpan="18"
+          [nzValidateStatus]="form.get('ban_name')?.dirty && form.get('ban_name')?.invalid ? 'error' : ''"
+          nzErrorTip="{{ getErrorMessage('ban_name') }}"
+        >
+          <input 
+            nz-input 
+            formControlName="ban_name" 
+            placeholder="Ingrese el nombre del banco"
+            nzSize="large"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="ban_description" nzSpan="24" nzMdSpan="6">
+          Descripción
+        </nz-form-label>
+        <nz-form-control 
+          nzSpan="24" 
+          nzMdSpan="18"
+          [nzValidateStatus]="form.get('ban_description')?.dirty && form.get('ban_description')?.invalid ? 'error' : ''"
+          nzErrorTip="{{ getErrorMessage('ban_description') }}"
+        >
+          <textarea 
+            nz-input 
+            formControlName="ban_description" 
+            placeholder="Ingrese una descripción (opcional)"
+            rows="4"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <div class="form-actions">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="onCancel()"
+          nzSize="large"
+        >
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+        <button 
+          nz-button 
+          nzType="primary" 
+          type="submit"
+          [nzLoading]="isLoading"
+          nzSize="large"
+        >
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Banco' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
