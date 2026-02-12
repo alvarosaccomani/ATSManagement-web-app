@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { BanksComponent } from './banks/banks.component';
+import { BankComponent } from './bank/bank.component';
 import { TypeCardsComponent } from './type-cards/type-cards.component';
 import { BrandCardsComponent } from './brand-cards/brand-cards.component';
 import { CardsComponent } from './cards/cards.component';
@@ -24,6 +25,8 @@ export const USER_ROUTES: Routes = [
         children: [
             { path: 'documents', component: DocumentsComponent},
             { path: 'banks', component: BanksComponent},
+            { path: 'bank/new', component: BankComponent },
+            { path: 'bank/edit/:ban_uuid', component: BankComponent },
             { path: 'type-cards', component: TypeCardsComponent},
             { path: 'brand-cards', component: BrandCardsComponent},
             { path: 'cards', component: CardsComponent},
