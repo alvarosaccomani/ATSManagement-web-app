@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -43,7 +44,10 @@ export class CardsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadCards();
@@ -254,11 +258,11 @@ export class CardsComponent implements OnInit {
 
   // Métodos de acción
   createCard(): void {
-    this.message.info('Crear nueva tarjeta');
+    this._router.navigate(['/admin/user/card/new']);
   }
 
   editCard(card: CardInterface): void {
-    this.message.info(`Editar tarjeta: ${this.formatCardNumber(card.crd_last4digits)}`);
+    this._router.navigate(['/admin/user/card/edit', card.crd_uuid]);
   }
 
   deleteCard(card: CardInterface): void {
