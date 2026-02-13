@@ -1,1 +1,270 @@
-<p>payment-period works!</p>
+<div class="payment-period-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="pay-circle" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Pago' : 'Nuevo Pago' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando datos..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Información básica -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="payp_uuid" [nzSpan]="24">
+              ID de Pago
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input nz-input formControlName="payp_uuid" placeholder="ID autogenerado" readonly />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="payp_paymentdate" [nzSpan]="24" nzRequired>
+              Fecha de Pago
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('payp_paymentdate')?.dirty && form.get('payp_paymentdate')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione fecha de pago"
+            >
+              <nz-date-picker 
+                formControlName="payp_paymentdate" 
+                nzShowTime
+                nzFormat="DD/MM/YYYY HH:mm"
+                nzPlaceHolder="Seleccione fecha y hora"
+                nzSize="large"
+                style="width: 100%"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="payp_amountpaid" [nzSpan]="24" nzRequired>
+              Monto Pagado
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('payp_amountpaid')?.dirty && form.get('payp_amountpaid')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('payp_amountpaid') }}"
+            >
+              <nz-input-number 
+                formControlName="payp_amountpaid" 
+                nzPrefix="$"
+                nzPlaceHolder="0.00"
+                [nzMin]="0"
+                [nzStep]="1000"
+                [nzFormatter]="currencyFormatter"
+                [nzParser]="currencyParser"
+                style="width: 100%"
+                nzSize="large"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Método de pago -->
+      <nz-divider nzText="Método de Pago" nzOrientation="left"></nz-divider>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="paym_uuid" [nzSpan]="24" nzRequired>
+              Método de Pago
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('paym_uuid')?.dirty && form.get('paym_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione un método de pago"
+            >
+              <nz-select 
+                formControlName="paym_uuid" 
+                placeholder="Seleccione método"
+                nzSize="large"
+                nzShowSearch
+              >
+                @for (method of paymentMethods; track method.value) {
+                  <nz-option [nzValue]="method.value" [nzLabel]="method.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="payp_paymentreference" [nzSpan]="24">
+              Referencia de Pago
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('payp_paymentreference')?.dirty && form.get('payp_paymentreference')?.invalid ? 'error' : ''"
+            >
+              <input 
+                nz-input 
+                formControlName="payp_paymentreference" 
+                placeholder="Ingrese referencia (opcional)"
+                nzSize="large"
+              />
+              <small class="form-text">Número de comprobante, transferencia, etc.</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Vista previa del método de pago -->
+      @if (form.get('paym_uuid')?.value) {
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">
+                Vista Previa del Método
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-tag [nzColor]="getMethodColor(form.get('paym_uuid')?.value)">
+                  <i nz-icon [nzType]="getMethodIcon(form.get('paym_uuid')?.value)" nzTheme="outline"></i>
+                  <strong>{{ getMethodLabel(form.get('paym_uuid')?.value) }}</strong>
+                </nz-tag>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <!-- Período y tarjeta relacionados -->
+      <nz-divider nzText="Información Relacionada" nzOrientation="left"></nz-divider>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="per_uuid" [nzSpan]="24" nzRequired>
+              Período
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_uuid')?.dirty && form.get('per_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione un período"
+            >
+              <nz-select 
+                formControlName="per_uuid" 
+                placeholder="Seleccione período"
+                nzSize="large"
+                nzShowSearch
+              >
+                @for (period of periods; track period.value) {
+                  <nz-option [nzValue]="period.value" [nzLabel]="period.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">
+              Tarjeta
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select 
+                formControlName="crd_uuid" 
+                placeholder="Se actualiza automáticamente"
+                nzSize="large"
+              >
+                @for (card of cards; track card.value) {
+                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                }
+              </nz-select>
+              <small class="form-text">Se selecciona según el período</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Estado del pago -->
+      <nz-divider nzText="Estado del Pago" nzOrientation="left"></nz-divider>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="payps_uuid" [nzSpan]="24" nzRequired>
+              Estado
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('payps_uuid')?.dirty && form.get('payps_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione un estado"
+            >
+              <nz-select 
+                formControlName="payps_uuid" 
+                placeholder="Seleccione estado"
+                nzSize="large"
+              >
+                @for (status of paymentStatuses; track status.value) {
+                  <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Vista previa del estado -->
+      @if (form.get('payps_uuid')?.value) {
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">
+                Vista Previa del Estado
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-tag [nzColor]="getStatusColor(form.get('payps_uuid')?.value)">
+                  <i nz-icon [nzType]="getStatusIcon(form.get('payps_uuid')?.value)" nzTheme="fill"></i>
+                  <strong>{{ getStatusLabel(form.get('payps_uuid')?.value) }}</strong>
+                </nz-tag>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <nz-divider></nz-divider>
+
+      <div class="form-actions">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="onCancel()"
+          nzSize="large"
+        >
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+        <button 
+          nz-button 
+          nzType="primary" 
+          type="submit"
+          [nzLoading]="isLoading"
+          nzSize="large"
+        >
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Registrar Pago' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
