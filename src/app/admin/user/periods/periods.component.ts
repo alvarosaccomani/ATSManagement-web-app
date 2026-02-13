@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -43,7 +44,10 @@ export class PeriodsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadPeriods();
@@ -222,11 +226,11 @@ export class PeriodsComponent implements OnInit {
 
   // Métodos de acción
   createPeriod(): void {
-    this.message.info('Crear nuevo período');
+    this._router.navigate(['/admin/user/period/new']);
   }
 
   editPeriod(period: PeriodInterface): void {
-    this.message.info(`Editar período: ${this.formatPeriodNumber(period.per_periodnumber)}`);
+    this._router.navigate(['/admin/user/period/edit', period.per_uuid]);
   }
 
   deletePeriod(period: PeriodInterface): void {
