@@ -1,1 +1,241 @@
-<p>voucher-fee works!</p>
+<div class="voucher-installment-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="reconciliation" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Cuota' : 'Nueva Cuota' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando datos..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Información básica -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="vouf_uuid" [nzSpan]="24">
+              ID de Cuota
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input nz-input formControlName="vouf_uuid" placeholder="ID autogenerado" readonly />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="vouf_quotanumber" [nzSpan]="24" nzRequired>
+              Número de Cuota
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('vouf_quotanumber')?.dirty && form.get('vouf_quotanumber')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('vouf_quotanumber') }}"
+            >
+              <nz-input-number 
+                formControlName="vouf_quotanumber" 
+                [nzMin]="1"
+                [nzMax]="36"
+                [nzStep]="1"
+                style="width: 100%"
+                nzSize="large"
+              ></nz-input-number>
+              <small class="form-text">Cuota 1 de 36</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="vou_uuid" [nzSpan]="24" nzRequired>
+              Voucher
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('vou_uuid')?.dirty && form.get('vou_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione un voucher"
+            >
+              <nz-select 
+                formControlName="vou_uuid" 
+                placeholder="Seleccione voucher"
+                nzSize="large"
+                nzShowSearch
+              >
+                @for (voucher of vouchers; track voucher.value) {
+                  <nz-option [nzValue]="voucher.value" [nzLabel]="voucher.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Monto y vencimiento -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="vouf_quotaamount" [nzSpan]="24" nzRequired>
+              Monto de la Cuota
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('vouf_quotaamount')?.dirty && form.get('vouf_quotaamount')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('vouf_quotaamount') }}"
+            >
+              <nz-input-number 
+                formControlName="vouf_quotaamount" 
+                nzPrefix="$"
+                nzPlaceHolder="0.00"
+                [nzMin]="0"
+                [nzStep]="100"
+                [nzFormatter]="currencyFormatter"
+                [nzParser]="currencyParser"
+                style="width: 100%"
+                nzSize="large"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="vouf_quotaduedate" [nzSpan]="24" nzRequired>
+              Fecha de Vencimiento
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('vouf_quotaduedate')?.dirty && form.get('vouf_quotaduedate')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione fecha de vencimiento"
+            >
+              <nz-date-picker 
+                formControlName="vouf_quotaduedate" 
+                nzFormat="DD/MM/YYYY"
+                nzPlaceHolder="Seleccione fecha"
+                nzSize="large"
+                style="width: 100%"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Información relacionada -->
+      <nz-divider nzText="Información Relacionada" nzOrientation="left"></nz-divider>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">
+              Tarjeta
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select 
+                formControlName="crd_uuid" 
+                placeholder="Se actualiza automáticamente"
+                nzSize="large"
+              >
+                @for (card of cards; track card.value) {
+                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                }
+              </nz-select>
+              <small class="form-text">Se selecciona según el voucher</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_uuid" [nzSpan]="24">
+              Período
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select 
+                formControlName="per_uuid" 
+                placeholder="Se actualiza automáticamente"
+                nzSize="large"
+              >
+                @for (period of periods; track period.value) {
+                  <nz-option [nzValue]="period.value" [nzLabel]="period.label"></nz-option>
+                }
+              </nz-select>
+              <small class="form-text">Se selecciona según el voucher</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="voufs_uuid" [nzSpan]="24" nzRequired>
+              Estado
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('voufs_uuid')?.dirty && form.get('voufs_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione un estado"
+            >
+              <nz-select 
+                formControlName="voufs_uuid" 
+                placeholder="Seleccione estado"
+                nzSize="large"
+              >
+                @for (status of installmentStatuses; track status.value) {
+                  <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Vista previa del estado -->
+      @if (form.get('voufs_uuid')?.value) {
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">
+                Vista Previa del Estado
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-tag [nzColor]="getStatusColor(form.get('voufs_uuid')?.value)">
+                  <strong>{{ getStatusLabel(form.get('voufs_uuid')?.value) }}</strong>
+                </nz-tag>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <nz-divider></nz-divider>
+
+      <div class="form-actions">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="onCancel()"
+          nzSize="large"
+        >
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+        <button 
+          nz-button 
+          nzType="primary" 
+          type="submit"
+          [nzLoading]="isLoading"
+          nzSize="large"
+        >
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Cuota' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
