@@ -1,1 +1,274 @@
-<p>period works!</p>
+<div class="period-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="calendar" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Período' : 'Nuevo Período' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando datos..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Información básica -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_uuid" [nzSpan]="24">
+              ID de Período
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input nz-input formControlName="per_uuid" placeholder="ID autogenerado" readonly />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_periodnumber" [nzSpan]="24" nzRequired>
+              Número de Período
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_periodnumber')?.dirty && form.get('per_periodnumber')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('per_periodnumber') }}"
+            >
+              <input 
+                nz-input 
+                formControlName="per_periodnumber" 
+                placeholder="202601"
+                maxlength="6"
+                nzSize="large"
+              />
+              @if (form.get('per_periodnumber')?.value) {
+                <small class="form-text">Formateado: {{ formatPeriodNumber(form.get('per_periodnumber')?.value) }}</small>
+              }
+              <small class="form-text">Formato: AAAAMM (ej: 202601)</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="crd_uuid" [nzSpan]="24" nzRequired>
+              Tarjeta
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('crd_uuid')?.dirty && form.get('crd_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione una tarjeta"
+            >
+              <nz-select 
+                formControlName="crd_uuid" 
+                placeholder="Seleccione tarjeta"
+                nzSize="large"
+                nzShowSearch
+              >
+                @for (card of cards; track card.value) {
+                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Fechas del período -->
+      <nz-divider nzText="Fechas del Período" nzOrientation="left"></nz-divider>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_startdate" [nzSpan]="24" nzRequired>
+              Fecha de Inicio
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_startdate')?.dirty && form.get('per_startdate')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione fecha de inicio"
+            >
+              <nz-date-picker 
+                formControlName="per_startdate" 
+                nzFormat="DD/MM/YYYY"
+                nzPlaceHolder="Seleccione fecha"
+                nzSize="large"
+                style="width: 100%"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_enddate" [nzSpan]="24" nzRequired>
+              Fecha de Fin
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_enddate')?.dirty && form.get('per_enddate')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione fecha de fin"
+            >
+              <nz-date-picker 
+                formControlName="per_enddate" 
+                nzFormat="DD/MM/YYYY"
+                nzPlaceHolder="Seleccione fecha"
+                nzSize="large"
+                style="width: 100%"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_duedate" [nzSpan]="24" nzRequired>
+              Fecha de Vencimiento
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_duedate')?.dirty && form.get('per_duedate')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione fecha de vencimiento"
+            >
+              <nz-date-picker 
+                formControlName="per_duedate" 
+                nzFormat="DD/MM/YYYY"
+                nzPlaceHolder="Seleccione fecha"
+                nzSize="large"
+                style="width: 100%"
+              ></nz-date-picker>
+              <small class="form-text">Fecha límite para pago</small>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Estado y montos -->
+      <nz-divider nzText="Estado y Montos" nzOrientation="left"></nz-divider>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="sper_uuid" [nzSpan]="24" nzRequired>
+              Estado
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('sper_uuid')?.dirty && form.get('sper_uuid')?.invalid ? 'error' : ''"
+              nzErrorTip="Seleccione un estado"
+            >
+              <nz-select 
+                formControlName="sper_uuid" 
+                placeholder="Seleccione estado"
+                nzSize="large"
+              >
+                @for (status of periodStatuses; track status.value) {
+                  <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_previousbalance" [nzSpan]="24">
+              Saldo Anterior
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_previousbalance')?.dirty && form.get('per_previousbalance')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('per_previousbalance') }}"
+            >
+              <nz-input-number 
+                formControlName="per_previousbalance" 
+                nzPrefix="$"
+                nzPlaceHolder="0.00"
+                [nzMin]="0"
+                [nzStep]="1000"
+                [nzFormatter]="currencyFormatter"
+                [nzParser]="currencyParser"
+                style="width: 100%"
+                nzSize="large"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="per_interest" [nzSpan]="24">
+              Interés
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('per_interest')?.dirty && form.get('per_interest')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('per_interest') }}"
+            >
+              <nz-input-number 
+                formControlName="per_interest" 
+                nzPrefix="$"
+                nzPlaceHolder="0.00"
+                [nzMin]="0"
+                [nzStep]="100"
+                [nzFormatter]="currencyFormatter"
+                [nzParser]="currencyParser"
+                style="width: 100%"
+                nzSize="large"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Vista previa del estado -->
+      @if (form.get('sper_uuid')?.value) {
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">
+                Vista Previa del Estado
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-tag [nzColor]="getStatusColor(form.get('sper_uuid')?.value)">
+                  <i nz-icon [nzType]="getStatusIcon(form.get('sper_uuid')?.value)" nzTheme="fill"></i>
+                  <strong>{{ getStatusLabel(form.get('sper_uuid')?.value) }}</strong>
+                </nz-tag>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <nz-divider></nz-divider>
+
+      <div class="form-actions">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="onCancel()"
+          nzSize="large"
+        >
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+        <button 
+          nz-button 
+          nzType="primary" 
+          type="submit"
+          [nzLoading]="isLoading"
+          nzSize="large"
+        >
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Período' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
