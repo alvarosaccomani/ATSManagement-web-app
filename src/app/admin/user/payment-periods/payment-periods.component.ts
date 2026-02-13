@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -42,7 +43,10 @@ export class PaymentPeriodsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadPayments();
@@ -284,11 +288,11 @@ export class PaymentPeriodsComponent implements OnInit {
 
   // Métodos de acción
   createPayment(): void {
-    this.message.info('Registrar nuevo pago');
+    this._router.navigate(['/admin/user/payment-period/new']);
   }
 
   editPayment(payment: PaymentPeriodInterface): void {
-    this.message.info(`Editar pago: ${payment.payp_uuid}`);
+    this._router.navigate(['/admin/user/payment-period/edit', payment.payp_uuid]);
   }
 
   deletePayment(payment: PaymentPeriodInterface): void {

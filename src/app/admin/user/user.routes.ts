@@ -21,6 +21,7 @@ import { CardComponent } from './card/card.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { VoucherFeeComponent } from './voucher-fee/voucher-fee.component';
 import { PeriodComponent } from './period/period.component';
+import { PaymentPeriodComponent } from './payment-period/payment-period.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -51,8 +52,9 @@ export const USER_ROUTES: Routes = [
             { path: 'voucher-fee/edit/:vouf_uuid', component: VoucherFeeComponent },
             { path: 'payment-periods-status', component: PaymentPeriodsStatusComponent},
             { path: 'payment-methods', component: PaymentMethodsComponent},
-            { path: 'payment-periods', component: PaymentPeriodsComponent}
-
+            { path: 'payment-periods', component: PaymentPeriodsComponent},
+            { path: 'payment-period/new', component: PaymentPeriodComponent },
+            { path: 'payment-period/edit/:per_uuid', component: PaymentPeriodComponent }
         ]
     }
 ];
