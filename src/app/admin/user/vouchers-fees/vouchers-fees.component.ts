@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -41,7 +42,10 @@ export class VouchersFeesComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadInstallments();
@@ -283,11 +287,11 @@ export class VouchersFeesComponent implements OnInit {
 
   // Métodos de acción
   createInstallment(): void {
-    this.message.info('Crear nueva cuota');
+    this._router.navigate(['/admin/user/voucher-fee/new']);
   }
 
   editInstallment(installment: VoucherFeeInterface): void {
-    this.message.info(`Editar cuota #${installment.vouf_quotanumber}`);
+    this._router.navigate(['/admin/user/voucher-fee/edit', installment.vouf_uuid]);
   }
 
   deleteInstallment(installment: VoucherFeeInterface): void {
