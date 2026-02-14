@@ -83,9 +83,34 @@ export class BanksComponent implements OnInit {
   }
 
   deleteBank(bank: BankInterface): void {
-    this.message.success(`Banco eliminado: ${bank.ban_name}`);
-    this.banks = this.banks.filter(b => b.ban_uuid !== bank.ban_uuid);
-    this.total = this.banks.length;
+    // this._messageService.showCustomMessage({
+    //     title: "¿Estás seguro de eliminar el Rubro?",
+    //     type: "question",
+    //     text: "Estás a punto de eliminar el Rubro.",
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: "Sí, eliminar!",
+    //     cancelButtonText: "No, cancelar"
+    //   },
+    //   (result: any) => {
+    //     if (result.value) {
+          this._banksService.deleteBank(bank.ban_uuid!)
+            .subscribe(
+              response => {
+                console.info(response);
+                this.loadBanks();
+                this.message.success(`Banco eliminado: ${bank.ban_name}`);
+                this.banks = this.banks.filter(b => b.ban_uuid !== bank.ban_uuid);
+                this.total = this.banks.length;
+              },
+              error => {
+                console.log(<any>error);
+              }
+            );
+    //     }
+    //   }
+    // );
   }
 
   viewDetails(bank: BankInterface): void {
