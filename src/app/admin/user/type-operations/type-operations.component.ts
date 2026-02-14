@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { TypeOperationInterface } from '../../../core/interfaces/type-operation.interface';
+import { TypeOperationInterface } from '../../../core/interfaces/type-operation';
+import { TypeOperationsService } from '../../../core/services/type-operations.service';
 
 @Component({
   selector: 'app-type-operations',
@@ -40,7 +42,11 @@ export class TypeOperationsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _typeOperationsService: TypeOperationsService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadTypeOperations();
@@ -48,42 +54,26 @@ export class TypeOperationsComponent implements OnInit {
 
   loadTypeOperations(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.typeOperations = [
-        {
-          tyop_uuid: "1",
-          tyop_name: "compra",
-          tyop_description: null,
-          tyop_createdat: "2026-02-08T17:24:54-03:00",
-          tyop_updatedat: "2026-02-08T17:24:54-03:00"
-        },
-        {
-          tyop_uuid: "2",
-          tyop_name: "devolucion",
-          tyop_description: null,
-          tyop_createdat: "2026-02-08T17:24:54-03:00",
-          tyop_updatedat: "2026-02-08T17:24:54-03:00"
-        },
-        {
-          tyop_uuid: "3",
-          tyop_name: "extraccion",
-          tyop_description: null,
-          tyop_createdat: "2026-02-08T17:24:54-03:00",
-          tyop_updatedat: "2026-02-08T17:24:54-03:00"
-        },
-        {
-          tyop_uuid: "4",
-          tyop_name: "pago_servicio",
-          tyop_description: null,
-          tyop_createdat: "2026-02-08T17:24:54-03:00",
-          tyop_updatedat: "2026-02-08T17:24:54-03:00"
+    this._typeOperationsService.getTypeOperations().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.typeOperations = response.data;
+          this.total = this.typeOperations.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.typeOperations.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Obtener color del tag según el tipo de operación
