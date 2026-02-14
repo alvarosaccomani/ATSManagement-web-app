@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { VoucherFeeStatusInterface } from '../../../core/interfaces/voucher-fee-status.interface';
+import { VoucherFeeStatusInterface } from '../../../core/interfaces/voucher-fee-status';
+import { VouchersFeeStatusService } from '../../../core/services/vouchers-fee-status.service';
 
 @Component({
   selector: 'app-vouchers-fee-status',
@@ -40,7 +42,11 @@ export class VouchersFeeStatusComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _vouchersFeeStatusService: VouchersFeeStatusService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadInstallmentStatuses();
@@ -48,35 +54,26 @@ export class VouchersFeeStatusComponent implements OnInit {
 
   loadInstallmentStatuses(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.installmentStatuses = [
-        {
-          voufs_uuid: "2",
-          voufs_name: "pagado",
-          voufs_description: null,
-          voufs_createdat: "2026-02-08T19:27:00-03:00",
-          voufs_updatedat: "2026-02-08T19:27:00-03:00"
-        },
-        {
-          voufs_uuid: "1",
-          voufs_name: "pendiente",
-          voufs_description: null,
-          voufs_createdat: "2026-02-08T19:27:00-03:00",
-          voufs_updatedat: "2026-02-08T19:27:00-03:00"
-        },
-        {
-          voufs_uuid: "3",
-          voufs_name: "vencido",
-          voufs_description: null,
-          voufs_createdat: "2026-02-08T19:27:00-03:00",
-          voufs_updatedat: "2026-02-08T19:27:00-03:00"
+    this._vouchersFeeStatusService.getVoucherFeeStatus().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.installmentStatuses = response.data;
+          this.total = this.installmentStatuses.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.installmentStatuses.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Obtener color del tag según el estado de la cuota
