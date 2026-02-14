@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { StatusPeriodInterface } from '../../../core/interfaces/status-period.interface';
+import { StatusPeriodInterface } from '../../../core/interfaces/status-period';
+import { StatusPeriodsService } from '../../../core/services/status-periods.service';
 
 @Component({
   selector: 'app-status-periods',
@@ -40,7 +42,11 @@ export class StatusPeriodsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _statusPeriodsService: StatusPeriodsService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadPeriodStatuses();
@@ -48,42 +54,26 @@ export class StatusPeriodsComponent implements OnInit {
 
   loadPeriodStatuses(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.periodStatuses = [
-        {
-          sper_uuid: "1",
-          sper_name: "Abierto",
-          sper_description: null,
-          sper_createdat: "2026-02-08T15:57:23-03:00",
-          sper_updatedat: "2026-02-08T15:57:23-03:00"
-        },
-        {
-          sper_uuid: "2",
-          sper_name: "Cerrado",
-          sper_description: null,
-          sper_createdat: "2026-02-08T15:57:23-03:00",
-          sper_updatedat: "2026-02-08T15:57:23-03:00"
-        },
-        {
-          sper_uuid: "3",
-          sper_name: "Pagado",
-          sper_description: null,
-          sper_createdat: "2026-02-08T15:57:23-03:00",
-          sper_updatedat: "2026-02-08T15:57:23-03:00"
-        },
-        {
-          sper_uuid: "4",
-          sper_name: "Vencido",
-          sper_description: null,
-          sper_createdat: "2026-02-08T15:57:23-03:00",
-          sper_updatedat: "2026-02-08T15:57:23-03:00"
+    this._statusPeriodsService.getStatusPeriods().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.periodStatuses = response.data;
+          this.total = this.periodStatuses.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.periodStatuses.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Obtener color del tag según el estado
