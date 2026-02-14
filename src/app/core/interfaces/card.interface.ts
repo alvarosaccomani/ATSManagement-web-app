@@ -1,5 +1,5 @@
 import { TypeCardInterface } from "./type-card";
-import { BrandCardInterface } from "./brand-card.interface";
+import { BrandCardInterface } from "./brand-card";
 import { BankInterface } from "./bank";
 
 export interface CardInterface {
