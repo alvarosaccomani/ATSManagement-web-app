@@ -1,4 +1,4 @@
-import { TypeOperationInterface } from "./type-operation.interface";
+import { TypeOperationInterface } from "./type-operation";
 import { VoucherStateInterface } from "./voucher-state";
 
 export interface VoucherInterface {
