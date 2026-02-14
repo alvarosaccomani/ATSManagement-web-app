@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { PaymentPeriodStatusInterface } from '../../../core/interfaces/payment-period-status.interface';
+import { PaymentPeriodStatusInterface } from '../../../core/interfaces/payment-period-status';
+import { PaymentPeriodsStatusService } from '../../../core/services/payment-periods-status.service';
 
 @Component({
   selector: 'app-payment-periods-status',
@@ -40,7 +42,11 @@ export class PaymentPeriodsStatusComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _paymentPeriodsStatusService: PaymentPeriodsStatusService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadPaymentPeriodStatuses();
@@ -48,35 +54,26 @@ export class PaymentPeriodsStatusComponent implements OnInit {
 
   loadPaymentPeriodStatuses(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.paymentPeriodStatuses = [
-        {
-          payps_uuid: "2",
-          payps_name: "confirmado",
-          payps_description: null,
-          payps_createdat: "2026-02-10T20:40:03-03:00",
-          payps_updatedat: "2026-02-10T20:40:03-03:00"
-        },
-        {
-          payps_uuid: "1",
-          payps_name: "procesado",
-          payps_description: null,
-          payps_createdat: "2026-02-10T20:40:03-03:00",
-          payps_updatedat: "2026-02-10T20:40:03-03:00"
-        },
-        {
-          payps_uuid: "3",
-          payps_name: "rechazado",
-          payps_description: null,
-          payps_createdat: "2026-02-10T20:40:03-03:00",
-          payps_updatedat: "2026-02-10T20:40:03-03:00"
+    this._paymentPeriodsStatusService.getPaymentPeriodsStatus().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.paymentPeriodStatuses = response.data;
+          this.total = this.paymentPeriodStatuses.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.paymentPeriodStatuses.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Obtener color del tag según el estado del período de pago
