@@ -56,4 +56,10 @@ export class BanksService {
 
     return this._http.put(`${environment.apiUrl}bank/${bank.ban_uuid}`, params, {headers:headers});
   }
+
+  public deleteBank(ban_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.delete(`${environment.apiUrl}bank/${ban_uuid}`, {headers:headers});
+  }
 }
