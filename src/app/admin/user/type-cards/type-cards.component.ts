@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -6,7 +7,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { TypeCardInterface } from '../../../core/interfaces/type-card.interface';
+import { TypeCardInterface } from '../../../core/interfaces/type-card';
+import { TypeCardsService } from '../../../core/services/type-cards.service';
 
 @Component({
   selector: 'app-type-cards',
@@ -38,7 +40,11 @@ export class TypeCardsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _typeCardsService: TypeCardsService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadTypeCards();
@@ -46,42 +52,26 @@ export class TypeCardsComponent implements OnInit {
 
   loadTypeCards(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.typeCards = [
-        {
-          tycrd_uuid: "1",
-          tycrd_name: "Débito",
-          tycrd_description: "Tarjeta de Débito",
-          tycrd_createdat: "2026-02-07T17:17:58-03:00",
-          tycrd_updatedat: "2026-02-07T17:17:58-03:00"
-        },
-        {
-          tycrd_uuid: "2",
-          tycrd_name: "Crédito",
-          tycrd_description: "Tarjeta de Crédito",
-          tycrd_createdat: "2026-02-07T17:18:30-03:00",
-          tycrd_updatedat: "2026-02-07T17:18:30-03:00"
-        },
-        {
-          tycrd_uuid: "3",
-          tycrd_name: "Prepaga",
-          tycrd_description: "Tarjeta Prepaga",
-          tycrd_createdat: "2026-02-07T17:19:15-03:00",
-          tycrd_updatedat: "2026-02-07T17:19:15-03:00"
-        },
-        {
-          tycrd_uuid: "4",
-          tycrd_name: "Vale",
-          tycrd_description: "Tarjeta Vale",
-          tycrd_createdat: "2026-02-07T17:20:00-03:00",
-          tycrd_updatedat: "2026-02-07T17:20:00-03:00"
+    this._typeCardsService.getTypeCards().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.typeCards = response.data;
+          this.total = this.typeCards.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.typeCards.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   createTypeCard(): void {
