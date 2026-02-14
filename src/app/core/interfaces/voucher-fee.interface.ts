@@ -1,4 +1,4 @@
-import { VoucherFeeStatusInterface } from "./voucher-fee-status.interface";
+import { VoucherFeeStatusInterface } from "./voucher-fee-status";
 
 export interface VoucherFeeInterface {
   usr_uuid: string;
