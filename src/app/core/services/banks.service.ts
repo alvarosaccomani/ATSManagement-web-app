@@ -36,4 +36,24 @@ export class BanksService {
 
     return this._http.get<BankResults>(`${environment.apiUrl}banks`, { headers, params });
   }
+
+  public getBankById(ban_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.get(`${environment.apiUrl}bank/${ban_uuid}`, {headers:headers});
+  }
+
+  public saveBank(ank: any): Observable<any> {
+    let params = JSON.stringify(ank);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.post(`${environment.apiUrl}bank`, params, {headers:headers});
+  }
+
+  public updateBank(bank: any): Observable<any> {
+    let params = JSON.stringify(bank);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.put(`${environment.apiUrl}bank/${bank.ban_uuid}`, params, {headers:headers});
+  }
 }
