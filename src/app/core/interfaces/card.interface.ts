@@ -1,4 +1,4 @@
-import { TypeCardInterface } from "./type-card.interface";
+import { TypeCardInterface } from "./type-card";
 import { BrandCardInterface } from "./brand-card.interface";
 import { BankInterface } from "./bank";
 
