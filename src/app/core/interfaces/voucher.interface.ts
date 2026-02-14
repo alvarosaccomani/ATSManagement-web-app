@@ -1,5 +1,5 @@
 import { TypeOperationInterface } from "./type-operation.interface";
-import { VoucherStateInterface } from "./voucher-state.interface";
+import { VoucherStateInterface } from "./voucher-state";
 
 export interface VoucherInterface {
   usr_uuid: string;
