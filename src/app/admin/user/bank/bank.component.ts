@@ -9,6 +9,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { BanksService } from '../../../core/services/banks.service';
 
 @Component({
   selector: 'app-bank',
@@ -37,6 +38,7 @@ export class BankComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private _banksService: BanksService,
     private message: NzMessageService
   ) {
     this.form = this.fb.group({
@@ -60,22 +62,31 @@ export class BankComponent implements OnInit {
 
   loadBank(): void {
     this.isLoading = true;
-    
-    // Simular carga desde API
-    setTimeout(() => {
-      const mockBank = {
-        ban_uuid: this.bankId,
-        ban_name: 'Banco de Prueba',
-        ban_description: 'Descripción del banco de prueba'
-      };
-      
-      // Habilitar temporalmente para patchear el valor
-      this.form.get('ban_uuid')?.enable();
-      this.form.patchValue(mockBank);
-      this.form.get('ban_uuid')?.disable();
-      
-      this.isLoading = false;
-    }, 500);
+
+    this._banksService.getBankById(this.bankId!).subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          const bank = response.data;
+
+          this.form.get('ban_uuid')?.enable();
+          this.form.patchValue(bank);
+          this.form.get('ban_uuid')?.disable();
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   onSubmit(): void {
@@ -91,18 +102,76 @@ export class BankComponent implements OnInit {
     }
 
     this.isLoading = true;
-    
-    // Simular guardado
-    setTimeout(() => {
-      this.isLoading = false;
-      const action = this.isEditing ? 'actualizado' : 'creado';
-      this.message.success(`Banco ${action} exitosamente`);
-      this.router.navigate(['/admin/user/bancos']);
-    }, 800);
+
+    if(!this.isEditing) {
+      this._banksService.saveBank(this.form.value).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Rubro fue agregado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/banks']);
+            //   }
+            // );
+            this.router.navigate(['/admin/user/banks']);
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error =>{
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            // if(errorMessage != null) {
+            //   this._messageService.error(
+            //     "Error", 
+            //     errorMessage.error.error
+            //   );
+            // }
+            this.message.success(errorMessage.error.error);
+        }
+      )
+    } else {
+      this._banksService.updateBank(this.form.value).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            this.router.navigate(['/admin/user/banks']);
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Banco fue actualizado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/banks']);
+            //   }
+            // );
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error => {
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            if(errorMessage != null) {
+              // this._messageService.error(
+              //   "Error", 
+              //   errorMessage.error.error
+              // );
+              this.message.success(errorMessage.error.error);
+            }
+        }
+      )
+    }
   }
 
   onCancel(): void {
-    this.router.navigate(['/admin/user/bancos']);
+    this.router.navigate(['/admin/user/banks']);
   }
 
   getErrorMessage(controlName: string): string | null {
