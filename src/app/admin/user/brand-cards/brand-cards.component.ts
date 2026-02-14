@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -6,7 +7,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { BrandCardInterface } from '../../../core/interfaces/brand-card.interface';
+import { BrandCardInterface } from '../../../core/interfaces/brand-card';
+import { BrandCardsService } from '../../../core/services/brand-cards.service';
 
 @Component({
   selector: 'app-brand-cards',
@@ -38,7 +40,11 @@ export class BrandCardsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _brandCardsService: BrandCardsService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadBrandCards();
@@ -46,49 +52,26 @@ export class BrandCardsComponent implements OnInit {
 
   loadBrandCards(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.brandCards = [
-        {
-          brcrd_uuid: "1",
-          brcrd_name: "Visa",
-          brcrd_description: "Tarjeta Visa",
-          brcrd_createdat: "2026-02-07T20:40:29-03:00",
-          brcrd_updatedat: "2026-02-07T20:40:29-03:00"
-        },
-        {
-          brcrd_uuid: "2",
-          brcrd_name: "Mastercard",
-          brcrd_description: "Tarjeta Mastercard",
-          brcrd_createdat: "2026-02-07T20:41:15-03:00",
-          brcrd_updatedat: "2026-02-07T20:41:15-03:00"
-        },
-        {
-          brcrd_uuid: "3",
-          brcrd_name: "American Express",
-          brcrd_description: "Tarjeta American Express",
-          brcrd_createdat: "2026-02-07T20:42:00-03:00",
-          brcrd_updatedat: "2026-02-07T20:42:00-03:00"
-        },
-        {
-          brcrd_uuid: "4",
-          brcrd_name: "Cabal",
-          brcrd_description: "Tarjeta Cabal",
-          brcrd_createdat: "2026-02-07T20:42:45-03:00",
-          brcrd_updatedat: "2026-02-07T20:42:45-03:00"
-        },
-        {
-          brcrd_uuid: "5",
-          brcrd_name: "Nativa",
-          brcrd_description: "Tarjeta Nativa",
-          brcrd_createdat: "2026-02-07T20:43:30-03:00",
-          brcrd_updatedat: "2026-02-07T20:43:30-03:00"
+    this._brandCardsService.getBrandCards().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.brandCards = response.data;
+          this.total = this.brandCards.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.brandCards.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   createBrandCard(): void {
