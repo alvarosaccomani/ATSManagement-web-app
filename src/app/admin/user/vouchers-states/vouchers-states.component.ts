@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { VoucherStateInterface } from '../../../core/interfaces/voucher-state.interface';
+import { VoucherStateInterface } from '../../../core/interfaces/voucher-state';
+import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
 
 @Component({
   selector: 'app-vouchers-states',
@@ -40,7 +42,11 @@ export class VouchersStatesComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _vouchersStatesService: VouchersStatesService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadVoucherStatuses();
@@ -48,42 +54,26 @@ export class VouchersStatesComponent implements OnInit {
 
   loadVoucherStatuses(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.voucherStatuses = [
-        {
-          vous_uuid: "2",
-          vous_name: "anulado",
-          vous_description: null,
-          vous_createdat: "2026-02-08T17:56:04-03:00",
-          vous_updatedat: "2026-02-08T17:56:04-03:00"
-        },
-        {
-          vous_uuid: "1",
-          vous_name: "confirmado",
-          vous_description: null,
-          vous_createdat: "2026-02-08T17:56:04-03:00",
-          vous_updatedat: "2026-02-08T17:56:04-03:00"
-        },
-        {
-          vous_uuid: "3",
-          vous_name: "disputado",
-          vous_description: null,
-          vous_createdat: "2026-02-08T17:56:04-03:00",
-          vous_updatedat: "2026-02-08T17:56:04-03:00"
-        },
-        {
-          vous_uuid: "4",
-          vous_name: "pendiente",
-          vous_description: null,
-          vous_createdat: "2026-02-08T17:56:04-03:00",
-          vous_updatedat: "2026-02-08T17:56:04-03:00"
+    this._vouchersStatesService.getVoucherStates().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.voucherStatuses = response.data;
+          this.total = this.voucherStatuses.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.voucherStatuses.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Obtener color del tag según el estado del comprobante
