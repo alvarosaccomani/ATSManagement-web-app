@@ -7,7 +7,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { BankInterface } from '../../../core/interfaces/bank.interface';
+import { BankInterface } from '../../../core/interfaces/bank';
+import { BanksService } from '../../../core/services/banks.service';
 
 @Component({
   selector: 'app-banks',
@@ -41,6 +42,7 @@ export class BanksComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _banksService: BanksService,
     private message: NzMessageService
   ) {}
 
@@ -50,35 +52,26 @@ export class BanksComponent implements OnInit {
 
   loadBanks(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.banks = [
-        {
-          ban_uuid: "1",
-          ban_name: "Provincia",
-          ban_description: "Banco Provincia",
-          ban_createdat: "2026-02-07T16:51:54-03:00",
-          ban_updatedat: "2026-02-07T16:51:54-03:00"
-        },
-        {
-          ban_uuid: "2",
-          ban_name: "Nación",
-          ban_description: "Banco Nación",
-          ban_createdat: "2026-02-06T10:30:00-03:00",
-          ban_updatedat: "2026-02-07T14:20:00-03:00"
-        },
-        {
-          ban_uuid: "3",
-          ban_name: "Galicia",
-          ban_description: "Banco Galicia",
-          ban_createdat: "2026-02-05T09:15:00-03:00",
-          ban_updatedat: "2026-02-07T11:45:00-03:00"
+    this._banksService.getBanks().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.banks = response.data;
+          this.total = this.banks.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.banks.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   createBank(): void {
