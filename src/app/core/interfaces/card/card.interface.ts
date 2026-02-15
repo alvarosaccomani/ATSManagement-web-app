@@ -1,6 +1,6 @@
-import { TypeCardInterface } from "./type-card";
-import { BrandCardInterface } from "./brand-card";
-import { BankInterface } from "./bank";
+import { TypeCardInterface } from "../type-card";
+import { BrandCardInterface } from "../brand-card";
+import { BankInterface } from "../bank";
 
 export interface CardInterface {
   usr_uuid: string;
