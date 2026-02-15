@@ -16,13 +16,37 @@
   } @else {
     <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
       <nz-row [nzGutter]="24">
-        <nz-col [nzSpan]="24" [nzMd]="12">
+        <nz-col [nzSpan]="24" [nzMd]="24">
           <nz-form-item>
             <nz-form-label nzFor="crd_uuid" [nzSpan]="24">
               ID
             </nz-form-label>
             <nz-form-control [nzSpan]="24">
               <input nz-input formControlName="crd_uuid" placeholder="ID autogenerado" readonly />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="crd_maskedcardnumber" [nzSpan]="24" nzRequired>
+              Numero de Tarjeta
+            </nz-form-label>
+            <nz-form-control 
+              [nzSpan]="24"
+              [nzValidateStatus]="form.get('crd_maskedcardnumber')?.dirty && form.get('crd_maskedcardnumber')?.invalid ? 'error' : ''"
+              nzErrorTip="{{ getErrorMessage('crd_maskedcardnumber') }}"
+            >
+              <input 
+                nz-input 
+                formControlName="crd_maskedcardnumber" 
+                placeholder="xxxx xxxx xxxx 1234"
+                maxlength="4"
+                nzSize="large"
+              />
+              <small class="form-text">Ingrese solo los últimos 4 dígitos de la tarjeta</small>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -66,8 +90,8 @@
                 placeholder="Seleccione tipo"
                 nzSize="large"
               >
-                @for (type of cardTypes; track type.value) {
-                  <nz-option [nzValue]="type.value" [nzLabel]="type.label"></nz-option>
+                @for (type of cardTypes; track type.tycrd_uuid) {
+                  <nz-option [nzValue]="type.tycrd_uuid" [nzLabel]="type.tycrd_name"></nz-option>
                 }
               </nz-select>
             </nz-form-control>
@@ -89,8 +113,8 @@
                 placeholder="Seleccione marca"
                 nzSize="large"
               >
-                @for (brand of cardBrands; track brand.value) {
-                  <nz-option [nzValue]="brand.value" [nzLabel]="brand.label"></nz-option>
+                @for (brand of cardBrands; track brand.brcrd_uuid) {
+                  <nz-option [nzValue]="brand.brcrd_uuid" [nzLabel]="brand.brcrd_name"></nz-option>
                 }
               </nz-select>
             </nz-form-control>
@@ -112,8 +136,8 @@
                 placeholder="Seleccione banco"
                 nzSize="large"
               >
-                @for (bank of banks; track bank.value) {
-                  <nz-option [nzValue]="bank.value" [nzLabel]="bank.label"></nz-option>
+                @for (bank of banks; track bank.ban_uuid) {
+                  <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>
                 }
               </nz-select>
             </nz-form-control>

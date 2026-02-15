@@ -13,6 +13,13 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TypeCardInterface } from '../../../core/interfaces/type-card';
+import { BrandCardInterface } from '../../../core/interfaces/brand-card';
+import { BankInterface } from '../../../core/interfaces/bank';
+import { TypeCardsService } from '../../../core/services/type-cards.service';
+import { BrandCardsService } from '../../../core/services/brand-cards.service';
+import { BanksService } from '../../../core/services/banks.service';
+import { CardsService } from '../../../core/services/cards.service';
 
 @Component({
   selector: 'app-card',
@@ -42,32 +49,24 @@ export class CardComponent implements OnInit {
   cardId: string | null = null;
 
   // Opciones para selects
-  cardTypes = [
-    { value: '1', label: 'Débito' },
-    { value: '2', label: 'Crédito' },
-    { value: '3', label: 'Prepaga' }
-  ];
-
-  cardBrands = [
-    { value: '1', label: 'Visa' },
-    { value: '2', label: 'Mastercard' },
-    { value: '3', label: 'American Express' }
-  ];
-
-  banks = [
-    { value: '1', label: 'Banco Provincia' },
-    { value: '2', label: 'Banco Nación' },
-    { value: '3', label: 'Banco Galicia' }
-  ];
+  cardTypes: TypeCardInterface[] = [];
+  cardBrands: BrandCardInterface[] = [];
+  banks: BankInterface[] = [];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private _typeCardsService: TypeCardsService,
+    private _brandCardsService: BrandCardsService,
+    private _banksService: BanksService,
+    private _cardsService: CardsService,
     private message: NzMessageService
   ) {
     this.form = this.fb.group({
+      usr_uuid: [{ value: '', disabled: true }],
       crd_uuid: [{ value: '', disabled: true }],
+      crd_maskedcardnumber: ['', [Validators.required]],
       crd_last4digits: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       tycrd_uuid: ['', Validators.required],
       brcrd_uuid: ['', Validators.required],
@@ -79,12 +78,18 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cardId = this.route.snapshot.paramMap.get('id');
+    this.cardId = this.route.snapshot.paramMap.get('crd_uuid');
     this.isEditing = !!this.cardId;
+    this.loadTypeCards();
+    this.loadBrandCards();
+    this.loadBanks();
     
     if (this.isEditing) {
       this.loadCard();
     } else {
+      this.form.patchValue({
+        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+      })
       this.form.get('crd_uuid')?.disable();
     }
 
@@ -98,26 +103,106 @@ export class CardComponent implements OnInit {
 
   loadCard(): void {
     this.isLoading = true;
-    
-    // Simular carga desde API
-    setTimeout(() => {
-      const mockCard = {
-        crd_uuid: this.cardId,
-        crd_last4digits: '8936',
-        tycrd_uuid: '1',
-        brcrd_uuid: '1',
-        ban_uuid: '1',
-        crd_expirationdate: new Date('2026-01-01'),
-        crd_creditlimit: null,
-        crd_active: true
-      };
-      
-      this.form.get('crd_uuid')?.enable();
-      this.form.patchValue(mockCard);
-      this.form.get('crd_uuid')?.disable();
-      
-      this.isLoading = false;
-    }, 500);
+
+    this._cardsService.getCardById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.cardId!).subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          const card = response.data;
+
+          this.form.get('crd_uuid')?.enable();
+          this.form.patchValue(card);
+          this.form.get('crd_uuid')?.disable();
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadTypeCards(): void {
+    this.isLoading = true;
+
+    this._typeCardsService.getTypeCards().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.cardTypes = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadBrandCards(): void {
+    this.isLoading = true;
+
+    this._brandCardsService.getBrandCards().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.cardBrands = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadBanks(): void {
+    this.isLoading = true;
+
+    this._banksService.getBanks().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.banks = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   onSubmit(): void {
@@ -133,18 +218,76 @@ export class CardComponent implements OnInit {
     }
 
     this.isLoading = true;
-    
-    // Simular guardado
-    setTimeout(() => {
-      this.isLoading = false;
-      const action = this.isEditing ? 'actualizada' : 'creada';
-      this.message.success(`Tarjeta ${action} exitosamente`);
-      this.router.navigate(['/admin/user/tarjetas']);
-    }, 800);
+
+    if(!this.isEditing) {
+      this._cardsService.saveCard(this.form.getRawValue()).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Rubro fue agregado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/cards']);
+            //   }
+            // );
+            this.router.navigate(['/admin/user/cards']);
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error =>{
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            // if(errorMessage != null) {
+            //   this._messageService.error(
+            //     "Error", 
+            //     errorMessage.error.error
+            //   );
+            // }
+            this.message.success(errorMessage.error.error);
+        }
+      )
+    } else {
+      this._cardsService.updateCard(this.form.getRawValue()).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            this.router.navigate(['/admin/user/cards']);
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Banco fue actualizado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/cards']);
+            //   }
+            // );
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error => {
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            if(errorMessage != null) {
+              // this._messageService.error(
+              //   "Error", 
+              //   errorMessage.error.error
+              // );
+              this.message.success(errorMessage.error.error);
+            }
+        }
+      )
+    }
   }
 
   onCancel(): void {
-    this.router.navigate(['/admin/user/tarjetas']);
+    this.router.navigate(['/admin/user/cards']);
   }
 
   getErrorMessage(controlName: string): string | null {
