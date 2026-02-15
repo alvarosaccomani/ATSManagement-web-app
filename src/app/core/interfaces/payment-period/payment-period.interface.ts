@@ -1,5 +1,5 @@
-import { PaymentMethodInterface } from "./payment-method";
-import { PaymentPeriodStatusInterface } from "./payment-period-status";
+import { PaymentMethodInterface } from "../payment-method";
+import { PaymentPeriodStatusInterface } from "../payment-period-status";
 
 export interface PaymentPeriodInterface {
   usr_uuid: string;
