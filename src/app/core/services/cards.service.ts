@@ -36,4 +36,30 @@ export class CardsService {
 
     return this._http.get<CardResults>(`${environment.apiUrl}cards/${usr_uuid}`, { headers, params });
   }
+
+  public getCardById(usr_uuid: string, crd_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.get(`${environment.apiUrl}card/${usr_uuid}/${crd_uuid}`, {headers:headers});
+  }
+
+  public saveCard(ank: any): Observable<any> {
+    let params = JSON.stringify(ank);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.post(`${environment.apiUrl}card`, params, {headers:headers});
+  }
+
+  public updateCard(card: any): Observable<any> {
+    let params = JSON.stringify(card);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.put(`${environment.apiUrl}card/${card.usr_uuid}/${card.crd_uuid}`, params, {headers:headers});
+  }
+
+  public deleteCard(usr_uuid: string, crd_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.delete(`${environment.apiUrl}card/${usr_uuid}/${crd_uuid}`, {headers:headers});
+  }
 }
