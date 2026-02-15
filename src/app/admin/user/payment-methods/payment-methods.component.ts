@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { PaymentMethodInterface } from '../../../core/interfaces/payment-method.interface';
+import { PaymentMethodInterface } from '../../../core/interfaces/payment-method';
+import { PaymentMethodsService } from '../../../core/services/payment-methods.service';
 
 @Component({
   selector: 'app-payment-methods',
@@ -40,7 +42,11 @@ export class PaymentMethodsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
-  constructor(private message: NzMessageService) {}
+  constructor(
+    private _router: Router,
+    private _paymentMethodsService: PaymentMethodsService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadPaymentMethods();
@@ -48,49 +54,26 @@ export class PaymentMethodsComponent implements OnInit {
 
   loadPaymentMethods(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.paymentMethods = [
-        {
-          paym_uuid: "1",
-          paym_name: "Banco",
-          paym_description: null,
-          paym_createdat: "2026-02-10T21:36:37-03:00",
-          paym_updatedat: "2026-02-10T21:36:37-03:00"
-        },
-        {
-          paym_uuid: "3",
-          paym_name: "Rapipago",
-          paym_description: null,
-          paym_createdat: "2026-02-10T21:36:37-03:00",
-          paym_updatedat: "2026-02-10T21:36:37-03:00"
-        },
-        {
-          paym_uuid: "2",
-          paym_name: "Transferencia",
-          paym_description: null,
-          paym_createdat: "2026-02-10T21:36:37-03:00",
-          paym_updatedat: "2026-02-10T21:36:37-03:00"
-        },
-        {
-          paym_uuid: "4",
-          paym_name: "Mercado Pago",
-          paym_description: "Pago a través de Mercado Pago",
-          paym_createdat: "2026-02-10T22:15:00-03:00",
-          paym_updatedat: "2026-02-10T22:15:00-03:00"
-        },
-        {
-          paym_uuid: "5",
-          paym_name: "Pago Fácil",
-          paym_description: null,
-          paym_createdat: "2026-02-10T22:20:00-03:00",
-          paym_updatedat: "2026-02-10T22:20:00-03:00"
+    this._paymentMethodsService.getPaymentMethods().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.paymentMethods = response.data;
+          this.total = this.paymentMethods.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.paymentMethods.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Obtener color del tag según el método de pago
