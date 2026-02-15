@@ -8,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { PaymentPeriodInterface } from '../../../core/interfaces/payment-period.interface';
+import { PaymentPeriodInterface } from '../../../core/interfaces/payment-period';
+import { PaymentPeriodsService } from '../../../core/services/payment-periods.service';
 
 @Component({
   selector: 'app-payment-periods',
@@ -45,6 +46,7 @@ export class PaymentPeriodsComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _paymentPeriodsService: PaymentPeriodsService,
     private message: NzMessageService
   ) {}
 
@@ -54,149 +56,26 @@ export class PaymentPeriodsComponent implements OnInit {
 
   loadPayments(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.payments = [
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          payp_uuid: "1",
-          payp_paymentdate: "2026-02-10T21:59:22-03:00",
-          payp_amountpaid: "100.00",
-          paym_uuid: "1",
-          paym: {
-            paym_uuid: "1",
-            paym_name: "Banco",
-            paym_description: null,
-            paym_createdat: "2026-02-11T00:36:37.979Z",
-            paym_updatedat: "2026-02-11T00:36:37.979Z"
-          },
-          payp_paymentreference: "REF-BANCO-001",
-          payps_uuid: "1",
-          payps: {
-            payps_uuid: "1",
-            payps_name: "procesado",
-            payps_description: null,
-            payps_createdat: "2026-02-10T23:40:03.401Z",
-            payps_updatedat: "2026-02-10T23:40:03.401Z"
-          },
-          payp_createdat: "2026-02-10T21:59:22-03:00",
-          payp_updatedat: "2026-02-10T21:59:22-03:00"
-        },
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "2",
-          payp_uuid: "2",
-          payp_paymentdate: "2026-02-09T15:30:00-03:00",
-          payp_amountpaid: "45000.00",
-          paym_uuid: "2",
-          paym: {
-            paym_uuid: "2",
-            paym_name: "Transferencia",
-            paym_description: null,
-            paym_createdat: "2026-02-11T00:36:37.979Z",
-            paym_updatedat: "2026-02-11T00:36:37.979Z"
-          },
-          payp_paymentreference: "TRF-20260209-001",
-          payps_uuid: "2",
-          payps: {
-            payps_uuid: "2",
-            payps_name: "confirmado",
-            payps_description: null,
-            payps_createdat: "2026-02-10T23:40:03.401Z",
-            payps_updatedat: "2026-02-10T23:40:03.401Z"
-          },
-          payp_createdat: "2026-02-09T15:30:00-03:00",
-          payp_updatedat: "2026-02-09T16:00:00-03:00"
-        },
-        {
-          usr_uuid: "8b178d01-c06c-56e2-9f18-02c689f3e65e",
-          crd_uuid: "2",
-          per_uuid: "1",
-          payp_uuid: "3",
-          payp_paymentdate: "2026-02-08T18:45:30-03:00",
-          payp_amountpaid: "25000.00",
-          paym_uuid: "3",
-          paym: {
-            paym_uuid: "3",
-            paym_name: "Rapipago",
-            paym_description: null,
-            paym_createdat: "2026-02-11T00:36:37.979Z",
-            paym_updatedat: "2026-02-11T00:36:37.979Z"
-          },
-          payp_paymentreference: "RPI-78901234",
-          payps_uuid: "2",
-          payps: {
-            payps_uuid: "2",
-            payps_name: "confirmado",
-            payps_description: null,
-            payps_createdat: "2026-02-10T23:40:03.401Z",
-            payps_updatedat: "2026-02-10T23:40:03.401Z"
-          },
-          payp_createdat: "2026-02-08T18:45:30-03:00",
-          payp_updatedat: "2026-02-08T18:45:30-03:00"
-        },
-        {
-          usr_uuid: "9c289e12-d17d-67f3-0g29-13d790g4f76f",
-          crd_uuid: "3",
-          per_uuid: "2",
-          payp_uuid: "4",
-          payp_paymentdate: "2026-02-07T10:15:00-03:00",
-          payp_amountpaid: "78500.00",
-          paym_uuid: "4",
-          paym: {
-            paym_uuid: "4",
-            paym_name: "Mercado Pago",
-            paym_description: "Pago a través de Mercado Pago",
-            paym_createdat: "2026-02-11T00:36:37.979Z",
-            paym_updatedat: "2026-02-11T00:36:37.979Z"
-          },
-          payp_paymentreference: "MP-AR-123456789",
-          payps_uuid: "3",
-          payps: {
-            payps_uuid: "3",
-            payps_name: "rechazado",
-            payps_description: null,
-            payps_createdat: "2026-02-10T23:40:03.401Z",
-            payps_updatedat: "2026-02-10T23:40:03.401Z"
-          },
-          payp_createdat: "2026-02-07T10:15:00-03:00",
-          payp_updatedat: "2026-02-07T10:20:00-03:00"
-        },
-        {
-          usr_uuid: "0d390f23-e28e-78g4-1h30-24e801h5g87g",
-          crd_uuid: "4",
-          per_uuid: "3",
-          payp_uuid: "5",
-          payp_paymentdate: "2026-02-11T09:30:00-03:00",
-          payp_amountpaid: "15000.00",
-          paym_uuid: "5",
-          paym: {
-            paym_uuid: "5",
-            paym_name: "Pago Fácil",
-            paym_description: null,
-            paym_createdat: "2026-02-11T00:36:37.979Z",
-            paym_updatedat: "2026-02-11T00:36:37.979Z"
-          },
-          payp_paymentreference: "PF-987654321",
-          payps_uuid: "1",
-          payps: {
-            payps_uuid: "1",
-            payps_name: "procesado",
-            payps_description: null,
-            payps_createdat: "2026-02-10T23:40:03.401Z",
-            payps_updatedat: "2026-02-10T23:40:03.401Z"
-          },
-          payp_createdat: "2026-02-11T09:30:00-03:00",
-          payp_updatedat: "2026-02-11T09:30:00-03:00"
+    this._paymentPeriodsService.getPaymentPeriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1', '1').subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.payments = response.data;
+          this.total = this.payments.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.payments.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Formatear fecha y hora
