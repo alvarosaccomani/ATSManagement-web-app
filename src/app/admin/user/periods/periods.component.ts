@@ -8,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { PeriodInterface } from '../../../core/interfaces/period.interface';
+import { PeriodInterface } from '../../../core/interfaces/period';
+import { PeriodsService } from '../../../core/services/periods.service';
 
 @Component({
   selector: 'app-periods',
@@ -46,6 +47,7 @@ export class PeriodsComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _periodsService: PeriodsService,
     private message: NzMessageService
   ) {}
 
@@ -55,119 +57,26 @@ export class PeriodsComponent implements OnInit {
 
   loadPeriods(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.periods = [
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          per_periodnumber: 202601,
-          per_startdate: "2026-01-01",
-          per_enddate: "2026-01-31",
-          per_duedate: "2026-02-10",
-          sper_uuid: "1",
-          sper: {
-            sper_uuid: "1",
-            sper_name: "Abierto",
-            sper_description: null,
-            sper_createdat: "2026-02-08T18:57:23.402Z",
-            sper_updatedat: "2026-02-08T18:57:23.402Z"
-          },
-          per_previousbalance: 0,
-          per_interest: 0,
-          per_createdat: "2026-02-08T15:58:04-03:00",
-          per_updatedat: "2026-02-08T15:58:04-03:00"
-        },
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "2",
-          per_periodnumber: 202602,
-          per_startdate: "2026-02-01",
-          per_enddate: "2026-02-28",
-          per_duedate: "2026-03-10",
-          sper_uuid: "2",
-          sper: {
-            sper_uuid: "2",
-            sper_name: "Cerrado",
-            sper_description: null,
-            sper_createdat: "2026-02-08T18:57:23.402Z",
-            sper_updatedat: "2026-02-08T18:57:23.402Z"
-          },
-          per_previousbalance: 15000,
-          per_interest: 150,
-          per_createdat: "2026-02-08T16:30:00-03:00",
-          per_updatedat: "2026-02-08T16:30:00-03:00"
-        },
-        {
-          usr_uuid: "8b178d01-c06c-56e2-9f18-02c689f3e65e",
-          crd_uuid: "2",
-          per_uuid: "3",
-          per_periodnumber: 202601,
-          per_startdate: "2026-01-01",
-          per_enddate: "2026-01-31",
-          per_duedate: "2026-02-10",
-          sper_uuid: "3",
-          sper: {
-            sper_uuid: "3",
-            sper_name: "Pagado",
-            sper_description: null,
-            sper_createdat: "2026-02-08T18:57:23.402Z",
-            sper_updatedat: "2026-02-08T18:57:23.402Z"
-          },
-          per_previousbalance: 45000,
-          per_interest: 450,
-          per_createdat: "2026-02-08T17:15:22-03:00",
-          per_updatedat: "2026-02-08T17:15:22-03:00"
-        },
-        {
-          usr_uuid: "9c289e12-d17d-67f3-0g29-13d790g4f76f",
-          crd_uuid: "3",
-          per_uuid: "4",
-          per_periodnumber: 202512,
-          per_startdate: "2025-12-01",
-          per_enddate: "2025-12-31",
-          per_duedate: "2026-01-10",
-          sper_uuid: "4",
-          sper: {
-            sper_uuid: "4",
-            sper_name: "Vencido",
-            sper_description: null,
-            sper_createdat: "2026-02-08T18:57:23.402Z",
-            sper_updatedat: "2026-02-08T18:57:23.402Z"
-          },
-          per_previousbalance: 78500,
-          per_interest: 785,
-          per_createdat: "2026-02-08T14:20:45-03:00",
-          per_updatedat: "2026-02-08T14:20:45-03:00"
-        },
-        {
-          usr_uuid: "0d390f23-e28e-78g4-1h30-24e801h5g87g",
-          crd_uuid: "4",
-          per_uuid: "5",
-          per_periodnumber: 202603,
-          per_startdate: "2026-03-01",
-          per_enddate: "2026-03-31",
-          per_duedate: "2026-04-10",
-          sper_uuid: "1",
-          sper: {
-            sper_uuid: "1",
-            sper_name: "Abierto",
-            sper_description: null,
-            sper_createdat: "2026-02-08T18:57:23.402Z",
-            sper_updatedat: "2026-02-08T18:57:23.402Z"
-          },
-          per_previousbalance: 25000,
-          per_interest: 250,
-          per_createdat: "2026-02-08T18:00:00-03:00",
-          per_updatedat: "2026-02-08T18:00:00-03:00"
+    this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1').subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.periods = response.data;
+          this.total = this.periods.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.periods.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Formatear número de período (YYYYMM → MM/YYYY)
