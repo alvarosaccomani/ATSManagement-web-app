@@ -8,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { VoucherInterface } from '../../../core/interfaces/voucher.interface';
+import { VoucherInterface } from '../../../core/interfaces/voucher';
+import { VouchersService } from '../../../core/services/vouchers.service';
 
 @Component({
   selector: 'app-vouchers',
@@ -46,6 +47,7 @@ export class VouchersComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _vouchersService: VouchersService,
     private message: NzMessageService
   ) {}
 
@@ -55,209 +57,26 @@ export class VouchersComponent implements OnInit {
 
   loadVouchers(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.vouchers = [
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          vou_uuid: "1",
-          vou_authorizationnumber: "AUTH123456",
-          vou_transactionnumber: "TXN789012",
-          vou_datetime: "2026-02-08T17:56:35-03:00",
-          vou_amount: "20000.00",
-          vou_currency: "ARS",
-          vou_commercename: "Supermercado Prueba",
-          vou_commercecuit: "111111111",
-          vou_commercecategory: "Supermercados",
-          tyop_uuid: "1",
-          tyop: {
-            tyop_uuid: "1",
-            tyop_name: "compra",
-            tyop_description: null,
-            tyop_createdat: "2026-02-08T20:24:54.922Z",
-            tyop_updatedat: "2026-02-08T20:24:54.922Z"
-          },
-          vou_installments: false,
-          vou_installmentcount: 1,
-          vou_installmentinterest: "0.00",
-          vou_poscode: "POS001",
-          vou_reference: "REF123",
-          vous_uuid: "1",
-          vous: {
-            vous_uuid: "1",
-            vous_name: "confirmado",
-            vous_description: null,
-            vous_createdat: "2026-02-08T20:56:04.839Z",
-            vous_updatedat: "2026-02-08T20:56:04.839Z"
-          },
-          vou_image: null,
-          vou_notes: null,
-          vou_createdat: "2026-02-08T17:56:35-03:00",
-          vou_updatedat: "2026-02-08T17:56:35-03:00"
-        },
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          vou_uuid: "2",
-          vou_authorizationnumber: "AUTH123457",
-          vou_transactionnumber: "TXN789013",
-          vou_datetime: "2026-02-08T18:30:22-03:00",
-          vou_amount: "45000.00",
-          vou_currency: "ARS",
-          vou_commercename: "Electrodomésticos XYZ",
-          vou_commercecuit: "222222222",
-          vou_commercecategory: "Electrónica",
-          tyop_uuid: "1",
-          tyop: {
-            tyop_uuid: "1",
-            tyop_name: "compra",
-            tyop_description: null,
-            tyop_createdat: "2026-02-08T20:24:54.922Z",
-            tyop_updatedat: "2026-02-08T20:24:54.922Z"
-          },
-          vou_installments: true,
-          vou_installmentcount: 6,
-          vou_installmentinterest: "1500.00",
-          vou_poscode: "POS002",
-          vou_reference: "REF124",
-          vous_uuid: "1",
-          vous: {
-            vous_uuid: "1",
-            vous_name: "confirmado",
-            vous_description: null,
-            vous_createdat: "2026-02-08T20:56:04.839Z",
-            vous_updatedat: "2026-02-08T20:56:04.839Z"
-          },
-          vou_image: null,
-          vou_notes: "Compra en 6 cuotas",
-          vou_createdat: "2026-02-08T18:30:22-03:00",
-          vou_updatedat: "2026-02-08T18:30:22-03:00"
-        },
-        {
-          usr_uuid: "8b178d01-c06c-56e2-9f18-02c689f3e65e",
-          crd_uuid: "2",
-          per_uuid: "2",
-          vou_uuid: "3",
-          vou_authorizationnumber: "AUTH123458",
-          vou_transactionnumber: "TXN789014",
-          vou_datetime: "2026-02-08T19:15:45-03:00",
-          vou_amount: "8500.00",
-          vou_currency: "ARS",
-          vou_commercename: "Farmacia Salud",
-          vou_commercecuit: "333333333",
-          vou_commercecategory: "Farmacia",
-          tyop_uuid: "1",
-          tyop: {
-            tyop_uuid: "1",
-            tyop_name: "compra",
-            tyop_description: null,
-            tyop_createdat: "2026-02-08T20:24:54.922Z",
-            tyop_updatedat: "2026-02-08T20:24:54.922Z"
-          },
-          vou_installments: false,
-          vou_installmentcount: 1,
-          vou_installmentinterest: "0.00",
-          vou_poscode: "POS003",
-          vou_reference: "REF125",
-          vous_uuid: "2",
-          vous: {
-            vous_uuid: "2",
-            vous_name: "pendiente",
-            vous_description: null,
-            vous_createdat: "2026-02-08T20:56:04.839Z",
-            vous_updatedat: "2026-02-08T20:56:04.839Z"
-          },
-          vou_image: null,
-          vou_notes: null,
-          vou_createdat: "2026-02-08T19:15:45-03:00",
-          vou_updatedat: "2026-02-08T19:15:45-03:00"
-        },
-        {
-          usr_uuid: "9c289e12-d17d-67f3-0g29-13d790g4f76f",
-          crd_uuid: "3",
-          per_uuid: "3",
-          vou_uuid: "4",
-          vou_authorizationnumber: "AUTH123459",
-          vou_transactionnumber: "TXN789015",
-          vou_datetime: "2026-02-08T20:05:10-03:00",
-          vou_amount: "150000.00",
-          vou_currency: "ARS",
-          vou_commercename: "Viajes Mundo",
-          vou_commercecuit: "444444444",
-          vou_commercecategory: "Turismo",
-          tyop_uuid: "1",
-          tyop: {
-            tyop_uuid: "1",
-            tyop_name: "compra",
-            tyop_description: null,
-            tyop_createdat: "2026-02-08T20:24:54.922Z",
-            tyop_updatedat: "2026-02-08T20:24:54.922Z"
-          },
-          vou_installments: true,
-          vou_installmentcount: 12,
-          vou_installmentinterest: "18000.00",
-          vou_poscode: "POS004",
-          vou_reference: "REF126",
-          vous_uuid: "3",
-          vous: {
-            vous_uuid: "3",
-            vous_name: "rechazado",
-            vous_description: null,
-            vous_createdat: "2026-02-08T20:56:04.839Z",
-            vous_updatedat: "2026-02-08T20:56:04.839Z"
-          },
-          vou_image: null,
-          vou_notes: "Compra en 12 cuotas con interés",
-          vou_createdat: "2026-02-08T20:05:10-03:00",
-          vou_updatedat: "2026-02-08T20:05:10-03:00"
-        },
-        {
-          usr_uuid: "0d390f23-e28e-78g4-1h30-24e801h5g87g",
-          crd_uuid: "4",
-          per_uuid: "4",
-          vou_uuid: "5",
-          vou_authorizationnumber: "AUTH123460",
-          vou_transactionnumber: "TXN789016",
-          vou_datetime: "2026-02-08T21:30:00-03:00",
-          vou_amount: "5000.00",
-          vou_currency: "ARS",
-          vou_commercename: "Restaurante Gourmet",
-          vou_commercecuit: "555555555",
-          vou_commercecategory: "Restaurantes",
-          tyop_uuid: "2",
-          tyop: {
-            tyop_uuid: "2",
-            tyop_name: "devolucion",
-            tyop_description: null,
-            tyop_createdat: "2026-02-08T20:24:54.922Z",
-            tyop_updatedat: "2026-02-08T20:24:54.922Z"
-          },
-          vou_installments: false,
-          vou_installmentcount: 1,
-          vou_installmentinterest: "0.00",
-          vou_poscode: "POS005",
-          vou_reference: "REF127",
-          vous_uuid: "1",
-          vous: {
-            vous_uuid: "1",
-            vous_name: "confirmado",
-            vous_description: null,
-            vous_createdat: "2026-02-08T20:56:04.839Z",
-            vous_updatedat: "2026-02-08T20:56:04.839Z"
-          },
-          vou_image: null,
-          vou_notes: "Devolución de compra",
-          vou_createdat: "2026-02-08T21:30:00-03:00",
-          vou_updatedat: "2026-02-08T21:30:00-03:00"
+    this._vouchersService.getVouchers('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1', '1').subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.vouchers = response.data;
+          this.total = this.vouchers.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.vouchers.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Formatear fecha y hora
