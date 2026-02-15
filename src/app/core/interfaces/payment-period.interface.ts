@@ -1,4 +1,4 @@
-import { PaymentMethodInterface } from "./payment-method.interface";
+import { PaymentMethodInterface } from "./payment-method";
 import { PaymentPeriodStatusInterface } from "./payment-period-status";
 
 export interface PaymentPeriodInterface {
