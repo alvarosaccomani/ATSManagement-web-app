@@ -1,4 +1,4 @@
-import { StatusPeriodInterface } from "./status-period";
+import { StatusPeriodInterface } from "../status-period";
 
 export interface PeriodInterface {
   usr_uuid: string;
