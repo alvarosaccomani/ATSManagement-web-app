@@ -8,7 +8,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { VoucherFeeInterface } from '../../../core/interfaces/voucher-fee.interface';
+import { VoucherFeeInterface } from '../../../core/interfaces/voucher-fee';
+import { VouchersFeesService } from '../../../core/services/vouchers-fees.service';
 
 @Component({
   selector: 'app-vouchers-fees',
@@ -44,6 +45,7 @@ export class VouchersFeesComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _vouchersFeesService: VouchersFeesService,
     private message: NzMessageService
   ) {}
 
@@ -53,174 +55,26 @@ export class VouchersFeesComponent implements OnInit {
 
   loadInstallments(): void {
     this.loading = true;
-    
-    setTimeout(() => {
-      this.installments = [
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          vou_uuid: "1",
-          vouf_uuid: "1",
-          vouf_quotanumber: 1,
-          vouf_quotaamount: 100,
-          vouf_quotaduedate: "2026-10-02",
-          voufs_uuid: "1",
-          voufs: {
-            voufs_uuid: "1",
-            voufs_name: "pendiente",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T19:32:02-03:00",
-          vouf_updatedat: "2026-02-10T19:32:02-03:00"
-        },
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          vou_uuid: "1",
-          vouf_uuid: "2",
-          vouf_quotanumber: 2,
-          vouf_quotaamount: 100,
-          vouf_quotaduedate: "2026-11-02",
-          voufs_uuid: "1",
-          voufs: {
-            voufs_uuid: "1",
-            voufs_name: "pendiente",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T19:32:02-03:00",
-          vouf_updatedat: "2026-02-10T19:32:02-03:00"
-        },
-        {
-          usr_uuid: "7a067c90-bf5b-45d1-8f07-91b578e2d54d",
-          crd_uuid: "1",
-          per_uuid: "1",
-          vou_uuid: "1",
-          vouf_uuid: "3",
-          vouf_quotanumber: 3,
-          vouf_quotaamount: 100,
-          vouf_quotaduedate: "2026-12-02",
-          voufs_uuid: "1",
-          voufs: {
-            voufs_uuid: "1",
-            voufs_name: "pendiente",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T19:32:02-03:00",
-          vouf_updatedat: "2026-02-10T19:32:02-03:00"
-        },
-        {
-          usr_uuid: "8b178d01-c06c-56e2-9f18-02c689f3e65e",
-          crd_uuid: "2",
-          per_uuid: "2",
-          vou_uuid: "2",
-          vouf_uuid: "4",
-          vouf_quotanumber: 1,
-          vouf_quotaamount: 500,
-          vouf_quotaduedate: "2026-09-15",
-          voufs_uuid: "2",
-          voufs: {
-            voufs_uuid: "2",
-            voufs_name: "pagado",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T20:15:30-03:00",
-          vouf_updatedat: "2026-02-10T20:15:30-03:00"
-        },
-        {
-          usr_uuid: "8b178d01-c06c-56e2-9f18-02c689f3e65e",
-          crd_uuid: "2",
-          per_uuid: "2",
-          vou_uuid: "2",
-          vouf_uuid: "5",
-          vouf_quotanumber: 2,
-          vouf_quotaamount: 500,
-          vouf_quotaduedate: "2026-10-15",
-          voufs_uuid: "1",
-          voufs: {
-            voufs_uuid: "1",
-            voufs_name: "pendiente",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T20:15:30-03:00",
-          vouf_updatedat: "2026-02-10T20:15:30-03:00"
-        },
-        {
-          usr_uuid: "9c289e12-d17d-67f3-0g29-13d790g4f76f",
-          crd_uuid: "3",
-          per_uuid: "3",
-          vou_uuid: "3",
-          vouf_uuid: "6",
-          vouf_quotanumber: 1,
-          vouf_quotaamount: 1250,
-          vouf_quotaduedate: "2025-12-01",
-          voufs_uuid: "3",
-          voufs: {
-            voufs_uuid: "3",
-            voufs_name: "vencido",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T21:05:45-03:00",
-          vouf_updatedat: "2026-02-10T21:05:45-03:00"
-        },
-        {
-          usr_uuid: "9c289e12-d17d-67f3-0g29-13d790g4f76f",
-          crd_uuid: "3",
-          per_uuid: "3",
-          vou_uuid: "3",
-          vouf_uuid: "7",
-          vouf_quotanumber: 2,
-          vouf_quotaamount: 1250,
-          vouf_quotaduedate: "2026-01-01",
-          voufs_uuid: "3",
-          voufs: {
-            voufs_uuid: "3",
-            voufs_name: "vencido",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T21:05:45-03:00",
-          vouf_updatedat: "2026-02-10T21:05:45-03:00"
-        },
-        {
-          usr_uuid: "9c289e12-d17d-67f3-0g29-13d790g4f76f",
-          crd_uuid: "3",
-          per_uuid: "3",
-          vou_uuid: "3",
-          vouf_uuid: "8",
-          vouf_quotanumber: 3,
-          vouf_quotaamount: 1250,
-          vouf_quotaduedate: "2026-02-01",
-          voufs_uuid: "1",
-          voufs: {
-            voufs_uuid: "1",
-            voufs_name: "pendiente",
-            voufs_description: null,
-            voufs_createdat: "2026-02-08T22:27:00.835Z",
-            voufs_updatedat: "2026-02-08T22:27:00.835Z"
-          },
-          vouf_createdat: "2026-02-10T21:05:45-03:00",
-          vouf_updatedat: "2026-02-10T21:05:45-03:00"
+    this._vouchersFeesService.getVoucherFees('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1', '1', '1').subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.installments = response.data;
+          this.total = this.installments.length;
+          this.loading = false;
+        } else {
+          //this.status = 'error'
         }
-      ];
-      
-      this.total = this.installments.length;
-      this.loading = false;
-    }, 800);
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   // Formatear fecha
