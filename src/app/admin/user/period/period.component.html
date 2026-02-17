@@ -71,8 +71,8 @@
                 nzSize="large"
                 nzShowSearch
               >
-                @for (card of cards; track card.value) {
-                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                @for (card of cards; track card.crd_uuid) {
+                  <nz-option [nzValue]="card.crd_uuid" [nzLabel]="card.crd_maskedcardnumber"></nz-option>
                 }
               </nz-select>
             </nz-form-control>
@@ -96,7 +96,7 @@
             >
               <nz-date-picker 
                 formControlName="per_startdate" 
-                nzFormat="DD/MM/YYYY"
+                nzFormat="dd/MM/yyyy"
                 nzPlaceHolder="Seleccione fecha"
                 nzSize="large"
                 style="width: 100%"
@@ -117,7 +117,7 @@
             >
               <nz-date-picker 
                 formControlName="per_enddate" 
-                nzFormat="DD/MM/YYYY"
+                nzFormat="dd/MM/yyyy"
                 nzPlaceHolder="Seleccione fecha"
                 nzSize="large"
                 style="width: 100%"
@@ -138,7 +138,7 @@
             >
               <nz-date-picker 
                 formControlName="per_duedate" 
-                nzFormat="DD/MM/YYYY"
+                nzFormat="dd/MM/yyyy"
                 nzPlaceHolder="Seleccione fecha"
                 nzSize="large"
                 style="width: 100%"
@@ -168,8 +168,8 @@
                 placeholder="Seleccione estado"
                 nzSize="large"
               >
-                @for (status of periodStatuses; track status.value) {
-                  <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+                @for (status of periodStatuses; track status.sper_uuid) {
+                  <nz-option [nzValue]="status.sper_uuid" [nzLabel]="status.sper_name"></nz-option>
                 }
               </nz-select>
             </nz-form-control>

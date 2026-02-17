@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { CardInterface } from '../../../core/interfaces/card';
+import { StatusPeriodInterface } from '../../../core/interfaces/status-period';
+import { CardsService } from '../../../core/services/cards.service';
+import { PeriodsService } from '../../../core/services/periods.service';
+import { StatusPeriodsService } from '../../../core/services/status-periods.service';
 
 // Definir interfaz para datos relacionados
 interface RelatedData {
@@ -44,48 +49,52 @@ export class PeriodComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   isEditing = false;
+  cardId: string | null = null;
   periodId: string | null = null;
 
   // Opciones para selects
-  periodStatuses = [
-    { value: '1', label: 'Abierto' },
-    { value: '2', label: 'Cerrado' },
-    { value: '3', label: 'Pagado' },
-    { value: '4', label: 'Vencido' }
-  ];
+  periodStatuses: StatusPeriodInterface[] = [];
 
-  cards = [
-    { value: '1', label: '**** **** **** 8936' },
-    { value: '2', label: '**** **** **** 5421' },
-    { value: '3', label: '**** **** **** 7890' }
-  ];
+  cards: CardInterface[] = [];
 
   constructor(
     private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _statusPeriodsService: StatusPeriodsService,
     private message: NzMessageService
   ) {
     this.form = this.fb.group({
+      usr_uuid: [{ value: '', disabled: true }],
+      crd_uuid: [{ value: '', disabled: true }],
       per_uuid: [{ value: '', disabled: true }],
       per_periodnumber: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
       per_startdate: [null, Validators.required],
       per_enddate: [null, Validators.required],
       per_duedate: [null, Validators.required],
       sper_uuid: ['1', Validators.required],
-      crd_uuid: ['', Validators.required],
       per_previousbalance: [0, [Validators.min(0)]],
       per_interest: [0, [Validators.min(0)]]
     });
   }
 
   ngOnInit(): void {
-    this.periodId = this.route.snapshot.paramMap.get('id');
+    this.cardId = this.route.snapshot.paramMap.get('crd_uuid');
+    this.periodId = this.route.snapshot.paramMap.get('per_uuid');
     this.isEditing = !!this.periodId;
+    this.loadCards();
+    this.loadStatusPeriods();
     
     if (this.isEditing) {
       this.loadPeriod();
     } else {
+      this.form.patchValue({
+        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d',
+        crd_uuid: '1'
+      })
       this.form.get('per_uuid')?.disable();
     }
 
@@ -103,27 +112,86 @@ export class PeriodComponent implements OnInit {
 
   loadPeriod(): void {
     this.isLoading = true;
-    
-    // Simular carga desde API
-    setTimeout(() => {
-      const mockPeriod = {
-        per_uuid: this.periodId,
-        per_periodnumber: '202601',
-        per_startdate: new Date('2026-01-01'),
-        per_enddate: new Date('2026-01-31'),
-        per_duedate: new Date('2026-02-10'),
-        sper_uuid: '1',
-        crd_uuid: '1',
-        per_previousbalance: 0,
-        per_interest: 0
-      };
-      
-      this.form.get('per_uuid')?.enable();
-      this.form.patchValue(mockPeriod);
-      this.form.get('per_uuid')?.disable();
-      
-      this.isLoading = false;
-    }, 500);
+
+    this._periodsService.getPeriodById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.cardId!, this.periodId!).subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          const period = {
+            ...response.data,
+            per_startdate: new Date(response.data.per_startdate + 'T00:00:00'),
+            per_enddate: new Date(response.data.per_enddate + 'T00:00:00'),
+            per_duedate: new Date(response.data.per_duedate + 'T00:00:00')
+          };
+
+          this.form.get('per_uuid')?.enable();
+          this.form.patchValue(period);
+          this.form.get('per_uuid')?.disable();
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadStatusPeriods(): void {
+    this.isLoading = true;
+
+    this._statusPeriodsService.getStatusPeriods().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.periodStatuses = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadCards(): void {
+    this.isLoading = true;
+
+    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.cards = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   onSubmit(): void {
@@ -154,18 +222,84 @@ export class PeriodComponent implements OnInit {
     }
 
     this.isLoading = true;
+
+    if(!this.isEditing) {
+      this._periodsService.savePeriod(this.form.getRawValue()).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Rubro fue agregado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/periods']);
+            //   }
+            // );
+            this.router.navigate(['/admin/user/periods']);
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error =>{
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            // if(errorMessage != null) {
+            //   this._messageService.error(
+            //     "Error", 
+            //     errorMessage.error.error
+            //   );
+            // }
+            this.message.success(errorMessage.error.error);
+        }
+      )
+    } else {
+      this._periodsService.updatePeriod(this.form.getRawValue()).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            this.router.navigate(['/admin/user/periods']);
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Banco fue actualizado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/periods']);
+            //   }
+            // );
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error => {
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            if(errorMessage != null) {
+              // this._messageService.error(
+              //   "Error", 
+              //   errorMessage.error.error
+              // );
+              this.message.success(errorMessage.error.error);
+            }
+        }
+      )
+    }
     
     // Simular guardado
     setTimeout(() => {
       this.isLoading = false;
       const action = this.isEditing ? 'actualizado' : 'creado';
       this.message.success(`Período ${action} exitosamente`);
-      this.router.navigate(['/admin/user/periodos']);
+      this.router.navigate(['/admin/user/periods']);
     }, 800);
   }
 
   onCancel(): void {
-    this.router.navigate(['/admin/user/periodos']);
+    this.router.navigate(['/admin/user/periods']);
   }
 
   getErrorMessage(controlName: string): string | null {
@@ -218,8 +352,8 @@ export class PeriodComponent implements OnInit {
 
   // Obtener etiqueta del estado
   getStatusLabel(statusId: string): string {
-    const status = this.periodStatuses.find(s => s.value === statusId);
-    return status ? status.label : 'Desconocido';
+    const status = this.periodStatuses.find(s => s.sper_uuid === statusId);
+    return status ? status.sper_name : 'Desconocido';
   }
 
   // Formatear número de período (YYYYMM → MM/YYYY)
