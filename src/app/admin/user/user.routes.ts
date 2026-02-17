@@ -40,7 +40,7 @@ export const USER_ROUTES: Routes = [
             { path: 'status-periods', component: StatusPeriodsComponent},
             { path: 'periods', component: PeriodsComponent},
             { path: 'period/new', component: PeriodComponent },
-            { path: 'period/edit/:per_uuid', component: PeriodComponent },
+            { path: 'period/edit/:crd_uuid/:per_uuid', component: PeriodComponent },
             { path: 'type-operations', component: TypeOperationsComponent},
             { path: 'vouchers-states', component: VouchersStatesComponent},
             { path: 'vouchers', component: VouchersComponent},

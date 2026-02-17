@@ -139,7 +139,7 @@ export class PeriodsComponent implements OnInit {
   }
 
   editPeriod(period: PeriodInterface): void {
-    this._router.navigate(['/admin/user/period/edit', period.per_uuid]);
+    this._router.navigate(['/admin/user/period/edit', period.crd_uuid, period.per_uuid]);
   }
 
   deletePeriod(period: PeriodInterface): void {
