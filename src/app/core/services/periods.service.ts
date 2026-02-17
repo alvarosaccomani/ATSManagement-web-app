@@ -36,4 +36,30 @@ export class PeriodsService {
 
     return this._http.get<PeriodResults>(`${environment.apiUrl}periods/${usr_uuid}/${crd_uuid}`, { headers, params });
   }
+
+  public getPeriodById(usr_uuid: string, crd_uuid: string, per_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.get(`${environment.apiUrl}period/${usr_uuid}/${crd_uuid}/${per_uuid}`, {headers:headers});
+  }
+
+  public savePeriod(period: any): Observable<any> {
+    let params = JSON.stringify(period);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.post(`${environment.apiUrl}period`, params, {headers:headers});
+}
+
+  public updatePeriod(period: any): Observable<any> {
+    let params = JSON.stringify(period);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.put(`${environment.apiUrl}period/${period.usr_uuid}/${period.crd_uuid}`, params, {headers:headers});
+  }
+
+  public deletePeriod(usr_uuid: string, crd_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.delete(`${environment.apiUrl}period/${usr_uuid}/${crd_uuid}`, {headers:headers});
+  }
 }
