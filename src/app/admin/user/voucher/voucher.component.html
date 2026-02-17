@@ -75,7 +75,7 @@
               <nz-date-picker 
                 formControlName="vou_datetime" 
                 nzShowTime
-                nzFormat="DD/MM/YYYY HH:mm"
+                nzFormat="dd/MM/yyyy HH:mm"
                 nzPlaceHolder="Seleccione fecha y hora"
                 nzSize="large"
                 style="width: 100%"
@@ -212,8 +212,8 @@
                 placeholder="Seleccione tipo"
                 nzSize="large"
               >
-                @for (type of operationTypes; track type.value) {
-                  <nz-option [nzValue]="type.value" [nzLabel]="type.label"></nz-option>
+                @for (type of operationTypes; track type.tyop_uuid) {
+                  <nz-option [nzValue]="type.tyop_uuid" [nzLabel]="type.tyop_name"></nz-option>
                 }
               </nz-select>
             </nz-form-control>
@@ -235,8 +235,8 @@
                 placeholder="Seleccione estado"
                 nzSize="large"
               >
-                @for (status of voucherStatuses; track status.value) {
-                  <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+                @for (status of voucherStatuses; track status.vous_uuid) {
+                  <nz-option [nzValue]="status.vous_uuid" [nzLabel]="status.vous_name"></nz-option>
                 }
               </nz-select>
             </nz-form-control>

@@ -13,6 +13,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TypeOperationInterface } from '../../../core/interfaces/type-operation';
+import { VoucherStateInterface } from '../../../core/interfaces/voucher-state';
+import { TypeOperationsService } from '../../../core/services/type-operations.service';
+import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
+import { VouchersService } from '../../../core/services/vouchers.service';
 
 @Component({
   selector: 'app-voucher',
@@ -39,22 +44,14 @@ export class VoucherComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   isEditing = false;
+  cardId: string | null = null;
+  periodId: string | null = null;
   voucherId: string | null = null;
 
   // Opciones para selects
-  operationTypes = [
-    { value: '1', label: 'Compra' },
-    { value: '2', label: 'Devolución' },
-    { value: '3', label: 'Extracción' },
-    { value: '4', label: 'Pago Servicio' }
-  ];
+  operationTypes: TypeOperationInterface[] = [];
 
-  voucherStatuses = [
-    { value: '1', label: 'Confirmado' },
-    { value: '2', label: 'Pendiente' },
-    { value: '3', label: 'Rechazado' },
-    { value: '4', label: 'Anulado' }
-  ];
+  voucherStatuses: VoucherStateInterface[] = [];
 
   currencies = [
     { value: 'ARS', label: 'Pesos Argentinos ($)' },
@@ -65,9 +62,15 @@ export class VoucherComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private _typeOperationsService: TypeOperationsService,
+    private _vouchersStatesService: VouchersStatesService,
+    private _vouchersService: VouchersService,
     private message: NzMessageService
   ) {
     this.form = this.fb.group({
+      usr_uuid: [{ value: '', disabled: true }],
+      crd_uuid: [{ value: '', disabled: true }],
+      per_uuid: [{ value: '', disabled: true }],
       vou_uuid: [{ value: '', disabled: true }],
       vou_authorizationnumber: ['', [Validators.required, Validators.maxLength(50)]],
       vou_transactionnumber: ['', [Validators.required, Validators.maxLength(50)]],
@@ -77,7 +80,7 @@ export class VoucherComponent implements OnInit {
       vou_commercename: ['', [Validators.required, Validators.maxLength(200)]],
       vou_commercecuit: ['', [Validators.pattern(/^\d{11}$/)]],
       vou_commercecategory: ['', Validators.maxLength(100)],
-      tyop_uuid: ['', Validators.required],
+      tyop_uuid: ['1', Validators.required],
       vou_installments: [false],
       vou_installmentcount: [1],
       vou_installmentinterest: [0],
@@ -89,10 +92,17 @@ export class VoucherComponent implements OnInit {
   ngOnInit(): void {
     this.voucherId = this.route.snapshot.paramMap.get('id');
     this.isEditing = !!this.voucherId;
+    this.loadTypeOperations();
+    this.loadVouchersStates();
     
     if (this.isEditing) {
       this.loadVoucher();
     } else {
+      this.form.patchValue({
+        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d',
+        crd_uuid: '1',
+        per_uuid: '1'
+      })
       this.form.get('vou_uuid')?.disable();
     }
 
@@ -112,33 +122,84 @@ export class VoucherComponent implements OnInit {
 
   loadVoucher(): void {
     this.isLoading = true;
-    
-    // Simular carga desde API
-    setTimeout(() => {
-      const mockVoucher = {
-        vou_uuid: this.voucherId,
-        vou_authorizationnumber: 'AUTH123456',
-        vou_transactionnumber: 'TXN789012',
-        vou_datetime: new Date('2026-02-08T17:56:35'),
-        vou_amount: 20000.00,
-        vou_currency: 'ARS',
-        vou_commercename: 'Supermercado Prueba',
-        vou_commercecuit: '11111111111',
-        vou_commercecategory: 'Supermercados',
-        tyop_uuid: '1',
-        vou_installments: false,
-        vou_installmentcount: 1,
-        vou_installmentinterest: 0,
-        vous_uuid: '1',
-        vou_notes: ''
-      };
-      
-      this.form.get('vou_uuid')?.enable();
-      this.form.patchValue(mockVoucher);
-      this.form.get('vou_uuid')?.disable();
-      
-      this.isLoading = false;
-    }, 500);
+
+    this._vouchersService.getVocuherById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.cardId!, this.periodId!, this.voucherId!).subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          const voucher = {
+            ...response.data,
+            vou_datetime: new Date(response.data.vou_datetime)
+          };
+
+          this.form.get('vou_uuid')?.enable();
+          this.form.patchValue(voucher);
+          this.form.get('vou_uuid')?.disable();
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadTypeOperations(): void {
+    this.isLoading = true;
+
+    this._typeOperationsService.getTypeOperations().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.operationTypes = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
+  }
+
+  loadVouchersStates(): void {
+    this.isLoading = true;
+
+    this._vouchersStatesService.getVoucherStates().subscribe(
+      (response: any) => {
+        if(response.success) {
+          console.info(response.data);
+          this.voucherStatuses = response.data;
+          
+          this.isLoading = false;
+        } else {
+          //this.status = 'error'
+        }
+      },
+      (error: any) => {
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+
+        if(errorMessage != null) {
+          //this.status = 'error'
+        }
+      }
+    )
   }
 
   onSubmit(): void {
@@ -154,6 +215,72 @@ export class VoucherComponent implements OnInit {
     }
 
     this.isLoading = true;
+
+    if(!this.isEditing) {
+      this._vouchersService.saveVoucher(this.form.getRawValue()).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Rubro fue agregado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/vouchers']);
+            //   }
+            // );
+            this.router.navigate(['/admin/user/vouchers']);
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error =>{
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            // if(errorMessage != null) {
+            //   this._messageService.error(
+            //     "Error", 
+            //     errorMessage.error.error
+            //   );
+            // }
+            this.message.success(errorMessage.error.error);
+        }
+      )
+    } else {
+      this._vouchersService.updateVoucher(this.form.getRawValue()).subscribe(
+        response => {
+          if(response.success) {
+            this.isLoading = false;
+            const item = response.item;
+            this.router.navigate(['/admin/user/vouchers']);
+            // this._messageService.success(
+            //   "Informacion", 
+            //   "El Banco fue actualizado correctamente.",
+            //   () => {
+            //     this.router.navigate(['/admin/user/vouchers']);
+            //   }
+            // );
+          } else {
+            this.isLoading = false;
+            //this.status = 'error'
+          }
+        },
+        error => {
+            this.isLoading = false;
+            let errorMessage = <any>error;
+            console.log(errorMessage);
+            if(errorMessage != null) {
+              // this._messageService.error(
+              //   "Error", 
+              //   errorMessage.error.error
+              // );
+              this.message.success(errorMessage.error.error);
+            }
+        }
+      )
+    }
     
     // Simular guardado
     setTimeout(() => {
