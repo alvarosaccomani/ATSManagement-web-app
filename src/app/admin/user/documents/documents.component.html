@@ -1,6 +1,22 @@
 <nz-splitter>
     <nz-splitter-panel nzDefaultSize="25%" nzMin="20%" nzMax="50%">
-        <div class="box">First</div>
+        <div class="box">
+            <div style="max-width: 800px; margin: 10px auto;">
+                <app-tree-view
+                    [title]="'Tarjetas'"
+                    [description]="'Seleccione y gestione sus archivos'"
+                    [nodes]="treeData"
+                    [showToolbar]="false"
+                    [checkable]="false"
+                    [draggable]="false"
+                    [defaultExpandedKeys]="['1', '1-3']"
+                    [defaultCheckedKeys]="['1-1']"
+                    (nodeClick)="onNodeSelected($event)"
+                    (nodeCheck)="onNodeChecked($event)"
+                    >
+                </app-tree-view>
+            </div>
+        </div>
     </nz-splitter-panel>
     <nz-splitter-panel>
         <div class="documents-wrapper">
