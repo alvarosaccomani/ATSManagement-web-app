@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Imports de Ng-Zorro (necesarios para standalone)
@@ -10,6 +11,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+
+import { SessionService } from '../../core/services/session.service';
+import { UsersService } from '../../core/services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -30,26 +34,50 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
   isSubmitting = false;
+  public identity: any = null;
+  public token: any = null;
 
-  constructor(private fb: FormBuilder, private message: NzMessageService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private message: NzMessageService,
+    private _router: Router,
+    private _sessionService: SessionService,
+    private _usersService: UsersService
+  ) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
+      usr_user: [null, [Validators.required]],
+      usr_password: [null, [Validators.required]]
     });
   }
 
   submitForm(): void {
     if (this.validateForm.valid) {
       this.isSubmitting = true;
-      
-      // Simulación de llamada al backend
-      setTimeout(() => {
-        this.isSubmitting = false;
-        this.message.success('¡Inicio de sesión exitoso!');
-        console.log('Datos:', this.validateForm.value);
-      }, 1500);
+
+      this._usersService.login(this.validateForm.value).subscribe(
+        response => {
+          this.identity = response.data;
+          if(!this.identity || !this.identity.usr_uuid) {
+            this.message.error('error');
+          } else {
+            //persist user data
+            this._sessionService.setIdentity(JSON.stringify(this.identity));
+            //get token
+            this.getToken();
+          }
+          this.isSubmitting = false;
+        },
+        error =>{
+          this.isSubmitting = false;
+          let errorMessage = <any>error;
+          console.log(errorMessage);
+          if(errorMessage != null) {
+            this.message.error(errorMessage.error.error);
+          }
+        }
+      )
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -58,5 +86,27 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+  }
+
+  private getToken(): void {
+    this._usersService.login(this.validateForm.value, 'true').subscribe(
+      response => {
+        this.token = response.data.token;
+        if(this.token.length <= 0) {
+            this.message.error('error');
+        } else {
+            //persist user token
+            this._sessionService.setToken(this.token);
+            this._router.navigate(['/admin/user/documents']);
+        }
+      },
+      error =>{
+        let errorMessage = <any>error;
+        console.log(errorMessage);
+        if(errorMessage != null) {
+          this.message.error(errorMessage.error.error);
+        }
+      }
+    )
   }
 }
