@@ -183,7 +183,7 @@ export class CardComponent implements OnInit {
   loadBanks(): void {
     this.isLoading = true;
 
-    this._banksService.getBanks().subscribe(
+    this._banksService.getBanks('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);

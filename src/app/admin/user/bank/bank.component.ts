@@ -42,6 +42,7 @@ export class BankComponent implements OnInit {
     private message: NzMessageService
   ) {
     this.form = this.fb.group({
+      usr_uuid: [{ value: '', disabled: true }],
       ban_uuid: [{ value: '', disabled: true }],
       ban_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       ban_description: ['', [Validators.maxLength(255)]]
@@ -55,6 +56,9 @@ export class BankComponent implements OnInit {
     if (this.isEditing) {
       this.loadBank();
     } else {
+      this.form.patchValue({
+        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+      })
       // Para nuevo, deshabilitar el campo UUID ya que es autogenerado
       this.form.get('ban_uuid')?.disable();
     }
@@ -63,7 +67,7 @@ export class BankComponent implements OnInit {
   loadBank(): void {
     this.isLoading = true;
 
-    this._banksService.getBankById(this.bankId!).subscribe(
+    this._banksService.getBankById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.bankId!).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -104,7 +108,7 @@ export class BankComponent implements OnInit {
     this.isLoading = true;
 
     if(!this.isEditing) {
-      this._banksService.saveBank(this.form.value).subscribe(
+      this._banksService.saveBank(this.form.getRawValue()).subscribe(
         response => {
           if(response.success) {
             this.isLoading = false;

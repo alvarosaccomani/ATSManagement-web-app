@@ -13,7 +13,7 @@ export class BanksService {
     private _http: HttpClient
   ) { }
 
-  public getBanks(page?: number, perPage?: number, field_order?: string, ban_order?: string): Observable<BankResults> {
+  public getBanks(usr_uuid: string, page?: number, perPage?: number, field_order?: string, ban_order?: string): Observable<BankResults> {
     const headers = new HttpHeaders().set('content-type','application/json');
 
     let params = new HttpParams();
@@ -34,13 +34,13 @@ export class BanksService {
       params = params.set('ban_order', ban_order);
     }
 
-    return this._http.get<BankResults>(`${environment.apiUrl}banks`, { headers, params });
+    return this._http.get<BankResults>(`${environment.apiUrl}banks/${usr_uuid}`, { headers, params });
   }
 
-  public getBankById(ban_uuid: string): Observable<any> {
+  public getBankById(usr_uuid: string, ban_uuid: string): Observable<any> {
     let headers = new HttpHeaders().set('content-type','application/json');
 
-    return this._http.get(`${environment.apiUrl}bank/${ban_uuid}`, {headers:headers});
+    return this._http.get(`${environment.apiUrl}bank/${usr_uuid}/${ban_uuid}`, {headers:headers});
   }
 
   public saveBank(ank: any): Observable<any> {
@@ -54,12 +54,12 @@ export class BanksService {
     let params = JSON.stringify(bank);
     let headers = new HttpHeaders().set('content-type','application/json');
 
-    return this._http.put(`${environment.apiUrl}bank/${bank.ban_uuid}`, params, {headers:headers});
+    return this._http.put(`${environment.apiUrl}bank/${bank.usr_uuid}/${bank.ban_uuid}`, params, {headers:headers});
   }
 
-  public deleteBank(ban_uuid: string): Observable<any> {
+  public deleteBank(usr_uuid: string, ban_uuid: string): Observable<any> {
     let headers = new HttpHeaders().set('content-type','application/json');
 
-    return this._http.delete(`${environment.apiUrl}bank/${ban_uuid}`, {headers:headers});
+    return this._http.delete(`${environment.apiUrl}bank/${usr_uuid}/${ban_uuid}`, {headers:headers});
   }
 }

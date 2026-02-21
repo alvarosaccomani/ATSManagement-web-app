@@ -52,7 +52,7 @@ export class BanksComponent implements OnInit {
 
   loadBanks(): void {
     this.loading = true;
-    this._banksService.getBanks().subscribe(
+    this._banksService.getBanks('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -95,7 +95,7 @@ export class BanksComponent implements OnInit {
     //   },
     //   (result: any) => {
     //     if (result.value) {
-          this._banksService.deleteBank(bank.ban_uuid!)
+          this._banksService.deleteBank(bank.usr_uuid!, bank.ban_uuid!)
             .subscribe(
               response => {
                 console.info(response);
