@@ -2,7 +2,7 @@
 version: '3.8'
 
 services:
-  ATSManagement-web-app:
+  atsmanagement-web-app:
     build:
       context: .
       dockerfile: Dockerfile
