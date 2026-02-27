@@ -34,6 +34,10 @@
                         Select File
                     </button>
                 </nz-upload>
+                <button nz-button nzType="primary" (click)="openFullScreenCamera()">
+                    <nz-icon nzType="camera" />
+                    Sacar Foto
+                </button>
             </div>
             <div class="documents-wrapper-bottom">
                 @for (item of items.data; track item.id) {
@@ -80,3 +84,12 @@
         </div>
     </nz-splitter-panel>
 </nz-splitter>
+
+@if (isCameraActiveView) {
+  <div class="whatsapp-camera-overlay">
+    <app-camera 
+      (onPhotoSaved)="handleCameraCapture($any($event))"
+      (onClose)="isCameraActiveView = false">
+    </app-camera>
+  </div>
+}
