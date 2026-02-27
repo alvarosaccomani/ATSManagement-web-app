@@ -6,17 +6,27 @@
     @if(isLoading) {
         <div class="loading-overlay">
             <nz-spin nzSimple nzSize="large"></nz-spin>
-            <span>Iniciando cámara...</span>
+            <span>Procesando imagen...</span>
         </div>
     }
 
     <video #video 
            autoplay 
            playsinline 
-           [style.display]="isCameraActive && !isLoading ? 'block' : 'none'">
+           [style.display]="isCameraActive && !isLoading && !isEditing ? 'block' : 'none'">
     </video>
 
-    @if(isCameraActive && !isLoading) {
+    @if(isCameraActive && !isLoading && !isEditing) {
+        <div class="camera-overlay-mask">
+            <div class="scanner-frame">
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+                <div class="scan-line"></div>
+            </div>
+        </div>
+
         <div class="capture-ui">
             <button class="shutter-button" (click)="capturePhoto()"></button>
             <p class="capture-hint">Encuadre el comprobante</p>
@@ -25,18 +35,30 @@
 
     <canvas #canvas style="display: none;"></canvas>
 
-    @if(capturedImage && !isCameraActive) {
-        <div class="preview-overlay">
-            <img [src]="capturedImage" alt="Foto capturada">
-            
+    @if(isEditing && capturedImage && !isLoading) {
+        <div class="editor-overlay">
+            <image-cropper
+                [imageBase64]="capturedImage"
+                [maintainAspectRatio]="false"
+                [alignImage]="'center'"
+                [cropperMinWidth]="50"
+                [onlyScaleDown]="true"
+                [roundCropper]="false"
+                [canvasRotation]="0"
+                format="png"
+                (imageCropped)="imageCropped($event)">
+            </image-cropper>
+
             <div class="preview-toolbar">
                 <button class="btn-action retake" (click)="retakePhoto()">
                     <span nz-icon nzType="reload" nzTheme="outline"></span> REINTENTAR
                 </button>
                 <button class="btn-action confirm" (click)="savePhoto()">
-                    {{ existingImage ? 'CONTINUAR' : 'ACEPTAR' }} <span nz-icon nzType="check" nzTheme="outline"></span>
+                    {{ existingImage ? 'CONTINUAR' : 'ACEPTAR' }} 
+                    <span nz-icon nzType="check" nzTheme="outline"></span>
                 </button>
             </div>
+            <div class="editor-hint">Ajuste los bordes del ticket</div>
         </div>
     }
 </div>

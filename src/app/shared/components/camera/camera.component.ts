@@ -1,34 +1,45 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterViewInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { CommonModule } from '@angular/common';
+import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
+import { OcrService } from '../../../core/services/ocr.service'; // Ajusta la ruta a tu servicio
 
 @Component({
   selector: 'app-camera',
+  standalone: true,
   imports: [
+    CommonModule,
     NzSpinModule,
-    NzIconModule
+    NzIconModule,
+    ImageCropperComponent
   ],
   templateUrl: './camera.component.html',
   styleUrl: './camera.component.scss'
 })
-export class CameraComponent {
+export class CameraComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() existingImage: string | null = null;
-
-  @ViewChild('video', { static: false }) videoElement!: ElementRef;
-  @ViewChild('canvas', { static: false }) canvasElement!: ElementRef;
-
-  @Output() onPhotoSaved = new EventEmitter<string>(); // Evento para emitir la imagen
+  @Output() onPhotoSaved = new EventEmitter<string>();
   @Output() onClose = new EventEmitter<void>();
 
-  public isCameraActive: boolean = true; // Controla si la cámara está activa
-  public capturedImage: string | null = null; // URL de la imagen capturada
-  public isLoading: boolean = true; // Estado de carga de la cámara
-  private mediaStream: MediaStream | null = null; // Almacena el stream de la cámara
+  @ViewChild('video') videoElement!: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvas') canvasElement!: ElementRef<HTMLCanvasElement>;
+
+  public isCameraActive = true;
+  public isLoading = true;
+  public capturedImage: string | null = null; // La foto original (para el cropper)
+  public croppedImage: string | null = null;  // El resultado del recorte manual
+  public isEditing = false; // Controla si mostramos el editor manual
+  
+  private mediaStream: MediaStream | null = null;
+
+  constructor(
+    private ocrService: OcrService
+  ) { }
 
   ngAfterViewInit() {
-    // Si ya tenemos existingImage, mostrarla
     if (this.existingImage) {
-      this.capturedImage = this.existingImage;
+      this.croppedImage = this.existingImage;
       this.isCameraActive = false;
       this.isLoading = false;
     } else {
@@ -37,109 +48,93 @@ export class CameraComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['existingImage'] && changes['existingImage'].currentValue !== changes['existingImage'].previousValue) {
+    if (changes['existingImage'] && !changes['existingImage'].firstChange) {
       const newImage = changes['existingImage'].currentValue;
       if (newImage) {
-        this.capturedImage = newImage;
+        this.croppedImage = newImage;
         this.isCameraActive = false;
-        this.isLoading = false;
-      } else {
-        // Si se borra la imagen existente, volver a la cámara
-        this.capturedImage = null;
-        this.isCameraActive = true;
-        this.startCamera();
+        this.isEditing = false;
       }
     }
   }
 
   public async startCamera() {
     try {
-      // Mostrar el mensaje de carga
       this.isLoading = true;
+      if (this.mediaStream) this.stopCamera();
 
-      // Detener el stream anterior si existe
-      if (this.mediaStream) {
-        this.stopCamera();
-      }
-
-      // Solicitar acceso a la cámara
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } // Preferir cámara trasera en móviles
+      });
       this.mediaStream = stream;
 
-      // Verificar que el elemento video esté disponible
-      if (this.videoElement && this.videoElement.nativeElement) {
+      if (this.videoElement?.nativeElement) {
         this.videoElement.nativeElement.srcObject = stream;
-
-        // Esperar a que el video esté listo para reproducirse
         await this.videoElement.nativeElement.play();
-
-        // Ocultar el mensaje de carga
-        this.isLoading = false;
-      } else {
-        console.error('El elemento video no está disponible.');
         this.isLoading = false;
       }
     } catch (error) {
-      console.error('Error al acceder a la cámara:', error);
-      this.isLoading = false; // Ocultar el mensaje de carga en caso de error
-      
-      // Solo alertar si no hay imagen existente ni capturada
-      if (!this.existingImage && !this.capturedImage) {
-        alert('No se pudo acceder a la cámara. Verifica los permisos.');
-      }
+      console.error('Error cámara:', error);
+      this.isLoading = false;
     }
   }
 
-  public capturePhoto(): void {
-    if (!this.videoElement || !this.videoElement.nativeElement) {
-      console.error('El elemento de video no está disponible.');
-      return;
-    }
+  public async capturePhoto(): Promise<void> {
+    if (!this.videoElement?.nativeElement) return;
 
     const video = this.videoElement.nativeElement;
     const canvas = this.canvasElement.nativeElement;
-
-    // Configurar el lienzo con las mismas dimensiones que el video
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    // Dibujar el fotograma actual del video en el lienzo
     const context = canvas.getContext('2d');
     context?.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Convertir el contenido del lienzo a una URL de imagen
-    this.capturedImage = canvas.toDataURL('image/png');
+    const rawImage = canvas.toDataURL('image/jpeg', 1.0);
+    this.stopCamera();
+    this.isLoading = true;
 
-    // Ocultar la cámara
+    // --- PASO 1: OpenCV (Autocrop sugerido) ---
+    // Procesamos con tu método processAndCrop para que el cropper 
+    // ya arranque con una sugerencia inteligente del ticket.
+    try {
+      this.capturedImage = await this.ocrService.processAndCrop(rawImage);
+    } catch (e) {
+      this.capturedImage = rawImage; // Fallback a original
+    }
+
     this.isCameraActive = false;
+    this.isEditing = true; // --- PASO 2: Abrir editor manual ---
+    this.isLoading = false;
+  }
+
+  // Se dispara cada vez que el usuario mueve los puntos de recorte
+  public imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.objectUrl || event.base64 || null;
   }
 
   public savePhoto(): void {
-    if (this.capturedImage) {
-      this.onPhotoSaved.emit(this.capturedImage); // Emitir la imagen capturada
-      console.log('Foto guardada.');
+    if (this.croppedImage) {
+      this.onPhotoSaved.emit(this.croppedImage);
     }
   }
 
   public retakePhoto(): void {
-    // Mostrar la cámara nuevamente
     this.isCameraActive = true;
+    this.isEditing = false;
     this.capturedImage = null;
-
-    // Reiniciar la cámara
+    this.croppedImage = null;
     this.startCamera();
   }
 
   public stopCamera(): void {
     if (this.mediaStream) {
-      const tracks = this.mediaStream.getTracks();
-      tracks.forEach((track) => track.stop());
+      this.mediaStream.getTracks().forEach(t => t.stop());
       this.mediaStream = null;
     }
   }
 
   ngOnDestroy() {
-    // Detener la cámara cuando el componente se destruye
     this.stopCamera();
   }
 }

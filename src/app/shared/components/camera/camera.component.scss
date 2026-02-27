@@ -5,10 +5,10 @@
     background: #000;
     overflow: hidden;
 
-    video, img {
+    video {
         width: 100%;
         height: 100%;
-        object-fit: cover; // Llena la pantalla sin deformar (estilo WhatsApp)
+        object-fit: cover;
         position: absolute;
         top: 0;
         left: 0;
@@ -19,7 +19,7 @@
         position: absolute;
         top: 20px;
         left: 20px;
-        z-index: 100;
+        z-index: 1000; // Por encima de todo
         background: none;
         border: none;
         color: white;
@@ -34,7 +34,13 @@
         transform: translate(-50%, -50%);
         color: white;
         text-align: center;
-        z-index: 50;
+        z-index: 500;
+        
+        span {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
     }
 
     // UI de disparo
@@ -57,47 +63,128 @@
             transition: transform 0.1s;
             &:active { transform: scale(0.9); }
         }
-
-        .capture-hint {
-            color: white;
-            margin-top: 15px;
-            text-shadow: 0 1px 3px #000;
-            font-weight: 500;
-        }
     }
 
-    // UI de confirmar foto
-    .preview-overlay {
+    // --- NUEVO: UI DE EDITOR / PREVISUALIZACIÓN ---
+    .editor-overlay {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 90;
+        inset: 0;
+        z-index: 900;
         background: #000;
+        display: flex;
+        flex-direction: column;
+
+        // Estilos para la librería del cropper
+        ::ng-deep image-cropper {
+            flex: 1;
+            padding-bottom: 100px; // Espacio para la toolbar
+
+            .cropper {
+                outline: 2px solid #25d366 !important; // Borde verde
+                box-shadow: 0 0 0 5000px rgba(0, 0, 0, 0.6) !important; // Oscurece fuera
+            }
+
+            // Hacer los manejadores de las esquinas más grandes para el pulgar
+            .move {
+                width: 24px !important;
+                height: 24px !important;
+                background-color: #25d366 !important;
+                border-radius: 50%;
+                border: 2px solid white;
+            }
+        }
+
+        .editor-hint {
+            position: absolute;
+            top: 70px;
+            width: 100%;
+            text-align: center;
+            color: #25d366;
+            font-weight: bold;
+            text-shadow: 0 2px 4px #000;
+        }
 
         .preview-toolbar {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 100px;
-            background: rgba(0,0,0,0.7);
+            height: 120px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
+            z-index: 1001;
         }
 
         .btn-action {
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 14px 28px;
+            border-radius: 30px;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 10px;
-            z-index: 1;
+            font-size: 14px;
             
-            &.retake { background: #555; color: white; }
-            &.confirm { background: #25d366; color: white; } // Color WhatsApp
+            &.retake { background: #333; color: white; }
+            &.confirm { background: #25d366; color: white; }
         }
     }
+}
+
+// Estilos de la máscara (Scanner)
+.camera-overlay-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    pointer-events: none;
+
+    .scanner-frame {
+        width: 80vw;
+        height: 65vh;
+        position: relative;
+        box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 4px solid #25d366;
+        }
+
+        .top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #25d366;
+            box-shadow: 0 0 10px #25d366;
+            animation: scan 3s infinite linear;
+        }
+    }
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    50% { top: 100%; }
+    100% { top: 0; }
+}
+
+.capture-hint {
+    color: white;
+    margin-top: 15px;
+    background: rgba(0,0,0,0.5);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    text-align: center;
 }
