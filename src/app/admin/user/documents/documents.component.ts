@@ -14,6 +14,7 @@ import { DocumentInterface } from '../../../core/interfaces/document.interface';
 import { TreeViewComponent } from '../../../shared/components/tree-view/tree-view.component';
 import { TreeInterface } from '../../../core/interfaces/tree';
 import { CameraComponent } from '../../../shared/components/camera/camera.component';
+import { OcrService } from '../../../core/services/ocr.service';
 import { TreesService } from '../../../core/services/trees.service';
 
 @Component({
@@ -45,7 +46,8 @@ export class DocumentsComponent {
   constructor(
     private modal: NzModalService,
     private drawerService: NzDrawerService,
-    private _treesService: TreesService
+    private _treesService: TreesService,
+    private ocrService: OcrService,
   ) { }
 
   ngOnInit(): void {
@@ -89,14 +91,16 @@ export class DocumentsComponent {
     this.isCameraActiveView = true;
   }
 
-  public handleCameraCapture(base64Image: string): void {
+  public async handleCameraCapture(base64Image: string) {
     this.isCameraActiveView = false;
+
+    const processedImage = await this.ocrService.processAndCrop(base64Image);
 
     // Crear el nuevo documento desde la captura
     const newDoc: DocumentInterface = {
       id: this.items.data.length + 1,
       name: `Voucher_${new Date().getTime()}.png`,
-      path: base64Image,
+      path: processedImage,
       status: 'sin_leer'
     };
 
@@ -137,16 +141,19 @@ export class DocumentsComponent {
     // Leer el archivo como base64
     const reader = new FileReader();
 
-    reader.onload = (e: ProgressEvent<FileReader>) => {
+    reader.onload = async (e: ProgressEvent<FileReader>) => {
       const base64String = e.target?.result as string; // Ej: "data:application/pdf;base64,JVBERi0..."
 
       // Aquí puedes hacer lo que quieras con el base64:
       console.log('Archivo en base64:', base64String);
 
+      //const processedImage = await this.ocrService.processAndCrop(base64String);
+
       this.items.data.push({
         id: this.items.data.length + 1,
-        path: base64String,
-        name: file.name
+        name: file.name,
+        path: base64String,//processedImage,
+        status: 'sin_leer'
       });
 
       // Si necesitas solo el contenido sin el prefijo:
