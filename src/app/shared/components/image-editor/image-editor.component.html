@@ -1,1 +1,51 @@
-<p>image-editor works!</p>
+<div class="full-screen-editor">
+  <div class="editor-header">
+    <div class="header-left">
+      <button class="btn-back" (click)="onCancel.emit()">
+        <span nz-icon nzType="arrow-left"></span>
+      </button>
+      <span class="title">Recortar Comprobante</span>
+    </div>
+
+    <div class="header-right">
+      @if (allowBinarize) {
+        <div class="contrast-switch" nz-tooltip nzTooltipTitle="Mejorar lectura del OCR (B&N)">
+          <span nz-icon nzType="read"></span>
+          <nz-switch [(ngModel)]="highContrastMode"></nz-switch>
+        </div>
+        <div class="divider"></div>
+      }
+
+      <button class="btn-action" (click)="resetImage()" nz-tooltip nzTooltipTitle="Restablecer">
+        <span nz-icon nzType="sync"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="cropper-area" [class.binarize-view]="allowBinarize && highContrastMode">
+    <image-cropper
+      [imageBase64]="imageBase64!"
+      [maintainAspectRatio]="false"
+      [transform]="transform"
+      [imageQuality]="100"
+      [output]="'base64'"
+      (imageCropped)="imageCropped($event)">
+    </image-cropper>
+
+    <div class="touch-toolbar">
+      <button class="btn-touch" (click)="zoomOut()"><span nz-icon nzType="zoom-out"></span></button>
+      <nz-slider class="zoom-slider" [nzMin]="0.1" [nzMax]="3" [nzStep]="0.1" [(ngModel)]="transform.scale"></nz-slider>
+      <button class="btn-touch" (click)="zoomIn()"><span nz-icon nzType="zoom-in"></span></button>
+      <div class="divider"></div>
+      <button class="btn-touch" (click)="rotateLeft()"><span nz-icon nzType="rotate-left"></span></button>
+      <button class="btn-touch" (click)="rotateRight()"><span nz-icon nzType="rotate-right"></span></button>
+    </div>
+  </div>
+
+  <div class="editor-footer">
+    <button class="btn-descartar" (click)="onCancel.emit()">DESCARTAR</button>
+    <button class="btn-save" (click)="confirm()">
+      GUARDAR <span nz-icon nzType="check"></span>
+    </button>
+  </div>
+</div>
