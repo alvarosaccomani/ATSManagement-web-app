@@ -93,3 +93,12 @@
     </app-camera>
   </div>
 }
+
+@if (isEditorVisible && imageToEdit) {
+  <app-image-editor
+    [imageBase64]="imageToEdit"
+    [allowBinarize]="false" 
+    (onConfirm)="onEditorConfirm($event)"
+    (onCancel)="isEditorVisible = false">
+  </app-image-editor>
+}
