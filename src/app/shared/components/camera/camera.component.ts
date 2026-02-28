@@ -2,8 +2,6 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterVie
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
-import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
-import { OcrService } from '../../../core/services/ocr.service'; // Ajusta la ruta a tu servicio
 
 @Component({
   selector: 'app-camera',
@@ -11,8 +9,7 @@ import { OcrService } from '../../../core/services/ocr.service'; // Ajusta la ru
   imports: [
     CommonModule,
     NzSpinModule,
-    NzIconModule,
-    ImageCropperComponent
+    NzIconModule
   ],
   templateUrl: './camera.component.html',
   styleUrl: './camera.component.scss'
@@ -27,19 +24,15 @@ export class CameraComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   public isCameraActive = true;
   public isLoading = true;
-  public capturedImage: string | null = null; // La foto original (para el cropper)
-  public croppedImage: string | null = null;  // El resultado del recorte manual
-  public isEditing = false; // Controla si mostramos el editor manual
+  public capturedImage: string | null = null; // Almacena la captura para previsualización rápida
   
   private mediaStream: MediaStream | null = null;
 
-  constructor(
-    private ocrService: OcrService
-  ) { }
+  constructor() { }
 
   ngAfterViewInit() {
     if (this.existingImage) {
-      this.croppedImage = this.existingImage;
+      this.capturedImage = this.existingImage;
       this.isCameraActive = false;
       this.isLoading = false;
     } else {
@@ -51,9 +44,8 @@ export class CameraComponent implements AfterViewInit, OnDestroy, OnChanges {
     if (changes['existingImage'] && !changes['existingImage'].firstChange) {
       const newImage = changes['existingImage'].currentValue;
       if (newImage) {
-        this.croppedImage = newImage;
+        this.capturedImage = newImage;
         this.isCameraActive = false;
-        this.isEditing = false;
       }
     }
   }
@@ -64,7 +56,11 @@ export class CameraComponent implements AfterViewInit, OnDestroy, OnChanges {
       if (this.mediaStream) this.stopCamera();
 
       const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } // Preferir cámara trasera en móviles
+        video: { 
+          facingMode: 'environment', 
+          width: { ideal: 4096 }, 
+          height: { ideal: 2160 }
+        } 
       });
       this.mediaStream = stream;
 
@@ -79,51 +75,38 @@ export class CameraComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
-  public async capturePhoto(): Promise<void> {
+  public capturePhoto(): void {
     if (!this.videoElement?.nativeElement) return;
 
     const video = this.videoElement.nativeElement;
     const canvas = this.canvasElement.nativeElement;
+    
+    // Ajustamos el canvas a la resolución real del stream de video
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
     const context = canvas.getContext('2d');
-    context?.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const rawImage = canvas.toDataURL('image/jpeg', 1.0);
-    this.stopCamera();
-    this.isLoading = true;
-
-    // --- PASO 1: OpenCV (Autocrop sugerido) ---
-    // Procesamos con tu método processAndCrop para que el cropper 
-    // ya arranque con una sugerencia inteligente del ticket.
-    try {
-      this.capturedImage = await this.ocrService.processAndCrop(rawImage);
-    } catch (e) {
-      this.capturedImage = rawImage; // Fallback a original
+    if (context) {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // Extraemos la imagen en alta calidad (JPEG 1.0)
+      this.capturedImage = canvas.toDataURL('image/jpeg', 1.0);
     }
 
     this.isCameraActive = false;
-    this.isEditing = true; // --- PASO 2: Abrir editor manual ---
-    this.isLoading = false;
-  }
-
-  // Se dispara cada vez que el usuario mueve los puntos de recorte
-  public imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.objectUrl || event.base64 || null;
+    this.stopCamera();
   }
 
   public savePhoto(): void {
-    if (this.croppedImage) {
-      this.onPhotoSaved.emit(this.croppedImage);
+    if (this.capturedImage) {
+      // Emitimos la imagen original al padre para que él decida 
+      // si pasar por OpenCV y el Editor Aislado.
+      this.onPhotoSaved.emit(this.capturedImage);
     }
   }
 
   public retakePhoto(): void {
     this.isCameraActive = true;
-    this.isEditing = false;
     this.capturedImage = null;
-    this.croppedImage = null;
     this.startCamera();
   }
 

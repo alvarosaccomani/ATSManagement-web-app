@@ -19,7 +19,7 @@
         position: absolute;
         top: 20px;
         left: 20px;
-        z-index: 1000; // Por encima de todo
+        z-index: 1000;
         background: none;
         border: none;
         color: white;
@@ -65,8 +65,9 @@
         }
     }
 
-    // --- NUEVO: UI DE EDITOR / PREVISUALIZACIÓN ---
-    .editor-overlay {
+    // --- PREVISUALIZACIÓN RÁPIDA (Post-Captura) ---
+    // Esta capa es solo para confirmar que la foto se tomó bien antes de ir al editor profesional
+    .preview-overlay {
         position: absolute;
         inset: 0;
         z-index: 900;
@@ -74,34 +75,12 @@
         display: flex;
         flex-direction: column;
 
-        // Estilos para la librería del cropper
-        ::ng-deep image-cropper {
+        img {
             flex: 1;
-            padding-bottom: 100px; // Espacio para la toolbar
-
-            .cropper {
-                outline: 2px solid #25d366 !important; // Borde verde
-                box-shadow: 0 0 0 5000px rgba(0, 0, 0, 0.6) !important; // Oscurece fuera
-            }
-
-            // Hacer los manejadores de las esquinas más grandes para el pulgar
-            .move {
-                width: 24px !important;
-                height: 24px !important;
-                background-color: #25d366 !important;
-                border-radius: 50%;
-                border: 2px solid white;
-            }
-        }
-
-        .editor-hint {
-            position: absolute;
-            top: 70px;
             width: 100%;
-            text-align: center;
-            color: #25d366;
-            font-weight: bold;
-            text-shadow: 0 2px 4px #000;
+            height: 100%;
+            object-fit: contain; // Ver la foto completa
+            background: #111;
         }
 
         .preview-toolbar {
@@ -126,9 +105,20 @@
             align-items: center;
             gap: 10px;
             font-size: 14px;
+            cursor: pointer;
             
             &.retake { background: #333; color: white; }
             &.confirm { background: #25d366; color: white; }
+        }
+
+        .editor-hint {
+            position: absolute;
+            top: 70px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-weight: 500;
+            text-shadow: 0 2px 4px #000;
         }
     }
 }
@@ -187,4 +177,5 @@
     border-radius: 20px;
     font-size: 13px;
     text-align: center;
+    z-index: 80;
 }
