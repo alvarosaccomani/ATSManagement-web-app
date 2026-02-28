@@ -36,4 +36,11 @@ export class PendingVouchersService {
 
     return this._http.get<PendingVoucherResults>(`${environment.apiUrl}pending-vouchers/${usr_uuid}`, { headers, params });
   }
+
+  public savePendingVoucher(pendingVoucher: any): Observable<any> {
+    let params = JSON.stringify(pendingVoucher);
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.post(`${environment.apiUrl}pending-voucher`, params, {headers:headers});
+  }
 }
