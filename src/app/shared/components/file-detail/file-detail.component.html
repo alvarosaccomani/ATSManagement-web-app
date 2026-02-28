@@ -12,10 +12,10 @@
                 Detalles del archivo
             </h3>
             <p>
-                <strong>Nombre:</strong> {{ drawerData.name }}
+                <strong>Nombre:</strong> {{ drawerData.pevou_name }}
             </p>
             <p>
-                <strong>ID:</strong> {{ drawerData.id }}
+                <strong>ID:</strong> {{ drawerData.pevou_uuid }}
             </p>
         </nz-collapse-panel>
         <nz-collapse-panel 
@@ -36,7 +36,7 @@
                                 (load)="loadedImage()" 
                                 #inputImage 
                                 class="input-image" 
-                                [src]="drawerData.path" alt="">
+                                [src]="drawerData.pevou_image" alt="">
                         </ng-container>
                     }
                 </div>
