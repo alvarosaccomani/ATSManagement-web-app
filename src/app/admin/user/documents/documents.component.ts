@@ -310,6 +310,35 @@ export class DocumentsComponent {
     });
   }
 
+  public deleteVoucherPending(pendingVoucher: PendingVoucherInterface) {
+    // this._messageService.showCustomMessage({
+    //     title: "¿Estás seguro de eliminar el Rubro?",
+    //     type: "question",
+    //     text: "Estás a punto de eliminar el Rubro.",
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: "Sí, eliminar!",
+    //     cancelButtonText: "No, cancelar"
+    //   },
+    //   (result: any) => {
+    //     if (result.value) {
+          this._pendingVouchersService.deletePendingVoucher(pendingVoucher.usr_uuid!, pendingVoucher.pevou_uuid!)
+            .subscribe(
+              response => {
+                console.info(response);
+                this.getPendingVocuhers(pendingVoucher.usr_uuid);
+                //this.message.success(`Banco eliminado: ${bank.ban_name}`);
+              },
+              error => {
+                console.log(<any>error);
+              }
+            );
+    //     }
+    //   }
+    // );
+  }
+
   public onNodeSelected(node: any): void {
     console.log('Nodo seleccionado:', node);
     alert(`Seleccionaste: ${node.title}`);
