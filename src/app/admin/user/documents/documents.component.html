@@ -19,69 +19,75 @@
         </div>
     </nz-splitter-panel>
     <nz-splitter-panel>
-        <div class="documents-wrapper">
-            <!-- Truco: Referencia oculta para que Angular sepa que PdfViewerComponent se usa -->
-            @if(false) {
-            <ng-container>
-                <app-pdf-viewer></app-pdf-viewer>
-                <app-file-detail></app-file-detail>
-            </ng-container>
-            }
-            <div class="documents-wrapper-top">
-                <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
-                    <button nz-button>
-                        <nz-icon nzType="upload" />
-                        Select File
-                    </button>
-                </nz-upload>
-                <button nz-button nzType="primary" (click)="openFullScreenCamera()">
-                    <nz-icon nzType="camera" />
-                    Sacar Foto
-                </button>
+        @if (isLoading) {
+            <div class="loading-container">
+                <nz-spin nzTip="Cargando datos..."></nz-spin>
             </div>
-            <div class="documents-wrapper-bottom">
-                @for (pendingVoucher of pendingVouchers; track pendingVoucher.pevou_uuid) {
-                <div class="document-card">
-                    <div class="file-view">
-                        @switch (getFileType(pendingVoucher)) {
-                        @case ('image') {
-                        <img nz-image [nzSrc]="normalizePath(pendingVoucher)" [nzFallback]="fallback" width="150px" height="150px"
-                            alt="Imagen" />
-                        }
-                        @case ('pdf') {
-                        <div class="preview-pdf" (click)="openPdfPreview(pendingVoucher)">
-                            <nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf" />
-                            <span>PDF</span>
-                        </div>
-                        }
-                        @case ('doc') {
-                        <div class="preview-doc" (click)="downloadFile(pendingVoucher)">
-                            <nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc" />
-                            <span>DOC</span>
-                        </div>
-                        }
-                        @case ('xls') {
-                        <div class="preview-xls" (click)="downloadFile(pendingVoucher)">
-                            <nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls" />
-                            <span>XLS</span>
-                        </div>
-                        }
-                        @default {
-                        <div class="preview-other" (click)="downloadFile(pendingVoucher)">
-                            <nz-icon nzType="file" nzTheme="outline" class="file-icon other" />
-                            <span>Archivo</span>
-                        </div>
-                        }
-                        }
-                    </div>
-                    <!-- Nombre del archivo debajo -->
-                    <div class="file-name" (click)="viewFile(pendingVoucher)">
-                        {{ pendingVoucher.pevou_name || 'Sin nombre' }}
-                    </div>
-                </div>
+        } @else {
+            <div class="documents-wrapper">
+                <!-- Truco: Referencia oculta para que Angular sepa que PdfViewerComponent se usa -->
+                @if(false) {
+                <ng-container>
+                    <app-pdf-viewer></app-pdf-viewer>
+                    <app-file-detail></app-file-detail>
+                </ng-container>
                 }
+                <div class="documents-wrapper-top">
+                    <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+                        <button nz-button>
+                            <nz-icon nzType="upload" />
+                            Select File
+                        </button>
+                    </nz-upload>
+                    <button nz-button nzType="primary" (click)="openFullScreenCamera()">
+                        <nz-icon nzType="camera" />
+                        Sacar Foto
+                    </button>
+                </div>
+                <div class="documents-wrapper-bottom">
+                    @for (pendingVoucher of pendingVouchers; track pendingVoucher.pevou_uuid) {
+                    <div class="document-card">
+                        <div class="file-view">
+                            @switch (getFileType(pendingVoucher)) {
+                            @case ('image') {
+                            <img nz-image [nzSrc]="normalizePath(pendingVoucher)" [nzFallback]="fallback" width="150px" height="150px"
+                                alt="Imagen" />
+                            }
+                            @case ('pdf') {
+                            <div class="preview-pdf" (click)="openPdfPreview(pendingVoucher)">
+                                <nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf" />
+                                <span>PDF</span>
+                            </div>
+                            }
+                            @case ('doc') {
+                            <div class="preview-doc" (click)="downloadFile(pendingVoucher)">
+                                <nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc" />
+                                <span>DOC</span>
+                            </div>
+                            }
+                            @case ('xls') {
+                            <div class="preview-xls" (click)="downloadFile(pendingVoucher)">
+                                <nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls" />
+                                <span>XLS</span>
+                            </div>
+                            }
+                            @default {
+                            <div class="preview-other" (click)="downloadFile(pendingVoucher)">
+                                <nz-icon nzType="file" nzTheme="outline" class="file-icon other" />
+                                <span>Archivo</span>
+                            </div>
+                            }
+                            }
+                        </div>
+                        <!-- Nombre del archivo debajo -->
+                        <div class="file-name" (click)="viewFile(pendingVoucher)">
+                            {{ pendingVoucher.pevou_name || 'Sin nombre' }}
+                        </div>
+                    </div>
+                    }
+                </div>
             </div>
-        </div>
+        }
     </nz-splitter-panel>
 </nz-splitter>
 
