@@ -43,4 +43,10 @@ export class PendingVouchersService {
 
     return this._http.post(`${environment.apiUrl}pending-voucher`, params, {headers:headers});
   }
+
+  public deletePendingVoucher(usr_uuid: string, pevou_uuid: string): Observable<any> {
+    let headers = new HttpHeaders().set('content-type','application/json');
+
+    return this._http.delete(`${environment.apiUrl}pending-voucher/${usr_uuid}/${pevou_uuid}`, {headers:headers});
+  }
 }
