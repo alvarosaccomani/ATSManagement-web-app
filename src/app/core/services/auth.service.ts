@@ -11,7 +11,8 @@ export class AuthService {
   constructor(private _http: HttpClient) { }
 
   public singup(user: any): Observable<any> {
-    const params = JSON.stringify(user);
+    const userWithApp = { ...user, app_cod: 'Management' };
+    const params = JSON.stringify(userWithApp);
     const headers = new HttpHeaders().set('content-type', 'application/json');
     return this._http.post(`${environment.apiUrl}register`, params, { headers });
   }
