@@ -4,6 +4,7 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountCreatedComponent } from './account-created/account-created.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SsoCallbackComponent } from './sso-callback/sso-callback.component';
 
 export const AUTH_ROUTES: Routes = [
@@ -14,6 +15,7 @@ export const AUTH_ROUTES: Routes = [
             { path: 'login', component: LoginComponent},
             { path: 'register', component: RegisterComponent },
             { path: 'account-created/:usr_email', component: AccountCreatedComponent },
+            { path: 'forgot-password', component: ForgotPasswordComponent },
             { path: 'sso', component: SsoCallbackComponent }
         ]
     }
