@@ -3,6 +3,7 @@ version: '3.8'
 
 services:
   atsmanagement-web-app:
+    container_name: atsmanagement-web-app
     build:
       context: .
       dockerfile: Dockerfile
