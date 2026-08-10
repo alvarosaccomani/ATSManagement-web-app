@@ -32,8 +32,17 @@ export class SessionService {
     this.updateSession(updated);
   }
 
+  public getIdentity(): any | null {
+    return this.getCurrentSession()?.identity || null;
+  }
+
   public getCurrentSession(): SessionData | null {
     return this.sessionSubject.value;
+  }
+
+  public logout(): void {
+    localStorage.removeItem('session');
+    this.sessionSubject.next(null);
   }
 
   private updateSession(session: SessionData): void {
