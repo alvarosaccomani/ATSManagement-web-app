@@ -17,6 +17,24 @@ export class AuthService {
     return this._http.post(`${environment.apiUrl}register`, params, { headers });
   }
 
+  public confirmAccount(token: string): Observable<any> {
+    const params = JSON.stringify({ token });
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}confirm-account`, params, { headers });
+  }
+
+  public forgotPassword(usr_email: string): Observable<any> {
+    const params = JSON.stringify({ usr_email, app_cod: 'Management' });
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}forgot-password`, params, { headers });
+  }
+
+  public resetPassword(payload: any): Observable<any> {
+    const params = JSON.stringify(payload);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}reset-password`, params, { headers });
+  }
+
   public login(user: any, gettoken: string | null = null): Observable<any> {
     if (gettoken != null) {
       user.gettoken = gettoken;
