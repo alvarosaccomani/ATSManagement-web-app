@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TypeOperationInterface } from '../../../core/interfaces/type-operation';
 import { TypeOperationsService } from '../../../core/services/type-operations.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-type-operations',
@@ -45,7 +46,8 @@ export class TypeOperationsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _typeOperationsService: TypeOperationsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -107,21 +109,38 @@ export class TypeOperationsComponent implements OnInit {
 
   // Métodos de acción
   createTypeOperation(): void {
-    this.message.info('Crear nuevo tipo de operación');
+    this._router.navigate(['/admin/user/type-operation/new']);
   }
 
   editTypeOperation(opType: TypeOperationInterface): void {
-    this.message.info(`Editar tipo: ${this.formatTypeOperationName(opType.tyop_name)}`);
+    this._router.navigate(['/admin/user/type-operation/edit', opType.tyop_uuid]);
   }
 
   deleteTypeOperation(opType: TypeOperationInterface): void {
-    this.message.success(`Tipo de operación eliminado: ${this.formatTypeOperationName(opType.tyop_name)}`);
-    this.typeOperations = this.typeOperations.filter(t => t.tyop_uuid !== opType.tyop_uuid);
-    this.total = this.typeOperations.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este tipo de operación?',
+      `Estás a punto de eliminar el tipo de operación "${this.formatTypeOperationName(opType.tyop_name)}". Esta acción no se puede deshacer.`,
+      () => {
+        this._typeOperationsService.deleteTypeOperation(opType.tyop_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Tipo de operación eliminado', `El tipo de operación "${this.formatTypeOperationName(opType.tyop_name)}" se eliminó correctamente`);
+              this.loadTypeOperations();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el tipo de operación');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el tipo de operación');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(opType: TypeOperationInterface): void {
-    this.message.info(`Detalles de: ${this.formatTypeOperationName(opType.tyop_name)}`);
+    this.message.info(`Nombre: ${this.formatTypeOperationName(opType.tyop_name)}\nDescripción: ${opType.tyop_description || 'Sin descripción'}`);
   }
 
   // Paginación
