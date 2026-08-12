@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PaymentPeriodStatusInterface } from '../../../core/interfaces/payment-period-status';
 import { PaymentPeriodsStatusService } from '../../../core/services/payment-periods-status.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-payment-periods-status',
@@ -45,7 +46,8 @@ export class PaymentPeriodsStatusComponent implements OnInit {
   constructor(
     private _router: Router,
     private _paymentPeriodsStatusService: PaymentPeriodsStatusService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -103,21 +105,38 @@ export class PaymentPeriodsStatusComponent implements OnInit {
 
   // Métodos de acción
   createPaymentPeriodStatus(): void {
-    this.message.info('Crear nuevo estado de período de pago');
+    this._router.navigate(['/admin/user/payment-period-status/new']);
   }
 
   editPaymentPeriodStatus(status: PaymentPeriodStatusInterface): void {
-    this.message.info(`Editar estado: ${this.formatStatusName(status.payps_name)}`);
+    this._router.navigate(['/admin/user/payment-period-status/edit', status.payps_uuid]);
   }
 
   deletePaymentPeriodStatus(status: PaymentPeriodStatusInterface): void {
-    this.message.success(`Estado eliminado: ${this.formatStatusName(status.payps_name)}`);
-    this.paymentPeriodStatuses = this.paymentPeriodStatuses.filter(s => s.payps_uuid !== status.payps_uuid);
-    this.total = this.paymentPeriodStatuses.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este estado de período de pago?',
+      `Estás a punto de eliminar el estado de período de pago "${this.formatStatusName(status.payps_name)}". Esta acción no se puede deshacer.`,
+      () => {
+        this._paymentPeriodsStatusService.deletePaymentPeriodStatus(status.payps_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Estado eliminado', `El estado de período de pago "${this.formatStatusName(status.payps_name)}" se eliminó correctamente`);
+              this.loadPaymentPeriodStatuses();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el estado');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el estado');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(status: PaymentPeriodStatusInterface): void {
-    this.message.info(`Detalles de: ${this.formatStatusName(status.payps_name)}`);
+    this.message.info(`Nombre: ${this.formatStatusName(status.payps_name)}\nDescripción: ${status.payps_description || 'Sin descripción'}`);
   }
 
   // Paginación
