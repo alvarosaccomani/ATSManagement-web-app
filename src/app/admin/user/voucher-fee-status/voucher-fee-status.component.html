@@ -1,1 +1,92 @@
-<p>voucher-fee-status works!</p>
+<div class="bank-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="project" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Estado de Cuota' : 'Nuevo Estado de Cuota' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()" type="button">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando datos..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label nzFor="voufs_uuid" nzSpan="24" nzMdSpan="6">
+          ID
+        </nz-form-label>
+        <nz-form-control nzSpan="24" nzMdSpan="18">
+          <input nz-input formControlName="voufs_uuid" placeholder="ID autogenerado" readonly />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="voufs_name" nzSpan="24" nzMdSpan="6" nzRequired>
+          Nombre
+        </nz-form-label>
+        <nz-form-control 
+          nzSpan="24" 
+          nzMdSpan="18"
+          [nzValidateStatus]="form.get('voufs_name')?.dirty && form.get('voufs_name')?.invalid ? 'error' : ''"
+          nzErrorTip="{{ getErrorMessage('voufs_name') }}"
+        >
+          <input 
+            nz-input 
+            formControlName="voufs_name" 
+            placeholder="Ingrese el nombre del estado (ej. Pagado, Pendiente, Vencido)"
+            nzSize="large"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="voufs_description" nzSpan="24" nzMdSpan="6">
+          Descripción
+        </nz-form-label>
+        <nz-form-control 
+          nzSpan="24" 
+          nzMdSpan="18"
+          [nzValidateStatus]="form.get('voufs_description')?.dirty && form.get('voufs_description')?.invalid ? 'error' : ''"
+          nzErrorTip="{{ getErrorMessage('voufs_description') }}"
+        >
+          <textarea 
+            nz-input 
+            formControlName="voufs_description" 
+            placeholder="Ingrese una descripción (opcional)"
+            rows="4"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <div class="form-actions">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="onCancel()"
+          nzSize="large"
+          type="button"
+        >
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+        <button 
+          nz-button 
+          nzType="primary" 
+          type="submit"
+          [nzLoading]="isLoading"
+          nzSize="large"
+        >
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Estado' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
