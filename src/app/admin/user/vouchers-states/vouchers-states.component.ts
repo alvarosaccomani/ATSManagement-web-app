@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { VoucherStateInterface } from '../../../core/interfaces/voucher-state';
 import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-vouchers-states',
@@ -45,7 +46,8 @@ export class VouchersStatesComponent implements OnInit {
   constructor(
     private _router: Router,
     private _vouchersStatesService: VouchersStatesService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -105,21 +107,38 @@ export class VouchersStatesComponent implements OnInit {
 
   // Métodos de acción
   createVoucherStatus(): void {
-    this.message.info('Crear nuevo estado de comprobante');
+    this._router.navigate(['/admin/user/voucher-state/new']);
   }
 
   editVoucherStatus(status: VoucherStateInterface): void {
-    this.message.info(`Editar estado: ${this.formatStatusName(status.vous_name)}`);
+    this._router.navigate(['/admin/user/voucher-state/edit', status.vous_uuid]);
   }
 
   deleteVoucherStatus(status: VoucherStateInterface): void {
-    this.message.success(`Estado eliminado: ${this.formatStatusName(status.vous_name)}`);
-    this.voucherStatuses = this.voucherStatuses.filter(s => s.vous_uuid !== status.vous_uuid);
-    this.total = this.voucherStatuses.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este estado de comprobante?',
+      `Estás a punto de eliminar el estado de comprobante "${this.formatStatusName(status.vous_name)}". Esta acción no se puede deshacer.`,
+      () => {
+        this._vouchersStatesService.deleteVoucherState(status.vous_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Estado eliminado', `El estado de comprobante "${this.formatStatusName(status.vous_name)}" se eliminó correctamente`);
+              this.loadVoucherStatuses();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el estado');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el estado');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(status: VoucherStateInterface): void {
-    this.message.info(`Detalles de: ${this.formatStatusName(status.vous_name)}`);
+    this.message.info(`Nombre: ${this.formatStatusName(status.vous_name)}\nDescripción: ${status.vous_description || 'Sin descripción'}`);
   }
 
   // Paginación
