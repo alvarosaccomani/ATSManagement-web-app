@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CardInterface } from '../../../core/interfaces/card';
 import { CardsService } from '../../../core/services/cards.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-cards',
@@ -48,7 +49,8 @@ export class CardsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _cardsService: CardsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -140,9 +142,29 @@ export class CardsComponent implements OnInit {
   }
 
   deleteCard(card: CardInterface): void {
-    this.message.success(`Tarjeta eliminada: ${this.formatCardNumber(card.crd_last4digits)}`);
-    this.cards = this.cards.filter(c => c.crd_uuid !== card.crd_uuid);
-    this.total = this.cards.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar esta tarjeta?',
+      `Vas a eliminar la tarjeta finalizada en ${card.crd_last4digits}. Esta acción no se puede deshacer.`,
+      () => {
+        this.loading = true;
+        this._cardsService.deleteCard('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid).subscribe({
+          next: (response: any) => {
+            this.loading = false;
+            if (response.success) {
+              this._messageService.success('Tarjeta eliminada', 'La tarjeta se eliminó correctamente');
+              this.loadCards();
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudo eliminar la tarjeta');
+            }
+          },
+          error: (error: any) => {
+            this.loading = false;
+            console.error(error);
+            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar la tarjeta');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(card: CardInterface): void {
