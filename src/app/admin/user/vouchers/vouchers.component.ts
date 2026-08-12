@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { VoucherInterface } from '../../../core/interfaces/voucher';
 import { VouchersService } from '../../../core/services/vouchers.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-vouchers',
@@ -48,7 +49,8 @@ export class VouchersComponent implements OnInit {
   constructor(
     private _router: Router,
     private _vouchersService: VouchersService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -166,9 +168,29 @@ export class VouchersComponent implements OnInit {
   }
 
   deleteVoucher(voucher: VoucherInterface): void {
-    this.message.success(`Voucher eliminado: ${voucher.vou_transactionnumber}`);
-    this.vouchers = this.vouchers.filter(v => v.vou_uuid !== voucher.vou_uuid);
-    this.total = this.vouchers.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este comprobante?',
+      `Vas a eliminar la transacción "${voucher.vou_transactionnumber}". Esta acción no se puede deshacer.`,
+      () => {
+        this.loading = true;
+        this._vouchersService.deleteVoucher(voucher.usr_uuid, voucher.crd_uuid, voucher.per_uuid, voucher.vou_uuid).subscribe({
+          next: (response: any) => {
+            this.loading = false;
+            if (response.success) {
+              this._messageService.success('Comprobante eliminado', 'El comprobante se eliminó correctamente');
+              this.loadVouchers();
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudo eliminar el comprobante');
+            }
+          },
+          error: (error: any) => {
+            this.loading = false;
+            console.error(error);
+            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar el comprobante');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(voucher: VoucherInterface): void {
