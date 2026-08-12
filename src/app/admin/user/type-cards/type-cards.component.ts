@@ -9,6 +9,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TypeCardInterface } from '../../../core/interfaces/type-card';
 import { TypeCardsService } from '../../../core/services/type-cards.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-type-cards',
@@ -43,7 +44,8 @@ export class TypeCardsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _typeCardsService: TypeCardsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -75,21 +77,38 @@ export class TypeCardsComponent implements OnInit {
   }
 
   createTypeCard(): void {
-    this.message.info('Crear nuevo tipo de tarjeta');
+    this._router.navigate(['/admin/user/type-card/new']);
   }
 
   editTypeCard(typeCard: TypeCardInterface): void {
-    this.message.info(`Editar tipo: ${typeCard.tycrd_name}`);
+    this._router.navigate(['/admin/user/type-card/edit', typeCard.tycrd_uuid]);
   }
 
   deleteTypeCard(typeCard: TypeCardInterface): void {
-    this.message.success(`Tipo de tarjeta eliminado: ${typeCard.tycrd_name}`);
-    this.typeCards = this.typeCards.filter(c => c.tycrd_uuid !== typeCard.tycrd_uuid);
-    this.total = this.typeCards.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este tipo de tarjeta?',
+      `Estás a punto de eliminar el tipo de tarjeta "${typeCard.tycrd_name}". Esta acción no se puede deshacer.`,
+      () => {
+        this._typeCardsService.deleteTypeCard(typeCard.tycrd_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Tipo de tarjeta eliminado', `El tipo de tarjeta "${typeCard.tycrd_name}" se eliminó correctamente`);
+              this.loadTypeCards();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el tipo de tarjeta');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el tipo de tarjeta');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(typeCard: TypeCardInterface): void {
-    this.message.info(`Detalles de: ${typeCard.tycrd_name}`);
+    this.message.info(`Nombre: ${typeCard.tycrd_name}\nDescripción: ${typeCard.tycrd_description || 'Sin descripción'}`);
   }
 
   onPageSizeChange(size: number): void {
