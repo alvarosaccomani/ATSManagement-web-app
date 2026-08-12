@@ -36,4 +36,26 @@ export class VouchersStatesService {
     
         return this._http.get<VoucherStateResults>(`${environment.apiUrl}voucher-states`, { headers, params });
       }
+
+  public getVoucherStateById(vous_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get<any>(`${environment.apiUrl}voucher-state/${vous_uuid}`, { headers });
+  }
+
+  public saveVoucherState(voucherState: any): Observable<any> {
+    const params = JSON.stringify(voucherState);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}voucher-state`, params, { headers });
+  }
+
+  public updateVoucherState(vous_uuid: string, voucherState: any): Observable<any> {
+    const params = JSON.stringify(voucherState);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.put(`${environment.apiUrl}voucher-state/${vous_uuid}`, params, { headers });
+  }
+
+  public deleteVoucherState(vous_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}voucher-state/${vous_uuid}`, { headers });
+  }
 }
