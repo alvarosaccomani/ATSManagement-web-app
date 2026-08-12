@@ -7,6 +7,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { Page, createWorker, recognize } from 'tesseract.js';
 import { OcrService } from '../../../core/services/ocr.service';
 import { AiService } from '../../../core/services/ai.service';
+import { VouchersParserService } from '../../../core/services/vouchers-parser.service';
 
 export interface PageWithWords extends Page {
   words?: Array<{
@@ -38,13 +39,15 @@ export class FileDetailComponent {
   public loadingPercentage!: number;
   public cx!: CanvasRenderingContext2D;
   public imageContent: string = '';
+  public voucherJson: any;
   public analisys: string = '';
   public isLoadingAnalisys: boolean = false;
 
   constructor(
     @Inject(NZ_DRAWER_DATA) public drawerData: any,
     private ocrService: OcrService,
-    private _ai: AiService
+    private _ai: AiService,
+    private _vouchersParserService: VouchersParserService
   ) { }
 
   public onCollapseChange(activeKeys: string[], name: string): void {
@@ -143,6 +146,7 @@ export class FileDetailComponent {
 
   public readImage(): void {
     this.initSetup();
+    this.voucherJson = this._vouchersParserService.parseText(this.imageContent);
   }
 
   public getJsonDocument(): void {
