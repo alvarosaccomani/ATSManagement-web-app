@@ -60,6 +60,6 @@ export class VouchersService {
   public deleteVoucher(usr_uuid: string, crd_uuid: string, per_uuid: string, vou_uuid: string): Observable<any> {
     let headers = new HttpHeaders().set('content-type','application/json');
 
-    return this._http.delete(`${environment.apiUrl}card/${usr_uuid}/${crd_uuid}/${per_uuid}/${vou_uuid}`, {headers:headers});
+    return this._http.delete(`${environment.apiUrl}voucher/${usr_uuid}/${crd_uuid}/${per_uuid}/${vou_uuid}`, {headers:headers});
   }
 }
