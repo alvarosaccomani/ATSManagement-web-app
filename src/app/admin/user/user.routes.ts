@@ -25,6 +25,7 @@ import { PaymentPeriodComponent } from './payment-period/payment-period.componen
 import { BrandCardComponent } from './brand-card/brand-card.component';
 import { TypeCardComponent } from './type-card/type-card.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
+import { TypeOperationComponent } from './type-operation/type-operation.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -49,6 +50,8 @@ export const USER_ROUTES: Routes = [
             { path: 'period/new', component: PeriodComponent },
             { path: 'period/edit/:crd_uuid/:per_uuid', component: PeriodComponent },
             { path: 'type-operations', component: TypeOperationsComponent},
+            { path: 'type-operation/new', component: TypeOperationComponent },
+            { path: 'type-operation/edit/:tyop_uuid', component: TypeOperationComponent },
             { path: 'vouchers-states', component: VouchersStatesComponent},
             { path: 'vouchers', component: VouchersComponent},
             { path: 'voucher/new', component: VoucherComponent },
