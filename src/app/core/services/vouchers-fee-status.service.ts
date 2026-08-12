@@ -36,4 +36,26 @@ export class VouchersFeeStatusService {
 
     return this._http.get<VoucherFeeStatusInterfaceResults>(`${environment.apiUrl}voucher-fee-statuses`, { headers, params });
   }
+
+  public getVoucherFeeStatusById(voufs_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get<any>(`${environment.apiUrl}voucher-fee-status/${voufs_uuid}`, { headers });
+  }
+
+  public saveVoucherFeeStatus(voucherFeeStatus: any): Observable<any> {
+    const params = JSON.stringify(voucherFeeStatus);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}voucher-fee-status`, params, { headers });
+  }
+
+  public updateVoucherFeeStatus(voufs_uuid: string, voucherFeeStatus: any): Observable<any> {
+    const params = JSON.stringify(voucherFeeStatus);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.put(`${environment.apiUrl}voucher-fee-status/${voufs_uuid}`, params, { headers });
+  }
+
+  public deleteVoucherFeeStatus(voufs_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}voucher-fee-status/${voufs_uuid}`, { headers });
+  }
 }
