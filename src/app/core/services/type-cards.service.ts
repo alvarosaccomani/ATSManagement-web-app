@@ -36,4 +36,26 @@ export class TypeCardsService {
   
       return this._http.get<TypeCardResults>(`${environment.apiUrl}type-cards`, { headers, params });
     }
+
+  public getTypeCardById(tycrd_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get<any>(`${environment.apiUrl}type-card/${tycrd_uuid}`, { headers });
+  }
+
+  public saveTypeCard(typeCard: any): Observable<any> {
+    const params = JSON.stringify(typeCard);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}type-card`, params, { headers });
+  }
+
+  public updateTypeCard(tycrd_uuid: string, typeCard: any): Observable<any> {
+    const params = JSON.stringify(typeCard);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.put(`${environment.apiUrl}type-card/${tycrd_uuid}`, params, { headers });
+  }
+
+  public deleteTypeCard(tycrd_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}type-card/${tycrd_uuid}`, { headers });
+  }
 }
