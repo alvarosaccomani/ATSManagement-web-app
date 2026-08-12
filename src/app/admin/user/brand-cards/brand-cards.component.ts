@@ -9,6 +9,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BrandCardInterface } from '../../../core/interfaces/brand-card';
 import { BrandCardsService } from '../../../core/services/brand-cards.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-brand-cards',
@@ -43,7 +44,8 @@ export class BrandCardsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _brandCardsService: BrandCardsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -75,21 +77,38 @@ export class BrandCardsComponent implements OnInit {
   }
 
   createBrandCard(): void {
-    this.message.info('Crear nueva marca de tarjeta');
+    this._router.navigate(['/admin/user/brand-card/new']);
   }
 
   editBrandCard(brandCard: BrandCardInterface): void {
-    this.message.info(`Editar marca: ${brandCard.brcrd_name}`);
+    this._router.navigate(['/admin/user/brand-card/edit', brandCard.brcrd_uuid]);
   }
 
   deleteBrandCard(brandCard: BrandCardInterface): void {
-    this.message.success(`Marca de tarjeta eliminada: ${brandCard.brcrd_name}`);
-    this.brandCards = this.brandCards.filter(c => c.brcrd_uuid !== brandCard.brcrd_uuid);
-    this.total = this.brandCards.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar esta marca?',
+      `Estás a punto de eliminar la marca "${brandCard.brcrd_name}". Esta acción no se puede deshacer.`,
+      () => {
+        this._brandCardsService.deleteBrandCard(brandCard.brcrd_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Marca eliminada', `La marca de tarjeta "${brandCard.brcrd_name}" se eliminó correctamente`);
+              this.loadBrandCards();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar la marca');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar la marca');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(brandCard: BrandCardInterface): void {
-    this.message.info(`Detalles de: ${brandCard.brcrd_name}`);
+    this.message.info(`Nombre: ${brandCard.brcrd_name}\nDescripción: ${brandCard.brcrd_description || 'Sin descripción'}`);
   }
 
   onPageSizeChange(size: number): void {
