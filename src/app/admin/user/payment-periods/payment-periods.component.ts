@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PaymentPeriodInterface } from '../../../core/interfaces/payment-period';
 import { PaymentPeriodsService } from '../../../core/services/payment-periods.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-payment-periods',
@@ -47,7 +48,8 @@ export class PaymentPeriodsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _paymentPeriodsService: PaymentPeriodsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -175,9 +177,29 @@ export class PaymentPeriodsComponent implements OnInit {
   }
 
   deletePayment(payment: PaymentPeriodInterface): void {
-    this.message.success(`Pago eliminado: ${payment.payp_uuid}`);
-    this.payments = this.payments.filter(p => p.payp_uuid !== payment.payp_uuid);
-    this.total = this.payments.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este pago?',
+      `Vas a eliminar el pago realizado el ${this.formatDateTime(payment.payp_paymentdate)} por un monto de ${this.formatAmount(payment.payp_amountpaid)}. Esta acción no se puede deshacer.`,
+      () => {
+        this.loading = true;
+        this._paymentPeriodsService.deletePaymentPeriod(payment.usr_uuid, payment.crd_uuid, payment.per_uuid, payment.payp_uuid).subscribe({
+          next: (response: any) => {
+            this.loading = false;
+            if (response.success) {
+              this._messageService.success('Pago eliminado', 'El pago se eliminó correctamente del período');
+              this.loadPayments();
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudo eliminar el pago');
+            }
+          },
+          error: (error: any) => {
+            this.loading = false;
+            console.error(error);
+            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar el pago');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(payment: PaymentPeriodInterface): void {
