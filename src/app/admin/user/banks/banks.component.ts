@@ -9,6 +9,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BankInterface } from '../../../core/interfaces/bank';
 import { BanksService } from '../../../core/services/banks.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-banks',
@@ -43,7 +44,8 @@ export class BanksComponent implements OnInit {
   constructor(
     private _router: Router,
     private _banksService: BanksService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -83,34 +85,24 @@ export class BanksComponent implements OnInit {
   }
 
   deleteBank(bank: BankInterface): void {
-    // this._messageService.showCustomMessage({
-    //     title: "¿Estás seguro de eliminar el Rubro?",
-    //     type: "question",
-    //     text: "Estás a punto de eliminar el Rubro.",
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: "Sí, eliminar!",
-    //     cancelButtonText: "No, cancelar"
-    //   },
-    //   (result: any) => {
-    //     if (result.value) {
-          this._banksService.deleteBank(bank.usr_uuid!, bank.ban_uuid!)
-            .subscribe(
-              response => {
-                console.info(response);
-                this.loadBanks();
-                this.message.success(`Banco eliminado: ${bank.ban_name}`);
-                this.banks = this.banks.filter(b => b.ban_uuid !== bank.ban_uuid);
-                this.total = this.banks.length;
-              },
-              error => {
-                console.log(<any>error);
-              }
-            );
-    //     }
-    //   }
-    // );
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este banco?',
+      `Estás a punto de eliminar el banco "${bank.ban_name}". Esta acción no se puede deshacer.`,
+      () => {
+        this._banksService.deleteBank(bank.usr_uuid!, bank.ban_uuid!)
+          .subscribe({
+            next: response => {
+              console.info(response);
+              this.loadBanks();
+              this._messageService.success('Banco eliminado', `El banco "${bank.ban_name}" se eliminó correctamente`);
+            },
+            error: error => {
+              console.error(error);
+              this._messageService.error('Error', 'Error al intentar eliminar el banco');
+            }
+          });
+      }
+    );
   }
 
   viewDetails(bank: BankInterface): void {
