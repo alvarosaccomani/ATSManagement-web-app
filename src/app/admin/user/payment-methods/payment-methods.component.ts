@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PaymentMethodInterface } from '../../../core/interfaces/payment-method';
 import { PaymentMethodsService } from '../../../core/services/payment-methods.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-payment-methods',
@@ -45,7 +46,8 @@ export class PaymentMethodsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _paymentMethodsService: PaymentMethodsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -109,21 +111,38 @@ export class PaymentMethodsComponent implements OnInit {
 
   // Métodos de acción
   createPaymentMethod(): void {
-    this.message.info('Crear nuevo método de pago');
+    this._router.navigate(['/admin/user/payment-method/new']);
   }
 
   editPaymentMethod(method: PaymentMethodInterface): void {
-    this.message.info(`Editar método: ${this.formatMethodName(method.paym_name)}`);
+    this._router.navigate(['/admin/user/payment-method/edit', method.paym_uuid]);
   }
 
   deletePaymentMethod(method: PaymentMethodInterface): void {
-    this.message.success(`Método eliminado: ${this.formatMethodName(method.paym_name)}`);
-    this.paymentMethods = this.paymentMethods.filter(m => m.paym_uuid !== method.paym_uuid);
-    this.total = this.paymentMethods.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este método de pago?',
+      `Estás a punto de eliminar el método de pago "${this.formatMethodName(method.paym_name)}". Esta acción no se puede deshacer.`,
+      () => {
+        this._paymentMethodsService.deletePaymentMethod(method.paym_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Método de pago eliminado', `El método de pago "${this.formatMethodName(method.paym_name)}" se eliminó correctamente`);
+              this.loadPaymentMethods();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el método de pago');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el método de pago');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(method: PaymentMethodInterface): void {
-    this.message.info(`Detalles de: ${this.formatMethodName(method.paym_name)}`);
+    this.message.info(`Nombre: ${this.formatMethodName(method.paym_name)}\nDescripción: ${method.paym_description || 'Sin descripción'}`);
   }
 
   // Paginación
