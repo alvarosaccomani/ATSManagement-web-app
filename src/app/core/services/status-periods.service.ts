@@ -36,4 +36,26 @@ export class StatusPeriodsService {
     
         return this._http.get<StatusPeriodResults>(`${environment.apiUrl}status-periods`, { headers, params });
       }
+
+  public getStatusPeriodById(sper_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get<any>(`${environment.apiUrl}status-period/${sper_uuid}`, { headers });
+  }
+
+  public saveStatusPeriod(statusPeriod: any): Observable<any> {
+    const params = JSON.stringify(statusPeriod);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}status-period`, params, { headers });
+  }
+
+  public updateStatusPeriod(sper_uuid: string, statusPeriod: any): Observable<any> {
+    const params = JSON.stringify(statusPeriod);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.put(`${environment.apiUrl}status-period/${sper_uuid}`, params, { headers });
+  }
+
+  public deleteStatusPeriod(sper_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}status-period/${sper_uuid}`, { headers });
+  }
 }
