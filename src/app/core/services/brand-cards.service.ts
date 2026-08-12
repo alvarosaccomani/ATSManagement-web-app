@@ -36,4 +36,26 @@ export class BrandCardsService {
     
         return this._http.get<BrandCardResults>(`${environment.apiUrl}brand-cards`, { headers, params });
       }
+
+  public getBrandCardById(brcrd_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get<any>(`${environment.apiUrl}brand-card/${brcrd_uuid}`, { headers });
+  }
+
+  public saveBrandCard(brandCard: any): Observable<any> {
+    const params = JSON.stringify(brandCard);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}brand-card`, params, { headers });
+  }
+
+  public updateBrandCard(brcrd_uuid: string, brandCard: any): Observable<any> {
+    const params = JSON.stringify(brandCard);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.put(`${environment.apiUrl}brand-card/${brcrd_uuid}`, params, { headers });
+  }
+
+  public deleteBrandCard(brcrd_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}brand-card/${brcrd_uuid}`, { headers });
+  }
 }
