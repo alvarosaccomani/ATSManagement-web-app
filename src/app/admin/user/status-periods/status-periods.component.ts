@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { StatusPeriodInterface } from '../../../core/interfaces/status-period';
 import { StatusPeriodsService } from '../../../core/services/status-periods.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-status-periods',
@@ -45,7 +46,8 @@ export class StatusPeriodsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _statusPeriodsService: StatusPeriodsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -89,21 +91,38 @@ export class StatusPeriodsComponent implements OnInit {
 
   // Métodos de acción
   createPeriodStatus(): void {
-    this.message.info('Crear nuevo estado de período');
+    this._router.navigate(['/admin/user/status-period/new']);
   }
 
   editPeriodStatus(status: StatusPeriodInterface): void {
-    this.message.info(`Editar estado: ${status.sper_name}`);
+    this._router.navigate(['/admin/user/status-period/edit', status.sper_uuid]);
   }
 
   deletePeriodStatus(status: StatusPeriodInterface): void {
-    this.message.success(`Estado eliminado: ${status.sper_name}`);
-    this.periodStatuses = this.periodStatuses.filter(s => s.sper_uuid !== status.sper_uuid);
-    this.total = this.periodStatuses.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este estado de período?',
+      `Estás a punto de eliminar el estado de período "${status.sper_name}". Esta acción no se puede deshacer.`,
+      () => {
+        this._statusPeriodsService.deleteStatusPeriod(status.sper_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Estado eliminado', `El estado de período "${status.sper_name}" se eliminó correctamente`);
+              this.loadPeriodStatuses();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el estado');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el estado');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(status: StatusPeriodInterface): void {
-    this.message.info(`Detalles de: ${status.sper_name}`);
+    this.message.info(`Nombre: ${status.sper_name}\nDescripción: ${status.sper_description || 'Sin descripción'}`);
   }
 
   // Paginación
