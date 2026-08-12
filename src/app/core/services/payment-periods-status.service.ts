@@ -36,4 +36,26 @@ export class PaymentPeriodsStatusService {
 
     return this._http.get<PaymentPeriodStatusResults>(`${environment.apiUrl}payment-period-statuses`, { headers, params });
   }
+
+  public getPaymentPeriodStatusById(payps_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get<any>(`${environment.apiUrl}payment-period-status/${payps_uuid}`, { headers });
+  }
+
+  public savePaymentPeriodStatus(paymentPeriodStatus: any): Observable<any> {
+    const params = JSON.stringify(paymentPeriodStatus);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}payment-period-status`, params, { headers });
+  }
+
+  public updatePaymentPeriodStatus(payps_uuid: string, paymentPeriodStatus: any): Observable<any> {
+    const params = JSON.stringify(paymentPeriodStatus);
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.put(`${environment.apiUrl}payment-period-status/${payps_uuid}`, params, { headers });
+  }
+
+  public deletePaymentPeriodStatus(payps_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}payment-period-status/${payps_uuid}`, { headers });
+  }
 }
