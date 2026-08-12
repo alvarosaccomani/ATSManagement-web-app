@@ -44,9 +44,10 @@ export class VoucherComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   isEditing = false;
-  cardId: string | null = null;
-  periodId: string | null = null;
+  cardId: string | null = '1';
+  periodId: string | null = '1';
   voucherId: string | null = null;
+  existingFees: any[] = [];
 
   // Opciones para selects
   operationTypes: TypeOperationInterface[] = [];
@@ -90,7 +91,9 @@ export class VoucherComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.voucherId = this.route.snapshot.paramMap.get('id');
+    this.voucherId = this.route.snapshot.paramMap.get('vou_uuid') || this.route.snapshot.paramMap.get('id');
+    this.cardId = this.route.snapshot.paramMap.get('crd_uuid') || '1';
+    this.periodId = this.route.snapshot.paramMap.get('per_uuid') || '1';
     this.isEditing = !!this.voucherId;
     this.loadTypeOperations();
     this.loadVouchersStates();
@@ -100,8 +103,8 @@ export class VoucherComponent implements OnInit {
     } else {
       this.form.patchValue({
         usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d',
-        crd_uuid: '1',
-        per_uuid: '1'
+        crd_uuid: this.cardId,
+        per_uuid: this.periodId
       })
       this.form.get('vou_uuid')?.disable();
     }
@@ -122,8 +125,10 @@ export class VoucherComponent implements OnInit {
 
   loadVoucher(): void {
     this.isLoading = true;
+    const cid = this.cardId || '1';
+    const pid = this.periodId || '1';
 
-    this._vouchersService.getVocuherById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.cardId!, this.periodId!, this.voucherId!).subscribe(
+    this._vouchersService.getVocuherById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', cid, pid, this.voucherId!).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -132,22 +137,22 @@ export class VoucherComponent implements OnInit {
             vou_datetime: new Date(response.data.vou_datetime)
           };
 
+          this.existingFees = response.data.fees || [];
+
           this.form.get('vou_uuid')?.enable();
           this.form.patchValue(voucher);
           this.form.get('vou_uuid')?.disable();
           
           this.isLoading = false;
         } else {
-          //this.status = 'error'
+          this.isLoading = false;
         }
       },
       (error: any) => {
+        this.isLoading = false;
         let errorMessage = <any>error;
         console.log(errorMessage);
-
-        if(errorMessage != null) {
-          //this.status = 'error'
-        }
+        this.message.error(errorMessage?.error?.error || 'Error al recuperar el comprobante');
       }
     )
   }
@@ -216,79 +221,75 @@ export class VoucherComponent implements OnInit {
 
     this.isLoading = true;
 
+    const rawValue = this.form.getRawValue();
+    const vou_amount = rawValue.vou_amount || 0;
+    const count = rawValue.vou_installments ? (rawValue.vou_installmentcount || 1) : 1;
+    const fees: any[] = [];
+
+    if (rawValue.vou_installments && count > 1) {
+      const amountPerInstallment = parseFloat((vou_amount / count).toFixed(2));
+      const lastAmount = parseFloat((vou_amount - (amountPerInstallment * (count - 1))).toFixed(2));
+      const baseDate = new Date(rawValue.vou_datetime || new Date());
+
+      for (let i = 1; i <= count; i++) {
+        const dueDate = new Date(baseDate);
+        dueDate.setMonth(baseDate.getMonth() + i);
+        const formattedDate = dueDate.toISOString().split('T')[0];
+
+        const existingFee = this.existingFees.find(ef => ef.vouf_quotanumber === i);
+
+        fees.push({
+          vouf_uuid: existingFee ? existingFee.vouf_uuid : undefined,
+          vouf_quotanumber: i,
+          vouf_quotaamount: i === count ? lastAmount : amountPerInstallment,
+          vouf_quotaduedate: formattedDate,
+          voufs_uuid: existingFee ? existingFee.voufs_uuid : '1'
+        });
+      }
+    }
+
+    const payload = {
+      ...rawValue,
+      fees
+    };
+
     if(!this.isEditing) {
-      this._vouchersService.saveVoucher(this.form.getRawValue()).subscribe(
+      this._vouchersService.saveVoucher(payload).subscribe(
         response => {
+          this.isLoading = false;
           if(response.success) {
-            this.isLoading = false;
-            const item = response.item;
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Rubro fue agregado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/vouchers']);
-            //   }
-            // );
+            this.message.success('Comprobante creado exitosamente');
             this.router.navigate(['/admin/user/vouchers']);
           } else {
-            this.isLoading = false;
-            //this.status = 'error'
+            this.message.error(response.message || 'Error al guardar el comprobante');
           }
         },
         error =>{
             this.isLoading = false;
             let errorMessage = <any>error;
             console.log(errorMessage);
-            // if(errorMessage != null) {
-            //   this._messageService.error(
-            //     "Error", 
-            //     errorMessage.error.error
-            //   );
-            // }
-            this.message.success(errorMessage.error.error);
+            this.message.error(errorMessage?.error?.error || 'Error al guardar el comprobante');
         }
       )
     } else {
-      this._vouchersService.updateVoucher(this.form.getRawValue()).subscribe(
+      this._vouchersService.updateVoucher(payload).subscribe(
         response => {
+          this.isLoading = false;
           if(response.success) {
-            this.isLoading = false;
-            const item = response.item;
+            this.message.success('Comprobante actualizado exitosamente');
             this.router.navigate(['/admin/user/vouchers']);
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Banco fue actualizado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/vouchers']);
-            //   }
-            // );
           } else {
-            this.isLoading = false;
-            //this.status = 'error'
+            this.message.error(response.message || 'Error al actualizar el comprobante');
           }
         },
         error => {
             this.isLoading = false;
             let errorMessage = <any>error;
             console.log(errorMessage);
-            if(errorMessage != null) {
-              // this._messageService.error(
-              //   "Error", 
-              //   errorMessage.error.error
-              // );
-              this.message.success(errorMessage.error.error);
-            }
+            this.message.error(errorMessage?.error?.error || 'Error al actualizar el comprobante');
         }
       )
     }
-    
-    // Simular guardado
-    setTimeout(() => {
-      this.isLoading = false;
-      const action = this.isEditing ? 'actualizado' : 'creado';
-      this.message.success(`Voucher ${action} exitosamente`);
-      this.router.navigate(['/admin/user/vouchers']);
-    }, 800);
   }
 
   onCancel(): void {
