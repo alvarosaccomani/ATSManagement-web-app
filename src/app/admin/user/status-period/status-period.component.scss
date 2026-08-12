@@ -1,0 +1,88 @@
+.bank-form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  max-width: 1000px;
+  margin: 20px auto;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #1890ff;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      padding: 0;
+      height: auto;
+      line-height: 1;
+      font-size: 16px;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  nz-form-item {
+    margin-bottom: 24px;
+  }
+
+  nz-form-label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+    
+    &::after {
+      content: ':';
+      margin: 0 8px 0 2px;
+    }
+  }
+
+  nz-form-control {
+    .ant-form-item-explain {
+      margin-top: 4px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    
+    nz-form-item {
+      margin-bottom: 16px;
+    }
+
+    nz-form-label {
+      margin-bottom: 8px;
+    }
+  }
+}

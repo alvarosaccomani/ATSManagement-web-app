@@ -1,1 +1,92 @@
-<p>status-period works!</p>
+<div class="bank-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="calendar" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Estado de Período' : 'Nuevo Estado de Período' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()" type="button">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando datos..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label nzFor="sper_uuid" nzSpan="24" nzMdSpan="6">
+          ID
+        </nz-form-label>
+        <nz-form-control nzSpan="24" nzMdSpan="18">
+          <input nz-input formControlName="sper_uuid" placeholder="ID autogenerado" readonly />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="sper_name" nzSpan="24" nzMdSpan="6" nzRequired>
+          Nombre
+        </nz-form-label>
+        <nz-form-control 
+          nzSpan="24" 
+          nzMdSpan="18"
+          [nzValidateStatus]="form.get('sper_name')?.dirty && form.get('sper_name')?.invalid ? 'error' : ''"
+          nzErrorTip="{{ getErrorMessage('sper_name') }}"
+        >
+          <input 
+            nz-input 
+            formControlName="sper_name" 
+            placeholder="Ingrese el nombre del estado (ej. Abierto, Cerrado)"
+            nzSize="large"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="sper_description" nzSpan="24" nzMdSpan="6">
+          Descripción
+        </nz-form-label>
+        <nz-form-control 
+          nzSpan="24" 
+          nzMdSpan="18"
+          [nzValidateStatus]="form.get('sper_description')?.dirty && form.get('sper_description')?.invalid ? 'error' : ''"
+          nzErrorTip="{{ getErrorMessage('sper_description') }}"
+        >
+          <textarea 
+            nz-input 
+            formControlName="sper_description" 
+            placeholder="Ingrese una descripción (opcional)"
+            rows="4"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <div class="form-actions">
+        <button 
+          nz-button 
+          nzType="default" 
+          (click)="onCancel()"
+          nzSize="large"
+          type="button"
+        >
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+        <button 
+          nz-button 
+          nzType="primary" 
+          type="submit"
+          [nzLoading]="isLoading"
+          nzSize="large"
+        >
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Estado' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
