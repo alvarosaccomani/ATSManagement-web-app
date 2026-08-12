@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { VoucherFeeInterface } from '../../../core/interfaces/voucher-fee';
 import { VouchersFeesService } from '../../../core/services/vouchers-fees.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-vouchers-fees',
@@ -46,7 +47,8 @@ export class VouchersFeesComponent implements OnInit {
   constructor(
     private _router: Router,
     private _vouchersFeesService: VouchersFeesService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -149,9 +151,29 @@ export class VouchersFeesComponent implements OnInit {
   }
 
   deleteInstallment(installment: VoucherFeeInterface): void {
-    this.message.success(`Cuota #${installment.vouf_quotanumber} eliminada`);
-    this.installments = this.installments.filter(i => i.vouf_uuid !== installment.vouf_uuid);
-    this.total = this.installments.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar esta cuota?',
+      `Vas a eliminar la cuota número ${installment.vouf_quotanumber}. Esta acción no se puede deshacer.`,
+      () => {
+        this.loading = true;
+        this._vouchersFeesService.deleteVoucherFee(installment.usr_uuid, installment.crd_uuid, installment.per_uuid, installment.vou_uuid, installment.vouf_uuid).subscribe({
+          next: (response: any) => {
+            this.loading = false;
+            if (response.success) {
+              this._messageService.success('Cuota eliminada', 'La cuota se eliminó correctamente');
+              this.loadInstallments();
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudo eliminar la cuota');
+            }
+          },
+          error: (error: any) => {
+            this.loading = false;
+            console.error(error);
+            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar la cuota');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(installment: VoucherFeeInterface): void {
