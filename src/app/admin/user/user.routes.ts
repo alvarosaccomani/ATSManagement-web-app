@@ -29,6 +29,7 @@ import { TypeOperationComponent } from './type-operation/type-operation.componen
 import { VoucherStateComponent } from './voucher-state/voucher-state.component';
 import { StatusPeriodComponent } from './status-period/status-period.component';
 import { PaymentPeriodStatusComponent } from './payment-period-status/payment-period-status.component';
+import { VoucherFeeStatusComponent } from './voucher-fee-status/voucher-fee-status.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -64,6 +65,8 @@ export const USER_ROUTES: Routes = [
             { path: 'voucher/new', component: VoucherComponent },
             { path: 'voucher/edit/:vou_uuid', component: VoucherComponent },
             { path: 'vouchers-fee-status', component: VouchersFeeStatusComponent},
+            { path: 'voucher-fee-status/new', component: VoucherFeeStatusComponent },
+            { path: 'voucher-fee-status/edit/:voufs_uuid', component: VoucherFeeStatusComponent },
             { path: 'vouchers-fees', component: VouchersFeesComponent},
             { path: 'voucher-fee/new', component: VoucherFeeComponent },
             { path: 'voucher-fee/edit/:vouf_uuid', component: VoucherFeeComponent },
