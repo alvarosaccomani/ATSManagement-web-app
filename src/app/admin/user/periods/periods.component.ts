@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PeriodInterface } from '../../../core/interfaces/period';
 import { PeriodsService } from '../../../core/services/periods.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-periods',
@@ -48,7 +49,8 @@ export class PeriodsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _periodsService: PeriodsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -143,9 +145,29 @@ export class PeriodsComponent implements OnInit {
   }
 
   deletePeriod(period: PeriodInterface): void {
-    this.message.success(`Período eliminado: ${this.formatPeriodNumber(period.per_periodnumber)}`);
-    this.periods = this.periods.filter(p => p.per_uuid !== period.per_uuid);
-    this.total = this.periods.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este período?',
+      `Vas a eliminar el período "${this.formatPeriodNumber(period.per_periodnumber)}". Esta acción no se puede deshacer.`,
+      () => {
+        this.loading = true;
+        this._periodsService.deletePeriod(period.usr_uuid, period.crd_uuid, period.per_uuid).subscribe({
+          next: (response: any) => {
+            this.loading = false;
+            if (response.success) {
+              this._messageService.success('Período eliminado', 'El período se eliminó correctamente');
+              this.loadPeriods();
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudo eliminar el período');
+            }
+          },
+          error: (error: any) => {
+            this.loading = false;
+            console.error(error);
+            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar el período');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(period: PeriodInterface): void {
