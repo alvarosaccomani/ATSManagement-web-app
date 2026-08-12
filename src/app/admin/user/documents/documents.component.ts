@@ -11,6 +11,7 @@ import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { PdfViewerComponent } from '../../../shared/components/pdf-viewer/pdf-viewer.component'
 import { FileDetailComponent } from '../../../shared/components/file-detail/file-detail.component'
+import { IframeViewerComponent } from '../../../shared/components/iframe-viewer/iframe-viewer.component'
 import { PendingVoucherInterface } from '../../../core/interfaces/pending-voucher';
 import { TreeViewComponent } from '../../../shared/components/tree-view/tree-view.component';
 import { ImageEditorComponent } from '../../../shared/components/image-editor/image-editor.component';
@@ -256,23 +257,19 @@ export class DocumentsComponent {
   public openPdfPreview(item: PendingVoucherInterface): void {
     let url = this.normalizePath(item);
 
-    // Si es una URL externa, podrías usar iframe
-    if (!url.startsWith('')) {
-      // Usa iframe con la URL directa
+    // Si es una URL externa (no empieza con data:)
+    if (!url.startsWith('data:')) {
       this.modal.create({
         nzTitle: 'PDF',
-        nzContent: `<iframe src="${url}" width="100%" height="600px" style="border: none;"></iframe>`,
+        nzContent: IframeViewerComponent,
+        nzData: { url: url },
         nzWidth: '80%',
         nzFooter: null
       });
       return;
     }
 
-    if (!url.startsWith('data:')) {
-      url = `data:${url}`
-    }
-
-    // Si es base64, usa el componente PdfViewer
+    // Si es base64
     this.modal.create({
       nzTitle: 'Vista previa del PDF',
       nzContent: PdfViewerComponent,

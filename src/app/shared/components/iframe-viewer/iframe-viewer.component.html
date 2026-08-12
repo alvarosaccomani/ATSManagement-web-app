@@ -1,1 +1,3 @@
-<p>iframe-viewer works!</p>
+<div class="iframe-container">
+  <iframe *ngIf="safeUrl" [src]="safeUrl" width="100%" height="600px" style="border: none;"></iframe>
+</div>
