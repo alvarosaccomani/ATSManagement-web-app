@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { VoucherFeeStatusInterface } from '../../../core/interfaces/voucher-fee-status';
 import { VouchersFeeStatusService } from '../../../core/services/vouchers-fee-status.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-vouchers-fee-status',
@@ -45,7 +46,8 @@ export class VouchersFeeStatusComponent implements OnInit {
   constructor(
     private _router: Router,
     private _vouchersFeeStatusService: VouchersFeeStatusService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -103,21 +105,38 @@ export class VouchersFeeStatusComponent implements OnInit {
 
   // Métodos de acción
   createInstallmentStatus(): void {
-    this.message.info('Crear nuevo estado de cuota');
+    this._router.navigate(['/admin/user/voucher-fee-status/new']);
   }
 
   editInstallmentStatus(status: VoucherFeeStatusInterface): void {
-    this.message.info(`Editar estado: ${this.formatStatusName(status.voufs_name)}`);
+    this._router.navigate(['/admin/user/voucher-fee-status/edit', status.voufs_uuid]);
   }
 
   deleteInstallmentStatus(status: VoucherFeeStatusInterface): void {
-    this.message.success(`Estado eliminado: ${this.formatStatusName(status.voufs_name)}`);
-    this.installmentStatuses = this.installmentStatuses.filter(s => s.voufs_uuid !== status.voufs_uuid);
-    this.total = this.installmentStatuses.length;
+    this._messageService.confirm(
+      '¿Estás seguro de eliminar este estado de cuota?',
+      `Estás a punto de eliminar el estado de cuota "${this.formatStatusName(status.voufs_name)}". Esta acción no se puede deshacer.`,
+      () => {
+        this._vouchersFeeStatusService.deleteVoucherFeeStatus(status.voufs_uuid).subscribe({
+          next: (response: any) => {
+            if(response.success) {
+              this._messageService.success('Estado eliminado', `El estado de cuota "${this.formatStatusName(status.voufs_name)}" se eliminó correctamente`);
+              this.loadInstallmentStatuses();
+            } else {
+              this._messageService.error('Error', response.message || 'Error al eliminar el estado');
+            }
+          },
+          error: (error: any) => {
+            console.error(error);
+            this._messageService.error('Error', 'Error de conexión al intentar eliminar el estado');
+          }
+        });
+      }
+    );
   }
 
   viewDetails(status: VoucherFeeStatusInterface): void {
-    this.message.info(`Detalles de: ${this.formatStatusName(status.voufs_name)}`);
+    this.message.info(`Nombre: ${this.formatStatusName(status.voufs_name)}\nDescripción: ${status.voufs_description || 'Sin descripción'}`);
   }
 
   // Paginación
