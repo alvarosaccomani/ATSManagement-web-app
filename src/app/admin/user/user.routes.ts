@@ -26,6 +26,7 @@ import { BrandCardComponent } from './brand-card/brand-card.component';
 import { TypeCardComponent } from './type-card/type-card.component';
 import { PaymentMethodComponent } from './payment-method/payment-method.component';
 import { TypeOperationComponent } from './type-operation/type-operation.component';
+import { VoucherStateComponent } from './voucher-state/voucher-state.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -53,6 +54,8 @@ export const USER_ROUTES: Routes = [
             { path: 'type-operation/new', component: TypeOperationComponent },
             { path: 'type-operation/edit/:tyop_uuid', component: TypeOperationComponent },
             { path: 'vouchers-states', component: VouchersStatesComponent},
+            { path: 'voucher-state/new', component: VoucherStateComponent },
+            { path: 'voucher-state/edit/:vous_uuid', component: VoucherStateComponent },
             { path: 'vouchers', component: VouchersComponent},
             { path: 'voucher/new', component: VoucherComponent },
             { path: 'voucher/edit/:vou_uuid', component: VoucherComponent },
