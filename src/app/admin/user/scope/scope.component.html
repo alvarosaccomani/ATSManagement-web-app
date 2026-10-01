@@ -1,1 +1,65 @@
-<p>scope works!</p>
+<nz-spin [nzSpinning]="isLoading">
+  <div style="max-width: 600px; margin: 0 auto;">
+    <h2>{{ isEditing ? 'Editar Ámbito' : 'Nuevo Ámbito' }}</h2>
+
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" nzLayout="vertical">
+      <nz-form-item *ngIf="isEditing">
+        <nz-form-label>ID Ámbito</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="scp_uuid" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Nombre del Ámbito</nz-form-label>
+        <nz-form-control nzErrorTip="Por favor ingrese el nombre del ámbito">
+          <input nz-input formControlName="scp_name" placeholder="Ej: Personal, Emprendimiento, Empresa" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Descripción</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="scp_description" rows="3" placeholder="Descripción opcional"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Color Identificador</nz-form-label>
+        <nz-form-control>
+          <input nz-input type="color" formControlName="scp_color" style="width: 80px; height: 38px; padding: 2px; cursor: pointer;" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Icono</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="scp_icon" placeholder="Nombre de icono AntD (ej: user, shop)" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Ámbito Compartido</nz-form-label>
+        <nz-form-control>
+          <nz-switch formControlName="scp_isshared"></nz-switch>
+          <span style="margin-left: 8px;">{{ form.get('scp_isshared')?.value ? 'Sí, visible por otros miembros del espacio' : 'No, solo el propietario' }}</span>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Estado</nz-form-label>
+        <nz-form-control>
+          <nz-switch formControlName="scp_active"></nz-switch>
+          <span style="margin-left: 8px;">{{ form.get('scp_active')?.value ? 'Activo' : 'Inactivo' }}</span>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px;">
+        <button nz-button type="button" (click)="onCancel()">Cancelar</button>
+        <button nz-button nzType="primary" type="submit" [nzLoading]="isLoading">
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Ámbito' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</nz-spin>
