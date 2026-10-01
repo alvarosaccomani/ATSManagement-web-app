@@ -20,6 +20,7 @@ import { TypeCardsService } from '../../../core/services/type-cards.service';
 import { BrandCardsService } from '../../../core/services/brand-cards.service';
 import { BanksService } from '../../../core/services/banks.service';
 import { CardsService } from '../../../core/services/cards.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-card',
@@ -61,7 +62,8 @@ export class CardComponent implements OnInit {
     private _brandCardsService: BrandCardsService,
     private _banksService: BanksService,
     private _cardsService: CardsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {
     this.form = this.fb.group({
       usr_uuid: [{ value: '', disabled: true }],
@@ -213,76 +215,58 @@ export class CardComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.message.error('Por favor complete todos los campos obligatorios');
+      this._messageService.error('Formulario Inválido', 'Por favor complete todos los campos obligatorios');
       return;
     }
 
     this.isLoading = true;
 
     if(!this.isEditing) {
-      this._cardsService.saveCard(this.form.getRawValue()).subscribe(
-        response => {
+      this._cardsService.saveCard(this.form.getRawValue()).subscribe({
+        next: response => {
+          this.isLoading = false;
           if(response.success) {
-            this.isLoading = false;
-            const item = response.item;
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Rubro fue agregado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/cards']);
-            //   }
-            // );
-            this.router.navigate(['/admin/user/cards']);
+            this._messageService.success(
+              'Tarjeta Creada', 
+              'La tarjeta se agregó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/cards']);
+              }
+            );
           } else {
-            this.isLoading = false;
-            //this.status = 'error'
+            this._messageService.error('Error', response.message || 'No se pudo guardar la tarjeta');
           }
         },
-        error =>{
-            this.isLoading = false;
-            let errorMessage = <any>error;
-            console.log(errorMessage);
-            // if(errorMessage != null) {
-            //   this._messageService.error(
-            //     "Error", 
-            //     errorMessage.error.error
-            //   );
-            // }
-            this.message.success(errorMessage.error.error);
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al guardar la tarjeta');
         }
-      )
+      });
     } else {
-      this._cardsService.updateCard(this.form.getRawValue()).subscribe(
-        response => {
+      this._cardsService.updateCard(this.form.getRawValue()).subscribe({
+        next: response => {
+          this.isLoading = false;
           if(response.success) {
-            this.isLoading = false;
-            const item = response.item;
-            this.router.navigate(['/admin/user/cards']);
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Banco fue actualizado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/cards']);
-            //   }
-            // );
+            this._messageService.success(
+              'Tarjeta Actualizada', 
+              'La tarjeta se actualizó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/cards']);
+              }
+            );
           } else {
-            this.isLoading = false;
-            //this.status = 'error'
+            this._messageService.error('Error', response.message || 'No se pudo actualizar la tarjeta');
           }
         },
-        error => {
-            this.isLoading = false;
-            let errorMessage = <any>error;
-            console.log(errorMessage);
-            if(errorMessage != null) {
-              // this._messageService.error(
-              //   "Error", 
-              //   errorMessage.error.error
-              // );
-              this.message.success(errorMessage.error.error);
-            }
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al actualizar la tarjeta');
         }
-      )
+      });
     }
   }
 
