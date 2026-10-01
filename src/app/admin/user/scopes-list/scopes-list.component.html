@@ -1,1 +1,52 @@
-<p>scopes-list works!</p>
+<nz-spin [nzSpinning]="isLoading">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <h2>Ámbitos (Contextos / Espacios)</h2>
+    <button nz-button nzType="primary" (click)="newScope()">
+      <nz-icon nzType="plus" /> Nuevo Ámbito
+    </button>
+  </div>
+
+  <nz-table #basicTable [nzData]="scopes" [nzBordered]="true">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Color</th>
+        <th>Compartido</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>
+          <span *ngIf="data.scp_color" [style.background-color]="data.scp_color" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px;"></span>
+          <strong>{{ data.scp_name }}</strong>
+        </td>
+        <td>{{ data.scp_description || '-' }}</td>
+        <td>
+          <nz-tag *ngIf="data.scp_color" [nzColor]="data.scp_color">{{ data.scp_color }}</nz-tag>
+          <span *ngIf="!data.scp_color">-</span>
+        </td>
+        <td>
+          <nz-tag [nzColor]="data.scp_isshared ? 'blue' : 'default'">
+            {{ data.scp_isshared ? 'Sí' : 'No' }}
+          </nz-tag>
+        </td>
+        <td>
+          <nz-tag [nzColor]="data.scp_active ? 'green' : 'red'">
+            {{ data.scp_active ? 'Activo' : 'Inactivo' }}
+          </nz-tag>
+        </td>
+        <td>
+          <button nz-button nzType="text" (click)="editScope(data)" nz-tooltip nzTooltipTitle="Editar">
+            <nz-icon nzType="edit" />
+          </button>
+          <button nz-button nzType="text" nzDanger (click)="deleteScope(data)" nz-tooltip nzTooltipTitle="Eliminar">
+            <nz-icon nzType="delete" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
