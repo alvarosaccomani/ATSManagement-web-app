@@ -30,6 +30,8 @@ import { VoucherStateComponent } from './voucher-state/voucher-state.component';
 import { StatusPeriodComponent } from './status-period/status-period.component';
 import { PaymentPeriodStatusComponent } from './payment-period-status/payment-period-status.component';
 import { VoucherFeeStatusComponent } from './voucher-fee-status/voucher-fee-status.component';
+import { TransactionsListComponent } from './transactions-list/transactions-list.component';
+import { TransactionComponent } from './transaction/transaction.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -78,7 +80,10 @@ export const USER_ROUTES: Routes = [
             { path: 'payment-method/edit/:paym_uuid', component: PaymentMethodComponent },
             { path: 'payment-periods', component: PaymentPeriodsComponent},
             { path: 'payment-period/new', component: PaymentPeriodComponent },
-            { path: 'payment-period/edit/:crd_uuid/:per_uuid/:payp_uuid', component: PaymentPeriodComponent }
+            { path: 'payment-period/edit/:crd_uuid/:per_uuid/:payp_uuid', component: PaymentPeriodComponent },
+            { path: 'transactions', component: TransactionsListComponent },
+            { path: 'transaction/new', component: TransactionComponent },
+            { path: 'transaction/edit/:trx_uuid', component: TransactionComponent }
         ]
     }
 ];
