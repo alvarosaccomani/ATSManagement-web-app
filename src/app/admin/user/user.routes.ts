@@ -69,7 +69,7 @@ export const USER_ROUTES: Routes = [
             { path: 'voucher-fee-status/edit/:voufs_uuid', component: VoucherFeeStatusComponent },
             { path: 'vouchers-fees', component: VouchersFeesComponent},
             { path: 'voucher-fee/new', component: VoucherFeeComponent },
-            { path: 'voucher-fee/edit/:vouf_uuid', component: VoucherFeeComponent },
+            { path: 'voucher-fee/edit/:crd_uuid/:per_uuid/:vou_uuid/:vouf_uuid', component: VoucherFeeComponent },
             { path: 'payment-periods-status', component: PaymentPeriodsStatusComponent},
             { path: 'payment-period-status/new', component: PaymentPeriodStatusComponent },
             { path: 'payment-period-status/edit/:payps_uuid', component: PaymentPeriodStatusComponent },
@@ -78,7 +78,7 @@ export const USER_ROUTES: Routes = [
             { path: 'payment-method/edit/:paym_uuid', component: PaymentMethodComponent },
             { path: 'payment-periods', component: PaymentPeriodsComponent},
             { path: 'payment-period/new', component: PaymentPeriodComponent },
-            { path: 'payment-period/edit/:per_uuid', component: PaymentPeriodComponent }
+            { path: 'payment-period/edit/:crd_uuid/:per_uuid/:payp_uuid', component: PaymentPeriodComponent }
         ]
     }
 ];

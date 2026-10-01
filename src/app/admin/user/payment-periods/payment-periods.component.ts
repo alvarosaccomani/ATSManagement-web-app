@@ -173,7 +173,7 @@ export class PaymentPeriodsComponent implements OnInit {
   }
 
   editPayment(payment: PaymentPeriodInterface): void {
-    this._router.navigate(['/admin/user/payment-period/edit', payment.payp_uuid]);
+    this._router.navigate(['/admin/user/payment-period/edit', payment.crd_uuid, payment.per_uuid, payment.payp_uuid]);
   }
 
   deletePayment(payment: PaymentPeriodInterface): void {

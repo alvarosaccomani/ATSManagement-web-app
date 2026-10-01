@@ -147,7 +147,7 @@ export class VouchersFeesComponent implements OnInit {
   }
 
   editInstallment(installment: VoucherFeeInterface): void {
-    this._router.navigate(['/admin/user/voucher-fee/edit', installment.vouf_uuid]);
+    this._router.navigate(['/admin/user/voucher-fee/edit', installment.crd_uuid, installment.per_uuid, installment.vou_uuid, installment.vouf_uuid]);
   }
 
   deleteInstallment(installment: VoucherFeeInterface): void {
