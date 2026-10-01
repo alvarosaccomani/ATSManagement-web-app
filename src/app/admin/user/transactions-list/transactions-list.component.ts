@@ -65,8 +65,16 @@ export class TransactionsListComponent implements OnInit {
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
-          this.scopes = response.data;
-          this.selectedScopeUuid = this.scopes[0].scp_uuid;
+          const allOption: ScopeInterface = {
+            scp_uuid: 'ALL',
+            scp_name: 'Todos los ámbitos',
+            scp_isshared: false,
+            usr_uuidowner: usr_uuid,
+            scp_active: true,
+            scp_color: '#108ee9'
+          };
+          this.scopes = [allOption, ...response.data];
+          this.selectedScopeUuid = 'ALL';
           this.loadTransactions();
         }
       },

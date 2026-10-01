@@ -58,6 +58,7 @@
       <thead>
         <tr>
           <th>Fecha</th>
+          <th>Ámbito</th>
           <th>Tipo</th>
           <th>Concepto / Comercio</th>
           <th>Monto</th>
@@ -70,6 +71,15 @@
         @for (data of basicTable.data; track data.trx_uuid) {
           <tr>
             <td>{{ data.trx_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              @if (data.scp) {
+                <nz-tag [nzColor]="data.scp.scp_color || 'cyan'">
+                  {{ data.scp.scp_name }}
+                </nz-tag>
+              } @else {
+                <span class="text-muted">-</span>
+              }
+            </td>
             <td>
               <nz-tag [nzColor]="getTypeColor(data.trx_type)">
                 <i nz-icon [nzType]="getTypeIcon(data.trx_type)"></i>
@@ -86,7 +96,7 @@
             </td>
             <td>
               @if (data.prs) {
-                <nz-tag nzColor="blue">👤 {{ data.prs.prs_name }}</nz-tag>
+                <nz-tag nzColor="blue">👤 {{ data.prs.prs_name }} ({{ data.prs.prs_type }})</nz-tag>
               } @else {
                 <span class="text-muted">-</span>
               }
