@@ -1,1 +1,108 @@
-<p>transactions-list works!</p>
+<div class="transactions-container">
+  <div class="header-actions">
+    <div class="title-section">
+      <h2>
+        <i nz-icon nzType="wallet" nzTheme="outline"></i>
+        Movimientos Financieros
+      </h2>
+      <p class="subtitle">Gestión unificada de Ingresos, Egresos y Transferencias</p>
+    </div>
+
+    <div class="action-buttons">
+      <button nz-button nzType="primary" (click)="newTransaction()" nzSize="large">
+        <i nz-icon nzType="plus"></i>
+        ＋ Cargar Gasto / Movimiento
+      </button>
+    </div>
+  </div>
+
+  <nz-card class="filter-card">
+    <div class="filter-row">
+      <div class="filter-item">
+        <label>Ámbito / Contexto:</label>
+        <nz-select [ngModel]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="width: 220px;" nzSize="large">
+          @for (scope of scopes; track scope.scp_uuid) {
+            <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? '🏢 ' : '👤 ') + scope.scp_name"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      <div class="filter-item">
+        <label>Tipo:</label>
+        <nz-select [ngModel]="selectedType" (ngModelChange)="onTypeChange($event)" style="width: 180px;" nzSize="large">
+          <nz-option nzValue="ALL" nzLabel="🌐 Todos"></nz-option>
+          <nz-option nzValue="INGRESO" nzLabel="🟢 Ingresos"></nz-option>
+          <nz-option nzValue="EGRESO" nzLabel="🔴 Egresos"></nz-option>
+          <nz-option nzValue="TRANSFERENCIA" nzLabel="🔵 Transferencias"></nz-option>
+        </nz-select>
+      </div>
+
+      <div class="filter-item search-item">
+        <label>Buscar:</label>
+        <nz-input-group [nzSuffix]="suffixIconSearch" nzSize="large">
+          <input type="text" nz-input [(ngModel)]="searchValue" (ngModelChange)="applyFilter()" placeholder="Buscar concepto o persona..." />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+  </nz-card>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Cargando movimientos..."></nz-spin>
+    </div>
+  } @else {
+    <nz-table #basicTable [nzData]="filteredTransactions" [nzPageSize]="10" nzShowPagination>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>Concepto / Comercio</th>
+          <th>Monto</th>
+          <th>Persona / Referencia</th>
+          <th>Notas</th>
+          <th nzWidth="120px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of basicTable.data; track data.trx_uuid) {
+          <tr>
+            <td>{{ data.trx_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              <nz-tag [nzColor]="getTypeColor(data.trx_type)">
+                <i nz-icon [nzType]="getTypeIcon(data.trx_type)"></i>
+                <strong>{{ data.trx_type }}</strong>
+              </nz-tag>
+            </td>
+            <td>
+              <strong>{{ data.trx_concept }}</strong>
+            </td>
+            <td>
+              <span [class.income-amount]="data.trx_type === 'INGRESO'" [class.expense-amount]="data.trx_type === 'EGRESO'">
+                {{ formatAmount(data.trx_amount) }}
+              </span>
+            </td>
+            <td>
+              @if (data.prs) {
+                <nz-tag nzColor="blue">👤 {{ data.prs.prs_name }}</nz-tag>
+              } @else {
+                <span class="text-muted">-</span>
+              }
+            </td>
+            <td>{{ data.trx_notes || '-' }}</td>
+            <td>
+              <button nz-button nzType="text" (click)="editTransaction(data)" nz-tooltip nzTooltipTitle="Editar">
+                <i nz-icon nzType="edit"></i>
+              </button>
+              <button nz-button nzType="text" nzDanger (click)="deleteTransaction(data)" nz-tooltip nzTooltipTitle="Eliminar">
+                <i nz-icon nzType="delete"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  }
+</div>

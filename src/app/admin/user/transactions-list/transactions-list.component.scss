@@ -1,0 +1,73 @@
+.transactions-container {
+  padding: 24px;
+
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .title-section {
+      h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #1f2937;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .subtitle {
+        margin: 4px 0 0 0;
+        color: #6b7280;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .filter-card {
+    margin-bottom: 24px;
+    border-radius: 8px;
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+
+      .filter-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        label {
+          font-weight: 600;
+          color: #374151;
+        }
+
+        &.search-item {
+          flex: 1;
+          min-width: 260px;
+        }
+      }
+    }
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 48px;
+  }
+
+  .income-amount {
+    color: #3f8600;
+    font-weight: 600;
+  }
+
+  .expense-amount {
+    color: #cf1322;
+    font-weight: 600;
+  }
+
+  .text-muted {
+    color: #9ca3af;
+  }
+}
