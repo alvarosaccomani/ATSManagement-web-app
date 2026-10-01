@@ -32,6 +32,10 @@ import { PaymentPeriodStatusComponent } from './payment-period-status/payment-pe
 import { VoucherFeeStatusComponent } from './voucher-fee-status/voucher-fee-status.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { ScopesListComponent } from './scopes-list/scopes-list.component';
+import { ScopeComponent } from './scope/scope.component';
+import { PersonsListComponent } from './persons-list/persons-list.component';
+import { PersonComponent } from './person/person.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -83,7 +87,13 @@ export const USER_ROUTES: Routes = [
             { path: 'payment-period/edit/:crd_uuid/:per_uuid/:payp_uuid', component: PaymentPeriodComponent },
             { path: 'transactions', component: TransactionsListComponent },
             { path: 'transaction/new', component: TransactionComponent },
-            { path: 'transaction/edit/:trx_uuid', component: TransactionComponent }
+            { path: 'transaction/edit/:trx_uuid', component: TransactionComponent },
+            { path: 'scopes', component: ScopesListComponent },
+            { path: 'scope/new', component: ScopeComponent },
+            { path: 'scope/edit/:scp_uuid', component: ScopeComponent },
+            { path: 'persons', component: PersonsListComponent },
+            { path: 'person/new', component: PersonComponent },
+            { path: 'person/edit/:prs_uuid', component: PersonComponent }
         ]
     }
 ];
