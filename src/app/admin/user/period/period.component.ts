@@ -18,6 +18,7 @@ import { StatusPeriodInterface } from '../../../core/interfaces/status-period';
 import { CardsService } from '../../../core/services/cards.service';
 import { PeriodsService } from '../../../core/services/periods.service';
 import { StatusPeriodsService } from '../../../core/services/status-periods.service';
+import { MessageService } from '../../../core/services/message.service';
 
 // Definir interfaz para datos relacionados
 interface RelatedData {
@@ -65,7 +66,8 @@ export class PeriodComponent implements OnInit {
     private _cardsService: CardsService,
     private _periodsService: PeriodsService,
     private _statusPeriodsService: StatusPeriodsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {
     this.form = this.fb.group({
       usr_uuid: [{ value: '', disabled: true }],
@@ -202,7 +204,7 @@ export class PeriodComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.message.error('Por favor complete todos los campos obligatorios');
+      this._messageService.error('Formulario Inválido', 'Por favor complete todos los campos obligatorios');
       return;
     }
 
@@ -212,90 +214,64 @@ export class PeriodComponent implements OnInit {
     const dueDate = this.form.get('per_duedate')?.value;
 
     if (startDate && endDate && startDate >= endDate) {
-      this.message.error('La fecha de inicio debe ser anterior a la fecha de fin');
+      this._messageService.error('Error de Fechas', 'La fecha de inicio debe ser anterior a la fecha de fin');
       return;
     }
 
     if (endDate && dueDate && endDate >= dueDate) {
-      this.message.error('La fecha de fin debe ser anterior a la fecha de vencimiento');
+      this._messageService.error('Error de Fechas', 'La fecha de fin debe ser anterior a la fecha de vencimiento');
       return;
     }
 
     this.isLoading = true;
 
     if(!this.isEditing) {
-      this._periodsService.savePeriod(this.form.getRawValue()).subscribe(
-        response => {
+      this._periodsService.savePeriod(this.form.getRawValue()).subscribe({
+        next: response => {
+          this.isLoading = false;
           if(response.success) {
-            this.isLoading = false;
-            const item = response.item;
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Rubro fue agregado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/periods']);
-            //   }
-            // );
-            this.router.navigate(['/admin/user/periods']);
+            this._messageService.success(
+              'Período Creado', 
+              'El período se agregó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/periods']);
+              }
+            );
           } else {
-            this.isLoading = false;
-            //this.status = 'error'
+            this._messageService.error('Error', response.message || 'No se pudo guardar el período');
           }
         },
-        error =>{
-            this.isLoading = false;
-            let errorMessage = <any>error;
-            console.log(errorMessage);
-            // if(errorMessage != null) {
-            //   this._messageService.error(
-            //     "Error", 
-            //     errorMessage.error.error
-            //   );
-            // }
-            this.message.success(errorMessage.error.error);
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al guardar el período');
         }
-      )
+      });
     } else {
-      this._periodsService.updatePeriod(this.form.getRawValue()).subscribe(
-        response => {
+      this._periodsService.updatePeriod(this.form.getRawValue()).subscribe({
+        next: response => {
+          this.isLoading = false;
           if(response.success) {
-            this.isLoading = false;
-            const item = response.item;
-            this.router.navigate(['/admin/user/periods']);
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Banco fue actualizado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/periods']);
-            //   }
-            // );
+            this._messageService.success(
+              'Período Actualizado', 
+              'El período se actualizó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/periods']);
+              }
+            );
           } else {
-            this.isLoading = false;
-            //this.status = 'error'
+            this._messageService.error('Error', response.message || 'No se pudo actualizar el período');
           }
         },
-        error => {
-            this.isLoading = false;
-            let errorMessage = <any>error;
-            console.log(errorMessage);
-            if(errorMessage != null) {
-              // this._messageService.error(
-              //   "Error", 
-              //   errorMessage.error.error
-              // );
-              this.message.success(errorMessage.error.error);
-            }
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al actualizar el período');
         }
-      )
+      });
     }
-    
-    // Simular guardado
-    setTimeout(() => {
-      this.isLoading = false;
-      const action = this.isEditing ? 'actualizado' : 'creado';
-      this.message.success(`Período ${action} exitosamente`);
-      this.router.navigate(['/admin/user/periods']);
-    }, 800);
   }
 
   onCancel(): void {
