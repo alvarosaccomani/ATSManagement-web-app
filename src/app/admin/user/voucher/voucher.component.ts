@@ -18,6 +18,7 @@ import { VoucherStateInterface } from '../../../core/interfaces/voucher-state';
 import { TypeOperationsService } from '../../../core/services/type-operations.service';
 import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
 import { VouchersService } from '../../../core/services/vouchers.service';
+import { MessageService } from '../../../core/services/message.service';
 
 @Component({
   selector: 'app-voucher',
@@ -66,7 +67,8 @@ export class VoucherComponent implements OnInit {
     private _typeOperationsService: TypeOperationsService,
     private _vouchersStatesService: VouchersStatesService,
     private _vouchersService: VouchersService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _messageService: MessageService
   ) {
     this.form = this.fb.group({
       usr_uuid: [{ value: '', disabled: true }],
@@ -215,7 +217,7 @@ export class VoucherComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.message.error('Por favor complete todos los campos obligatorios');
+      this._messageService.error('Formulario Inválido', 'Por favor complete todos los campos obligatorios');
       return;
     }
 
@@ -254,41 +256,51 @@ export class VoucherComponent implements OnInit {
     };
 
     if(!this.isEditing) {
-      this._vouchersService.saveVoucher(payload).subscribe(
-        response => {
+      this._vouchersService.saveVoucher(payload).subscribe({
+        next: response => {
           this.isLoading = false;
           if(response.success) {
-            this.message.success('Comprobante creado exitosamente');
-            this.router.navigate(['/admin/user/vouchers']);
+            this._messageService.success(
+              'Comprobante Creado', 
+              'El comprobante se agregó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/vouchers']);
+              }
+            );
           } else {
-            this.message.error(response.message || 'Error al guardar el comprobante');
+            this._messageService.error('Error', response.message || 'No se pudo guardar el comprobante');
           }
         },
-        error =>{
-            this.isLoading = false;
-            let errorMessage = <any>error;
-            console.log(errorMessage);
-            this.message.error(errorMessage?.error?.error || 'Error al guardar el comprobante');
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage?.error?.error || 'Hubo un problema al guardar el comprobante');
         }
-      )
+      });
     } else {
-      this._vouchersService.updateVoucher(payload).subscribe(
-        response => {
+      this._vouchersService.updateVoucher(payload).subscribe({
+        next: response => {
           this.isLoading = false;
           if(response.success) {
-            this.message.success('Comprobante actualizado exitosamente');
-            this.router.navigate(['/admin/user/vouchers']);
+            this._messageService.success(
+              'Comprobante Actualizado', 
+              'El comprobante se actualizó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/vouchers']);
+              }
+            );
           } else {
-            this.message.error(response.message || 'Error al actualizar el comprobante');
+            this._messageService.error('Error', response.message || 'No se pudo actualizar el comprobante');
           }
         },
-        error => {
-            this.isLoading = false;
-            let errorMessage = <any>error;
-            console.log(errorMessage);
-            this.message.error(errorMessage?.error?.error || 'Error al actualizar el comprobante');
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage?.error?.error || 'Hubo un problema al actualizar el comprobante');
         }
-      )
+      });
     }
   }
 
