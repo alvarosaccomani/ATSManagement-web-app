@@ -14,7 +14,14 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 
-// Definir interfaz para datos relacionados
+import { VoucherFeeInterface } from '../../../core/interfaces/voucher-fee';
+import { CardsService } from '../../../core/services/cards.service';
+import { PeriodsService } from '../../../core/services/periods.service';
+import { VouchersService } from '../../../core/services/vouchers.service';
+import { VouchersFeeStatusService } from '../../../core/services/vouchers-fee-status.service';
+import { VouchersFeesService } from '../../../core/services/vouchers-fees.service';
+import { MessageService } from '../../../core/services/message.service';
+
 interface RelatedData {
   crd_uuid: string;
   per_uuid: string;
@@ -47,43 +54,26 @@ export class VoucherFeeComponent implements OnInit {
   isEditing = false;
   installmentId: string | null = null;
 
-  // Opciones para selects
-  installmentStatuses = [
-    { value: '1', label: 'Pendiente' },
-    { value: '2', label: 'Pagado' },
-    { value: '3', label: 'Vencido' }
-  ];
+  // Opciones para selects cargadas desde el backend
+  installmentStatuses: any[] = [];
+  vouchers: any[] = [];
+  cards: any[] = [];
+  periods: any[] = [];
 
-  vouchers = [
-    { value: '1', label: 'Voucher #1 - Supermercado Prueba' },
-    { value: '2', label: 'Voucher #2 - Electrodomésticos XYZ' },
-    { value: '3', label: 'Voucher #3 - Farmacia Salud' }
-  ];
-
-  cards = [
-    { value: '1', label: '**** **** **** 8936' },
-    { value: '2', label: '**** **** **** 5421' },
-    { value: '3', label: '**** **** **** 7890' }
-  ];
-
-  periods = [
-    { value: '1', label: 'Período 01/2026' },
-    { value: '2', label: 'Período 02/2026' },
-    { value: '3', label: 'Período 03/2026' }
-  ];
-
-  // Mapeo de datos relacionados con tipado seguro
-  private relatedDataMap: { [key: string]: RelatedData } = {
-    '1': { crd_uuid: '1', per_uuid: '1' },
-    '2': { crd_uuid: '2', per_uuid: '2' },
-    '3': { crd_uuid: '3', per_uuid: '3' }
-  };
+  // Mapeo de datos relacionados
+  private relatedDataMap: { [key: string]: RelatedData } = {};
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _vouchersService: VouchersService,
+    private _vouchersFeeStatusService: VouchersFeeStatusService,
+    private _vouchersFeesService: VouchersFeesService,
+    private _messageService: MessageService
   ) {
     this.form = this.fb.group({
       vouf_uuid: [{ value: '', disabled: true }],
@@ -98,11 +88,18 @@ export class VoucherFeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.installmentId = this.route.snapshot.paramMap.get('id');
-    this.isEditing = !!this.installmentId;
+    const vouf_uuid = this.route.snapshot.paramMap.get('vouf_uuid');
+    const crd_uuid = this.route.snapshot.paramMap.get('crd_uuid');
+    const per_uuid = this.route.snapshot.paramMap.get('per_uuid');
+    const vou_uuid = this.route.snapshot.paramMap.get('vou_uuid');
+
+    this.isEditing = !!vouf_uuid;
+    this.loadStatuses();
+    this.loadVouchersData();
     
     if (this.isEditing) {
-      this.loadInstallment();
+      this.installmentId = vouf_uuid;
+      this.loadInstallment(crd_uuid!, per_uuid!, vou_uuid!, vouf_uuid!);
     } else {
       this.form.get('vouf_uuid')?.disable();
     }
@@ -118,57 +115,169 @@ export class VoucherFeeComponent implements OnInit {
     });
   }
 
-  loadInstallment(): void {
+  loadStatuses(): void {
+    this._vouchersFeeStatusService.getVoucherFeeStatus().subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.installmentStatuses = response.data.map((s: any) => ({
+            value: s.voufs_uuid,
+            label: this.formatStatusName(s.voufs_name)
+          }));
+        }
+      }
+    });
+  }
+
+  loadVouchersData(): void {
     this.isLoading = true;
-    
-    // Simular carga desde API
-    setTimeout(() => {
-      const mockInstallment = {
-        vouf_uuid: this.installmentId,
-        vouf_quotanumber: 1,
-        vouf_quotaamount: 100.00,
-        vouf_quotaduedate: new Date('2026-10-02'),
-        voufs_uuid: '1',
-        vou_uuid: '1',
-        crd_uuid: '1',
-        per_uuid: '1'
-      };
-      
-      // Habilitar temporalmente para patchear
-      this.form.get('vouf_uuid')?.enable();
-      this.form.get('crd_uuid')?.enable();
-      this.form.get('per_uuid')?.enable();
-      
-      this.form.patchValue(mockInstallment);
-      
-      this.form.get('vouf_uuid')?.disable();
-      this.form.get('crd_uuid')?.disable();
-      this.form.get('per_uuid')?.disable();
-      
-      this.isLoading = false;
-    }, 500);
+    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe({
+      next: (cardResponse: any) => {
+        if (cardResponse.success) {
+          const cardsData = cardResponse.data;
+          this.cards = cardsData.map((c: any) => ({ value: c.crd_uuid, label: `**** **** **** ${c.crd_last4digits}` }));
+          
+          let pendingQueries = cardsData.length;
+          if (pendingQueries === 0) {
+            this.isLoading = false;
+            return;
+          }
+
+          const allVouchers: any[] = [];
+          const relatedMap: { [key: string]: RelatedData } = {};
+          const allPeriods: any[] = [];
+
+          cardsData.forEach((card: any) => {
+            this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid).subscribe({
+              next: (periodResponse: any) => {
+                if (periodResponse.success) {
+                  const periodsData = periodResponse.data;
+                  periodsData.forEach((p: any) => {
+                    if (!allPeriods.some(ap => ap.value === p.per_uuid)) {
+                      allPeriods.push({ value: p.per_uuid, label: `Período ${this.formatPeriodNumber(p.per_periodnumber)}` });
+                    }
+                  });
+
+                  let pendingPeriodVouchers = periodsData.length;
+                  if (pendingPeriodVouchers === 0) {
+                    pendingQueries--;
+                    if (pendingQueries === 0) {
+                      this.vouchers = allVouchers;
+                      this.periods = allPeriods;
+                      this.relatedDataMap = relatedMap;
+                      this.isLoading = false;
+                    }
+                    return;
+                  }
+
+                  periodsData.forEach((period: any) => {
+                    this._vouchersService.getVouchers('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid, period.per_uuid).subscribe({
+                      next: (voucherResponse: any) => {
+                        if (voucherResponse.success) {
+                          voucherResponse.data.forEach((v: any) => {
+                            allVouchers.push({
+                              value: v.vou_uuid,
+                              label: `${v.vou_commercename} - ${v.vou_transactionnumber} (${this.formatAmount(v.vou_amount)})`
+                            });
+                            relatedMap[v.vou_uuid] = {
+                              crd_uuid: card.crd_uuid,
+                              per_uuid: period.per_uuid
+                            };
+                          });
+                        }
+                        pendingPeriodVouchers--;
+                        if (pendingPeriodVouchers === 0) {
+                          pendingQueries--;
+                          if (pendingQueries === 0) {
+                            this.vouchers = allVouchers;
+                            this.periods = allPeriods;
+                            this.relatedDataMap = relatedMap;
+                            this.isLoading = false;
+                          }
+                        }
+                      },
+                      error: () => {
+                        pendingPeriodVouchers--;
+                        if (pendingPeriodVouchers === 0) {
+                          pendingQueries--;
+                          if (pendingQueries === 0) {
+                            this.vouchers = allVouchers;
+                            this.periods = allPeriods;
+                            this.relatedDataMap = relatedMap;
+                            this.isLoading = false;
+                          }
+                        }
+                      }
+                    });
+                  });
+                } else {
+                  pendingQueries--;
+                  if (pendingQueries === 0) {
+                    this.vouchers = allVouchers;
+                    this.periods = allPeriods;
+                    this.relatedDataMap = relatedMap;
+                    this.isLoading = false;
+                  }
+                }
+              },
+              error: () => {
+                pendingQueries--;
+                if (pendingQueries === 0) {
+                  this.vouchers = allVouchers;
+                  this.periods = allPeriods;
+                  this.relatedDataMap = relatedMap;
+                  this.isLoading = false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading = false;
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadInstallment(crd_uuid: string, per_uuid: string, vou_uuid: string, vouf_uuid: string): void {
+    this.isLoading = true;
+    this._vouchersFeesService.getVoucherFeeById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', crd_uuid, per_uuid, vou_uuid, vouf_uuid).subscribe({
+      next: (response: any) => {
+        this.isLoading = false;
+        if (response.success) {
+          const installment = {
+            ...response.data,
+            vouf_quotaduedate: new Date(response.data.vouf_quotaduedate)
+          };
+
+          this.form.get('vouf_uuid')?.enable();
+          this.form.get('crd_uuid')?.enable();
+          this.form.get('per_uuid')?.enable();
+
+          this.form.patchValue(installment);
+
+          this.form.get('vouf_uuid')?.disable();
+          this.form.get('crd_uuid')?.disable();
+          this.form.get('per_uuid')?.disable();
+        }
+      },
+      error: error => {
+        this.isLoading = false;
+        console.error(error);
+        this._messageService.error('Error', 'No se pudo cargar la cuota');
+      }
+    });
   }
 
   loadRelatedData(voucherId: string): void {
-    // Verificar si el voucherId existe en el mapa
     if (this.relatedDataMap.hasOwnProperty(voucherId)) {
       const data = this.relatedDataMap[voucherId];
-      // Habilitar temporalmente para setear valor
       this.form.get('crd_uuid')?.enable();
       this.form.get('per_uuid')?.enable();
       
       this.form.get('crd_uuid')?.setValue(data.crd_uuid);
       this.form.get('per_uuid')?.setValue(data.per_uuid);
-      
-      this.form.get('crd_uuid')?.disable();
-      this.form.get('per_uuid')?.disable();
-    } else {
-      // Si no existe, limpiar los campos
-      this.form.get('crd_uuid')?.enable();
-      this.form.get('per_uuid')?.enable();
-      
-      this.form.get('crd_uuid')?.setValue('');
-      this.form.get('per_uuid')?.setValue('');
       
       this.form.get('crd_uuid')?.disable();
       this.form.get('per_uuid')?.disable();
@@ -183,23 +292,68 @@ export class VoucherFeeComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.message.error('Por favor complete todos los campos obligatorios');
+      this._messageService.error('Formulario Inválido', 'Por favor complete todos los campos obligatorios');
       return;
     }
 
     this.isLoading = true;
-    
-    // Simular guardado
-    setTimeout(() => {
-      this.isLoading = false;
-      const action = this.isEditing ? 'actualizada' : 'creada';
-      this.message.success(`Cuota ${action} exitosamente`);
-      this.router.navigate(['/admin/user/cuotas-comprobantes']);
-    }, 800);
+    const rawValue = this.form.getRawValue();
+    const payload = {
+      ...rawValue,
+      usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+    };
+
+    if (!this.isEditing) {
+      this._vouchersFeesService.saveVoucherFee(payload).subscribe({
+        next: response => {
+          this.isLoading = false;
+          if (response.success) {
+            this._messageService.success(
+              'Cuota Creada', 
+              'La cuota se agregó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/vouchers-fees']);
+              }
+            );
+          } else {
+            this._messageService.error('Error', response.message || 'No se pudo guardar la cuota');
+          }
+        },
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage?.error?.error || 'Hubo un problema al guardar la cuota');
+        }
+      });
+    } else {
+      this._vouchersFeesService.updateVoucherFee(payload.usr_uuid, payload.crd_uuid, payload.per_uuid, payload.vou_uuid, payload.vouf_uuid, payload).subscribe({
+        next: response => {
+          this.isLoading = false;
+          if (response.success) {
+            this._messageService.success(
+              'Cuota Actualizada', 
+              'La cuota se actualizó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/vouchers-fees']);
+              }
+            );
+          } else {
+            this._messageService.error('Error', response.message || 'No se pudo actualizar la cuota');
+          }
+        },
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage?.error?.error || 'Hubo un problema al actualizar la cuota');
+        }
+      });
+    }
   }
 
   onCancel(): void {
-    this.router.navigate(['/admin/user/cuotas-comprobantes']);
+    this.router.navigate(['/admin/user/vouchers-fees']);
   }
 
   getErrorMessage(controlName: string): string | null {
@@ -216,6 +370,21 @@ export class VoucherFeeComponent implements OnInit {
     return null;
   }
 
+  formatPeriodNumber(periodNumber: number): string {
+    const periodStr = periodNumber.toString();
+    const year = periodStr.substring(0, 4);
+    const month = periodStr.substring(4, 6);
+    return `${month}/${year}`;
+  }
+
+  formatAmount(amount: any): string {
+    const amountNum = parseFloat(amount);
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS'
+    }).format(amountNum);
+  }
+
   currencyFormatter = (value: number): string => {
     if (!value) return '';
     return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -225,17 +394,19 @@ export class VoucherFeeComponent implements OnInit {
     return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
   };
 
-  // Obtener color del estado para mostrar en el formulario
   getStatusColor(statusId: string): string {
     switch (statusId) {
-      case '1': return 'processing'; // Pendiente
-      case '2': return 'success';    // Pagado
-      case '3': return 'error';      // Vencido
+      case '1': return 'processing';
+      case '2': return 'success';
+      case '3': return 'error';
       default: return 'default';
     }
   }
 
-  // Obtener etiqueta del estado
+  formatStatusName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
   getStatusLabel(statusId: string): string {
     const status = this.installmentStatuses.find(s => s.value === statusId);
     return status ? status.label : 'Desconocido';
