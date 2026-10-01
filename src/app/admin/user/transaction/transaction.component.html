@@ -1,1 +1,169 @@
-<p>transaction works!</p>
+<div class="transaction-form-container">
+  <div class="form-header">
+    <h2>
+      <i nz-icon nzType="wallet" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Movimiento' : 'Cargar Gasto / Movimiento' }}
+    </h2>
+    <button nz-button nzType="text" (click)="onCancel()">
+      <i nz-icon nzType="close"></i>
+    </button>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <nz-spin nzTip="Guardando..."></nz-spin>
+    </div>
+  } @else {
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit(false)">
+      <!-- Selector de Tipo de Movimiento -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24">
+          <nz-form-item class="type-selector-item">
+            <nz-form-label [nzSpan]="24" nzRequired>Tipo de Operación</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-radio-group formControlName="trx_type" nzSize="large" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="EGRESO" class="radio-egreso">
+                  <i nz-icon nzType="arrow-up"></i> 🔴 EGRESO / GASTO
+                </label>
+                <label nz-radio-button nzValue="INGRESO" class="radio-ingreso">
+                  <i nz-icon nzType="arrow-down"></i> 🟢 INGRESO / VENTA
+                </label>
+                <label nz-radio-button nzValue="TRANSFERENCIA" class="radio-transferencia">
+                  <i nz-icon nzType="swap"></i> 🔵 TRANSFERENCIA
+                </label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Ámbito y Fecha -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="scp_uuid" [nzSpan]="24" nzRequired>Ámbito / Contexto</nz-form-label>
+            <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione un ámbito">
+              <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito" nzSize="large">
+                @for (scope of scopes; track scope.scp_uuid) {
+                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? '🏢 ' : '👤 ') + scope.scp_name"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="trx_datetime" [nzSpan]="24" nzRequired>Fecha y Hora</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-date-picker formControlName="trx_datetime" nzShowTime nzFormat="DD/MM/YYYY HH:mm" style="width: 100%" nzSize="large"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Concepto e Importe -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="14">
+          <nz-form-item>
+            <nz-form-label nzFor="trx_concept" [nzSpan]="24" nzRequired>Concepto / Comercio</nz-form-label>
+            <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese el concepto o comercio">
+              <input #conceptInput nz-input formControlName="trx_concept" placeholder="Ej. Supermercado, Venta Producto X, Alquiler" nzSize="large" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="24" [nzMd]="10">
+          <nz-form-item>
+            <nz-form-label nzFor="trx_amount" [nzSpan]="24" nzRequired>Monto ($)</nz-form-label>
+            <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese el monto">
+              <nz-input-number formControlName="trx_amount" nzPrefix="$" [nzMin]="0.01" [nzStep]="100" [nzFormatter]="currencyFormatter" [nzParser]="currencyParser" style="width: 100%" nzSize="large"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Fuente de Dinero y Destino (si es Transferencia) -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24" [nzMd]="form.get('trx_type')?.value === 'TRANSFERENCIA' ? 12 : 12">
+          <nz-form-item>
+            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">Cuenta Origen / Fuente de Dinero</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <nz-select formControlName="crd_uuid" placeholder="Efectivo / Mercado Pago / Tarjeta" nzSize="large" nzAllowClear>
+                @for (card of cards; track card.value) {
+                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        @if (form.get('trx_type')?.value === 'TRANSFERENCIA') {
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="target_crduuid" [nzSpan]="24" nzRequired>Cuenta Destino</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione la cuenta destino">
+                <nz-select formControlName="target_crduuid" placeholder="Seleccione cuenta destino" nzSize="large">
+                  @for (card of cards; track card.value) {
+                    <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        }
+
+        @if (form.get('trx_type')?.value !== 'TRANSFERENCIA') {
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="prs_uuid" [nzSpan]="24">Persona / Socio / Cliente / Proveedor</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="prs_uuid" placeholder="Seleccione o busque persona" nzSize="large" nzAllowClear nzShowSearch>
+                  @for (person of persons; track person.prs_uuid) {
+                    <nz-option [nzValue]="person.prs_uuid" [nzLabel]="person.prs_name + ' (' + person.prs_type + ')'"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        }
+      </nz-row>
+
+      <!-- Notas -->
+      <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-label nzFor="trx_notes" [nzSpan]="24">Observaciones</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <textarea nz-input formControlName="trx_notes" placeholder="Detalle adicional del movimiento (opcional)" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-divider></nz-divider>
+
+      <!-- Botones de Acción -->
+      <div class="form-actions">
+        <button nz-button nzType="default" (click)="onCancel()" nzSize="large">
+          <i nz-icon nzType="rollback"></i>
+          Cancelar
+        </button>
+
+        @if (!isEditing) {
+          <button nz-button nzType="default" type="button" (click)="onSubmit(true)" [nzLoading]="isLoading" nzSize="large" class="btn-batch">
+            <i nz-icon nzType="plus-circle"></i>
+            Guardar y Cargar Otro (Modo Rápido Excel)
+          </button>
+        }
+
+        <button nz-button nzType="primary" type="submit" [nzLoading]="isLoading" nzSize="large">
+          <i nz-icon nzType="save"></i>
+          {{ isEditing ? 'Guardar Cambios' : 'Guardar y Finalizar' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

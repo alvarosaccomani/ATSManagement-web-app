@@ -1,0 +1,49 @@
+.transaction-form-container {
+  padding: 24px;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 48px;
+  }
+
+  .type-selector-item {
+    margin-bottom: 24px;
+
+    .radio-egreso {
+      color: #cf1322;
+    }
+    .radio-ingreso {
+      color: #3f8600;
+    }
+    .radio-transferencia {
+      color: #1890ff;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+
+    .btn-batch {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+  }
+}
