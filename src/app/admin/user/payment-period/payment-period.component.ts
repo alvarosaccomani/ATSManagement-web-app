@@ -14,7 +14,14 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 
-// Definir interfaz para datos relacionados
+import { PaymentPeriodInterface } from '../../../core/interfaces/payment-period';
+import { CardsService } from '../../../core/services/cards.service';
+import { PeriodsService } from '../../../core/services/periods.service';
+import { PaymentMethodsService } from '../../../core/services/payment-methods.service';
+import { PaymentPeriodsStatusService } from '../../../core/services/payment-periods-status.service';
+import { PaymentPeriodsService } from '../../../core/services/payment-periods.service';
+import { MessageService } from '../../../core/services/message.service';
+
 interface RelatedData {
   crd_uuid: string;
   per_uuid: string;
@@ -47,45 +54,26 @@ export class PaymentPeriodComponent implements OnInit {
   isEditing = false;
   paymentId: string | null = null;
 
-  // Opciones para selects
-  paymentMethods = [
-    { value: '1', label: 'Banco' },
-    { value: '2', label: 'Transferencia' },
-    { value: '3', label: 'Rapipago' },
-    { value: '4', label: 'Mercado Pago' },
-    { value: '5', label: 'Pago Fácil' }
-  ];
+  // Opciones para selects cargadas desde el backend
+  paymentMethods: any[] = [];
+  paymentStatuses: any[] = [];
+  periods: any[] = [];
+  cards: any[] = [];
 
-  paymentStatuses = [
-    { value: '1', label: 'Procesado' },
-    { value: '2', label: 'Confirmado' },
-    { value: '3', label: 'Rechazado' }
-  ];
-
-  periods = [
-    { value: '1', label: 'Período 01/2026' },
-    { value: '2', label: 'Período 02/2026' },
-    { value: '3', label: 'Período 03/2026' }
-  ];
-
-  cards = [
-    { value: '1', label: '**** **** **** 8936' },
-    { value: '2', label: '**** **** **** 5421' },
-    { value: '3', label: '**** **** **** 7890' }
-  ];
-
-  // Mapeo de datos relacionados con tipado seguro
-  private relatedDataMap: { [key: string]: RelatedData } = {
-    '1': { crd_uuid: '1', per_uuid: '1' },
-    '2': { crd_uuid: '2', per_uuid: '2' },
-    '3': { crd_uuid: '3', per_uuid: '3' }
-  };
+  // Mapeo de datos relacionados
+  private relatedDataMap: { [key: string]: RelatedData } = {};
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _paymentMethodsService: PaymentMethodsService,
+    private _paymentPeriodsStatusService: PaymentPeriodsStatusService,
+    private _paymentPeriodsService: PaymentPeriodsService,
+    private _messageService: MessageService
   ) {
     this.form = this.fb.group({
       payp_uuid: [{ value: '', disabled: true }],
@@ -100,11 +88,18 @@ export class PaymentPeriodComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paymentId = this.route.snapshot.paramMap.get('id');
-    this.isEditing = !!this.paymentId;
+    const payp_uuid = this.route.snapshot.paramMap.get('payp_uuid');
+    const crd_uuid = this.route.snapshot.paramMap.get('crd_uuid');
+    const per_uuid = this.route.snapshot.paramMap.get('per_uuid');
+
+    this.isEditing = !!payp_uuid;
+    this.loadPaymentMethods();
+    this.loadPaymentStatuses();
+    this.loadPeriodsData();
     
     if (this.isEditing) {
-      this.loadPayment();
+      this.paymentId = payp_uuid;
+      this.loadPayment(crd_uuid!, per_uuid!, payp_uuid!);
     } else {
       this.form.get('payp_uuid')?.disable();
     }
@@ -114,52 +109,126 @@ export class PaymentPeriodComponent implements OnInit {
       if (periodId) {
         this.loadRelatedData(periodId);
       } else {
-        this.form.get('crd_uuid')?.enable();
         this.form.get('crd_uuid')?.setValue('');
-        this.form.get('crd_uuid')?.disable();
       }
     });
   }
 
-  loadPayment(): void {
+  loadPaymentMethods(): void {
+    this._paymentMethodsService.getPaymentMethods().subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.paymentMethods = response.data.map((m: any) => ({
+            value: m.paym_uuid,
+            label: this.formatMethodName(m.paym_name)
+          }));
+        }
+      }
+    });
+  }
+
+  loadPaymentStatuses(): void {
+    this._paymentPeriodsStatusService.getPaymentPeriodsStatus().subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.paymentStatuses = response.data.map((s: any) => ({
+            value: s.payps_uuid,
+            label: this.formatStatusName(s.payps_name)
+          }));
+        }
+      }
+    });
+  }
+
+  loadPeriodsData(): void {
     this.isLoading = true;
-    
-    // Simular carga desde API
-    setTimeout(() => {
-      const mockPayment = {
-        payp_uuid: this.paymentId,
-        payp_paymentdate: new Date('2026-02-10T21:59:22'),
-        payp_amountpaid: 100.00,
-        paym_uuid: '1',
-        payp_paymentreference: 'REF-BANCO-001',
-        payps_uuid: '1',
-        per_uuid: '1',
-        crd_uuid: '1'
-      };
-      
-      this.form.get('payp_uuid')?.enable();
-      this.form.get('crd_uuid')?.enable();
-      
-      this.form.patchValue(mockPayment);
-      
-      this.form.get('payp_uuid')?.disable();
-      this.form.get('crd_uuid')?.disable();
-      
-      this.isLoading = false;
-    }, 500);
+    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe({
+      next: (cardResponse: any) => {
+        if (cardResponse.success) {
+          const cardsData = cardResponse.data;
+          this.cards = cardsData.map((c: any) => ({ value: c.crd_uuid, label: `**** **** **** ${c.crd_last4digits}` }));
+          
+          let pendingQueries = cardsData.length;
+          if (pendingQueries === 0) {
+            this.isLoading = false;
+            return;
+          }
+
+          const allPeriods: any[] = [];
+          const relatedMap: { [key: string]: RelatedData } = {};
+
+          cardsData.forEach((card: any) => {
+            this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid).subscribe({
+              next: (periodResponse: any) => {
+                if (periodResponse.success) {
+                  periodResponse.data.forEach((p: any) => {
+                    allPeriods.push({ value: p.per_uuid, label: `Período ${this.formatPeriodNumber(p.per_periodnumber)}` });
+                    relatedMap[p.per_uuid] = {
+                      crd_uuid: card.crd_uuid,
+                      per_uuid: p.per_uuid
+                    };
+                  });
+                }
+                pendingQueries--;
+                if (pendingQueries === 0) {
+                  this.periods = allPeriods;
+                  this.relatedDataMap = relatedMap;
+                  this.isLoading = false;
+                }
+              },
+              error: () => {
+                pendingQueries--;
+                if (pendingQueries === 0) {
+                  this.periods = allPeriods;
+                  this.relatedDataMap = relatedMap;
+                  this.isLoading = false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading = false;
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadPayment(crd_uuid: string, per_uuid: string, payp_uuid: string): void {
+    this.isLoading = true;
+    this._paymentPeriodsService.getPaymentPeriodById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', crd_uuid, per_uuid, payp_uuid).subscribe({
+      next: (response: any) => {
+        this.isLoading = false;
+        if (response.success) {
+          const payment = {
+            ...response.data,
+            payp_paymentdate: new Date(response.data.payp_paymentdate)
+          };
+
+          this.form.get('payp_uuid')?.enable();
+          this.form.get('crd_uuid')?.enable();
+
+          this.form.patchValue(payment);
+
+          this.form.get('payp_uuid')?.disable();
+          this.form.get('crd_uuid')?.disable();
+        }
+      },
+      error: error => {
+        this.isLoading = false;
+        console.error(error);
+        this._messageService.error('Error', 'No se pudo cargar la información del pago');
+      }
+    });
   }
 
   loadRelatedData(periodId: string): void {
-    // Verificar si el periodId existe en el mapa
     if (this.relatedDataMap.hasOwnProperty(periodId)) {
       const data = this.relatedDataMap[periodId];
       this.form.get('crd_uuid')?.enable();
       this.form.get('crd_uuid')?.setValue(data.crd_uuid);
-      this.form.get('crd_uuid')?.disable();
-    } else {
-      // Si no existe, limpiar el campo
-      this.form.get('crd_uuid')?.enable();
-      this.form.get('crd_uuid')?.setValue('');
       this.form.get('crd_uuid')?.disable();
     }
   }
@@ -172,23 +241,68 @@ export class PaymentPeriodComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
-      this.message.error('Por favor complete todos los campos obligatorios');
+      this._messageService.error('Formulario Inválido', 'Por favor complete todos los campos obligatorios');
       return;
     }
 
     this.isLoading = true;
-    
-    // Simular guardado
-    setTimeout(() => {
-      this.isLoading = false;
-      const action = this.isEditing ? 'actualizado' : 'creado';
-      this.message.success(`Pago ${action} exitosamente`);
-      this.router.navigate(['/admin/user/pagos-periodos']);
-    }, 800);
+    const rawValue = this.form.getRawValue();
+    const payload = {
+      ...rawValue,
+      usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+    };
+
+    if (!this.isEditing) {
+      this._paymentPeriodsService.savePaymentPeriod(payload).subscribe({
+        next: response => {
+          this.isLoading = false;
+          if (response.success) {
+            this._messageService.success(
+              'Pago Registrado', 
+              'El pago se registró correctamente en el período.',
+              () => {
+                this.router.navigate(['/admin/user/payment-periods']);
+              }
+            );
+          } else {
+            this._messageService.error('Error', response.message || 'No se pudo registrar el pago');
+          }
+        },
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage?.error?.error || 'Hubo un problema al registrar el pago');
+        }
+      });
+    } else {
+      this._paymentPeriodsService.updatePaymentPeriod(payload.usr_uuid, payload.crd_uuid, payload.per_uuid, payload.payp_uuid, payload).subscribe({
+        next: response => {
+          this.isLoading = false;
+          if (response.success) {
+            this._messageService.success(
+              'Pago Actualizado', 
+              'El pago se actualizó correctamente.',
+              () => {
+                this.router.navigate(['/admin/user/payment-periods']);
+              }
+            );
+          } else {
+            this._messageService.error('Error', response.message || 'No se pudo actualizar el pago');
+          }
+        },
+        error: error => {
+          this.isLoading = false;
+          let errorMessage = <any>error;
+          console.error(errorMessage);
+          this._messageService.error('Error', errorMessage?.error?.error || 'Hubo un problema al actualizar el pago');
+        }
+      });
+    }
   }
 
   onCancel(): void {
-    this.router.navigate(['/admin/user/pagos-periodos']);
+    this.router.navigate(['/admin/user/payment-periods']);
   }
 
   getErrorMessage(controlName: string): string | null {
@@ -202,6 +316,13 @@ export class PaymentPeriodComponent implements OnInit {
     return null;
   }
 
+  formatPeriodNumber(periodNumber: number): string {
+    const periodStr = periodNumber.toString();
+    const year = periodStr.substring(0, 4);
+    const month = periodStr.substring(4, 6);
+    return `${month}/${year}`;
+  }
+
   currencyFormatter = (value: number): string => {
     if (!value && value !== 0) return '';
     return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -211,57 +332,54 @@ export class PaymentPeriodComponent implements OnInit {
     return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
   };
 
-  // Obtener color del método de pago
   getMethodColor(methodId: string): string {
-    switch (methodId) {
-      case '1': return 'blue';      // Banco
-      case '2': return 'geekblue';  // Transferencia
-      case '3': return 'gold';      // Rapipago
-      case '4': return 'volcano';   // Mercado Pago
-      case '5': return 'orange';    // Pago Fácil
-      default: return 'default';
-    }
+    const label = this.getMethodLabel(methodId).toLowerCase();
+    if (label.includes('banco')) return 'blue';
+    if (label.includes('transferencia')) return 'geekblue';
+    if (label.includes('rapipago')) return 'gold';
+    if (label.includes('mercado')) return 'volcano';
+    if (label.includes('fácil')) return 'orange';
+    return 'default';
   }
 
-  // Obtener icono del método de pago
   getMethodIcon(methodId: string): string {
-    switch (methodId) {
-      case '1': return 'bank';        // Banco
-      case '2': return 'swap';        // Transferencia
-      case '3': return 'barcode';     // Rapipago
-      case '4': return 'wallet';      // Mercado Pago
-      case '5': return 'barcode';     // Pago Fácil
-      default: return 'credit-card';
-    }
+    const label = this.getMethodLabel(methodId).toLowerCase();
+    if (label.includes('banco')) return 'bank';
+    if (label.includes('transferencia')) return 'swap';
+    if (label.includes('rapipago') || label.includes('fácil')) return 'barcode';
+    if (label.includes('mercado') || label.includes('wallet')) return 'wallet';
+    return 'credit-card';
   }
 
-  // Obtener color del estado de pago
+  formatMethodName(name: string): string {
+    return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  formatStatusName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
   getStatusColor(statusId: string): string {
-    switch (statusId) {
-      case '1': return 'processing'; // Procesado
-      case '2': return 'success';    // Confirmado
-      case '3': return 'error';      // Rechazado
-      default: return 'default';
-    }
+    const label = this.getStatusLabel(statusId).toLowerCase();
+    if (label.includes('confirmado')) return 'success';
+    if (label.includes('procesado')) return 'processing';
+    if (label.includes('rechazado')) return 'error';
+    return 'default';
   }
 
-  // Obtener icono del estado de pago
   getStatusIcon(statusId: string): string {
-    switch (statusId) {
-      case '1': return 'sync';           // Procesado
-      case '2': return 'check-circle';   // Confirmado
-      case '3': return 'close-circle';   // Rechazado
-      default: return 'info-circle';
-    }
+    const label = this.getStatusLabel(statusId).toLowerCase();
+    if (label.includes('confirmado')) return 'check-circle';
+    if (label.includes('procesado')) return 'sync';
+    if (label.includes('rechazado')) return 'close-circle';
+    return 'info-circle';
   }
 
-  // Obtener etiqueta del estado
   getStatusLabel(statusId: string): string {
     const status = this.paymentStatuses.find(s => s.value === statusId);
     return status ? status.label : 'Desconocido';
   }
 
-  // Obtener etiqueta del método
   getMethodLabel(methodId: string): string {
     const method = this.paymentMethods.find(m => m.value === methodId);
     return method ? method.label : 'Desconocido';
