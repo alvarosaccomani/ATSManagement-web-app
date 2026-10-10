@@ -1,1 +1,150 @@
-<p>dashboard works!</p>
+<nz-spin [nzSpinning]="isLoading">
+  <div style="padding: 16px;">
+    <!-- Header Section -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <h2 style="margin: 0; font-weight: 600;">
+          <i nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 8px;"></i>
+          Tablero Principal
+        </h2>
+        <p style="margin: 4px 0 0 0; color: #8c8c8c;">Resumen financiero unificado y métricas clave</p>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="min-width: 220px;">
+          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="(s.scp_isshared ? '🏢 ' : '👤 ') + s.scp_name"></nz-option>
+        </nz-select>
+
+        <button nz-button nzType="primary" (click)="newTransaction()">
+          <i nz-icon nzType="plus"></i> Nuevo Movimiento
+        </button>
+      </div>
+    </div>
+
+    <!-- KPIs Row -->
+    <div nz-row [nzGutter]="[16, 16]" style="margin-bottom: 24px;">
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="formatAmount(summary?.total_income || 0)"
+            [nzTitle]="'Total Ingresos'"
+            [nzValueStyle]="{ color: '#3f8600' }"
+            [nzPrefix]="prefixIncome"
+          ></nz-statistic>
+          <ng-template #prefixIncome><i nz-icon nzType="arrow-down" style="color: #3f8600;"></i></ng-template>
+        </nz-card>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="formatAmount(summary?.total_expense || 0)"
+            [nzTitle]="'Total Egresos'"
+            [nzValueStyle]="{ color: '#cf1322' }"
+            [nzPrefix]="prefixExpense"
+          ></nz-statistic>
+          <ng-template #prefixExpense><i nz-icon nzType="arrow-up" style="color: #cf1322;"></i></ng-template>
+        </nz-card>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="formatAmount(summary?.net_balance || 0)"
+            [nzTitle]="'Balance Neto'"
+            [nzValueStyle]="{ color: (summary?.net_balance || 0) >= 0 ? '#1890ff' : '#cf1322' }"
+            [nzPrefix]="prefixBalance"
+          ></nz-statistic>
+          <ng-template #prefixBalance><i nz-icon nzType="wallet"></i></ng-template>
+        </nz-card>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="summary?.transaction_count || 0"
+            [nzTitle]="'Total Movimientos Registrados'"
+            [nzValueStyle]="{ color: '#722ed1' }"
+            [nzPrefix]="prefixCount"
+          ></nz-statistic>
+          <ng-template #prefixCount><i nz-icon nzType="unordered-list"></i></ng-template>
+        </nz-card>
+      </div>
+    </div>
+
+    <!-- Scopes Breakdown & Recent Activity -->
+    <div nz-row [nzGutter]="[16, 16]">
+      <!-- Scopes Summary Table -->
+      <div nz-col [nzXs]="24" [nzLg]="10">
+        <nz-card nzTitle="Saldos por Ámbito (Contextos)" [nzExtra]="extraScopes">
+          <ng-template #extraScopes>
+            <button nz-button nzType="link" (click)="newScope()">+ Crear Ámbito</button>
+          </ng-template>
+
+          <nz-table #scopeTable [nzData]="summary?.scopes_summary || []" [nzShowPagination]="false" nzSize="small">
+            <thead>
+              <tr>
+                <th>Ámbito</th>
+                <th>Ingresos</th>
+                <th>Egresos</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of scopeTable.data">
+                <td>
+                  <span *ngIf="item.scp_color" [style.background-color]="item.scp_color" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px;"></span>
+                  <strong>{{ item.scp_name }}</strong>
+                </td>
+                <td style="color: #3f8600;">{{ formatAmount(item.total_income) }}</td>
+                <td style="color: #cf1322;">{{ formatAmount(item.total_expense) }}</td>
+                <td>
+                  <strong [style.color]="item.balance >= 0 ? '#1890ff' : '#cf1322'">
+                    {{ formatAmount(item.balance) }}
+                  </strong>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+
+      <!-- Recent Activity Table -->
+      <div nz-col [nzXs]="24" [nzLg]="14">
+        <nz-card nzTitle="Últimos Movimientos Registrados">
+          <nz-table #recentTable [nzData]="summary?.recent_transactions || []" [nzShowPagination]="false" nzSize="small">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Concepto</th>
+                <th>Monto</th>
+                <th>Persona</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of recentTable.data">
+                <td>{{ t.trx_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>
+                  <nz-tag [nzColor]="getTypeColor(t.trx_type)">
+                    {{ t.trx_type }}
+                  </nz-tag>
+                </td>
+                <td><strong>{{ t.trx_concept }}</strong></td>
+                <td>
+                  <strong [style.color]="t.trx_type === 'INGRESO' ? '#3f8600' : (t.trx_type === 'EGRESO' ? '#cf1322' : '#1890ff')">
+                    {{ formatAmount(t.trx_amount) }}
+                  </strong>
+                </td>
+                <td>
+                  <span *ngIf="t.prs">👤 {{ t.prs.prs_name }}</span>
+                  <span *ngIf="!t.prs" style="color: #bfbfbf;">-</span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</nz-spin>
