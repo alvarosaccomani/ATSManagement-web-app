@@ -36,12 +36,15 @@ import { ScopesListComponent } from './scopes-list/scopes-list.component';
 import { ScopeComponent } from './scope/scope.component';
 import { PersonsListComponent } from './persons-list/persons-list.component';
 import { PersonComponent } from './person/person.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const USER_ROUTES: Routes = [
     {
         path: '',
         component: UserLayoutComponent,
         children: [
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+            { path: 'dashboard', component: DashboardComponent },
             { path: 'documents', component: DocumentsComponent},
             { path: 'banks', component: BanksComponent},
             { path: 'bank/new', component: BankComponent },
