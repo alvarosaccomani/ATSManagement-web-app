@@ -1,4 +1,8 @@
 <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item [routerLink]="['/admin/user/dashboard']" routerLinkActive="ant-menu-item-selected">
+        <nz-icon nzType="dashboard" nzTheme="outline" />
+        Dashboard
+    </li>
     <li nz-menu-item [routerLink]="['/admin/user/transactions']" routerLinkActive="ant-menu-item-selected">
         <nz-icon nzType="wallet" nzTheme="outline" />
         Movimientos (Gastos/Ingresos)
