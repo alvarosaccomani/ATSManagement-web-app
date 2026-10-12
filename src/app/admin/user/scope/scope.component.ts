@@ -94,6 +94,9 @@ export class ScopeComponent implements OnInit {
 
     this.isLoading = true;
     const rawValue = this.form.getRawValue();
+    if (!this.isEditing) {
+      delete rawValue.scp_uuid;
+    }
     const payload = {
       ...rawValue,
       usr_uuidowner: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
