@@ -128,9 +128,10 @@ export class TransactionsListComponent implements OnInit {
   }
 
   newTransaction(): void {
-    this._router.navigate(['/admin/user/transaction/new'], {
-      queryParams: { scp_uuid: this.selectedScopeUuid }
-    });
+    const queryParams = (this.selectedScopeUuid && this.selectedScopeUuid !== 'ALL')
+      ? { scp_uuid: this.selectedScopeUuid }
+      : {};
+    this._router.navigate(['/admin/user/transaction/new'], { queryParams });
   }
 
   editTransaction(trx: TransactionInterface): void {
