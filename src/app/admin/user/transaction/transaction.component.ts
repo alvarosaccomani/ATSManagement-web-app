@@ -87,15 +87,6 @@ export class TransactionComponent implements OnInit {
     this.trx_uuid = this.route.snapshot.paramMap.get('trx_uuid');
     this.isEditing = !!this.trx_uuid;
 
-    const queryScope = this.route.snapshot.queryParamMap.get('scp_uuid');
-
-    this.loadCards();
-    this.loadScopes(queryScope);
-
-    if (this.isEditing) {
-      this.loadTransaction(this.trx_uuid!);
-    }
-
     // Dynamic validator for transfer target
     this.form.get('trx_type')?.valueChanges.subscribe(type => {
       const targetCtrl = this.form.get('target_crduuid');
@@ -110,7 +101,7 @@ export class TransactionComponent implements OnInit {
 
     // Load persons when scope changes
     this.form.get('scp_uuid')?.valueChanges.subscribe(scp_uuid => {
-      if (scp_uuid) {
+      if (scp_uuid && scp_uuid !== 'ALL') {
         this.loadPersons(scp_uuid);
       }
     });
@@ -137,6 +128,15 @@ export class TransactionComponent implements OnInit {
 
     this.form.get('trx_amount')?.valueChanges.subscribe(() => calculateCommission());
     this.form.get('trx_commissionrate')?.valueChanges.subscribe(() => calculateCommission());
+
+    const queryScope = this.route.snapshot.queryParamMap.get('scp_uuid');
+
+    this.loadCards();
+    this.loadScopes(queryScope);
+
+    if (this.isEditing) {
+      this.loadTransaction(this.trx_uuid!);
+    }
   }
 
   loadScopes(defaultScopeUuid?: string | null): void {
@@ -146,8 +146,10 @@ export class TransactionComponent implements OnInit {
         if (response.success && response.data.length > 0) {
           this.scopes = response.data;
           if (!this.form.get('scp_uuid')?.value) {
-            const initialScope = defaultScopeUuid || this.scopes[0].scp_uuid;
+            const hasValidDefault = defaultScopeUuid && defaultScopeUuid !== 'ALL' && this.scopes.some(s => s.scp_uuid === defaultScopeUuid);
+            const initialScope = hasValidDefault ? defaultScopeUuid! : this.scopes[0].scp_uuid;
             this.form.get('scp_uuid')?.setValue(initialScope);
+            this.loadPersons(initialScope);
           }
         }
       }
@@ -155,6 +157,10 @@ export class TransactionComponent implements OnInit {
   }
 
   loadPersons(scp_uuid: string): void {
+    if (!scp_uuid || scp_uuid === 'ALL') {
+      this.persons = [];
+      return;
+    }
     this._personsService.getPersons(scp_uuid).subscribe({
       next: (response) => {
         if (response.success) {
