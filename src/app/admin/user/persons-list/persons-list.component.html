@@ -38,8 +38,8 @@
       <tr *ngFor="let data of basicTable.data">
         <td><strong>{{ data.prs_name }}</strong></td>
         <td>
-          <nz-tag [nzColor]="getTypeTagColor(data.prs_type)">
-            {{ data.prs_type }}
+          <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" style="margin-bottom: 2px;">
+            {{ t }}
           </nz-tag>
         </td>
         <td>{{ data.prs_phone || '-' }}</td>

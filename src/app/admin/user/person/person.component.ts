@@ -10,6 +10,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PersonsService } from '../../../core/services/persons.service';
@@ -29,7 +31,9 @@ import { MessageService } from '../../../core/services/message.service';
     NzIconModule,
     NzSpinModule,
     NzSelectModule,
-    NzSwitchModule
+    NzSwitchModule,
+    NzInputNumberModule,
+    NzCheckboxModule
   ],
   templateUrl: './person.component.html',
   styleUrl: './person.component.scss'
@@ -41,12 +45,13 @@ export class PersonComponent implements OnInit {
   prs_uuid: string | null = null;
   scopes: ScopeInterface[] = [];
 
-  personTypes = [
-    { value: 'SOCIO', label: 'Socio / Miembro' },
-    { value: 'CLIENTE', label: 'Cliente' },
-    { value: 'PROVEEDOR', label: 'Proveedor' },
-    { value: 'AMIGO', label: 'Amigo / Familiar' },
-    { value: 'OTRO', label: 'Otro' }
+  typeOptions = [
+    { label: 'Socio / Miembro', value: 'SOCIO', checked: false },
+    { label: 'Vendedor', value: 'VENDEDOR', checked: false },
+    { label: 'Cliente', value: 'CLIENTE', checked: false },
+    { label: 'Proveedor', value: 'PROVEEDOR', checked: false },
+    { label: 'Amigo / Familiar', value: 'AMIGO', checked: false },
+    { label: 'Otro', value: 'OTRO', checked: false }
   ];
 
   constructor(
@@ -61,10 +66,10 @@ export class PersonComponent implements OnInit {
       prs_uuid: [{ value: '', disabled: true }],
       scp_uuid: ['', Validators.required],
       prs_name: ['', [Validators.required, Validators.maxLength(150)]],
-      prs_type: ['CLIENTE', Validators.required],
       prs_phone: [''],
       prs_email: ['', [Validators.email]],
       prs_taxid: [''],
+      prs_commissionrate: [null, [Validators.min(0), Validators.max(100)]],
       usr_uuidlinked: [null],
       prs_active: [true]
     });
@@ -80,6 +85,10 @@ export class PersonComponent implements OnInit {
 
     if (this.isEditing) {
       this.loadPerson(this.prs_uuid!);
+    } else {
+      // Default to CLIENTE for new person
+      const clienteOpt = this.typeOptions.find(o => o.value === 'CLIENTE');
+      if (clienteOpt) clienteOpt.checked = true;
     }
   }
 
@@ -105,6 +114,12 @@ export class PersonComponent implements OnInit {
         this.isLoading = false;
         if (response.success) {
           this.form.patchValue(response.data);
+          if (response.data.prs_type) {
+            const types = response.data.prs_type.split(',').map((t: string) => t.trim());
+            this.typeOptions.forEach(opt => {
+              opt.checked = types.includes(opt.value);
+            });
+          }
         }
       },
       error: (error) => {
@@ -127,8 +142,18 @@ export class PersonComponent implements OnInit {
       return;
     }
 
+    const selectedTypes = this.typeOptions.filter(opt => opt.checked).map(opt => opt.value);
+    const prs_type = selectedTypes.length > 0 ? selectedTypes.join(',') : 'OTRO';
+
     this.isLoading = true;
-    const payload = this.form.getRawValue();
+    const rawData = this.form.getRawValue();
+    if (!this.isEditing) {
+      delete rawData.prs_uuid;
+    }
+    const payload = {
+      ...rawData,
+      prs_type
+    };
 
     if (!this.isEditing) {
       this._personsService.savePerson(payload).subscribe({

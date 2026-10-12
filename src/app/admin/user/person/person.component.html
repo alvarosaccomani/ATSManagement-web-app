@@ -27,11 +27,13 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzRequired>Tipo de Contacto</nz-form-label>
-        <nz-form-control nzErrorTip="Por favor seleccione el tipo">
-          <nz-select formControlName="prs_type">
-            <nz-option *ngFor="let t of personTypes" [nzValue]="t.value" [nzLabel]="t.label"></nz-option>
-          </nz-select>
+        <nz-form-label nzRequired>Roles / Tipo de Contacto (marcar todos los que apliquen)</nz-form-label>
+        <nz-form-control>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; padding: 10px 14px; background: #fafafa; border-radius: 6px; border: 1px solid #d9d9d9;">
+            <label *ngFor="let opt of typeOptions" nz-checkbox [(ngModel)]="opt.checked" [ngModelOptions]="{standalone: true}">
+              {{ opt.label }}
+            </label>
+          </div>
         </nz-form-control>
       </nz-form-item>
 
@@ -51,12 +53,21 @@
         </nz-form-item>
       </div>
 
-      <nz-form-item>
-        <nz-form-label>CUIT / CUIL / DNI / Identificación Fiscal</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="prs_taxid" placeholder="Ej: 20-12345678-9" />
-        </nz-form-control>
-      </nz-form-item>
+      <div style="display: flex; gap: 16px;">
+        <nz-form-item style="flex: 1;">
+          <nz-form-label>CUIT / CUIL / DNI / Identificación Fiscal</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="prs_taxid" placeholder="Ej: 20-12345678-9" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item style="flex: 1;">
+          <nz-form-label>% Comisión Acordada</nz-form-label>
+          <nz-form-control nzErrorTip="Ingrese un porcentaje válido (0 - 100)">
+            <nz-input-number formControlName="prs_commissionrate" [nzMin]="0" [nzMax]="100" [nzStep]="0.5" nzPlaceHolder="Ej: 10%" style="width: 100%;"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
       <nz-form-item>
         <nz-form-label>Estado</nz-form-label>

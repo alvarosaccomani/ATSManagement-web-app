@@ -46,6 +46,7 @@ export class PersonsListComponent implements OnInit {
 
   personTypes = [
     { value: 'TODOS', label: 'Todos los tipos' },
+    { value: 'VENDEDOR', label: 'Vendedor' },
     { value: 'SOCIO', label: 'Socio / Miembro' },
     { value: 'CLIENTE', label: 'Cliente' },
     { value: 'PROVEEDOR', label: 'Proveedor' },
@@ -109,12 +110,20 @@ export class PersonsListComponent implements OnInit {
     if (this.selectedType === 'TODOS') {
       this.filteredPersons = [...this.persons];
     } else {
-      this.filteredPersons = this.persons.filter(p => p.prs_type === this.selectedType);
+      this.filteredPersons = this.persons.filter(p => 
+        p.prs_type && p.prs_type.split(',').map(t => t.trim()).includes(this.selectedType)
+      );
     }
+  }
+
+  splitTypes(type: string): string[] {
+    if (!type) return ['OTRO'];
+    return type.split(',').map(t => t.trim()).filter(Boolean);
   }
 
   getTypeTagColor(type: string): string {
     switch (type) {
+      case 'VENDEDOR': return 'gold';
       case 'SOCIO': return 'purple';
       case 'CLIENTE': return 'green';
       case 'PROVEEDOR': return 'orange';
