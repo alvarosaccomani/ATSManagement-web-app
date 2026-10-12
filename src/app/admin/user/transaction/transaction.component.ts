@@ -77,6 +77,8 @@ export class TransactionComponent implements OnInit {
       crd_uuid: [null],
       target_crduuid: [null],
       prs_uuid: [null],
+      trx_commissionrate: [null, [Validators.min(0), Validators.max(100)]],
+      trx_commissionamount: [null, [Validators.min(0)]],
       trx_notes: ['']
     });
   }
@@ -112,6 +114,29 @@ export class TransactionComponent implements OnInit {
         this.loadPersons(scp_uuid);
       }
     });
+
+    // When person changes, prefill commission rate if available and type is INGRESO
+    this.form.get('prs_uuid')?.valueChanges.subscribe(prs_uuid => {
+      if (prs_uuid && this.form.get('trx_type')?.value === 'INGRESO') {
+        const selectedPerson = this.persons.find(p => p.prs_uuid === prs_uuid);
+        if (selectedPerson && selectedPerson.prs_commissionrate != null && !this.form.get('trx_commissionrate')?.value) {
+          this.form.get('trx_commissionrate')?.setValue(selectedPerson.prs_commissionrate);
+        }
+      }
+    });
+
+    // Auto calculate commission amount when amount or rate changes
+    const calculateCommission = () => {
+      const amount = this.form.get('trx_amount')?.value;
+      const rate = this.form.get('trx_commissionrate')?.value;
+      if (amount && rate != null) {
+        const commAmount = Math.round(((amount * rate) / 100) * 100) / 100;
+        this.form.get('trx_commissionamount')?.setValue(commAmount, { emitEvent: false });
+      }
+    };
+
+    this.form.get('trx_amount')?.valueChanges.subscribe(() => calculateCommission());
+    this.form.get('trx_commissionrate')?.valueChanges.subscribe(() => calculateCommission());
   }
 
   loadScopes(defaultScopeUuid?: string | null): void {

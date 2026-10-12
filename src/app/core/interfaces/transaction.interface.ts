@@ -15,6 +15,8 @@ export interface TransactionInterface {
     trx_concept: string;
     prs_uuid?: string | null;
     prs?: PersonInterface;
+    trx_commissionrate?: number | null;
+    trx_commissionamount?: number | null;
     trx_notes?: string | null;
     trx_createdat?: string;
     trx_updatedat?: string;

@@ -118,7 +118,7 @@
         @if (form.get('trx_type')?.value !== 'TRANSFERENCIA') {
           <nz-col [nzSpan]="24" [nzMd]="12">
             <nz-form-item>
-              <nz-form-label nzFor="prs_uuid" [nzSpan]="24">Persona / Socio / Cliente / Proveedor</nz-form-label>
+              <nz-form-label nzFor="prs_uuid" [nzSpan]="24">Persona / Vendedor / Socio / Cliente</nz-form-label>
               <nz-form-control [nzSpan]="24">
                 <nz-select formControlName="prs_uuid" placeholder="Seleccione o busque persona" nzSize="large" nzAllowClear nzShowSearch>
                   @for (person of persons; track person.prs_uuid) {
@@ -130,6 +130,29 @@
           </nz-col>
         }
       </nz-row>
+
+      <!-- Comisión del Vendedor (solo para INGRESOS / VENTAS) -->
+      @if (form.get('trx_type')?.value === 'INGRESO' && form.get('prs_uuid')?.value) {
+        <nz-row [nzGutter]="24" style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 6px; margin-bottom: 24px;">
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="trx_commissionrate" [nzSpan]="24">% Comisión Vendedor</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-input-number formControlName="trx_commissionrate" [nzMin]="0" [nzMax]="100" [nzStep]="0.5" nzPrefix="%" placeholder="Ej: 10%" style="width: 100%;" nzSize="large"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="trx_commissionamount" [nzSpan]="24">Ganancia Comisión Vendedor ($)</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-input-number formControlName="trx_commissionamount" [nzMin]="0" [nzStep]="10" nzPrefix="$" placeholder="Calculado automáticamente" style="width: 100%;" nzSize="large"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
 
       <!-- Notas -->
       <nz-row [nzGutter]="24">
