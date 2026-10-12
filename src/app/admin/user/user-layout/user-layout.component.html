@@ -1,3 +1,80 @@
-<app-nav-bar></app-nav-bar>
+<nz-layout class="app-layout">
+  <!-- Sidebar -->
+  <nz-sider
+    class="app-sider"
+    nzCollapsible
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+    [nzWidth]="256"
+    [nzCollapsedWidth]="80"
+    nzBreakpoint="md"
+    nzTheme="dark"
+  >
+    <div class="sidebar-logo">
+      <div class="logo-icon-wrapper">
+        <nz-icon nzType="wallet" nzTheme="outline" />
+      </div>
+      <div class="logo-text-wrapper" *ngIf="!isCollapsed">
+        <span class="logo-title">ATS Management</span>
+        <span class="logo-subtitle">Finanzas & Control</span>
+      </div>
+    </div>
 
-<router-outlet></router-outlet>
+    <div class="sidebar-menu-wrapper">
+      <app-nav-bar [isCollapsed]="isCollapsed"></app-nav-bar>
+    </div>
+  </nz-sider>
+
+  <!-- Main Layout -->
+  <nz-layout class="main-layout">
+    <!-- Header -->
+    <nz-header class="app-header">
+      <div class="header-left">
+        <button
+          nz-button
+          nzType="text"
+          class="collapse-trigger-btn"
+          (click)="isCollapsed = !isCollapsed"
+          [nzTooltipTitle]="isCollapsed ? 'Expandir menú lateral' : 'Colapsar menú lateral'"
+          nz-tooltip
+        >
+          <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+        </button>
+      </div>
+
+      <div class="header-right">
+        <div
+          nz-dropdown
+          [nzDropdownMenu]="userDropdown"
+          nzPlacement="bottomRight"
+          class="user-profile-badge"
+        >
+          <nz-avatar nzIcon="user" class="header-avatar" nzSize="small"></nz-avatar>
+          <span class="header-username">{{ userName }}</span>
+          <nz-icon nzType="down" class="dropdown-chevron" />
+        </div>
+
+        <nz-dropdown-menu #userDropdown="nzDropdownMenu">
+          <ul nz-menu class="user-dropdown-menu">
+            <li nz-menu-item disabled class="user-info-item">
+              <div class="user-info-name">{{ userName }}</div>
+              <div class="user-info-email" *ngIf="userEmail">{{ userEmail }}</div>
+            </li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="logout()" class="logout-item">
+              <nz-icon nzType="logout" nzTheme="outline" />
+              <span>Cerrar Sesión</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </nz-header>
+
+    <!-- Page Content Container -->
+    <nz-content class="app-content">
+      <div class="page-container">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

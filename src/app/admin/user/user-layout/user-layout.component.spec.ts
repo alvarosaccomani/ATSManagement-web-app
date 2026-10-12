@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { UserLayoutComponent } from './user-layout.component';
 
@@ -8,7 +10,11 @@ describe('UserLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserLayoutComponent]
+      imports: [UserLayoutComponent],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations()
+      ]
     })
     .compileComponents();
 
@@ -21,3 +27,4 @@ describe('UserLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

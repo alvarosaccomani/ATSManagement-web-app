@@ -1,75 +1,100 @@
-<ul nz-menu nzMode="horizontal">
-    <li nz-menu-item [routerLink]="['/admin/user/dashboard']" routerLinkActive="ant-menu-item-selected">
-        <nz-icon nzType="dashboard" nzTheme="outline" />
-        Dashboard
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/transactions']" routerLinkActive="ant-menu-item-selected">
-        <nz-icon nzType="wallet" nzTheme="outline" />
-        Movimientos (Gastos/Ingresos)
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/scopes']" routerLinkActive="ant-menu-item-selected">
-        <nz-icon nzType="environment" nzTheme="outline" />
-        Ámbitos
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/persons']" routerLinkActive="ant-menu-item-selected">
-        <nz-icon nzType="team" nzTheme="outline" />
-        Contactos
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/seller-commissions']" routerLinkActive="ant-menu-item-selected">
-        <nz-icon nzType="dollar" nzTheme="outline" />
-        Mis Comisiones
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/documents']" routerLinkActive="ant-menu-item-selected">
+<ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+  <li nz-menu-item [routerLink]="['/admin/user/dashboard']" routerLinkActive="ant-menu-item-selected">
+    <nz-icon nzType="dashboard" nzTheme="outline" />
+    <span>Dashboard</span>
+  </li>
+
+  <li nz-menu-item [routerLink]="['/admin/user/transactions']" routerLinkActive="ant-menu-item-selected">
+    <nz-icon nzType="wallet" nzTheme="outline" />
+    <span>Movimientos</span>
+  </li>
+
+  <li nz-menu-item [routerLink]="['/admin/user/seller-commissions']" routerLinkActive="ant-menu-item-selected">
+    <nz-icon nzType="dollar-circle" nzTheme="outline" />
+    <span>Mis Comisiones</span>
+  </li>
+
+  <li nz-menu-item [routerLink]="['/admin/user/scopes']" routerLinkActive="ant-menu-item-selected">
+    <nz-icon nzType="environment" nzTheme="outline" />
+    <span>Ámbitos</span>
+  </li>
+
+  <li nz-menu-item [routerLink]="['/admin/user/persons']" routerLinkActive="ant-menu-item-selected">
+    <nz-icon nzType="team" nzTheme="outline" />
+    <span>Contactos</span>
+  </li>
+
+  <!-- Submenu Comprobantes & Operaciones -->
+  <li nz-submenu nzTitle="Comprobantes & Pagos" nzIcon="file-text">
+    <ul>
+      <li nz-menu-item [routerLink]="['/admin/user/documents']" routerLinkActive="ant-menu-item-selected">
         <nz-icon nzType="file" nzTheme="outline" />
-        Documentos
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/vouchers']">
-        <nz-icon nzType="file"/>
-        Comprobantes
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/vouchers-fees']">
-        Cuotas Comprobantes
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/periods']">
-        <nz-icon nzType="appstore"/>
-        Periodos
-    </li>
-    <li nz-menu-item [routerLink]="['/admin/user/payment-periods']">
-        <nz-icon nzType="appstore"/>
-        Pagos de Periodos
-    </li>
-    <li nz-submenu nzTitle="Parametros" nzIcon="setting">
+        <span>Documentos</span>
+      </li>
+      <li nz-menu-item [routerLink]="['/admin/user/vouchers']" routerLinkActive="ant-menu-item-selected">
+        <nz-icon nzType="file-done" nzTheme="outline" />
+        <span>Comprobantes</span>
+      </li>
+      <li nz-menu-item [routerLink]="['/admin/user/vouchers-fees']" routerLinkActive="ant-menu-item-selected">
+        <nz-icon nzType="calculator" nzTheme="outline" />
+        <span>Cuotas Comprobantes</span>
+      </li>
+      <li nz-menu-item [routerLink]="['/admin/user/periods']" routerLinkActive="ant-menu-item-selected">
+        <nz-icon nzType="calendar" nzTheme="outline" />
+        <span>Períodos</span>
+      </li>
+      <li nz-menu-item [routerLink]="['/admin/user/payment-periods']" routerLinkActive="ant-menu-item-selected">
+        <nz-icon nzType="credit-card" nzTheme="outline" />
+        <span>Pagos de Períodos</span>
+      </li>
+    </ul>
+  </li>
+
+  <!-- Submenu Configuración -->
+  <li nz-submenu nzTitle="Configuración" nzIcon="setting">
+    <ul>
+      <li nz-menu-group nzTitle="Tarjetas & Cuentas">
         <ul>
-            <li nz-menu-group nzTitle="Configuracion Tarjeta">
-                <ul>
-                <li nz-menu-item [routerLink]="['/admin/user/type-cards']">Tipos de Tarjetas</li>
-                <li nz-menu-item [routerLink]="['/admin/user/brand-cards']">Marcas de Tarjetas</li>
-                <li nz-menu-item [routerLink]="['/admin/user/banks']">Bancos</li>
-                <li nz-menu-item [routerLink]="['/admin/user/cards']">Tarjetas</li>
-                </ul>
-            </li>
-            <li nz-menu-group nzTitle="Configuracion Periodos">
-                <ul>
-                <li nz-menu-item [routerLink]="['/admin/user/status-periods']">Estados</li>
-                </ul>
-            </li>
-            <li nz-menu-group nzTitle="Configuracion Comprobantes">
-                <ul>
-                <li nz-menu-item [routerLink]="['/admin/user/vouchers-states']">Estados</li>
-                <li nz-menu-item [routerLink]="['/admin/user/type-operations']">Tipos de Operaciones</li>
-                </ul>
-            </li>
-            <li nz-menu-group nzTitle="Configuracion de Cuotas de Comprobantes">
-                <ul>
-                <li nz-menu-item [routerLink]="['/admin/user/vouchers-fee-status']">Estados de Cuotas de Comprobantes</li>
-            </ul>
-            </li>
-            <li nz-menu-group nzTitle="Configuracion Pagos">
-                <ul>
-                <li nz-menu-item  [routerLink]="['/admin/user/payment-periods-status']">Estados</li>
-                <li nz-menu-item  [routerLink]="['/admin/user/payment-methods']">Metodos de Pago</li>
-                </ul>
-            </li>
+          <li nz-menu-item [routerLink]="['/admin/user/type-cards']" routerLinkActive="ant-menu-item-selected">
+            <nz-icon nzType="credit-card" nzTheme="outline" />
+            <span>Tipos de Tarjetas</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/brand-cards']" routerLinkActive="ant-menu-item-selected">
+            <nz-icon nzType="credit-card" nzTheme="outline" />
+            <span>Marcas de Tarjetas</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/banks']" routerLinkActive="ant-menu-item-selected">
+            <nz-icon nzType="bank" nzTheme="outline" />
+            <span>Bancos</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/cards']" routerLinkActive="ant-menu-item-selected">
+            <nz-icon nzType="credit-card" nzTheme="outline" />
+            <span>Tarjetas</span>
+          </li>
         </ul>
-    </li>
-</ul>
+      </li>
+      <li nz-menu-group nzTitle="Parámetros & Estados">
+        <ul>
+          <li nz-menu-item [routerLink]="['/admin/user/payment-methods']" routerLinkActive="ant-menu-item-selected">
+            <span>Métodos de Pago</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/type-operations']" routerLinkActive="ant-menu-item-selected">
+            <span>Tipos de Operaciones</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/status-periods']" routerLinkActive="ant-menu-item-selected">
+            <span>Estados de Períodos</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/vouchers-states']" routerLinkActive="ant-menu-item-selected">
+            <span>Estados de Comprobantes</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/vouchers-fee-status']" routerLinkActive="ant-menu-item-selected">
+            <span>Estados Cuotas</span>
+          </li>
+          <li nz-menu-item [routerLink]="['/admin/user/payment-periods-status']" routerLinkActive="ant-menu-item-selected">
+            <span>Estados Pagos Períodos</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

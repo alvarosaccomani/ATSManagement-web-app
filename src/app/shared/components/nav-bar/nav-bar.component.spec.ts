@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { NavBarComponent } from './nav-bar.component';
 
@@ -8,7 +10,11 @@ describe('NavBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavBarComponent]
+      imports: [NavBarComponent],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations()
+      ]
     })
     .compileComponents();
 
@@ -21,3 +27,4 @@ describe('NavBarComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
