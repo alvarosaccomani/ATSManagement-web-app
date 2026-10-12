@@ -37,6 +37,7 @@ import { ScopeComponent } from './scope/scope.component';
 import { PersonsListComponent } from './persons-list/persons-list.component';
 import { PersonComponent } from './person/person.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SellerCommissionsComponent } from './seller-commissions/seller-commissions.component';
 
 export const USER_ROUTES: Routes = [
     {
@@ -96,7 +97,8 @@ export const USER_ROUTES: Routes = [
             { path: 'scope/edit/:scp_uuid', component: ScopeComponent },
             { path: 'persons', component: PersonsListComponent },
             { path: 'person/new', component: PersonComponent },
-            { path: 'person/edit/:prs_uuid', component: PersonComponent }
+            { path: 'person/edit/:prs_uuid', component: PersonComponent },
+            { path: 'seller-commissions', component: SellerCommissionsComponent }
         ]
     }
 ];
