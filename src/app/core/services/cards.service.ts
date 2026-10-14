@@ -13,7 +13,7 @@ export class CardsService {
       private _http: HttpClient
     ) { }
     
-  public getCards(usr_uuid: string, page?: number, perPage?: number, field_order?: string, crd_order?: string): Observable<CardResults> {
+  public getCards(usr_uuid: string, page?: number, perPage?: number, field_order?: string, crd_order?: string, scp_uuid?: string): Observable<CardResults> {
     const headers = new HttpHeaders().set('content-type','application/json');
 
     let params = new HttpParams();
@@ -32,6 +32,10 @@ export class CardsService {
 
     if(crd_order) {
       params = params.set('crd_order', crd_order);
+    }
+
+    if (scp_uuid && scp_uuid !== 'ALL') {
+      params = params.set('scp_uuid', scp_uuid);
     }
 
     return this._http.get<CardResults>(`${environment.apiUrl}cards/${usr_uuid}`, { headers, params });

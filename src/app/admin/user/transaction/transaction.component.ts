@@ -175,10 +175,14 @@ export class TransactionComponent implements OnInit {
     this._cardsService.getCards(usr_uuid).subscribe({
       next: (response: any) => {
         if (response.success) {
-          this.cards = response.data.map((c: any) => ({
-            value: c.crd_uuid,
-            label: `${c.crd_alias || 'Tarjeta'} (**** ${c.crd_last4digits})`
-          }));
+          this.cards = response.data.map((c: any) => {
+            const scopeIcon = c.scp?.scp_isshared ? '🏢 ' : (c.scp ? '👤 ' : '');
+            const scopeTag = c.scp?.scp_name ? ` [${c.scp.scp_name}]` : '';
+            return {
+              value: c.crd_uuid,
+              label: `${scopeIcon}${c.crd_alias || 'Tarjeta'} (**** ${c.crd_last4digits})${scopeTag}`
+            };
+          });
         }
       }
     });

@@ -13,13 +13,17 @@ export class TreesService {
     private _http: HttpClient
   ) { }
 
-  public getCardsTree(usr_uuid: string): Observable<TreeResults> {
+  public getCardsTree(usr_uuid: string, scp_uuid?: string): Observable<TreeResults> {
     const headers = new HttpHeaders().set('content-type','application/json');
 
     let params = new HttpParams();
 
     if (usr_uuid) {
       params = params.set('usr_uuid', usr_uuid.toString());
+    }
+
+    if (scp_uuid && scp_uuid !== 'ALL') {
+      params = params.set('scp_uuid', scp_uuid.toString());
     }
 
     return this._http.get<TreeResults>(`${environment.apiUrl}cards-tree/${usr_uuid}`, { headers, params });

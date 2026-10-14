@@ -8,8 +8,12 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { FormsModule } from '@angular/forms';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CardInterface } from '../../../core/interfaces/card';
 import { CardsService } from '../../../core/services/cards.service';
+import { ScopesService } from '../../../core/services/scopes.service';
+import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { MessageService } from '../../../core/services/message.service';
 
 @Component({
@@ -17,18 +21,22 @@ import { MessageService } from '../../../core/services/message.service';
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     NzTableModule,
     NzButtonModule,
     NzIconModule,
     NzEmptyModule,
     NzSpinModule,
-    NzTagModule
+    NzTagModule,
+    NzSelectModule
   ],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss'
 })
 export class CardsComponent implements OnInit {
   cards: CardInterface[] = [];
+  scopes: ScopeInterface[] = [];
+  selectedScopeUuid: string = 'ALL';
   loading = false;
   pageIndex = 1;
   pageSize = 10;
@@ -36,6 +44,7 @@ export class CardsComponent implements OnInit {
 
   listOfColumns = [
     { key: 'crd_uuid', title: 'ID', width: '80px' },
+    { key: 'scope', title: 'Ámbito', width: '130px' },
     { key: 'card_number', title: 'Tarjeta', width: '160px' },
     { key: 'card_type', title: 'Tipo', width: '110px' },
     { key: 'card_brand', title: 'Marca', width: '110px' },
@@ -49,17 +58,43 @@ export class CardsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _cardsService: CardsService,
+    private _scopesService: ScopesService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    this.loadScopes();
+    this.loadCards();
+  }
+
+  loadScopes(): void {
+    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    this._scopesService.getScopes(usr_uuid).subscribe({
+      next: (response) => {
+        if (response.success && response.data.length > 0) {
+          const allOption: ScopeInterface = {
+            scp_uuid: 'ALL',
+            scp_name: 'Todos los ámbitos',
+            scp_isshared: false,
+            usr_uuidowner: usr_uuid,
+            scp_active: true,
+            scp_color: '#108ee9'
+          };
+          this.scopes = [allOption, ...response.data];
+        }
+      }
+    });
+  }
+
+  onScopeChange(scopeUuid: string): void {
+    this.selectedScopeUuid = scopeUuid;
     this.loadCards();
   }
 
   loadCards(): void {
     this.loading = true;
-    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
+    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d', undefined, undefined, undefined, undefined, this.selectedScopeUuid).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -67,16 +102,13 @@ export class CardsComponent implements OnInit {
           this.total = this.cards.length;
           this.loading = false;
         } else {
-          //this.status = 'error'
+          this.loading = false;
         }
       },
       (error: any) => {
+        this.loading = false;
         let errorMessage = <any>error;
         console.log(errorMessage);
-
-        if(errorMessage != null) {
-          //this.status = 'error'
-        }
       }
     )
   }

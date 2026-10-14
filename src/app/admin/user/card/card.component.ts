@@ -20,6 +20,8 @@ import { TypeCardsService } from '../../../core/services/type-cards.service';
 import { BrandCardsService } from '../../../core/services/brand-cards.service';
 import { BanksService } from '../../../core/services/banks.service';
 import { CardsService } from '../../../core/services/cards.service';
+import { ScopesService } from '../../../core/services/scopes.service';
+import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { MessageService } from '../../../core/services/message.service';
 
 @Component({
@@ -53,6 +55,7 @@ export class CardComponent implements OnInit {
   cardTypes: TypeCardInterface[] = [];
   cardBrands: BrandCardInterface[] = [];
   banks: BankInterface[] = [];
+  scopes: ScopeInterface[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -62,12 +65,15 @@ export class CardComponent implements OnInit {
     private _brandCardsService: BrandCardsService,
     private _banksService: BanksService,
     private _cardsService: CardsService,
+    private _scopesService: ScopesService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {
     this.form = this.fb.group({
       usr_uuid: [{ value: '', disabled: true }],
       crd_uuid: [{ value: '', disabled: true }],
+      scp_uuid: [null, Validators.required],
+      crd_alias: [''],
       crd_maskedcardnumber: ['', [Validators.required]],
       crd_last4digits: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       tycrd_uuid: ['', Validators.required],
@@ -82,6 +88,7 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {
     this.cardId = this.route.snapshot.paramMap.get('crd_uuid');
     this.isEditing = !!this.cardId;
+    this.loadScopes();
     this.loadTypeCards();
     this.loadBrandCards();
     this.loadBanks();
@@ -99,6 +106,20 @@ export class CardComponent implements OnInit {
     this.form.get('tycrd_uuid')?.valueChanges.subscribe(value => {
       if (value === '1') { // Débito
         this.form.get('crd_creditlimit')?.setValue(null);
+      }
+    });
+  }
+
+  loadScopes(): void {
+    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    this._scopesService.getScopes(usr_uuid).subscribe({
+      next: (response) => {
+        if (response.success && response.data.length > 0) {
+          this.scopes = response.data;
+          if (!this.form.get('scp_uuid')?.value) {
+            this.form.get('scp_uuid')?.setValue(this.scopes[0].scp_uuid);
+          }
+        }
       }
     });
   }
@@ -220,9 +241,11 @@ export class CardComponent implements OnInit {
     }
 
     this.isLoading = true;
+    const rawValue = this.form.getRawValue();
 
     if(!this.isEditing) {
-      this._cardsService.saveCard(this.form.getRawValue()).subscribe({
+      delete rawValue.crd_uuid;
+      this._cardsService.saveCard(rawValue).subscribe({
         next: response => {
           this.isLoading = false;
           if(response.success) {

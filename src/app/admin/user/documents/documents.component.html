@@ -2,6 +2,18 @@
     <nz-splitter-panel nzDefaultSize="25%" nzMin="20%" nzMax="50%">
         <div class="box">
             <div style="max-width: 800px; margin: 10px auto;">
+                <div style="margin-bottom: 12px;">
+                    <nz-select 
+                        [(ngModel)]="selectedScopeUuid" 
+                        (ngModelChange)="onScopeChange($event)"
+                        style="width: 100%;"
+                        nzPlaceHolder="Filtrar por ámbito"
+                    >
+                        @for (scope of scopes; track scope.scp_uuid) {
+                            <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_uuid === 'ALL' ? '🌐 ' : (scope.scp_isshared ? '🏢 ' : '👤 ')) + scope.scp_name"></nz-option>
+                        }
+                    </nz-select>
+                </div>
                 <app-tree-view
                     [title]="'Tarjetas'"
                     [description]="'Seleccione y gestione sus archivos'"

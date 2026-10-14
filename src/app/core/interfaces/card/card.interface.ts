@@ -1,10 +1,15 @@
 import { TypeCardInterface } from "../type-card";
 import { BrandCardInterface } from "../brand-card";
 import { BankInterface } from "../bank";
+import { ScopeInterface } from "../scope.interface";
 
 export interface CardInterface {
   usr_uuid: string;
   crd_uuid: string;
+  scp_uuid?: string | null;
+  scp?: ScopeInterface;
+  crd_alias?: string | null;
+  crd_cardholdername?: string | null;
   crd_maskedcardnumber: string;
   crd_last4digits: string;
   tycrd_uuid: string;
@@ -16,6 +21,7 @@ export interface CardInterface {
   crd_expirationdate: string;
   crd_creditlimit: number | null;
   crd_active: boolean;
+  crd_allowdelegation?: boolean;
   crd_createdat: string;
   crd_updatedat: string;
 }
