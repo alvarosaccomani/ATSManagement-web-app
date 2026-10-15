@@ -92,12 +92,11 @@
             >
               <nz-input-number 
                 formControlName="vouf_quotaamount" 
-                nzPrefix="$"
                 nzPlaceHolder="0.00"
                 [nzMin]="0"
                 [nzStep]="100"
-                [nzFormatter]="currencyFormatter"
-                [nzParser]="currencyParser"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
                 style="width: 100%"
                 nzSize="large"
               ></nz-input-number>

@@ -21,6 +21,7 @@ import { VouchersService } from '../../../core/services/vouchers.service';
 import { VouchersFeeStatusService } from '../../../core/services/vouchers-fee-status.service';
 import { VouchersFeesService } from '../../../core/services/vouchers-fees.service';
 import { MessageService } from '../../../core/services/message.service';
+import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
 interface RelatedData {
   crd_uuid: string;
@@ -385,14 +386,10 @@ export class VoucherFeeComponent implements OnInit {
     }).format(amountNum);
   }
 
-  currencyFormatter = (value: number): string => {
-    if (!value) return '';
-    return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
-
-  currencyParser = (value: string): number => {
-    return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
-  };
+  formatterDollar = formatterDollar;
+  parserDollar = parserDollar;
+  currencyFormatter = formatterDollar;
+  currencyParser = parserDollar;
 
   getStatusColor(statusId: string): string {
     switch (statusId) {
