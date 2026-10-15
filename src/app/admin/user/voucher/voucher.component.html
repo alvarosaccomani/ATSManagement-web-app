@@ -96,10 +96,11 @@
             >
               <nz-input-number 
                 formControlName="vou_amount" 
+                nzPlaceHolder="0.00"
                 [nzMin]="0"
                 [nzStep]="100"
-                [nzFormatter]="currencyFormatter"
-                [nzParser]="currencyParser"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
                 style="width: 100%"
                 nzSize="large"
               ></nz-input-number>
@@ -292,11 +293,11 @@
               <nz-form-control [nzSpan]="24">
                 <nz-input-number 
                   formControlName="vou_installmentinterest" 
-                  nzPrefix="$"
+                  nzPlaceHolder="0.00"
                   [nzMin]="0"
                   [nzStep]="100"
-                  [nzFormatter]="currencyFormatter"
-                  [nzParser]="currencyParser"
+                  [nzFormatter]="formatterDollar"
+                  [nzParser]="parserDollar"
                   style="width: 100%"
                   nzSize="large"
                 ></nz-input-number>

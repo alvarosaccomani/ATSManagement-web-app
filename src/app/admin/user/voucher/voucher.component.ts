@@ -19,6 +19,7 @@ import { TypeOperationsService } from '../../../core/services/type-operations.se
 import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
 import { VouchersService } from '../../../core/services/vouchers.service';
 import { MessageService } from '../../../core/services/message.service';
+import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
 @Component({
   selector: 'app-voucher',
@@ -334,12 +335,8 @@ export class VoucherComponent implements OnInit {
     return null;
   }
 
-  currencyFormatter = (value: number): string => {
-    if (!value) return '';
-    return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
-
-  currencyParser = (value: string): number => {
-    return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
-  };
+  formatterDollar = formatterDollar;
+  parserDollar = parserDollar;
+  currencyFormatter = formatterDollar;
+  currencyParser = parserDollar;
 }
