@@ -21,6 +21,7 @@ import { PaymentMethodsService } from '../../../core/services/payment-methods.se
 import { PaymentPeriodsStatusService } from '../../../core/services/payment-periods-status.service';
 import { PaymentPeriodsService } from '../../../core/services/payment-periods.service';
 import { MessageService } from '../../../core/services/message.service';
+import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
 interface RelatedData {
   crd_uuid: string;
@@ -323,14 +324,10 @@ export class PaymentPeriodComponent implements OnInit {
     return `${month}/${year}`;
   }
 
-  currencyFormatter = (value: number): string => {
-    if (!value && value !== 0) return '';
-    return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
-
-  currencyParser = (value: string): number => {
-    return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
-  };
+  formatterDollar = formatterDollar;
+  parserDollar = parserDollar;
+  currencyFormatter = formatterDollar;
+  currencyParser = parserDollar;
 
   getMethodColor(methodId: string): string {
     const label = this.getMethodLabel(methodId).toLowerCase();
