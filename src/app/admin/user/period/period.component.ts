@@ -19,6 +19,7 @@ import { CardsService } from '../../../core/services/cards.service';
 import { PeriodsService } from '../../../core/services/periods.service';
 import { StatusPeriodsService } from '../../../core/services/status-periods.service';
 import { MessageService } from '../../../core/services/message.service';
+import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
 // Definir interfaz para datos relacionados
 interface RelatedData {
@@ -295,14 +296,10 @@ export class PeriodComponent implements OnInit {
     return null;
   }
 
-  currencyFormatter = (value: number): string => {
-    if (!value && value !== 0) return '';
-    return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
-
-  currencyParser = (value: string): number => {
-    return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
-  };
+  formatterDollar = formatterDollar;
+  parserDollar = parserDollar;
+  currencyFormatter = formatterDollar;
+  currencyParser = parserDollar;
 
   // Obtener color del estado para mostrar en el formulario
   getStatusColor(statusId: string): string {

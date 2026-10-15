@@ -188,12 +188,11 @@
             >
               <nz-input-number 
                 formControlName="per_previousbalance" 
-                nzPrefix="$"
                 nzPlaceHolder="0.00"
                 [nzMin]="0"
                 [nzStep]="1000"
-                [nzFormatter]="currencyFormatter"
-                [nzParser]="currencyParser"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
                 style="width: 100%"
                 nzSize="large"
               ></nz-input-number>
@@ -213,12 +212,11 @@
             >
               <nz-input-number 
                 formControlName="per_interest" 
-                nzPrefix="$"
                 nzPlaceHolder="0.00"
                 [nzMin]="0"
                 [nzStep]="100"
-                [nzFormatter]="currencyFormatter"
-                [nzParser]="currencyParser"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
                 style="width: 100%"
                 nzSize="large"
               ></nz-input-number>
