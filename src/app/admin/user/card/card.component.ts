@@ -23,6 +23,7 @@ import { CardsService } from '../../../core/services/cards.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { MessageService } from '../../../core/services/message.service';
+import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
 @Component({
   selector: 'app-card',
@@ -311,14 +312,10 @@ export class CardComponent implements OnInit {
     return null;
   }
 
-  currencyFormatter = (value: number): string => {
-    if (!value) return '';
-    return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
-
-  currencyParser = (value: string): number => {
-    return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
-  };
+  formatterDollar = formatterDollar;
+  parserDollar = parserDollar;
+  currencyFormatter = formatterDollar;
+  currencyParser = parserDollar;
 
   onInstallmentsChange(value: boolean): void {
     // Esta función puede ser usada si necesitas lógica adicional al cambiar cuotas
