@@ -22,6 +22,7 @@ import { ScopesService } from '../../../core/services/scopes.service';
 import { PersonsService } from '../../../core/services/persons.service';
 import { CardsService } from '../../../core/services/cards.service';
 import { MessageService } from '../../../core/services/message.service';
+import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
 @Component({
   selector: 'app-transaction',
@@ -287,12 +288,6 @@ export class TransactionComponent implements OnInit {
     this.router.navigate(['/admin/user/transactions']);
   }
 
-  currencyFormatter = (value: number): string => {
-    if (!value && value !== 0) return '';
-    return `$ ${value.toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
-
-  currencyParser = (value: string): number => {
-    return +value.replace(/\$\s?|(\.*)/g, '').replace(/(\.*)/g, '.');
-  };
+  formatterDollar = formatterDollar;
+  parserDollar = parserDollar;
 }

@@ -79,7 +79,16 @@
           <nz-form-item>
             <nz-form-label nzFor="trx_amount" [nzSpan]="24" nzRequired>Monto ($)</nz-form-label>
             <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese el monto">
-              <nz-input-number formControlName="trx_amount" nzPrefix="$" [nzMin]="0.01" [nzStep]="100" [nzFormatter]="currencyFormatter" [nzParser]="currencyParser" style="width: 100%" nzSize="large"></nz-input-number>
+              <nz-input-number 
+                formControlName="trx_amount" 
+                nzPlaceHolder="0.00" 
+                [nzMin]="0" 
+                [nzStep]="100" 
+                [nzFormatter]="formatterDollar" 
+                [nzParser]="parserDollar" 
+                style="width: 100%" 
+                nzSize="large">
+              </nz-input-number>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -147,7 +156,16 @@
             <nz-form-item>
               <nz-form-label nzFor="trx_commissionamount" [nzSpan]="24">Ganancia Comisión Vendedor ($)</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-input-number formControlName="trx_commissionamount" [nzMin]="0" [nzStep]="10" nzPrefix="$" placeholder="Calculado automáticamente" style="width: 100%;" nzSize="large"></nz-input-number>
+                <nz-input-number 
+                  formControlName="trx_commissionamount" 
+                  nzPlaceHolder="0.00"
+                  [nzMin]="0" 
+                  [nzStep]="10" 
+                  [nzFormatter]="formatterDollar"
+                  [nzParser]="parserDollar"
+                  style="width: 100%" 
+                  nzSize="large">
+                </nz-input-number>
               </nz-form-control>
             </nz-form-item>
           </nz-col>
