@@ -1,0 +1,3944 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  TreeViewComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/shared/components/tree-view/tree-view.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Componente reutilizable de navegación jerárquica en árbol (<code>&lt;app-tree-view&gt;</code>) construido sobre <code>nz-tree</code> de Ng-Zorro.</p>
+<p>Muestra jerarquías multinivel (como Tarjeta -&gt; Período -&gt; Comprobante) con
+búsqueda de texto en tiempo real, controles de expandir/contraer, selección de nodos y soporte para casillas de verificación.</p>
+
+    </p>
+
+
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tree-view</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>    <code>NzTreeModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzCardModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                        <div>    <code>NzDividerModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzGridModule</code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./tree-view.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tree-view.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./tree-view.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../components/DocumentsComponent.html" target="_self" >DocumentsComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                        <code>NzTreeModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzCardModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDividerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzGridModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#checkedKeys" >checkedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#expandedKeys" >expandedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#filteredNodes" >filteredNodes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isSearching" >isSearching</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#searchText" >searchText</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#selectedKeys" >selectedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#selectedNode" >selectedNode</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#treeNodes" >treeNodes</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#checkAll" >checkAll</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#clearSelection" >clearSelection</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#collapseAll" >collapseAll</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#expandAll" >expandAll</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#filterNodes" >filterNodes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#findNodeByKey" >findNodeByKey</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getAllKeys" >getAllKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getCheckedKeys" >getCheckedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getCheckedLeafNodes" >getCheckedLeafNodes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getCheckedNodes" >getCheckedNodes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#getCheckedNodesRecursive" >getCheckedNodesRecursive</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getExpandedKeys" >getExpandedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#getExpandedKeysForSearch" >getExpandedKeysForSearch</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getNodeTitleByKey" >getNodeTitleByKey</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getSelectedNode" >getSelectedNode</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#initializeTree" >initializeTree</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onExpandChange" >onExpandChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onNodeCheck" >onNodeCheck</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onNodeClick" >onNodeClick</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSearchChange" >onSearchChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#refreshTree" >refreshTree</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#setCheckedKeys" >setCheckedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#setExpandedKeys" >setExpandedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#setSelectedNodeByKey" >setSelectedNodeByKey</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#uncheckAll" >uncheckAll</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Entradas</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#blockNode" >blockNode</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#checkable" >checkable</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#defaultCheckedKeys" >defaultCheckedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#defaultExpandedKeys" >defaultExpandedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#defaultSelectedKeys" >defaultSelectedKeys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#description" >description</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#draggable" >draggable</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#expandable" >expandable</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#multiple" >multiple</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#nodes" >nodes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#searchable" >searchable</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#showIcon" >showIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#showInfoPanel" >showInfoPanel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#showSearch" >showSearch</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#showToolbar" >showToolbar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#title" >title</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Salidas</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">O</span><a href="#nodeCheck" >nodeCheck</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">O</span><a href="#nodeClick" >nodeClick</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">O</span><a href="#nodeExpand" >nodeExpand</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Entradas</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="blockNode"></a>
+                        <b>blockNode</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="59" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:59</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si los nodos del árbol ocupan todo el ancho horizontal de su contenedor.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="checkable"></a>
+                        <b>checkable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="53" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:53</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si los nodos muestran casillas de verificación de selección.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultCheckedKeys"></a>
+                        <b>defaultCheckedKeys</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="67" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:67</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Claves de los nodos marcados por defecto.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultExpandedKeys"></a>
+                        <b>defaultExpandedKeys</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="65" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:65</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Claves de los nodos expandidos por defecto.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultSelectedKeys"></a>
+                        <b>defaultSelectedKeys</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="69" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:69</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Claves de los nodos seleccionados por defecto.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="description"></a>
+                        <b>description</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="41" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:41</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Subtítulo o texto descriptivo opcional.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="draggable"></a>
+                        <b>draggable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:57</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si los nodos pueden reordenarse mediante arrastrar y soltar.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expandable"></a>
+                        <b>expandable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="51" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:51</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si los nodos padre pueden expandirse/contraerse.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="multiple"></a>
+                        <b>multiple</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="55" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:55</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si se pueden seleccionar múltiples nodos simultáneamente.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodes"></a>
+                        <b>nodes</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>NzTreeNodeOptions[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="43" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:43</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Arreglo de opciones de nodos raíz del árbol a renderizar.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchable"></a>
+                        <b>searchable</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="49" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:49</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si los nodos del árbol pueden filtrarse mediante búsqueda de texto.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showIcon"></a>
+                        <b>showIcon</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="61" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:61</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si se muestran iconos de nodo junto a los títulos.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showInfoPanel"></a>
+                        <b>showInfoPanel</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:63</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si se debe mostrar el panel inferior de resumen/información para los nodos seleccionados y marcados.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showSearch"></a>
+                        <b>showSearch</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="45" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:45</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si se debe mostrar el cuadro de entrada de búsqueda.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showToolbar"></a>
+                        <b>showToolbar</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:47</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si se debe mostrar la barra de herramientas de acciones para expandir/contraer/marcar.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="title"></a>
+                        <b>title</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;Árbol de Navegación&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="39" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:39</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Título del encabezado de la tarjeta del árbol.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Salidas</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodeCheck"></a>
+                        <b>nodeCheck</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:74</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emite el estado de marcado del nodo y todas las claves marcadas actualmente cuando se alterna una casilla de verificación.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodeClick"></a>
+                        <b>nodeClick</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="72" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:72</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emite el <code>NzTreeNode</code> pulsado cuando un usuario selecciona un nodo.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodeExpand"></a>
+                        <b>nodeExpand</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="76" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:76</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emite el arreglo actualizado de claves de nodos expandidos cuando se expande o contrae una rama.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkAll"></a>
+                    <span class="name">
+                        <span ><b>checkAll</b></span>
+                        <a href="#checkAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkAll()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="286"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:286</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Marca todos los nodos del árbol.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearSelection"></a>
+                    <span class="name">
+                        <span ><b>clearSelection</b></span>
+                        <a href="#clearSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearSelection()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="300"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:300</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Limpia la selección de nodos actual.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="collapseAll"></a>
+                    <span class="name">
+                        <span ><b>collapseAll</b></span>
+                        <a href="#collapseAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>collapseAll()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="279"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:279</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Contrae todos los nodos del árbol.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expandAll"></a>
+                    <span class="name">
+                        <span ><b>expandAll</b></span>
+                        <a href="#expandAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>expandAll()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="272"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:272</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Expande todos los nodos del árbol.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterNodes"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>filterNodes</b></span>
+                        <a href="#filterNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filterNodes(nodes: NzTreeNode[], searchText: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="223"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:223</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filtra recursivamente una lista de nodos del árbol, preservando los nodos padre cuyos descendientes coincidan con <code>searchText</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>nodes</td>
+                                            <td>
+                                                        <code>NzTreeNode[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nodos del árbol de origen a filtrar.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>searchText</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Consulta de búsqueda insensible a mayúsculas y minúsculas.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>NzTreeNode[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo filtrado de instancias de <code>NzTreeNode</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findNodeByKey"></a>
+                    <span class="name">
+                        <span ><b>findNodeByKey</b></span>
+                        <a href="#findNodeByKey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findNodeByKey(nodes: NzTreeNode[], key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="339"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:339</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Busca recursivamente un nodo del árbol que coincida con la clave proporcionada.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>nodes</td>
+                                            <td>
+                                                        <code>NzTreeNode[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nodos del árbol donde buscar.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>key</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Clave del nodo de destino.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>NzTreeNode | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>El <code>NzTreeNode</code> coincidente o <code>null</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllKeys"></a>
+                    <span class="name">
+                        <span ><b>getAllKeys</b></span>
+                        <a href="#getAllKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllKeys(nodes: NzTreeNode[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="311"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:311</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Recopila recursivamente todas las claves de los nodos en la lista de nodos proporcionada.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>nodes</td>
+                                            <td>
+                                                        <code>NzTreeNode[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nodos del árbol a recorrer.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo plano de todas las claves de los nodos.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCheckedKeys"></a>
+                    <span class="name">
+                        <span ><b>getCheckedKeys</b></span>
+                        <a href="#getCheckedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCheckedKeys()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="403"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:403</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve una copia superficial de las claves de los nodos marcados actualmente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo de claves de los nodos marcados.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCheckedLeafNodes"></a>
+                    <span class="name">
+                        <span ><b>getCheckedLeafNodes</b></span>
+                        <a href="#getCheckedLeafNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCheckedLeafNodes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="368"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:368</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve únicamente los nodos hoja terminales (<code>isLeaf === true</code>) que están marcados actualmente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>NzTreeNode[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo de nodos hoja marcados.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCheckedNodes"></a>
+                    <span class="name">
+                        <span ><b>getCheckedNodes</b></span>
+                        <a href="#getCheckedNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCheckedNodes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="357"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:357</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve todas las instancias de <code>NzTreeNode</code> marcadas actualmente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>NzTreeNode[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo de nodos del árbol marcados.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCheckedNodesRecursive"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getCheckedNodesRecursive</b></span>
+                        <a href="#getCheckedNodesRecursive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCheckedNodesRecursive(treeNodes: NzTreeNode[], result: NzTreeNode[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="378"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:378</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Función auxiliar que puebla recursivamente <code>result</code> con los nodos marcados.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>treeNodes</td>
+                                            <td>
+                                                        <code>NzTreeNode[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nodos a recorrer.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>result</td>
+                                            <td>
+                                                        <code>NzTreeNode[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Arreglo acumulador de nodos marcados.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getExpandedKeys"></a>
+                    <span class="name">
+                        <span ><b>getExpandedKeys</b></span>
+                        <a href="#getExpandedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getExpandedKeys()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="412"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:412</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve una copia superficial de las claves de los nodos expandidos actualmente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo de claves de los nodos expandidos.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getExpandedKeysForSearch"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getExpandedKeysForSearch</b></span>
+                        <a href="#getExpandedKeysForSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getExpandedKeysForSearch(nodes: NzTreeNode[], searchText: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="253"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:253</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Recopila las claves de todos los nodos que deben expandirse para mostrar las coincidencias de búsqueda.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>nodes</td>
+                                            <td>
+                                                        <code>NzTreeNode[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nodos del árbol a inspeccionar.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>searchText</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Consulta de búsqueda activa.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Arreglo de claves de nodos a expandir.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNodeTitleByKey"></a>
+                    <span class="name">
+                        <span ><b>getNodeTitleByKey</b></span>
+                        <a href="#getNodeTitleByKey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNodeTitleByKey(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="328"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:328</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Busca el título de visualización de un nodo mediante su clave única.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>key</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Clave del nodo a buscar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>El título del nodo, o la propia clave si no se encuentra.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedNode"></a>
+                    <span class="name">
+                        <span ><b>getSelectedNode</b></span>
+                        <a href="#getSelectedNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedNode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="394"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:394</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el <code>NzTreeNode</code> seleccionado actualmente o <code>null</code>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>NzTreeNode | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Nodo del árbol seleccionado o <code>null</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initializeTree"></a>
+                    <span class="name">
+                        <span ><b>initializeTree</b></span>
+                        <a href="#initializeTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initializeTree()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="128"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:128</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Convierte los <code>nodes</code> de entrada sin procesar en instancias de <code>NzTreeNode</code> y aplica las claves expandidas/marcadas/seleccionadas por defecto.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: <a href="https://angular.dev/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="107"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reinicializa o actualiza el estado del árbol cuando cambian las propiedades de entrada.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changes</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Mapa <code>SimpleChanges</code> de Angular.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="98"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicializa la estructura del árbol al iniciar el componente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onExpandChange"></a>
+                    <span class="name">
+                        <span ><b>onExpandChange</b></span>
+                        <a href="#onExpandChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onExpandChange(expandedKeys: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="190"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza <code>expandedKeys</code> y emite <code>nodeExpand</code> cuando las ramas se expanden o contraen.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>expandedKeys</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Arreglo de claves de los nodos actualmente expandidos.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNodeCheck"></a>
+                    <span class="name">
+                        <span ><b>onNodeCheck</b></span>
+                        <a href="#onNodeCheck"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onNodeCheck(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="162"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:162</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maneja los eventos de alternancia de casillas de verificación de nodos y emite la selección actualizada mediante <code>nodeCheck</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Evento de marcado en el árbol de Ng-Zorro.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNodeClick"></a>
+                    <span class="name">
+                        <span ><b>onNodeClick</b></span>
+                        <a href="#onNodeClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onNodeClick(event: NzFormatEmitEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="147"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maneja los eventos de clic en un nodo y emite el <code>NzTreeNode</code> seleccionado mediante <code>nodeClick</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>NzFormatEmitEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Evento de clic en el árbol de Ng-Zorro.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSearchChange"></a>
+                    <span class="name">
+                        <span ><b>onSearchChange</b></span>
+                        <a href="#onSearchChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSearchChange(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="200"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:200</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filtra los nodos del árbol en tiempo real según la consulta de búsqueda del usuario y expande las ramas coincidentes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Cadena de entrada de búsqueda.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshTree"></a>
+                    <span class="name">
+                        <span ><b>refreshTree</b></span>
+                        <a href="#refreshTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshTree()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="450"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:450</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reconstruye el árbol a partir de los <code>nodes</code> de entrada actuales.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setCheckedKeys"></a>
+                    <span class="name">
+                        <span ><b>setCheckedKeys</b></span>
+                        <a href="#setCheckedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setCheckedKeys(keys: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="434"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:434</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Establece programáticamente las claves de los nodos marcados.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>keys</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Arreglo de claves de nodos a marcar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setExpandedKeys"></a>
+                    <span class="name">
+                        <span ><b>setExpandedKeys</b></span>
+                        <a href="#setExpandedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setExpandedKeys(keys: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="443"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:443</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Establece programáticamente las claves de los nodos expandidos.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>keys</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Arreglo de claves de nodos a expandir.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectedNodeByKey"></a>
+                    <span class="name">
+                        <span ><b>setSelectedNodeByKey</b></span>
+                        <a href="#setSelectedNodeByKey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectedNodeByKey(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="421"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:421</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Selecciona programáticamente un nodo del árbol mediante su clave.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>key</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Clave del nodo a seleccionar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uncheckAll"></a>
+                    <span class="name">
+                        <span ><b>uncheckAll</b></span>
+                        <a href="#uncheckAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>uncheckAll()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="293"
+                                    class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:293</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Desmarca todos los nodos del árbol.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkedKeys"></a>
+                    <span class="name">
+                        <span ><b>checkedKeys</b></span>
+                        <a href="#checkedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="87" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:87</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Claves de los nodos actualmente marcados.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expandedKeys"></a>
+                    <span class="name">
+                        <span ><b>expandedKeys</b></span>
+                        <a href="#expandedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="83" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Claves de los nodos actualmente expandidos.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredNodes"></a>
+                    <span class="name">
+                        <span ><b>filteredNodes</b></span>
+                        <a href="#filteredNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>NzTreeNode[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="81" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Subconjunto filtrado de <code>treeNodes</code> que coincide con la consulta de búsqueda activa.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSearching"></a>
+                    <span class="name">
+                        <span ><b>isSearching</b></span>
+                        <a href="#isSearching"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="93" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:93</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si hay un filtro de búsqueda activo actualmente.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchText"></a>
+                    <span class="name">
+                        <span ><b>searchText</b></span>
+                        <a href="#searchText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="91" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:91</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Cadena de consulta de búsqueda actual.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedKeys"></a>
+                    <span class="name">
+                        <span ><b>selectedKeys</b></span>
+                        <a href="#selectedKeys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="85" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Claves de los nodos actualmente seleccionados.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedNode"></a>
+                    <span class="name">
+                        <span ><b>selectedNode</b></span>
+                        <a href="#selectedNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>NzTreeNode | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="89" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:89</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referencia al nodo activo/seleccionado actualmente.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeNodes"></a>
+                    <span class="name">
+                        <span ><b>treeNodes</b></span>
+                        <a href="#treeNodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>NzTreeNode[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="79" class="link-to-prism">src/app/shared/components/tree-view/tree-view.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Arreglo interno de objetos <code>NzTreeNode</code> instanciados.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { NzTreeModule, NzTreeNode, NzFormatEmitEvent, NzTreeNodeOptions } from &#x27;ng-zorro-antd/tree&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzCardModule } from &#x27;ng-zorro-antd/card&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzGridModule } from &#x27;ng-zorro-antd/grid&#x27;; // Agregado para nz-row y nz-col
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+
+/**
+ * Componente reutilizable de navegación jerárquica en árbol (&#x60;&lt;app-tree-view&gt;&#x60;) construido sobre &#x60;nz-tree&#x60; de Ng-Zorro.
+ *
+ * @description Muestra jerarquías multinivel (como Tarjeta -&gt; Período -&gt; Comprobante) con
+ * búsqueda de texto en tiempo real, controles de expandir/contraer, selección de nodos y soporte para casillas de verificación.
+ */
+@Component({
+  selector: &#x27;app-tree-view&#x27;,
+  standalone: true,
+  imports: [
+    NzTreeModule,
+    NzIconModule,
+    NzButtonModule,
+    NzCardModule,
+    NzTagModule,
+    NzDividerModule,
+    NzInputModule,
+    NzGridModule, // Importante para nz-row y nz-col
+    CommonModule,
+    FormsModule
+  ],
+  templateUrl: &#x27;./tree-view.component.html&#x27;,
+  styleUrl: &#x27;./tree-view.component.scss&#x27;
+})
+export class TreeViewComponent {
+  /** Título del encabezado de la tarjeta del árbol. */
+  @Input() title: string &#x3D; &#x27;Árbol de Navegación&#x27;;
+  /** Subtítulo o texto descriptivo opcional. */
+  @Input() description: string &#x3D; &#x27;&#x27;;
+  /** Arreglo de opciones de nodos raíz del árbol a renderizar. */
+  @Input() nodes: NzTreeNodeOptions[] &#x3D; [];
+  /** Indica si se debe mostrar el cuadro de entrada de búsqueda. */
+  @Input() showSearch: boolean &#x3D; true;
+  /** Indica si se debe mostrar la barra de herramientas de acciones para expandir/contraer/marcar. */
+  @Input() showToolbar: boolean &#x3D; true;
+  /** Indica si los nodos del árbol pueden filtrarse mediante búsqueda de texto. */
+  @Input() searchable: boolean &#x3D; true;
+  /** Indica si los nodos padre pueden expandirse/contraerse. */
+  @Input() expandable: boolean &#x3D; true;
+  /** Indica si los nodos muestran casillas de verificación de selección. */
+  @Input() checkable: boolean &#x3D; true;
+  /** Indica si se pueden seleccionar múltiples nodos simultáneamente. */
+  @Input() multiple: boolean &#x3D; true;
+  /** Indica si los nodos pueden reordenarse mediante arrastrar y soltar. */
+  @Input() draggable: boolean &#x3D; false;
+  /** Indica si los nodos del árbol ocupan todo el ancho horizontal de su contenedor. */
+  @Input() blockNode: boolean &#x3D; true;
+  /** Indica si se muestran iconos de nodo junto a los títulos. */
+  @Input() showIcon: boolean &#x3D; true;
+  /** Indica si se debe mostrar el panel inferior de resumen/información para los nodos seleccionados y marcados. */
+  @Input() showInfoPanel: boolean &#x3D; true;
+  /** Claves de los nodos expandidos por defecto. */
+  @Input() defaultExpandedKeys: string[] &#x3D; [];
+  /** Claves de los nodos marcados por defecto. */
+  @Input() defaultCheckedKeys: string[] &#x3D; [];
+  /** Claves de los nodos seleccionados por defecto. */
+  @Input() defaultSelectedKeys: string[] &#x3D; [];
+
+  /** Emite el &#x60;NzTreeNode&#x60; pulsado cuando un usuario selecciona un nodo. */
+  @Output() nodeClick &#x3D; new EventEmitter&lt;NzTreeNode&gt;();
+  /** Emite el estado de marcado del nodo y todas las claves marcadas actualmente cuando se alterna una casilla de verificación. */
+  @Output() nodeCheck &#x3D; new EventEmitter&lt;{ node: NzTreeNode; checked: boolean; checkedKeys: string[] }&gt;();
+  /** Emite el arreglo actualizado de claves de nodos expandidos cuando se expande o contrae una rama. */
+  @Output() nodeExpand &#x3D; new EventEmitter&lt;string[]&gt;();
+
+  /** Arreglo interno de objetos &#x60;NzTreeNode&#x60; instanciados. */
+  treeNodes: NzTreeNode[] &#x3D; [];
+  /** Subconjunto filtrado de &#x60;treeNodes&#x60; que coincide con la consulta de búsqueda activa. */
+  filteredNodes: NzTreeNode[] &#x3D; [];
+  /** Claves de los nodos actualmente expandidos. */
+  expandedKeys: string[] &#x3D; [];
+  /** Claves de los nodos actualmente seleccionados. */
+  selectedKeys: string[] &#x3D; [];
+  /** Claves de los nodos actualmente marcados. */
+  checkedKeys: string[] &#x3D; [];
+  /** Referencia al nodo activo/seleccionado actualmente. */
+  selectedNode: NzTreeNode | null &#x3D; null;
+  /** Cadena de consulta de búsqueda actual. */
+  searchText: string &#x3D; &#x27;&#x27;;
+  /** Indica si hay un filtro de búsqueda activo actualmente. */
+  isSearching: boolean &#x3D; false;
+
+  /**
+   * Inicializa la estructura del árbol al iniciar el componente.
+   */
+  ngOnInit() {
+    this.initializeTree();
+  }
+
+  /**
+   * Reinicializa o actualiza el estado del árbol cuando cambian las propiedades de entrada.
+   *
+   * @param changes Mapa &#x60;SimpleChanges&#x60; de Angular.
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes[&#x27;nodes&#x27;] &amp;&amp; !changes[&#x27;nodes&#x27;].firstChange) {
+      this.initializeTree();
+    }
+    if (changes[&#x27;defaultExpandedKeys&#x27;]) {
+      this.expandedKeys &#x3D; [...this.defaultExpandedKeys];
+    }
+    if (changes[&#x27;defaultCheckedKeys&#x27;]) {
+      this.checkedKeys &#x3D; [...this.defaultCheckedKeys];
+    }
+    if (changes[&#x27;defaultSelectedKeys&#x27;]) {
+      this.selectedKeys &#x3D; [...this.defaultSelectedKeys];
+      if (this.selectedKeys.length &gt; 0) {
+        this.selectedNode &#x3D; this.findNodeByKey(this.treeNodes, this.selectedKeys[0]);
+      }
+    }
+  }
+
+  /**
+   * Convierte los &#x60;nodes&#x60; de entrada sin procesar en instancias de &#x60;NzTreeNode&#x60; y aplica las claves expandidas/marcadas/seleccionadas por defecto.
+   */
+  initializeTree(): void {
+    this.treeNodes &#x3D; this.nodes.map(node &#x3D;&gt; new NzTreeNode(node));
+    this.filteredNodes &#x3D; [...this.treeNodes];
+    
+    // Establecer estados por defecto
+    this.expandedKeys &#x3D; [...this.defaultExpandedKeys];
+    this.checkedKeys &#x3D; [...this.defaultCheckedKeys];
+    this.selectedKeys &#x3D; [...this.defaultSelectedKeys];
+    
+    if (this.selectedKeys.length &gt; 0) {
+      this.selectedNode &#x3D; this.findNodeByKey(this.treeNodes, this.selectedKeys[0]);
+    }
+  }
+
+  /**
+   * Maneja los eventos de clic en un nodo y emite el &#x60;NzTreeNode&#x60; seleccionado mediante &#x60;nodeClick&#x60;.
+   *
+   * @param event Evento de clic en el árbol de Ng-Zorro.
+   */
+  onNodeClick(event: NzFormatEmitEvent): void {
+    const node &#x3D; event.node;
+    if (node) {
+      this.selectedNode &#x3D; node;
+      this.selectedKeys &#x3D; [node.key!];
+      this.nodeClick.emit(node);
+      console.log(&#x27;Nodo seleccionado:&#x27;, node);
+    }
+  }
+
+  /**
+   * Maneja los eventos de alternancia de casillas de verificación de nodos y emite la selección actualizada mediante &#x60;nodeCheck&#x60;.
+   *
+   * @param event Evento de marcado en el árbol de Ng-Zorro.
+   */
+  onNodeCheck(event: any): void {
+    const node &#x3D; event.node;
+    
+    // En NG-ZORRO v19, usamos event.checkedNodes para obtener los nodos checkeados
+    const checkedNodes &#x3D; event.checkedKeys as NzTreeNode[] || [];
+    this.checkedKeys &#x3D; checkedNodes.map(n &#x3D;&gt; n.key!).filter(k &#x3D;&gt; k !&#x3D;&#x3D; undefined);
+    
+    // Obtener el estado checked del nodo
+    const checked &#x3D; node?.isChecked || false;
+    
+    this.nodeCheck.emit({
+      node: node!,
+      checked: checked,
+      checkedKeys: this.checkedKeys
+    });
+    
+    console.log(&#x27;Nodo checkeado:&#x27;, { 
+      node: node?.title, 
+      checked: checked, 
+      checkedKeys: this.checkedKeys 
+    });
+  }
+
+  /**
+   * Actualiza &#x60;expandedKeys&#x60; y emite &#x60;nodeExpand&#x60; cuando las ramas se expanden o contraen.
+   *
+   * @param expandedKeys Arreglo de claves de los nodos actualmente expandidos.
+   */
+  onExpandChange(expandedKeys: string[]): void {
+    this.expandedKeys &#x3D; expandedKeys;
+    this.nodeExpand.emit(expandedKeys);
+  }
+
+  /**
+   * Filtra los nodos del árbol en tiempo real según la consulta de búsqueda del usuario y expande las ramas coincidentes.
+   *
+   * @param value Cadena de entrada de búsqueda.
+   */
+  onSearchChange(value: string): void {
+    this.searchText &#x3D; value.trim();
+    
+    if (this.searchText &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+      this.filteredNodes &#x3D; [...this.treeNodes];
+      this.isSearching &#x3D; false;
+      return;
+    }
+    
+    this.isSearching &#x3D; true;
+    this.filteredNodes &#x3D; this.filterNodes(this.treeNodes, this.searchText);
+    
+    // Expandir nodos que coincidan con la búsqueda
+    this.expandedKeys &#x3D; this.getExpandedKeysForSearch(this.treeNodes, this.searchText);
+  }
+
+  /**
+   * Filtra recursivamente una lista de nodos del árbol, preservando los nodos padre cuyos descendientes coincidan con &#x60;searchText&#x60;.
+   *
+   * @param nodes Nodos del árbol de origen a filtrar.
+   * @param searchText Consulta de búsqueda insensible a mayúsculas y minúsculas.
+   * @returns Arreglo filtrado de instancias de &#x60;NzTreeNode&#x60;.
+   */
+  private filterNodes(nodes: NzTreeNode[], searchText: string): NzTreeNode[] {
+    const result: NzTreeNode[] &#x3D; [];
+    
+    nodes.forEach(node &#x3D;&gt; {
+      const matchTitle &#x3D; node.title.toLowerCase().includes(searchText.toLowerCase());
+      const childrenMatch &#x3D; node.children ? this.filterNodes(node.children, searchText) : [];
+      
+      if (matchTitle || childrenMatch.length &gt; 0) {
+        const newNode &#x3D; new NzTreeNode({
+          ...node.origin,
+          title: node.title,
+          key: node.key,
+          icon: node.icon,
+          isLeaf: node.isLeaf,
+          children: childrenMatch.length &gt; 0 ? childrenMatch : undefined
+        });
+        result.push(newNode);
+      }
+    });
+    
+    return result;
+  }
+
+  /**
+   * Recopila las claves de todos los nodos que deben expandirse para mostrar las coincidencias de búsqueda.
+   *
+   * @param nodes Nodos del árbol a inspeccionar.
+   * @param searchText Consulta de búsqueda activa.
+   * @returns Arreglo de claves de nodos a expandir.
+   */
+  private getExpandedKeysForSearch(nodes: NzTreeNode[], searchText: string): string[] {
+    const keys: string[] &#x3D; [];
+    
+    nodes.forEach(node &#x3D;&gt; {
+      const matchTitle &#x3D; node.title.toLowerCase().includes(searchText.toLowerCase());
+      const childrenMatch &#x3D; node.children ? this.getExpandedKeysForSearch(node.children, searchText) : [];
+      
+      if (matchTitle || childrenMatch.length &gt; 0) {
+        keys.push(node.key!);
+        keys.push(...childrenMatch);
+      }
+    });
+    
+    return keys;
+  }
+
+  /**
+   * Expande todos los nodos del árbol.
+   */
+  expandAll(): void {
+    this.expandedKeys &#x3D; this.getAllKeys(this.treeNodes);
+  }
+
+  /**
+   * Contrae todos los nodos del árbol.
+   */
+  collapseAll(): void {
+    this.expandedKeys &#x3D; [];
+  }
+
+  /**
+   * Marca todos los nodos del árbol.
+   */
+  checkAll(): void {
+    this.checkedKeys &#x3D; this.getAllKeys(this.treeNodes);
+  }
+
+  /**
+   * Desmarca todos los nodos del árbol.
+   */
+  uncheckAll(): void {
+    this.checkedKeys &#x3D; [];
+  }
+
+  /**
+   * Limpia la selección de nodos actual.
+   */
+  clearSelection(): void {
+    this.selectedKeys &#x3D; [];
+    this.selectedNode &#x3D; null;
+  }
+
+  /**
+   * Recopila recursivamente todas las claves de los nodos en la lista de nodos proporcionada.
+   *
+   * @param nodes Nodos del árbol a recorrer.
+   * @returns Arreglo plano de todas las claves de los nodos.
+   */
+  getAllKeys(nodes: NzTreeNode[]): string[] {
+    const keys: string[] &#x3D; [];
+    nodes.forEach(node &#x3D;&gt; {
+      keys.push(node.key!);
+      if (node.children) {
+        keys.push(...this.getAllKeys(node.children));
+      }
+    });
+    return keys;
+  }
+
+  /**
+   * Busca el título de visualización de un nodo mediante su clave única.
+   *
+   * @param key Clave del nodo a buscar.
+   * @returns El título del nodo, o la propia clave si no se encuentra.
+   */
+  getNodeTitleByKey(key: string): string {
+    return this.findNodeByKey(this.treeNodes, key)?.title || key;
+  }
+
+  /**
+   * Busca recursivamente un nodo del árbol que coincida con la clave proporcionada.
+   *
+   * @param nodes Nodos del árbol donde buscar.
+   * @param key Clave del nodo de destino.
+   * @returns El &#x60;NzTreeNode&#x60; coincidente o &#x60;null&#x60;.
+   */
+  findNodeByKey(nodes: NzTreeNode[], key: string): NzTreeNode | null {
+    for (const node of nodes) {
+      if (node.key &#x3D;&#x3D;&#x3D; key) {
+        return node;
+      }
+      if (node.children) {
+        const found &#x3D; this.findNodeByKey(node.children, key);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Devuelve todas las instancias de &#x60;NzTreeNode&#x60; marcadas actualmente.
+   *
+   * @returns Arreglo de nodos del árbol marcados.
+   */
+  getCheckedNodes(): NzTreeNode[] {
+    const nodes: NzTreeNode[] &#x3D; [];
+    this.getCheckedNodesRecursive(this.treeNodes, nodes);
+    return nodes;
+  }
+
+  /**
+   * Devuelve únicamente los nodos hoja terminales (&#x60;isLeaf &#x3D;&#x3D;&#x3D; true&#x60;) que están marcados actualmente.
+   *
+   * @returns Arreglo de nodos hoja marcados.
+   */
+  getCheckedLeafNodes(): NzTreeNode[] {
+    return this.getCheckedNodes().filter(node &#x3D;&gt; node.isLeaf);
+  }
+
+  /**
+   * Función auxiliar que puebla recursivamente &#x60;result&#x60; con los nodos marcados.
+   *
+   * @param treeNodes Nodos a recorrer.
+   * @param result Arreglo acumulador de nodos marcados.
+   */
+  private getCheckedNodesRecursive(treeNodes: NzTreeNode[], result: NzTreeNode[]): void {
+    treeNodes.forEach(node &#x3D;&gt; {
+      if (node.isChecked) {
+        result.push(node);
+      }
+      if (node.children) {
+        this.getCheckedNodesRecursive(node.children, result);
+      }
+    });
+  }
+
+  /**
+   * Devuelve el &#x60;NzTreeNode&#x60; seleccionado actualmente o &#x60;null&#x60;.
+   *
+   * @returns Nodo del árbol seleccionado o &#x60;null&#x60;.
+   */
+  getSelectedNode(): NzTreeNode | null {
+    return this.selectedNode;
+  }
+
+  /**
+   * Devuelve una copia superficial de las claves de los nodos marcados actualmente.
+   *
+   * @returns Arreglo de claves de los nodos marcados.
+   */
+  getCheckedKeys(): string[] {
+    return [...this.checkedKeys];
+  }
+
+  /**
+   * Devuelve una copia superficial de las claves de los nodos expandidos actualmente.
+   *
+   * @returns Arreglo de claves de los nodos expandidos.
+   */
+  getExpandedKeys(): string[] {
+    return [...this.expandedKeys];
+  }
+
+  /**
+   * Selecciona programáticamente un nodo del árbol mediante su clave.
+   *
+   * @param key Clave del nodo a seleccionar.
+   */
+  setSelectedNodeByKey(key: string): void {
+    const node &#x3D; this.findNodeByKey(this.treeNodes, key);
+    if (node) {
+      this.selectedNode &#x3D; node;
+      this.selectedKeys &#x3D; [key];
+    }
+  }
+
+  /**
+   * Establece programáticamente las claves de los nodos marcados.
+   *
+   * @param keys Arreglo de claves de nodos a marcar.
+   */
+  setCheckedKeys(keys: string[]): void {
+    this.checkedKeys &#x3D; [...keys];
+  }
+
+  /**
+   * Establece programáticamente las claves de los nodos expandidos.
+   *
+   * @param keys Arreglo de claves de nodos a expandir.
+   */
+  setExpandedKeys(keys: string[]): void {
+    this.expandedKeys &#x3D; [...keys];
+  }
+
+  /**
+   * Reconstruye el árbol a partir de los &#x60;nodes&#x60; de entrada actuales.
+   */
+  refreshTree(): void {
+    this.initializeTree();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nz-card [nzBordered]&#x3D;&quot;false&quot; [nzTitle]&#x3D;&quot;title&quot;&gt;
+
+    @if(showSearch || showToolbar) {
+        &lt;!-- Barra de herramientas --&gt;
+        &lt;div class&#x3D;&quot;tree-toolbar&quot;&gt;
+            &lt;div nz-row [nzGutter]&#x3D;&quot;8&quot; style&#x3D;&quot;margin-bottom: 16px;&quot;&gt;
+                @if(showSearch) {
+                    &lt;!-- Búsqueda --&gt;
+                    &lt;div nz-col [nzSpan]&#x3D;&quot;8&quot; *ngIf&#x3D;&quot;searchable&quot; style&#x3D;&quot;min-width: 100%; margin: 0 0 10px 0;&quot;&gt;
+                        &lt;nz-input-group nzPrefixIcon&#x3D;&quot;search&quot;&gt;
+                        &lt;input 
+                            type&#x3D;&quot;text&quot; 
+                            nz-input 
+                            [(ngModel)]&#x3D;&quot;searchText&quot; 
+                            (ngModelChange)&#x3D;&quot;onSearchChange($event)&quot;
+                            placeholder&#x3D;&quot;Buscar...&quot;
+                        /&gt;
+                        &lt;/nz-input-group&gt;
+                    &lt;/div&gt;
+                }
+
+                @if(showToolbar) {
+                &lt;!-- Botones de control --&gt;
+                &lt;div nz-col [nzSpan]&#x3D;&quot;searchable ? 16 : 24&quot; style&#x3D;&quot;display: flex; flex-direction: row; min-width: 100%;&quot;&gt;
+                    &lt;button 
+                        nz-button 
+                        nzType&#x3D;&quot;primary&quot; 
+                        (click)&#x3D;&quot;expandAll()&quot;
+                        nz-tooltip&#x3D;&quot;Expandir todos los nodos&quot;
+                        *ngIf&#x3D;&quot;expandable&quot;
+                    &gt;
+                        &lt;span nz-icon nzType&#x3D;&quot;down-square&quot;&gt;&lt;/span&gt;
+                        Expandir Todo
+                    &lt;/button&gt;
+                    
+                    &lt;button 
+                        nz-button 
+                        nzType&#x3D;&quot;default&quot; 
+                        (click)&#x3D;&quot;collapseAll()&quot;
+                        nz-tooltip&#x3D;&quot;Contraer todos los nodos&quot;
+                        *ngIf&#x3D;&quot;expandable&quot;
+                        style&#x3D;&quot;margin-left: 8px;&quot;
+                    &gt;
+                        &lt;span nz-icon nzType&#x3D;&quot;up-square&quot;&gt;&lt;/span&gt;
+                        Contraer Todo
+                    &lt;/button&gt;
+                    
+                    &lt;button 
+                        nz-button 
+                        nzType&#x3D;&quot;default&quot; 
+                        (click)&#x3D;&quot;checkAll()&quot;
+                        nz-tooltip&#x3D;&quot;Marcar todos los nodos&quot;
+                        *ngIf&#x3D;&quot;checkable&quot;
+                        style&#x3D;&quot;margin-left: 8px;&quot;
+                    &gt;
+                        &lt;span nz-icon nzType&#x3D;&quot;check-square&quot;&gt;&lt;/span&gt;
+                        Marcar Todo
+                    &lt;/button&gt;
+                    
+                    &lt;button 
+                        nz-button 
+                        nzType&#x3D;&quot;default&quot; 
+                        (click)&#x3D;&quot;uncheckAll()&quot;
+                        nz-tooltip&#x3D;&quot;Desmarcar todos los nodos&quot;
+                        *ngIf&#x3D;&quot;checkable&quot;
+                        style&#x3D;&quot;margin-left: 8px;&quot;
+                    &gt;
+                        &lt;span nz-icon nzType&#x3D;&quot;stop&quot;&gt;&lt;/span&gt;
+                        Desmarcar Todo
+                    &lt;/button&gt;
+                    
+                    &lt;button 
+                        nz-button 
+                        nzType&#x3D;&quot;default&quot; 
+                        (click)&#x3D;&quot;clearSelection()&quot;
+                        nz-tooltip&#x3D;&quot;Limpiar selección&quot;
+                        style&#x3D;&quot;margin-left: 8px;&quot;
+                    &gt;
+                        &lt;span nz-icon nzType&#x3D;&quot;close-circle&quot;&gt;&lt;/span&gt;
+                        Limpiar
+                    &lt;/button&gt;
+
+                &lt;/div&gt;
+                }
+            &lt;/div&gt;
+        &lt;/div&gt;
+    }
+
+    &lt;!-- Tree principal --&gt;
+    &lt;nz-tree
+        [nzData]&#x3D;&quot;filteredNodes&quot;
+        [nzBlockNode]&#x3D;&quot;blockNode&quot;
+        [nzShowIcon]&#x3D;&quot;showIcon&quot;
+        [nzCheckable]&#x3D;&quot;checkable&quot;
+        [nzMultiple]&#x3D;&quot;multiple&quot;
+        [nzDraggable]&#x3D;&quot;draggable&quot;
+        [(nzExpandedKeys)]&#x3D;&quot;expandedKeys&quot;
+        [(nzSelectedKeys)]&#x3D;&quot;selectedKeys&quot;
+        [(nzCheckedKeys)]&#x3D;&quot;checkedKeys&quot;
+        (nzClick)&#x3D;&quot;onNodeClick($event)&quot;
+        (nzCheckBoxChange)&#x3D;&quot;onNodeCheck($event)&quot;
+        (nzExpandedKeysChange)&#x3D;&quot;onExpandChange($event)&quot;
+        &gt;
+    &lt;/nz-tree&gt;
+
+    &lt;!-- Panel de información --&gt;
+    &lt;nz-divider *ngIf&#x3D;&quot;showInfoPanel&quot;&gt;&lt;/nz-divider&gt;
+
+    &lt;div *ngIf&#x3D;&quot;showInfoPanel&quot; nz-row [nzGutter]&#x3D;&quot;16&quot;&gt;
+        &lt;div nz-col [nzSpan]&#x3D;&quot;12&quot;&gt;
+            &lt;h4&gt;Seleccionado:&lt;/h4&gt;
+            &lt;nz-tag *ngIf&#x3D;&quot;selectedNode&quot; nzColor&#x3D;&quot;blue&quot;&gt;
+                &lt;span nz-icon [nzType]&#x3D;&quot;selectedNode.icon || &#x27;file&#x27;&quot;&gt;&lt;/span&gt;
+                {{ selectedNode.title }}
+            &lt;/nz-tag&gt;
+            &lt;span *ngIf&#x3D;&quot;!selectedNode&quot; class&#x3D;&quot;empty-text&quot;&gt;Ninguno&lt;/span&gt;
+        &lt;/div&gt;
+        @if(checkable) {
+            &lt;div nz-col [nzSpan]&#x3D;&quot;12&quot;&gt;
+                &lt;h4&gt;Checkeados ({{ checkedKeys.length }}):&lt;/h4&gt;
+                &lt;div *ngIf&#x3D;&quot;checkedKeys.length &gt; 0&quot;&gt;
+                    &lt;nz-tag 
+                    *ngFor&#x3D;&quot;let key of checkedKeys&quot; 
+                    nzColor&#x3D;&quot;green&quot;
+                    style&#x3D;&quot;margin-bottom: 4px; display: inline-block;&quot;
+                    &gt;
+                    {{ getNodeTitleByKey(key) }}
+                    &lt;/nz-tag&gt;
+                &lt;/div&gt;
+                &lt;span *ngIf&#x3D;&quot;checkedKeys.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;empty-text&quot;&gt;Ninguno&lt;/span&gt;
+            &lt;/div&gt;
+        }
+    &lt;/div&gt;
+&lt;/nz-card&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./tree-view.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.tree-toolbar {
+    padding: 8px 0;
+}
+.empty-text {
+    color: #999;
+    font-style: italic;
+}
+nz-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+nz-tree {
+    height: calc(100vh - 335px);
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nz-card [nzBordered]="false" [nzTitle]="title">    @if(showSearch || showToolbar) {        <!-- Barra de herramientas -->        <div class="tree-toolbar">            <div nz-row [nzGutter]="8" style="margin-bottom: 16px;">                @if(showSearch) {                    <!-- Búsqueda -->                    <div nz-col [nzSpan]="8" *ngIf="searchable" style="min-width: 100%; margin: 0 0 10px 0;">                        <nz-input-group nzPrefixIcon="search">                        <input                             type="text"                             nz-input                             [(ngModel)]="searchText"                             (ngModelChange)="onSearchChange($event)"                            placeholder="Buscar..."                        />                        </nz-input-group>                    </div>                }                @if(showToolbar) {                <!-- Botones de control -->                <div nz-col [nzSpan]="searchable ? 16 : 24" style="display: flex; flex-direction: row; min-width: 100%;">                    <button                         nz-button                         nzType="primary"                         (click)="expandAll()"                        nz-tooltip="Expandir todos los nodos"                        *ngIf="expandable"                    >                        <span nz-icon nzType="down-square"></span>                        Expandir Todo                    </button>                                        <button                         nz-button                         nzType="default"                         (click)="collapseAll()"                        nz-tooltip="Contraer todos los nodos"                        *ngIf="expandable"                        style="margin-left: 8px;"                    >                        <span nz-icon nzType="up-square"></span>                        Contraer Todo                    </button>                                        <button                         nz-button                         nzType="default"                         (click)="checkAll()"                        nz-tooltip="Marcar todos los nodos"                        *ngIf="checkable"                        style="margin-left: 8px;"                    >                        <span nz-icon nzType="check-square"></span>                        Marcar Todo                    </button>                                        <button                         nz-button                         nzType="default"                         (click)="uncheckAll()"                        nz-tooltip="Desmarcar todos los nodos"                        *ngIf="checkable"                        style="margin-left: 8px;"                    >                        <span nz-icon nzType="stop"></span>                        Desmarcar Todo                    </button>                                        <button                         nz-button                         nzType="default"                         (click)="clearSelection()"                        nz-tooltip="Limpiar selección"                        style="margin-left: 8px;"                    >                        <span nz-icon nzType="close-circle"></span>                        Limpiar                    </button>                </div>                }            </div>        </div>    }    <!-- Tree principal -->    <nz-tree        [nzData]="filteredNodes"        [nzBlockNode]="blockNode"        [nzShowIcon]="showIcon"        [nzCheckable]="checkable"        [nzMultiple]="multiple"        [nzDraggable]="draggable"        [(nzExpandedKeys)]="expandedKeys"        [(nzSelectedKeys)]="selectedKeys"        [(nzCheckedKeys)]="checkedKeys"        (nzClick)="onNodeClick($event)"        (nzCheckBoxChange)="onNodeCheck($event)"        (nzExpandedKeysChange)="onExpandChange($event)"        >    </nz-tree>    <!-- Panel de información -->    <nz-divider *ngIf="showInfoPanel"></nz-divider>    <div *ngIf="showInfoPanel" nz-row [nzGutter]="16">        <div nz-col [nzSpan]="12">            <h4>Seleccionado:</h4>            <nz-tag *ngIf="selectedNode" nzColor="blue">                <span nz-icon [nzType]="selectedNode.icon || \'file\'"></span>                {{ selectedNode.title }}            </nz-tag>            <span *ngIf="!selectedNode" class="empty-text">Ninguno</span>        </div>        @if(checkable) {            <div nz-col [nzSpan]="12">                <h4>Checkeados ({{ checkedKeys.length }}):</h4>                <div *ngIf="checkedKeys.length > 0">                    <nz-tag                     *ngFor="let key of checkedKeys"                     nzColor="green"                    style="margin-bottom: 4px; display: inline-block;"                    >                    {{ getNodeTitleByKey(key) }}                    </nz-tag>                </div>                <span *ngIf="checkedKeys.length === 0" class="empty-text">Ninguno</span>            </div>        }    </div></nz-card></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TreeViewComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/TreeViewComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/TreeViewComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/TreeViewComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TreeViewComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

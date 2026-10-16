@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Service that parses raw OCR text from receipts/vouchers using regular expressions
+ * to extract key financial fields (CUIT, date, total amount, and card last 4 digits).
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -7,6 +11,12 @@ export class VouchersParserService {
 
   constructor() { }
 
+  /**
+   * Parses raw OCR text and extracts structured receipt fields.
+   *
+   * @param text Raw text recognized from the receipt image.
+   * @returns An object containing `cuit`, `fecha`, `monto`, `tarjeta_nro`, and `comercio`.
+   */
   parseText(text: string): any {
     const cleanText = text.toUpperCase();
     
@@ -30,11 +40,24 @@ export class VouchersParserService {
     return data;
   }
 
+  /**
+   * Evaluates a regular expression against the normalized text and returns the first captured group or full match.
+   *
+   * @param text Uppercase normalized receipt text.
+   * @param regex Regular expression pattern to match.
+   * @returns The matched substring or `null` if not found.
+   */
   private matchPattern(text: string, regex: RegExp): string | null {
     const match = text.match(regex);
     return match ? match[1] || match[0] : null;
   }
 
+  /**
+   * Extracts and normalizes the total monetary amount from the receipt text.
+   *
+   * @param text Uppercase normalized receipt text.
+   * @returns The parsed numeric amount, or `null` if no amount pattern matched.
+   */
   private parseAmount(text: string): number | null {
     // Buscamos el valor numérico después de palabras clave como TOTAL, IMPORTE o el signo $
     const regex = /(?:TOTAL|IMPORTE|[\$])\s*([\d\.\,]+)/;

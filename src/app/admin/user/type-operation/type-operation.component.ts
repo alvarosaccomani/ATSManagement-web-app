@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { TypeOperationsService } from '../../../core/services/type-operations.service';
 
+/**
+ * Component for creating and editing an operation type record.
+ * @description Provides a reactive form for managing operation type name and description.
+ */
 @Component({
   selector: 'app-type-operation',
   standalone: true,
@@ -29,11 +33,23 @@ import { TypeOperationsService } from '../../../core/services/type-operations.se
   styleUrl: './type-operation.component.scss'
 })
 export class TypeOperationComponent implements OnInit {
+  /** Reactive form group for operation type fields. */
   form: FormGroup;
+  /** Flag indicating whether a request is in progress. */
   isLoading = false;
+  /** Flag indicating whether the form is in edit mode. */
   isEditing = false;
+  /** UUID of the operation type being edited, or null when creating. */
   typeOperationId: string | null = null;
 
+  /**
+   * Initializes the TypeOperationComponent and builds the reactive form.
+   * @param fb Angular FormBuilder service.
+   * @param route ActivatedRoute for reading route parameters.
+   * @param router Angular Router service.
+   * @param _typeOperationsService Service for operation type CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class TypeOperationComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.typeOperationId = this.route.snapshot.paramMap.get('tyop_uuid');
     this.isEditing = !!this.typeOperationId;
@@ -59,6 +79,10 @@ export class TypeOperationComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads an existing operation type record by ID and populates the form.
+   * @returns void
+   */
   loadTypeOperation(): void {
     this.isLoading = true;
     this._typeOperationsService.getTypeOperationById(this.typeOperationId!).subscribe({
@@ -82,6 +106,10 @@ export class TypeOperationComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates and submits the form to create or update the operation type.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class TypeOperationComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels the operation and navigates back to the operation types list.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/type-operations']);
   }
 
+  /**
+   * Retrieves the validation error message for a form control.
+   * @param controlName Name of the form control.
+   * @returns Validation error message or null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

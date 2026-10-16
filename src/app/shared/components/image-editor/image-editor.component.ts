@@ -8,6 +8,10 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 
+/**
+ * Componente interactivo de edición de imágenes (`<app-image-editor>`) para recortar, rotar, hacer zoom
+ * y aplicar contraste de umbral binario (binarización) a fotografías de comprobantes antes del OCR.
+ */
 @Component({
   selector: 'app-image-editor',
   standalone: true,
@@ -25,15 +29,19 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
   styleUrl: './image-editor.component.scss'
 })
 export class ImageEditorComponent {
+  /** Imagen de origen en formato Base64 para cargar en el recortador. */
   @Input() imageBase64: string | null = null;
+  /** Indica si se debe mostrar el interruptor de binarización de alto contraste en la barra de herramientas. */
   @Input() allowBinarize: boolean = false;
+  /** Emite la cadena final de la imagen recortada (y opcionalmente binarizada) en formato Base64. */
   @Output() onConfirm = new EventEmitter<string>();
+  /** Se emite cuando el usuario cancela la edición. */
   @Output() onCancel = new EventEmitter<void>();
 
+  /** Almacena la salida actual de la imagen recortada en formato Base64. */
   public croppedImageBase64: string | null = null;
   
-  // Objeto de transformación para ngx-image-cropper
-  // Estado inicial de la transformación
+  /** Estado de transformación inicial predeterminado para `ngx-image-cropper`. */
   public initialTransform: ImageTransform = {
     rotate: 0,
     flipH: false,
@@ -41,17 +49,25 @@ export class ImageEditorComponent {
     scale: 1
   };
 
+  /** Estado de transformación activo actual aplicado al recortador de imágenes. */
   public transform: ImageTransform = { ...this.initialTransform };
 
-  // Control del filtro de alto contraste
+  /** Indica si la umbralización binaria de alto contraste está habilitada. */
   public highContrastMode = false;
 
+  /**
+   * Callback que se invoca cada vez que el usuario ajusta el cuadro de recorte.
+   *
+   * @param event Evento del recortador que contiene la imagen recortada en formato Base64.
+   */
   public imageCropped(event: ImageCroppedEvent) {
     // Obtenemos el base64 del recorte actual
     this.croppedImageBase64 = event.base64 || null;
   }
 
-  // Métodos de rotación (bidireccional)
+  /**
+   * Rota la imagen 90 grados en sentido antihorario.
+   */
   public rotateLeft() {
     this.transform = {
       ...this.transform,
@@ -59,6 +75,9 @@ export class ImageEditorComponent {
     };
   }
 
+  /**
+   * Rota la imagen 90 grados en sentido horario.
+   */
   public rotateRight() {
     this.transform = {
       ...this.transform,
@@ -66,32 +85,45 @@ export class ImageEditorComponent {
     };
   }
 
-  // Zoom
+  /**
+   * Acerca la imagen incrementando la escala en pasos de 0.1.
+   */
   public zoomIn() { 
     this.transform = { 
       ...this.transform, scale: (this.transform.scale || 1) + 0.1
     };
   }
 
+  /**
+   * Aleja la imagen reduciendo la escala en pasos de 0.1 (mínimo 0.1).
+   */
   public zoomOut() {
     this.transform = {
       ...this.transform, scale: Math.max((this.transform.scale || 1) - 0.1, 0.1)
     };
   }
 
-  // Restablecer imagen al estado inicial
+  /**
+   * Restablece todas las transformaciones de rotación, zoom y alto contraste a su estado inicial.
+   */
   public resetImage() {
     this.transform = { ...this.initialTransform };
     this.highContrastMode = false;
   }
 
-  // Alternar modo alto contraste
+  /**
+   * Alterna el modo de vista previa de binarización de alto contraste.
+   */
   public toggleHighContrast() {
     // Al cambiar la binarización, el cropper debe re-procesar la imagen
     // No necesitamos hacer nada extra aquí, el CSS binarizará la vista
     // y el cropper tomará la imagen resultante.
   }
 
+  /**
+   * Confirma la edición, aplicando opcionalmente binarización a nivel de píxel si `highContrastMode` está activo,
+   * y emite la cadena Base64 resultante mediante `onConfirm`.
+   */
   public confirm() {
     if (this.croppedImageBase64) {
       // Si el modo alto contraste está activo, binarizamos la imagen final antes de enviarla
@@ -105,7 +137,12 @@ export class ImageEditorComponent {
     }
   }
 
-  // Función auxiliar para binarizar el recorte final usando un Canvas
+  /**
+   * Convierte una imagen en formato Base64 a blanco y negro puro (umbral binario = 128) utilizando un `<canvas>` fuera de pantalla.
+   *
+   * @param base64 Imagen de origen recortada en formato Base64.
+   * @returns Una promesa que se resuelve con la imagen PNG binarizada en formato Base64.
+   */
   private binarizeFinalImage(base64: string): Promise<string> {
     return new Promise((resolve) => {
       const img = new Image();

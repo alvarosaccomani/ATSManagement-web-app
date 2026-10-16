@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { PaymentPeriodsStatusService } from '../../../core/services/payment-periods-status.service';
 
+/**
+ * Componente para crear y editar un registro de estado de período de pago.
+ * @description Proporciona un formulario reactivo para gestionar el nombre y la descripción del estado de período de pago.
+ */
 @Component({
   selector: 'app-payment-period-status',
   standalone: true,
@@ -29,11 +33,23 @@ import { PaymentPeriodsStatusService } from '../../../core/services/payment-peri
   styleUrl: './payment-period-status.component.scss'
 })
 export class PaymentPeriodStatusComponent implements OnInit {
+  /** Grupo de formulario reactivo para los campos de estado de período de pago. */
   form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
   isLoading = false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
   isEditing = false;
+  /** UUID del estado de período de pago que se está editando, o null al crear uno nuevo. */
   paymentPeriodStatusId: string | null = null;
 
+  /**
+   * Inicializa el componente PaymentPeriodStatusComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _paymentPeriodsStatusService Servicio para operaciones CRUD de estados de período de pago.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class PaymentPeriodStatusComponent implements OnInit {
     });
   }
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.paymentPeriodStatusId = this.route.snapshot.paramMap.get('payps_uuid');
     this.isEditing = !!this.paymentPeriodStatusId;
@@ -59,6 +79,10 @@ export class PaymentPeriodStatusComponent implements OnInit {
     }
   }
 
+  /**
+   * Carga un registro de estado de período de pago existente por su ID y completa el formulario.
+   * @returns void
+   */
   loadPaymentPeriodStatus(): void {
     this.isLoading = true;
     this._paymentPeriodsStatusService.getPaymentPeriodStatusById(this.paymentPeriodStatusId!).subscribe({
@@ -82,6 +106,10 @@ export class PaymentPeriodStatusComponent implements OnInit {
     });
   }
 
+  /**
+   * Valida y envía el formulario para crear o actualizar el estado de período de pago.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class PaymentPeriodStatusComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la operación y navega de regreso a la lista de estados de período de pago.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/payment-periods-status']);
   }
 
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

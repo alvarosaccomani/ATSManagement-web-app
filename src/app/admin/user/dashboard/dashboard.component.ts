@@ -20,6 +20,12 @@ import { DashboardService } from '../../../core/services/dashboard.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Componente de Panel de Control Financiero (`<app-dashboard>`) en `/admin/user/dashboard`.
+ *
+ * @description Muestra indicadores clave de rendimiento (KPI) financieros globales o filtrados por ámbito (Ingresos Totales, Egresos Totales,
+ * Saldo Neto de Caja, Total de Transacciones), una tabla de resumen de saldos por ámbito y las 10 transacciones más recientes.
+ */
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -41,12 +47,25 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
+  /** Indica si las métricas del panel de control se están cargando actualmente. */
   isLoading = false;
+  /** UUID del usuario activo. */
   usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+  /** Filtro de ámbito seleccionado actualmente (`'ALL'` o un `scp_uuid` específico). */
   selectedScopeUuid: string = 'ALL';
+  /** Ámbitos disponibles para el menú desplegable de filtro. */
   scopes: ScopeInterface[] = [];
+  /** Datos consolidados del resumen financiero devueltos por el backend. */
   summary: DashboardSummary | null = null;
 
+  /**
+   * Inicializa el componente de panel de control financiero.
+   *
+   * @param _dashboardService Servicio para obtener las métricas de resumen del panel de control.
+   * @param _scopesService Servicio para obtener los ámbitos del usuario.
+   * @param _messageService Servicio para mostrar mensajes modales de error.
+   * @param _router Instancia de `Router` de Angular.
+   */
   constructor(
     private _dashboardService: DashboardService,
     private _scopesService: ScopesService,
@@ -54,10 +73,16 @@ export class DashboardComponent implements OnInit {
     private _router: Router
   ) {}
 
+  /**
+   * Carga los ámbitos del usuario y el resumen inicial del panel de control al iniciar el componente.
+   */
   ngOnInit(): void {
     this.loadScopes();
   }
 
+  /**
+   * Obtiene los ámbitos disponibles desde {@link ScopesService}, antepone la opción `'ALL'` y carga el resumen.
+   */
   loadScopes(): void {
     this._scopesService.getScopes(this.usr_uuid).subscribe({
       next: (response) => {
@@ -77,6 +102,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Obtiene el resumen del panel de control financiero para `selectedScopeUuid`.
+   */
   loadSummary(): void {
     this.isLoading = true;
     this._dashboardService.getSummary(this.usr_uuid, this.selectedScopeUuid).subscribe({
@@ -94,29 +122,55 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Se ejecuta cuando el usuario selecciona un filtro de ámbito diferente; recarga el resumen del panel de control.
+   *
+   * @param scp_uuid UUID del ámbito seleccionado o `'ALL'`.
+   */
   onScopeChange(scp_uuid: string): void {
     this.selectedScopeUuid = scp_uuid;
     this.loadSummary();
   }
 
+  /**
+   * Navega al formulario de nueva transacción (`/admin/user/transaction/new`), pasando el ámbito activo si está seleccionado.
+   */
   newTransaction(): void {
     this._router.navigate(['/admin/user/transaction/new'], {
       queryParams: { scp_uuid: this.selectedScopeUuid !== 'ALL' ? this.selectedScopeUuid : undefined }
     });
   }
 
+  /**
+   * Navega al formulario de nuevo contacto/persona (`/admin/user/person/new`).
+   */
   newPerson(): void {
     this._router.navigate(['/admin/user/person/new']);
   }
 
+  /**
+   * Navega al formulario de nuevo ámbito (`/admin/user/scope/new`).
+   */
   newScope(): void {
     this._router.navigate(['/admin/user/scope/new']);
   }
 
+  /**
+   * Formatea un monto numérico en notación de moneda Peso Argentino (`ARS`).
+   *
+   * @param amount Valor numérico a formatear.
+   * @returns Cadena de moneda formateada.
+   */
   formatAmount(amount: number): string {
     return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(amount);
   }
 
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro correspondiente a un tipo de transacción.
+   *
+   * @param type Tipo de transacción (`'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`).
+   * @returns Nombre del color de etiqueta (`'success' | 'error' | 'processing' | 'default'`).
+   */
   getTypeColor(type: string): string {
     switch (type) {
       case 'INGRESO': return 'success';

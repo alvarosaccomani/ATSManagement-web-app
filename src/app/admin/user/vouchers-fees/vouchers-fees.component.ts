@@ -12,6 +12,10 @@ import { VoucherFeeInterface } from '../../../core/interfaces/voucher-fee';
 import { VouchersFeesService } from '../../../core/services/vouchers-fees.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Component for listing and managing voucher installments (quotas/fees).
+ * @description Displays a paginated table of installments with due date countdowns, status badges, and CRUD actions.
+ */
 @Component({
   selector: 'app-vouchers-fees',
   standalone: true,
@@ -28,12 +32,18 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './vouchers-fees.component.scss'
 })
 export class VouchersFeesComponent implements OnInit {
+  /** Array of loaded voucher installment records. */
   installments: VoucherFeeInterface[] = [];
+  /** Flag indicating whether table data is loading. */
   loading = false;
+  /** Current page index (1-based). */
   pageIndex = 1;
+  /** Number of rows per page. */
   pageSize = 10;
+  /** Total number of installment records. */
   total = 0;
 
+  /** Table column definitions. */
   listOfColumns = [
     { key: 'vouf_uuid', title: 'ID', width: '80px' },
     { key: 'quota_number', title: 'Cuota', width: '100px' },
@@ -44,6 +54,13 @@ export class VouchersFeesComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
+  /**
+   * Initializes the VouchersFeesComponent.
+   * @param _router Angular Router service.
+   * @param _vouchersFeesService Service for installment CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Custom modal alert service.
+   */
   constructor(
     private _router: Router,
     private _vouchersFeesService: VouchersFeesService,
@@ -51,10 +68,18 @@ export class VouchersFeesComponent implements OnInit {
     private _messageService: MessageService
   ) {}
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.loadInstallments();
   }
 
+  /**
+   * Loads the installments list from the backend service.
+   * @returns void
+   */
   loadInstallments(): void {
     this.loading = true;
     this._vouchersFeesService.getVoucherFees('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1', '1', '1').subscribe(
@@ -79,7 +104,11 @@ export class VouchersFeesComponent implements OnInit {
     )
   }
 
-  // Formatear fecha
+  /**
+   * Formats an ISO date string into `DD/MM/YYYY`.
+   * @param dateString ISO date string.
+   * @returns Formatted date string.
+   */
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -88,7 +117,11 @@ export class VouchersFeesComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  // Formatear monto
+  /**
+   * Formats a numeric amount as an Argentine Peso currency string.
+   * @param amount Numeric amount.
+   * @returns Formatted currency string.
+   */
   formatAmount(amount: number): string {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -98,7 +131,11 @@ export class VouchersFeesComponent implements OnInit {
     }).format(amount);
   }
 
-  // Obtener color del tag según el estado de la cuota
+  /**
+   * Returns the Ng-Zorro badge status color for an installment status name.
+   * @param statusName Status name string.
+   * @returns Badge status color string.
+   */
   getStatusColor(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'pagado': return 'success';
@@ -108,7 +145,11 @@ export class VouchersFeesComponent implements OnInit {
     }
   }
 
-  // Obtener icono según el estado de la cuota
+  /**
+   * Returns the Ng-Zorro icon name for an installment status name.
+   * @param statusName Status name string.
+   * @returns Icon name string.
+   */
   getStatusIcon(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'pagado': return 'check-circle';
@@ -118,12 +159,20 @@ export class VouchersFeesComponent implements OnInit {
     }
   }
 
-  // Formatear nombre del estado
+  /**
+   * Capitalizes the first letter of a status name.
+   * @param name Raw status name.
+   * @returns Capitalized status name.
+   */
   formatStatusName(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  // Calcular días restantes hasta el vencimiento
+  /**
+   * Calculates the remaining days until the installment due date and returns badge metadata.
+   * @param dueDate Due date string.
+   * @returns Object containing day difference, badge color, and label text.
+   */
   getDaysLeft(dueDate: string): { days: number; color: string; text: string } {
     const due = new Date(dueDate);
     const today = new Date();
@@ -141,15 +190,28 @@ export class VouchersFeesComponent implements OnInit {
     }
   }
 
-  // Métodos de acción
+  /**
+   * Navigates to the installment creation form.
+   * @returns void
+   */
   createInstallment(): void {
     this._router.navigate(['/admin/user/voucher-fee/new']);
   }
 
+  /**
+   * Navigates to the installment edit form.
+   * @param installment Installment record to edit.
+   * @returns void
+   */
   editInstallment(installment: VoucherFeeInterface): void {
     this._router.navigate(['/admin/user/voucher-fee/edit', installment.crd_uuid, installment.per_uuid, installment.vou_uuid, installment.vouf_uuid]);
   }
 
+  /**
+   * Prompts for confirmation and deletes an installment record.
+   * @param installment Installment record to delete.
+   * @returns void
+   */
   deleteInstallment(installment: VoucherFeeInterface): void {
     this._messageService.confirm(
       '¿Estás seguro de eliminar esta cuota?',
@@ -176,27 +238,51 @@ export class VouchersFeesComponent implements OnInit {
     );
   }
 
+  /**
+   * Displays a toast notification with installment details.
+   * @param installment Installment record to inspect.
+   * @returns void
+   */
   viewDetails(installment: VoucherFeeInterface): void {
     this.message.info(`Detalles de la cuota #${installment.vouf_quotanumber}`);
   }
 
+  /**
+   * Marks an installment as paid in the UI.
+   * @param installment Installment record to update.
+   * @returns void
+   */
   markAsPaid(installment: VoucherFeeInterface): void {
     installment.voufs.voufs_name = 'pagado';
     this.message.success(`Cuota #${installment.vouf_quotanumber} marcada como pagada`);
   }
 
+  /**
+   * Marks an installment as pending in the UI.
+   * @param installment Installment record to update.
+   * @returns void
+   */
   markAsPending(installment: VoucherFeeInterface): void {
     installment.voufs.voufs_name = 'pendiente';
     this.message.info(`Cuota #${installment.vouf_quotanumber} marcada como pendiente`);
   }
 
-  // Paginación
+  /**
+   * Handles table page size changes.
+   * @param size New page size.
+   * @returns void
+   */
   onPageSizeChange(size: number): void {
     this.pageSize = size;
     this.pageIndex = 1;
     this.loadInstallments();
   }
 
+  /**
+   * Handles table page index changes.
+   * @param index New page index.
+   * @returns void
+   */
   onPageIndexChange(index: number): void {
     this.pageIndex = index;
     this.loadInstallments();

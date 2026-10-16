@@ -1,0 +1,382 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Manual de Usuario: Autenticación y Acceso SSO</h1>
+<p>Este documento describe en detalle los flujos de autenticación, inicio de sesión unificado (SSO), registro de nuevos usuarios, activación de cuentas y recuperación de credenciales implementados en <strong>ATSManagement Web App</strong>.</p>
+<hr>
+<h2>1. Inicio de Sesión (<code>/auth/login</code>) y Delegación al SSO Central</h2>
+<p>El punto de entrada principal para los usuarios es la ruta <code>/auth/login</code>. El comportamiento del módulo de inicio de sesión depende de la configuración de entorno definida en la propiedad <code>app_login_mode</code>:</p>
+<h3>1.1. Modo de Autenticación Centralizada (<code>app_login_mode === &#39;central&#39;</code>)</h3>
+<p>Cuando la aplicación se encuentra configurada en modo <code>&#39;central&#39;</code>, el componente <code>LoginComponent</code> delega automáticamente el inicio de sesión al portal de autenticación centralizado durante su inicialización (<code>ngOnInit</code>):</p>
+<ol>
+<li>El sistema construye una URL de retorno (<code>returnUrl</code>) apuntando al receptor local <code>/auth/sso</code> (por ejemplo: <code>http://localhost:4201/auth/sso</code>).</li>
+<li>Redirige el navegador hacia la URL configurada en <code>environment.central_login_url</code> adjuntando el parámetro <code>?returnUrl=...</code>.</li>
+</ol>
+<h3>1.2. Recepción y Validación de Sesión SSO (<code>/auth/sso</code>)</h3>
+<p>Una vez que el usuario se autentica en el portal central, es redirigido de regreso a la ruta <code>/auth/sso?token=&lt;JWT&gt;</code>. El componente <code>SsoReceiverComponent</code> gestiona tres estados visuales durante el procesamiento:</p>
+<ul>
+<li><strong><code>loading</code> (&quot;Iniciando sesión con tu cuenta central...&quot;)</strong>: Estado inicial mientras lee el parámetro <code>token</code> de la URL e invoca el método <code>verifySsoToken(token)</code> del servicio <code>AuthService</code> (<code>POST /auth/sso-verify</code>).</li>
+<li><strong><code>success</code> (&quot;¡Autenticado! Redirigiendo a tu espacio de trabajo...&quot;)</strong>: Cuando el backend valida la firma del token y devuelve los datos de sesión. El sistema almacena la sesión en <code>SessionStorageService</code> y redirige automáticamente a <code>/admin/user/dashboard</code>.</li>
+<li><strong><code>error</code></strong>: Si no se recibe un token en la URL o si el token es inválido o ha expirado, se muestra el mensaje descriptivo del problema junto con el botón <strong>&quot;Intentar de nuevo&quot;</strong>, el cual reinicia el flujo hacia <code>/auth/login</code>.</li>
+</ul>
+<h3>1.3. Modo de Autenticación Local (<code>app_login_mode === &#39;local&#39;</code>)</h3>
+<p>Si el modo de operación es local, el usuario visualiza el formulario de acceso tradicional:</p>
+<ul>
+<li><strong>Correo electrónico (<code>usr_email</code>)</strong>: Campo obligatorio con validación de formato de correo electrónico.</li>
+<li><strong>Contraseña (<code>usr_password</code>)</strong>: Campo obligatorio de contraseña.</li>
+<li><strong>Recordarme (<code>remember</code>)</strong>: Casilla de verificación para persistir la preferencia de acceso.</li>
+<li><strong>Enlaces de asistencia</strong>: Acceso directo a <strong>¿Olvidaste tu contraseña?</strong> (<code>/auth/forgot-password</code>) y <strong>Regístrate ahora</strong> (<code>/auth/register</code>).</li>
+</ul>
+<hr>
+<h2>2. Registro de Nuevos Usuarios (<code>/auth/register</code>)</h2>
+<p>El formulario de alta de cuenta en <code>/auth/register</code> permite registrar un nuevo usuario en la plataforma validando tanto la integridad de los datos como la seguridad de la contraseña elegida.</p>
+<h3>2.1. Campos del Formulario</h3>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr><th style="text-align: left">Campo</th><th style="text-align: left">Identificador</th><th style="text-align: left">Validaciones</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: left"><strong>Nombre</strong></td><td style="text-align: left"><code>usr_name</code></td><td style="text-align: left">Obligatorio, mínimo 2 caracteres.</td></tr>
+<tr><td style="text-align: left"><strong>Apellido</strong></td><td style="text-align: left"><code>usr_surname</code></td><td style="text-align: left">Obligatorio, mínimo 2 caracteres.</td></tr>
+<tr><td style="text-align: left"><strong>Usuario (Nick)</strong></td><td style="text-align: left"><code>usr_nick</code></td><td style="text-align: left">Obligatorio, mínimo 3 caracteres.</td></tr>
+<tr><td style="text-align: left"><strong>Correo Electrónico</strong></td><td style="text-align: left"><code>usr_email</code></td><td style="text-align: left">Obligatorio, formato de email válido.</td></tr>
+<tr><td style="text-align: left"><strong>Contraseña</strong></td><td style="text-align: left"><code>usr_password</code></td><td style="text-align: left">Obligatorio, mínimo 8 caracteres y validador personalizado <code>passwordStrengthValidator</code>.</td></tr>
+<tr><td style="text-align: left"><strong>Confirmar Contraseña</strong></td><td style="text-align: left"><code>confirmPassword</code></td><td style="text-align: left">Obligatorio, validador cruzado <code>confirmationValidator</code> que verifica coincidencia exacta con <code>usr_password</code>.</td></tr>
+</tbody>
+</table>
+<h3>2.2. Validador de Fortaleza de Contraseña e Indicador Visual</h3>
+<p>A medida que el usuario escribe su contraseña, el componente evalúa en tiempo real 5 requisitos de seguridad:</p>
+<ol>
+<li><strong>Al menos una letra mayúscula</strong> (<code>/[A-Z]/</code>)</li>
+<li><strong>Al menos una letra minúscula</strong> (<code>/[a-z]/</code>)</li>
+<li><strong>Al menos un número</strong> (<code>/[0-9]/</code>)</li>
+<li><strong>Al menos un carácter especial</strong> (<code>/[!@#$%^&amp;*(),.?&quot;:{}|&lt;&gt;]/</code>)</li>
+<li><strong>Mínimo 8 caracteres de longitud</strong> (<code>length &gt;= 8</code>)</li>
+</ol>
+<p>Debajo del campo de contraseña se despliega una barra de progreso porcentual y una lista interactiva de verificación codificada por colores según el puntaje alcanzado (<code>passwordStrength</code>):</p>
+<ul>
+<li><strong>Débil (<code>&lt; 50%</code>)</strong>: Barra en color rojo (<code>#dc3545</code>).</li>
+<li><strong>Media (<code>50% - 79%</code>)</strong>: Barra en color amarillo/ámbar (<code>#ffc107</code>).</li>
+<li><strong>Fuerte (<code>&gt;= 80%</code>)</strong>: Barra en color verde (<code>#28a745</code>). La contraseña solo es aceptada por el formulario cuando los 5 requisitos se cumplen en su totalidad (<code>100%</code>).</li>
+</ul>
+<hr>
+<h2>3. Confirmación y Activación de Cuenta</h2>
+<p>Tras completar el formulario de registro con éxito:</p>
+<ol>
+<li><strong>Notificación de Cuenta Creada (<code>/auth/account-created/:usr_email</code>)</strong>: El usuario es redirigido a una pantalla informativa que muestra la dirección de correo electrónico registrada (<code>usr_email</code>) e indica los pasos para revisar su bandeja de entrada (y carpeta de correo no deseado) para activar la cuenta. Incluye un acceso directo para volver a <code>/auth/login</code>.</li>
+<li><strong>Confirmación mediante Token (<code>/auth/account-confirmed/:usr_ConfirmationToken</code>)</strong>: Al abrir el enlace enviado por correo electrónico, el componente <code>AccountConfirmedComponent</code> captura el parámetro <code>usr_ConfirmationToken</code> de la ruta y ejecuta <code>UsersService.confirmAccount()</code> (<code>PUT /user-confirmation</code>).<ul>
+<li>Mientras se procesa la solicitud, muestra un indicador de carga (<em>&quot;Confirmando tu cuenta...&quot;</em>).</li>
+<li>Si el token es válido, muestra el mensaje de éxito <strong>¡Cuenta Confirmada!</strong> y habilita el botón para <strong>Iniciar Sesión</strong>.</li>
+<li>Si el token es inválido o ya fue utilizado, informa el error en pantalla.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>4. Recuperación y Restablecimiento de Contraseña</h2>
+<p>El flujo de recuperación de credenciales se divide en dos etapas:</p>
+<h3>4.1. Solicitud de Recuperación (<code>/auth/forgot-password</code>)</h3>
+<ol>
+<li>El usuario ingresa su dirección de correo electrónico registrada en el campo <code>usr_email</code>.</li>
+<li>Al enviar el formulario, se invoca <code>UsersService.forgotPassword(email)</code> (<code>POST /forgot-password</code>).</li>
+<li>El sistema muestra una confirmación en pantalla indicando que, si el correo se encuentra registrado, recibirá un mensaje con las instrucciones y el enlace temporal de restablecimiento.</li>
+</ol>
+<h3>4.2. Restablecimiento de Contraseña (<code>/auth/reset-password/:usr_ResetPasswordToken</code>)</h3>
+<ol>
+<li>El usuario accede al enlace recibido por correo, el cual contiene el token de seguridad <code>usr_ResetPasswordToken</code>.</li>
+<li>En la pantalla de restablecimiento debe ingresar:<ul>
+<li><strong>Nueva Contraseña (<code>usr_password</code>)</strong>: Sujeta a exactamente las mismas 5 reglas de fortaleza e indicadores de color (<code>#dc3545</code>, <code>#ffc107</code>, <code>#28a745</code>) que el registro de usuarios.</li>
+<li><strong>Confirmar Contraseña (<code>confirmPassword</code>)</strong>: Validación de coincidencia con la nueva contraseña.</li>
+</ul>
+</li>
+<li>Al confirmar, se envía la petición mediante <code>UsersService.resetPassword()</code> (<code>PUT /reset-password</code>). Una vez actualizada la credencial, el sistema muestra una confirmación y permite regresar a <code>/auth/login</code>.</li>
+</ol>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/additional-documentation/autenticaci%C3%B3n-y-acceso-sso.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/additional-documentation/authentication-and-sso-access.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/additional-documentation/autentica%C3%A7%C3%A3o-e-acesso-sso.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'autenticación-y-acceso-sso.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

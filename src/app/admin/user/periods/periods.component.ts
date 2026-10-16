@@ -12,6 +12,10 @@ import { PeriodInterface } from '../../../core/interfaces/period';
 import { PeriodsService } from '../../../core/services/periods.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Componente para listar y gestionar períodos de facturación de tarjetas.
+ * @description Muestra una tabla paginada de períodos de facturación con rangos de fechas, insignias de estado, saldos anteriores y acciones CRUD.
+ */
 @Component({
   selector: 'app-periods',
   standalone: true,
@@ -28,12 +32,18 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './periods.component.scss'
 })
 export class PeriodsComponent implements OnInit {
+  /** Arreglo de registros de períodos de facturación cargados. */
   periods: PeriodInterface[] = [];
+  /** Indicador de si los datos de la tabla se están cargando. */
   loading = false;
+  /** Índice de la página actual (basado en 1). */
   pageIndex = 1;
+  /** Cantidad de filas por página. */
   pageSize = 10;
+  /** Cantidad total de registros de períodos. */
   total = 0;
 
+  /** Definiciones de las columnas de la tabla. */
   listOfColumns = [
     { key: 'per_uuid', title: 'ID', width: '80px' },
     { key: 'period_number', title: 'Período', width: '100px' },
@@ -46,6 +56,13 @@ export class PeriodsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
+  /**
+   * Inicializa el componente PeriodsComponent.
+   * @param _router Servicio Router de Angular.
+   * @param _periodsService Servicio para operaciones CRUD de períodos de facturación.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
   constructor(
     private _router: Router,
     private _periodsService: PeriodsService,
@@ -53,10 +70,18 @@ export class PeriodsComponent implements OnInit {
     private _messageService: MessageService
   ) {}
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.loadPeriods();
   }
 
+  /**
+   * Carga la lista de períodos de facturación desde el servicio de backend.
+   * @returns void
+   */
   loadPeriods(): void {
     this.loading = true;
     this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1').subscribe(
@@ -81,7 +106,11 @@ export class PeriodsComponent implements OnInit {
     )
   }
 
-  // Formatear número de período (YYYYMM → MM/YYYY)
+  /**
+   * Formatea un período numérico (`YYYYMM`) como `MM/YYYY`.
+   * @param periodNumber Valor numérico del período.
+   * @returns Cadena de período formateada.
+   */
   formatPeriodNumber(periodNumber: number): string {
     const periodStr = periodNumber.toString();
     const year = periodStr.substring(0, 4);
@@ -89,7 +118,11 @@ export class PeriodsComponent implements OnInit {
     return `${month}/${year}`;
   }
 
-  // Formatear fecha
+  /**
+   * Formatea una cadena de fecha ISO como `DD/MM/YYYY`.
+   * @param dateString Cadena de fecha ISO.
+   * @returns Cadena de fecha formateada.
+   */
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -98,7 +131,11 @@ export class PeriodsComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  // Verificar si la fecha de vencimiento está próxima o vencida
+  /**
+   * Evalúa si la fecha de vencimiento de un período está vencida, próxima a vencer o al día.
+   * @param dueDate Cadena con la fecha de vencimiento.
+   * @returns Objeto que contiene el color de la insignia y el texto del estado.
+   */
   getDueDateStatus(dueDate: string): { color: string; text: string } {
     const due = new Date(dueDate);
     const today = new Date();
@@ -114,7 +151,11 @@ export class PeriodsComponent implements OnInit {
     }
   }
 
-  // Obtener color del tag según el estado
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un nombre de estado de período.
+   * @param statusName Nombre del estado del período.
+   * @returns Cadena con el color de estado de la insignia.
+   */
   getStatusColor(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'abierto': return 'success';
@@ -125,7 +166,11 @@ export class PeriodsComponent implements OnInit {
     }
   }
 
-  // Formatear montos monetarios
+  /**
+   * Formatea un monto numérico como una cadena de moneda en Pesos Argentinos.
+   * @param amount Monto numérico.
+   * @returns Cadena de moneda formateada.
+   */
   formatAmount(amount: number): string {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -135,15 +180,28 @@ export class PeriodsComponent implements OnInit {
     }).format(amount);
   }
 
-  // Métodos de acción
+  /**
+   * Navega al formulario de creación de período de facturación.
+   * @returns void
+   */
   createPeriod(): void {
     this._router.navigate(['/admin/user/period/new']);
   }
 
+  /**
+   * Navega al formulario de edición de período de facturación.
+   * @param period Registro de período de facturación a editar.
+   * @returns void
+   */
   editPeriod(period: PeriodInterface): void {
     this._router.navigate(['/admin/user/period/edit', period.crd_uuid, period.per_uuid]);
   }
 
+  /**
+   * Solicita confirmación y elimina un registro de período de facturación.
+   * @param period Registro de período de facturación a eliminar.
+   * @returns void
+   */
   deletePeriod(period: PeriodInterface): void {
     this._messageService.confirm(
       '¿Estás seguro de eliminar este período?',
@@ -170,22 +228,41 @@ export class PeriodsComponent implements OnInit {
     );
   }
 
+  /**
+   * Muestra una notificación emergente con los detalles del período de facturación.
+   * @param period Registro de período de facturación a inspeccionar.
+   * @returns void
+   */
   viewDetails(period: PeriodInterface): void {
     this.message.info(`Detalles del período: ${this.formatPeriodNumber(period.per_periodnumber)}`);
   }
 
+  /**
+   * Muestra una notificación emergente de confirmación para el cierre de un período de facturación.
+   * @param period Registro de período de facturación a cerrar.
+   * @returns void
+   */
   closePeriod(period: PeriodInterface): void {
     this.message.success(`Período cerrado: ${this.formatPeriodNumber(period.per_periodnumber)}`);
     // Aquí iría la lógica para cerrar el período
   }
 
-  // Paginación
+  /**
+   * Maneja los cambios en el tamaño de página de la tabla.
+   * @param size Nuevo tamaño de página.
+   * @returns void
+   */
   onPageSizeChange(size: number): void {
     this.pageSize = size;
     this.pageIndex = 1;
     this.loadPeriods();
   }
 
+  /**
+   * Maneja los cambios en el índice de página de la tabla.
+   * @param index Nuevo índice de página.
+   * @returns void
+   */
   onPageIndexChange(index: number): void {
     this.pageIndex = index;
     this.loadPeriods();

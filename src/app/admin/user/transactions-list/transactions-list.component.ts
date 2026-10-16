@@ -20,6 +20,12 @@ import { TransactionsService } from '../../../core/services/transactions.service
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Cash-flow ledger list component (`<app-transactions-list>`) at `/admin/user/transactions`.
+ *
+ * @description Displays all recorded cash movements with combined filtering by scope,
+ * movement type (`INGRESO`, `EGRESO`, `TRANSFERENCIA`), and real-time text search.
+ */
 @Component({
   selector: 'app-transactions-list',
   standalone: true,
@@ -41,14 +47,29 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './transactions-list.component.scss'
 })
 export class TransactionsListComponent implements OnInit {
+  /** Indicates whether the transactions list is currently loading. */
   isLoading = false;
+  /** Unfiltered transactions returned by the backend for the selected scope and type. */
   transactions: TransactionInterface[] = [];
+  /** Transactions matching the client-side text search filter. */
   filteredTransactions: TransactionInterface[] = [];
+  /** Available scopes for the scope filter dropdown. */
   scopes: ScopeInterface[] = [];
+  /** Currently selected scope UUID (`'ALL'` after initialization). */
   selectedScopeUuid: string = '11111111-1111-1111-1111-111111111111'; // Default Personal Scope
+  /** Currently selected movement type filter (`'ALL' | 'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`). */
   selectedType: string = 'ALL';
+  /** Current text search query string. */
   searchValue: string = '';
 
+  /**
+   * Initializes the transactions list component.
+   *
+   * @param _transactionsService Service for querying and deleting transactions.
+   * @param _scopesService Service for querying user scopes.
+   * @param _messageService Service for displaying modal notifications.
+   * @param _router Angular `Router` instance.
+   */
   constructor(
     private _transactionsService: TransactionsService,
     private _scopesService: ScopesService,
@@ -56,10 +77,16 @@ export class TransactionsListComponent implements OnInit {
     private _router: Router
   ) {}
 
+  /**
+   * Loads scopes and transactions on component initialization.
+   */
   ngOnInit(): void {
     this.loadScopes();
   }
 
+  /**
+   * Fetches user scopes, prepends `'ALL'`, and triggers initial transaction loading.
+   */
   loadScopes(): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this._scopesService.getScopes(usr_uuid).subscribe({
@@ -84,6 +111,9 @@ export class TransactionsListComponent implements OnInit {
     });
   }
 
+  /**
+   * Fetches transactions matching `selectedScopeUuid` and `selectedType` from {@link TransactionsService}.
+   */
   loadTransactions(): void {
     if (!this.selectedScopeUuid) return;
     this.isLoading = true;
@@ -104,16 +134,29 @@ export class TransactionsListComponent implements OnInit {
     });
   }
 
+  /**
+   * Reloads transactions when the selected scope filter changes.
+   *
+   * @param scopeUuid Selected scope UUID or `'ALL'`.
+   */
   onScopeChange(scopeUuid: string): void {
     this.selectedScopeUuid = scopeUuid;
     this.loadTransactions();
   }
 
+  /**
+   * Reloads transactions when the selected movement type filter changes.
+   *
+   * @param type Selected movement type (`'ALL' | 'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`).
+   */
   onTypeChange(type: string): void {
     this.selectedType = type;
     this.loadTransactions();
   }
 
+  /**
+   * Filters `transactions` by `searchValue` across concept, associated person name, and notes.
+   */
   applyFilter(): void {
     if (!this.searchValue.trim()) {
       this.filteredTransactions = [...this.transactions];
@@ -127,6 +170,9 @@ export class TransactionsListComponent implements OnInit {
     );
   }
 
+  /**
+   * Navigates to the new transaction form (`/admin/user/transaction/new`), passing the active scope if selected.
+   */
   newTransaction(): void {
     const queryParams = (this.selectedScopeUuid && this.selectedScopeUuid !== 'ALL')
       ? { scp_uuid: this.selectedScopeUuid }
@@ -134,10 +180,20 @@ export class TransactionsListComponent implements OnInit {
     this._router.navigate(['/admin/user/transaction/new'], { queryParams });
   }
 
+  /**
+   * Navigates to the edit form for the selected transaction (`/admin/user/transaction/edit/:trx_uuid`).
+   *
+   * @param trx Transaction record to edit.
+   */
   editTransaction(trx: TransactionInterface): void {
     this._router.navigate(['/admin/user/transaction/edit', trx.trx_uuid]);
   }
 
+  /**
+   * Prompts for confirmation and deletes the selected transaction record.
+   *
+   * @param trx Transaction record to delete.
+   */
   deleteTransaction(trx: TransactionInterface): void {
     this._messageService.confirm(
       '¿Eliminar Movimiento?',
@@ -161,6 +217,12 @@ export class TransactionsListComponent implements OnInit {
     );
   }
 
+  /**
+   * Maps a transaction type to an Ng-Zorro tag status color.
+   *
+   * @param type Movement type (`'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`).
+   * @returns Tag color string.
+   */
   getTypeColor(type: string): string {
     switch (type) {
       case 'INGRESO': return 'success';
@@ -170,6 +232,12 @@ export class TransactionsListComponent implements OnInit {
     }
   }
 
+  /**
+   * Maps a transaction type to an Ng-Zorro icon name.
+   *
+   * @param type Movement type (`'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`).
+   * @returns Icon name string.
+   */
   getTypeIcon(type: string): string {
     switch (type) {
       case 'INGRESO': return 'arrow-down';
@@ -179,6 +247,12 @@ export class TransactionsListComponent implements OnInit {
     }
   }
 
+  /**
+   * Formats a numeric amount into Argentine Peso (`ARS`) currency notation.
+   *
+   * @param amount Numeric amount to format.
+   * @returns Formatted currency string.
+   */
   formatAmount(amount: number): string {
     return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(amount);
   }

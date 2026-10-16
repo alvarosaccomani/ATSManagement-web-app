@@ -15,6 +15,11 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Componente de solicitud de recuperación de contraseña (`<app-forgot-password>`) en `/auth/forgot-password`.
+ *
+ * @description Permite al usuario solicitar un enlace de restablecimiento de contraseña enviando su dirección de correo electrónico registrada.
+ */
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -35,23 +40,40 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent implements OnInit {
+  /** Grupo de formulario reactivo que contiene el control `usr_email`. */
   validateForm!: FormGroup;
+  /** Indica si la solicitud de recuperación se está enviando actualmente. */
   isSubmitting = false;
+  /** Indica si el correo electrónico de recuperación se ha enviado con éxito. */
   emailSent = false;
+  /** Almacena la dirección de correo electrónico a la que se enviaron las instrucciones de recuperación. */
   sentEmailAddress = '';
 
+  /**
+   * Inicializa el componente de recuperación de contraseña.
+   *
+   * @param fb Instancia de `FormBuilder` de Angular.
+   * @param message Servicio de mensajes emergentes (toast) de Ng-Zorro.
+   * @param _authService Servicio de autenticación.
+   */
   constructor(
     private fb: FormBuilder,
     private message: NzMessageService,
     private _authService: AuthService
   ) { }
 
+  /**
+   * Construye el formulario reactivo con validadores de campo obligatorio y formato de correo electrónico.
+   */
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       usr_email: [null, [Validators.required, Validators.email]]
     });
   }
 
+  /**
+   * Valida el formulario y solicita las instrucciones de restablecimiento de contraseña mediante {@link AuthService.forgotPassword}.
+   */
   public submitForm(): void {
     if (this.validateForm.valid) {
       this.isSubmitting = true;

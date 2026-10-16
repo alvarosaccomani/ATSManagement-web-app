@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Authentication and SSO Access",
+    "file": "autenticacion-y-sso.md"
+  },
+  {
+    "title": "Dashboard, Cash Flow, Scopes and Commissions",
+    "file": "finanzas-caja-y-comisiones.md"
+  },
+  {
+    "title": "Digitization, Camera, OCR and AI",
+    "file": "documentos-ocr-e-ia.md"
+  },
+  {
+    "title": "Cards, Vouchers, Installments and Parameters",
+    "file": "tarjetas-vouchers-y-parametros.md"
+  }
+]

@@ -10,6 +10,10 @@ import { AccountConfirmedComponent } from './account-confirmed/account-confirmed
 import { SsoCallbackComponent } from './sso-callback/sso-callback.component';
 import { unauthGuard } from '../core/guard/unauth.guard';
 
+/**
+ * Rutas del módulo de autenticación.
+ * @description Define las rutas para el inicio de sesión, registro, recuperación de contraseña, confirmación de cuenta y callback de SSO.
+ */
 export const AUTH_ROUTES: Routes = [
     {
         path: '',

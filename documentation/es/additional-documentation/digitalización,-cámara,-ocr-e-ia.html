@@ -1,0 +1,388 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Manual de Usuario: Digitalización, Cámara, OCR e IA</h1>
+<p>Este documento describe el flujo completo de captura, preprocesamiento de imágenes, reconocimiento óptico de caracteres (OCR) y estructuración mediante Inteligencia Artificial en el módulo de <strong>Documentos y Vouchers</strong> (<code>/admin/user/documents</code>).</p>
+<hr>
+<h2>1. Vista Dividida de Documentos (<code>/admin/user/documents</code>)</h2>
+<p>La pantalla de gestión documental está diseñada con una interfaz dividida (<em>split-screen</em>) en dos paneles redimensionables:</p>
+<h3>1.1. Panel Izquierdo (30%): Filtro de Ámbito y Árbol Jerárquico</h3>
+<ul>
+<li><strong>Selector de Ámbito (<code>selectedScopeUuid</code>)</strong>: Permite filtrar las tarjetas y comprobantes asociados a un contexto financiero específico o visualizar <strong>&quot;Todos los Ámbitos&quot; (<code>ALL</code>)</strong>.</li>
+<li><strong>Árbol de Navegación (<code>&lt;app-tree-view&gt;</code>)</strong>: Construye dinámicamente una jerarquía de tres niveles a partir de las tarjetas registradas:<ol>
+<li><strong>Nivel 1 — Tarjeta</strong>: Muestra el número enmascarado de la tarjeta y su descripción.</li>
+<li><strong>Nivel 2 — Período (<code>YYYY-MM</code>)</strong>: Agrupa los comprobantes según el año y mes de la transacción.</li>
+<li><strong>Nivel 3 — Comprobante (Hoja)</strong>: Representa cada voucher individual con su número de transacción y fecha. Al hacer clic sobre un comprobante, se abre el panel lateral (<em>Drawer</em>) con su detalle.</li>
+</ol>
+</li>
+</ul>
+<h3>1.2. Panel Derecho (70%): Carga de Archivos, Cámara y Vouchers Pendientes</h3>
+<p>En la mitad superior dispone de una zona dividida de ingreso de comprobantes:</p>
+<ul>
+<li><strong>Subida de Archivos (<code>nz-upload</code> Drag &amp; Drop)</strong>: Permite arrastrar o seleccionar imágenes de tickets/vouchers desde el dispositivo, convirtiéndolas a Base64 y agregándolas a la bandeja de pendientes.</li>
+<li><strong>Botón <code>&quot;Sacar Foto&quot;</code></strong>: Inicia el componente de cámara WebRTC (<code>&lt;app-camera&gt;</code>) para fotografiar un comprobante físico en el momento.</li>
+</ul>
+<p>En la mitad inferior se muestra la <strong>Grilla de Vouchers Pendientes (<code>pendingVouchers</code>)</strong>, persistida localmente mediante <code>PendingVouchersService</code>. Cada tarjeta en la grilla muestra una miniatura de la imagen y su estado actual:</p>
+<ul>
+<li><strong>Pendiente de leer</strong> (naranja): Imagen recién cargada o fotografiada.</li>
+<li><strong>Leído</strong> (azul): Imagen procesada mediante OCR o IA con texto extraído.</li>
+<li><strong>Guardado</strong> (verde): Comprobante confirmado.
+Desde cada miniatura se puede abrir el detalle (ícono de ojo) o eliminar el borrador (ícono de papelera).</li>
+</ul>
+<hr>
+<h2>2. Captura con Cámara WebRTC (<code>&lt;app-camera&gt;</code>)</h2>
+<p>Al presionar <strong>&quot;Sacar Foto&quot;</strong>, se despliega el visor de captura fotográfica en vivo:</p>
+<ol>
+<li><strong>Alternancia de Cámara (<code>toggleCamera</code>)</strong>: Permite conmutar entre la cámara trasera (<code>environment</code>, ideal para enfocar tickets sobre una mesa en dispositivos móviles) y la cámara frontal (<code>user</code>).</li>
+<li><strong>Captura de Fotograma (<code>takePhoto</code>)</strong>: Congela el fotograma actual del flujo de video en un lienzo <code>&lt;canvas&gt;</code> con la resolución nativa del sensor y genera una imagen PNG en Base64.</li>
+<li><strong>Vista Previa y Confirmación</strong>: Tras capturar la foto, el usuario puede elegir entre:<ul>
+<li><strong>Confirmar (<code>confirmPhoto</code>)</strong>: Envía la fotografía capturada hacia el <strong>Editor de Imagen</strong> para su recorte y mejora antes de guardarla.</li>
+<li><strong>Intentar de nuevo (<code>retakePhoto</code>)</strong>: Descarta la toma actual y reactiva la cámara en vivo.</li>
+<li><strong>Cancelar (<code>cancelCamera</code>)</strong>: Detiene el stream de video y regresa a la vista de documentos.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>3. Editor de Imagen y Preprocesamiento OCR (<code>&lt;app-image-editor&gt;</code>)</h2>
+<p>Antes de almacenar una fotografía tomada con la cámara, el componente <code>&lt;app-image-editor&gt;</code> (basado en <code>Cropper.js</code>) permite optimizar la imagen para maximizar la precisión del motor de OCR:</p>
+<ul>
+<li><strong>Recorte Interactivo</strong>: Marco ajustable libremente para aislar únicamente el área impresa del ticket o cupón de tarjeta, descartando fondos ruidosos.</li>
+<li><strong>Rotación (<code>rotateLeft</code> / <code>rotateRight</code>)</strong>: Gira la imagen en incrementos de <code>-90°</code> o <code>+90°</code>.</li>
+<li><strong>Volteo (<code>flipHorizontal</code> / <code>flipVertical</code>)</strong>: Invierte el eje horizontal o vertical de la imagen.</li>
+<li><strong>Zoom (<code>zoomIn</code> / <code>zoomOut</code>)</strong>: Acerca o aleja el lienzo en incrementos de <code>10%</code>.</li>
+<li><strong>Umbral Binario / Binarización (<code>applyBinaryThreshold</code>)</strong>: Función especializada para lectura de tickets térmicos. Recorre los píxeles del área recortada, calcula la luminancia ($0.299R + 0.587G + 0.114B$) y aplica un umbral de contraste (<code>128</code>) convirtiendo cada píxel a blanco puro (<code>255</code>) o negro puro (<code>0</code>). Esto elimina sombras, manchas de papel térmico e iluminación despareja.</li>
+<li><strong>Restablecer (<code>reset</code>)</strong>: Revierte todas las transformaciones y binarizaciones, restaurando la fotografía original capturada.</li>
+<li><strong>Aceptar (<code>confirmEdit</code>)</strong>: Exporta la imagen recortada y optimizada y la agrega a la bandeja de vouchers pendientes.</li>
+</ul>
+<hr>
+<h2>4. Drawer de Detalle, OCR e Inteligencia Artificial (<code>&lt;app-file-detail&gt;</code>)</h2>
+<p>Al seleccionar un voucher pendiente o un nodo del árbol, se abre un panel deslizable lateral (<em>Drawer</em>) con un diseño de dos columnas: a la izquierda los datos estructurados del comprobante y a la derecha el lienzo interactivo <code>&lt;canvas&gt;</code> con la imagen del ticket.</p>
+<h3>4.1. Botón &quot;Leer&quot; — Reconocimiento Óptico de Caracteres (<code>OcrService</code> + <code>VouchersParserService</code>)</h3>
+<p>Al pulsar el botón <strong>&quot;Leer&quot;</strong>:</p>
+<ol>
+<li><strong>Ejecución de Tesseract.js</strong>: Se invoca <code>OcrService.recognizeImage()</code>, que inicializa un <em>worker</em> de <code>tesseract.js</code> configurado en idioma español (<code>spa</code>). Durante el proceso se muestra una barra de progreso porcentual en tiempo real.</li>
+<li><strong>Detección Visual en el Lienzo (<code>&lt;canvas&gt;</code>)</strong>: Una vez completado el reconocimiento, el componente superpone <strong>recuadros verdes</strong> (<code>strokeStyle = &#39;#00FF00&#39;</code>) sobre cada palabra detectada en la imagen cuya confianza estadística sea superior al 60% (<code>word.confidence &gt; 60</code>).</li>
+<li><strong>Extracción por Expresiones Regulares (<code>VouchersParserService</code>)</strong>: El texto crudo reconocido es analizado automáticamente mediante patrones regulares para identificar y poblar en pantalla:<ul>
+<li><strong>CUIT</strong>: Formato <code>XX-XXXXXXXX-X</code>.</li>
+<li><strong>Fecha</strong>: Formatos <code>DD/MM/YYYY</code> o <code>DD-MM-YYYY</code>.</li>
+<li><strong>Monto Total</strong>: Importes precedidos por <code>TOTAL</code>, <code>IMPORTE</code>, <code>NETO</code>, <code>PAGO</code> o símbolo <code>$</code>.</li>
+<li><strong>Número de Tarjeta</strong>: Últimos 4 dígitos de la tarjeta utilizada.</li>
+<li><strong>Comercio</strong>: Primera línea significativa del encabezado del ticket.</li>
+</ul>
+</li>
+</ol>
+<h3>4.2. Botón &quot;Analizar&quot; — Estructuración Inteligente con IA (<code>AiService</code>)</h3>
+<p>Una vez que el comprobante cuenta con texto extraído por OCR, se habilita el botón <strong>&quot;Analizar&quot;</strong>:</p>
+<ol>
+<li><strong>Envío al Modelo de Lenguaje</strong>: El componente invoca <code>AiService.analyzeOcrText()</code>, enviando el texto crudo del OCR al modelo <strong><code>qwen/qwen3-4b:free</code></strong> (a través de OpenRouter) con un <em>prompt</em> especializado en análisis contable de tickets y facturas.</li>
+<li><strong>Estructuración JSON Completa</strong>: La IA interpreta el contexto semántico del ticket (incluso si el papel estaba arrugado o con errores tipográficos de OCR) y devuelve un objeto JSON normalizado con la siguiente estructura:<ul>
+<li><code>comercio</code>: Nombre del comercio o tienda.</li>
+<li><code>fecha</code>: Fecha en formato <code>YYYY-MM-DD</code>.</li>
+<li><code>hora</code>: Hora de la operación en formato <code>HH:MM</code>.</li>
+<li><code>monto_total</code>: Valor numérico decimal del total abonado.</li>
+<li><code>moneda</code>: Símbolo o código de moneda (<code>$</code>, <code>ARS</code>, <code>USD</code>).</li>
+<li><code>cuit</code>: CUIT del emisor si está presente.</li>
+<li><code>nro_transaccion</code>: Número de ticket, factura o cupón de autorización.</li>
+<li><code>metodo_pago</code>: Medio de pago detectado (<em>Efectivo</em>, <em>Tarjeta de Crédito</em>, <em>Débito</em>, etc.).</li>
+<li><code>items</code>: Arreglo detallado de productos o conceptos adquiridos (<code>descripcion</code>, <code>cantidad</code>, <code>precio_unitario</code>, <code>subtotal</code>).</li>
+</ul>
+</li>
+<li><strong>Persistencia Automática</strong>: Los datos estructurados por la IA actualizan la vista de detalle y se guardan automáticamente en el registro del voucher pendiente mediante <code>PendingVouchersService.updateVoucher()</code>.</li>
+</ol>
+<hr>
+<h2>5. Visores Auxiliares de Documentos (<code>&lt;app-pdf-viewer&gt;</code> y <code>&lt;app-iframe-viewer&gt;</code>)</h2>
+<p>Para documentos que no son imágenes fotográficas sino archivos digitales o enlaces externos, el módulo dispone de dos componentes embebidos:</p>
+<ul>
+<li><strong>Visor de PDF (<code>&lt;app-pdf-viewer&gt;</code>)</strong>: Basado en <code>ng2-pdf-viewer</code>, permite renderizar documentos PDF multipágina directamente en la interfaz sin descargar el archivo ni abandonar la pantalla.</li>
+<li><strong>Visor Iframe (<code>&lt;app-iframe-viewer&gt;</code>)</strong>: Sanitiza URLs seguras mediante <code>DomSanitizer</code> (<code>bypassSecurityTrustResourceUrl</code>) para previsualizar comprobantes electrónicos alojados en portales externos.</li>
+</ul>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/additional-documentation/digitalizaci%C3%B3n%2C-c%C3%A1mara%2C-ocr-e-ia.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/additional-documentation/digitization%2C-camera%2C-ocr-and-ai.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/additional-documentation/digitaliza%C3%A7%C3%A3o%2C-c%C3%A2mera%2C-ocr-e-ia.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'digitalización,-cámara,-ocr-e-ia.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

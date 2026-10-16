@@ -1,0 +1,3519 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  DocumentsComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/documents/documents.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Espacio de trabajo de digitalización de documentos, captura por cámara WebRTC, preprocesamiento de imágenes y OCR/IA (<code>&lt;app-documents&gt;</code>)
+en <code>/admin/user/documents</code>.</p>
+<p>Implementa una vista de pantalla dividida con un árbol jerárquico filtrado por ámbito (<code>&lt;app-tree-view&gt;</code>) a la izquierda,
+y carga de archivos (<code>nz-upload</code>), captura de cámara WebRTC en vivo (<code>&lt;app-camera&gt;</code>), recorte/binarización interactiva de imágenes
+(<code>&lt;app-image-editor&gt;</code>) y cuadrícula de comprobantes pendientes a la derecha.</p>
+
+    </p>
+
+
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-documents</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzSplitterModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzUploadModule</code>
+</div>
+                        <div>    <code>NzImageModule</code>
+</div>
+                        <div>    <code>NzModalModule</code>
+</div>
+                        <div>    <code>NzDrawerModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>        <code><a href="../components/PdfViewerComponent.html" target="_self" >PdfViewerComponent</a></code>
+</div>
+                        <div>        <code><a href="../components/FileDetailComponent.html" target="_self" >FileDetailComponent</a></code>
+</div>
+                        <div>        <code><a href="../components/TreeViewComponent.html" target="_self" >TreeViewComponent</a></code>
+</div>
+                        <div>        <code><a href="../components/ImageEditorComponent.html" target="_self" >ImageEditorComponent</a></code>
+</div>
+                        <div>        <code><a href="../components/CameraComponent.html" target="_self" >CameraComponent</a></code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./documents.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./documents.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./documents.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSplitterModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzUploadModule</code>
+                                </li>
+                                <li>
+                                        <code>NzImageModule</code>
+                                </li>
+                                <li>
+                                        <code>NzModalModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDrawerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/PdfViewerComponent.html" target="_self" >PdfViewerComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/FileDetailComponent.html" target="_self" >FileDetailComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/TreeViewComponent.html" target="_self" >TreeViewComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/ImageEditorComponent.html" target="_self" >ImageEditorComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/CameraComponent.html" target="_self" >CameraComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#beforeUpload" >beforeUpload</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#fallback" >fallback</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#fileList" >fileList</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageToEdit" >imageToEdit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#isCameraActiveView" >isCameraActiveView</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#isEditorVisible" >isEditorVisible</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#pendingVouchers" >pendingVouchers</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#scopes" >scopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectedScopeUuid" >selectedScopeUuid</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#treeData" >treeData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#addDocumentToList" >addDocumentToList</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#addMimeType" >addMimeType</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#deleteVoucherPending" >deleteVoucherPending</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#downloadFile" >downloadFile</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#getCardsTree" >getCardsTree</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#getFileType" >getFileType</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#getPendingVocuhers" >getPendingVocuhers</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleCameraCapture" >handleCameraCapture</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadScopes" >loadScopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#normalizePath" >normalizePath</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#onEditorConfirm" >onEditorConfirm</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#onNodeChecked" >onNodeChecked</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#onNodeSelected" >onNodeSelected</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#onScopeChange" >onScopeChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#openDocPreview" >openDocPreview</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#openFullScreenCamera" >openFullScreenCamera</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#openPdfPreview" >openPdfPreview</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#viewFile" >viewFile</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(modal: NzModalService, drawerService: NzDrawerService, _treesService: <a href="../injectables/TreesService.html" target="_self">TreesService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, ocrService: <a href="../injectables/OcrService.html" target="_self">OcrService</a>, _pendingVouchersService: <a href="../injectables/PendingVouchersService.html" target="_self">PendingVouchersService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="79" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:79</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the documents component.</p>
+</div>
+                            <div>
+                                    <b>Parámetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descripción</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>modal</td>
+                                                  
+                                                        <td>
+                                                                    <code>NzModalService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Ng-Zorro modal service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>drawerService</td>
+                                                  
+                                                        <td>
+                                                                    <code>NzDrawerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Ng-Zorro drawer service for opening <code>&lt;app-file-detail&gt;</code>.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_treesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TreesService.html" target="_self" >TreesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching the cards/periods/vouchers hierarchy.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_scopesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ScopesService.html" target="_self" >ScopesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching user scopes.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>ocrService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OcrService.html" target="_self" >OcrService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for OpenCV image preprocessing and OCR events.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_pendingVouchersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PendingVouchersService.html" target="_self" >PendingVouchersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for managing pending vouchers.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addDocumentToList"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>addDocumentToList</b></span>
+                        <a href="#addDocumentToList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addDocumentToList(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="261"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:261</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Persists a new pending voucher record via <a href="PendingVouchersService.savePendingVoucher">PendingVouchersService.savePendingVoucher</a>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>File name for the pending voucher.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>path</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Base64 data URL of the voucher image/document.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addMimeType"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>addMimeType</b></span>
+                        <a href="#addMimeType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addMimeType(base64: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, name?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="323"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:323</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Prepends the appropriate MIME type header to a raw Base64 string based on file extension.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>base64</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Raw Base64 string.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Si
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Optional file name with extension.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>MIME-prefixed Base64 string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteVoucherPending"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>deleteVoucherPending</b></span>
+                        <a href="#deleteVoucherPending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteVoucherPending(pendingVoucher: <a href="../interfaces/PendingVoucherInterface.html" target="_self">PendingVoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="464"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:464</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a pending voucher record via <a href="PendingVouchersService.deletePendingVoucher">PendingVouchersService.deletePendingVoucher</a> and refreshes the list.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>pendingVoucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PendingVoucherInterface.html" target="_self" >PendingVoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pending voucher record to delete.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="downloadFile"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>downloadFile</b></span>
+                        <a href="#downloadFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>downloadFile(item: <a href="../interfaces/PendingVoucherInterface.html" target="_self">PendingVoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="431"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:431</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Triggers a browser download for the specified pending voucher file.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PendingVoucherInterface.html" target="_self" >PendingVoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pending voucher record to download.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCardsTree"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getCardsTree</b></span>
+                        <a href="#getCardsTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCardsTree(usr_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, scp_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="175"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:175</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the hierarchical cards/periods/vouchers tree from <a href="../injectables/TreesService.html">TreesService</a>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Valor por defecto</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>usr_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    <p>User UUID.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>scp_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>&#x27;ALL&#x27;</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>Scope UUID filter (<code>&#39;ALL&#39;</code> by default).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFileType"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getFileType</b></span>
+                        <a href="#getFileType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getFileType(item: <a href="../interfaces/PendingVoucherInterface.html" target="_self">PendingVoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="351"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:351</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Determines the file category (<code>&#39;image&#39; | &#39;pdf&#39; | &#39;doc&#39; | &#39;xls&#39; | &#39;other&#39;</code>) of a pending voucher.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PendingVoucherInterface.html" target="_self" >PendingVoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pending voucher record.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>&quot;image&quot; | &quot;pdf&quot; | &quot;doc&quot; | &quot;xls&quot; | &quot;other&quot;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Detected file type category.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPendingVocuhers"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getPendingVocuhers</b></span>
+                        <a href="#getPendingVocuhers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPendingVocuhers(usr_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="201"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the list of pending vouchers from <a href="../injectables/PendingVouchersService.html">PendingVouchersService</a>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>usr_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>User UUID.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleCameraCapture"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>handleCameraCapture</b></span>
+                        <a href="#handleCameraCapture"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleCameraCapture(base64Image: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="130"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Receives the captured Base64 image from <code>&lt;app-camera&gt;</code> and opens <code>&lt;app-image-editor&gt;</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>base64Image</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Captured photograph in Base64 format.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadScopes"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadScopes</b></span>
+                        <a href="#loadScopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadScopes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="139"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads the user&#39;s scopes and prepends the <code>&#39;ALL&#39;</code> filter option.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="103"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads scopes, the hierarchical card tree, and pending vouchers on component initialization.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="normalizePath"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>normalizePath</b></span>
+                        <a href="#normalizePath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>normalizePath(item: <a href="../interfaces/PendingVoucherInterface.html" target="_self">PendingVoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="288"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:288</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Normalizes the <code>pevou_image</code> property of a pending voucher into a valid URL or MIME-prefixed Base64 string.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PendingVoucherInterface.html" target="_self" >PendingVoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pending voucher record.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Normalized image or document source string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEditorConfirm"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onEditorConfirm</b></span>
+                        <a href="#onEditorConfirm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onEditorConfirm(croppedImage: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="250"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:250</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Saves the cropped/binarized image emitted by <code>&lt;app-image-editor&gt;</code> as a new pending voucher.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>croppedImage</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Processed Base64 image string.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNodeChecked"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onNodeChecked</b></span>
+                        <a href="#onNodeChecked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onNodeChecked(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="508"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:508</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Callback invoked when a user checks or unchecks a node in <code>&lt;app-tree-view&gt;</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Tree check event payload.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNodeSelected"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onNodeSelected</b></span>
+                        <a href="#onNodeSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onNodeSelected(node: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="498"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:498</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Callback invoked when a user clicks a node in <code>&lt;app-tree-view&gt;</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>node</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Selected tree node.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onScopeChange"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onScopeChange</b></span>
+                        <a href="#onScopeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onScopeChange(scopeUuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="164"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:164</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reloads the hierarchical cards tree when the selected scope filter changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>scopeUuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Selected scope UUID or <code>&#39;ALL&#39;</code>.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDocPreview"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>openDocPreview</b></span>
+                        <a href="#openDocPreview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openDocPreview(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="421"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:421</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens a Word or Excel document URL in a new browser tab using Google Docs Viewer.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>url</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Document URL to preview.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openFullScreenCamera"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>openFullScreenCamera</b></span>
+                        <a href="#openFullScreenCamera"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openFullScreenCamera()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="121"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the fullscreen WebRTC camera modal (<code>&lt;app-camera&gt;</code>).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openPdfPreview"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>openPdfPreview</b></span>
+                        <a href="#openPdfPreview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openPdfPreview(item: <a href="../interfaces/PendingVoucherInterface.html" target="_self">PendingVoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="391"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:391</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens a modal preview for a PDF pending voucher using either <code>&lt;app-iframe-viewer&gt;</code> or <code>&lt;app-pdf-viewer&gt;</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PendingVoucherInterface.html" target="_self" >PendingVoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pending voucher record.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewFile"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>viewFile</b></span>
+                        <a href="#viewFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>viewFile(item: <a href="../interfaces/PendingVoucherInterface.html" target="_self">PendingVoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="443"
+                                    class="link-to-prism">src/app/admin/user/documents/documents.component.ts:443</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the side drawer (<code>&lt;app-file-detail&gt;</code>) to inspect the voucher image and run OCR/AI extraction.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PendingVoucherInterface.html" target="_self" >PendingVoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Pending voucher record to inspect.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="beforeUpload"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>beforeUpload</b></span>
+                        <a href="#beforeUpload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="231" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:231</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Intercepts file uploads in <code>nz-upload</code>, converts the file to a Data URL,
+and opens <code>&lt;app-image-editor&gt;</code> for images or saves non-image files directly.</p>
+</div>
+                </td>
+            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description">
+                                <b>Parámetros :</b>
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                    <td>file</td>
+                                                    <td>
+                                                            <code><p>Uploaded file instance.</p>
+</code>
+                                                    </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fallback"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fallback</b></span>
+                        <a href="#fallback"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQvc6UAAABRWlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8LAwSDCIMogwMCcmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsis7PPOq3QdDFcvjV3jOD1boQVTPQrgSkktTgbSf4A4LbmgqISBgTEFyFYuLykAsTuAbJEioKOA7DkgdjqEvQHEToKwj4DVhAQ5A9k3gGyB5IxEoBmML4BsnSQk8XQkNtReEOBxcfXxUQg1Mjc0dyHgXNJBSWpFCYh2zi+oLMpMzyhRcASGUqqCZ16yno6CkYGRAQMDKMwhqj/fAIcloxgHQqxAjIHBEugw5sUIsSQpBobtQPdLciLEVJYzMPBHMDBsayhILEqEO4DxG0txmrERhM29nYGBddr//5/DGRjYNRkY/l7////39v///y4Dmn+LgeHANwDrkl1AuO+pmgAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAwqADAAQAAAABAAAAwwAAAAD9b/HnAAAHlklEQVR4Ae3dP3PTWBSGcbGzM6GCKqlIBRV0dHRJFarQ0eUT8LH4BnRU0NHR0UEFVdIlFRV7TzRksomPY8uykTk/zewQfKw/9znv4yvJynLv4uLiV2dBoDiBf4qP3/ARuCRABEFAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghgg0Aj8i0JO4OzsrPv69Wv+hi2qPHr0qNvf39+iI97soRIh4f3z58/u7du3SXX7Xt7Z2enevHmzfQe+oSN2apSAPj09TSrb+XKI/f379+08+A0cNRE2ANkupk+ACNPvkSPcAAEibACyXUyfABGm3yNHuAECRNgAZLuYPgEirKlHu7u7XdyytGwHAd8jjNyng4OD7vnz51dbPT8/7z58+NB9+/bt6jU/TI+AGWHEnrx48eJ/EsSmHzx40L18+fLyzxF3ZVMjEyDCiEDjMYZZS5wiPXnyZFbJaxMhQIQRGzHvWR7XCyOCXsOmiDAi1HmPMMQjDpbpEiDCiL358eNHurW/5SnWdIBbXiDCiA38/Pnzrce2YyZ4//59F3ePLNMl4PbpiL2J0L979+7yDtHDhw8vtzzvdGnEXdvUigSIsCLAWavHp/+qM0BcXMd/q25n1vF57TYBp0a3mUzilePj4+7k5KSLb6gt6ydAhPUzXnoPR0dHl79WGTNCfBnn1uvSCJdegQhLI1vvCk+fPu2ePXt2tZOYEV6/fn31dz+shwAR1sP1cqvLntbEN9MxA9xcYjsxS1jWR4AIa2Ibzx0tc44fYX/16lV6NDFLXH+YL32jwiACRBiEbf5KcXoTIsQSpzXx4N28Ja4BQoK7rgXiydbHjx/P25TaQAJEGAguWy0+2Q8PD6/Ki4R8EVl+bzBOnZY95fq9rj9zAkTI2SxdidBHqG9+skdw43borCXO/ZcJdraPWdv22uIEiLA4q7nvvCug8WTqzQveOH26fodo7g6uFe/a17W3+nFBAkRYENRdb1vkkz1CH9cPsVy/jrhr27PqMYvENYNlHAIesRiBYwRy0V+8iXP8+/fvX11Mr7L7ECueb/r48eMqm7FuI2BGWDEG8cm+7G3NEOfmdcTQw4h9/55lhm7DekRYKQPZF2ArbXTAyu4kDYB2YxUzwg0gi/41ztHnfQG26HbGel/crVrm7tNY+/1btkOEAZ2M05r4FB7r9GbAIdxaZYrHdOsgJ/wCEQY0J74TmOKnbxxT9n3FgGGWWsVdowHtjt9Nnvf7yQM2aZU/TIAIAxrw6dOnAWtZZcoEnBpNuTuObWMEiLAx1HY0ZQJEmHJ3HNvGCBBhY6jtaMoEiJB0Z29vL6ls58vxPcO8/zfrdo5qvKO+d3Fx8Wu8zf1dW4p/cPzLly/dtv9Ts/EbcvGAHhHyfBIhZ6NSiIBTo0LNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzDTUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzDTUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzDTUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiEC/wGgKKC4YMA4TAAAAABJRU5ErkJggg&#x3D;&#x3D;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="65" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Imagen de marcador de posición en Base64 de respaldo cuando falla la carga de una miniatura.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fileList"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fileList</b></span>
+                        <a href="#fileList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>NzUploadFile[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="73" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Upload queue managed by <code>nz-upload</code>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageToEdit"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageToEdit</b></span>
+                        <a href="#imageToEdit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="77" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Base64 image currently loaded into <code>&lt;app-image-editor&gt;</code>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isCameraActiveView"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isCameraActiveView</b></span>
+                        <a href="#isCameraActiveView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="79" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Controls visibility of the fullscreen <code>&lt;app-camera&gt;</code> modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditorVisible"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isEditorVisible</b></span>
+                        <a href="#isEditorVisible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="75" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Controls visibility of the <code>&lt;app-image-editor&gt;</code> modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si se están cargando los comprobantes pendientes o los datos del árbol.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pendingVouchers"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>pendingVouchers</b></span>
+                        <a href="#pendingVouchers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>PendingVoucherInterface[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="71" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of pending vouchers awaiting OCR/AI analysis or confirmation.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scopes"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>scopes</b></span>
+                        <a href="#scopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/ScopeInterface.html" target="_self" >ScopeInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="67" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of scopes available in the filter selector.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedScopeUuid"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>selectedScopeUuid</b></span>
+                        <a href="#selectedScopeUuid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;ALL&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="69" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currently selected scope UUID (<code>&#39;ALL&#39;</code> by default).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="treeData"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>treeData</b></span>
+                        <a href="#treeData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/TreeInterface.html" target="_self" >TreeInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="61" class="link-to-prism">src/app/admin/user/documents/documents.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nodos del árbol jerárquico que representan Tarjetas -&gt; Períodos de Facturación -&gt; Comprobantes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { NzSplitterModule } from &#x27;ng-zorro-antd/splitter&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzUploadFile, NzUploadModule } from &#x27;ng-zorro-antd/upload&#x27;;
+import { NzImageModule } from &#x27;ng-zorro-antd/image&#x27;;
+import { NzModalModule } from &#x27;ng-zorro-antd/modal&#x27;;
+import { NzDrawerModule } from &#x27;ng-zorro-antd/drawer&#x27;;
+import { NzModalService } from &#x27;ng-zorro-antd/modal&#x27;;
+import { NzDrawerService } from &#x27;ng-zorro-antd/drawer&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { PdfViewerComponent } from &#x27;../../../shared/components/pdf-viewer/pdf-viewer.component&#x27;
+import { FileDetailComponent } from &#x27;../../../shared/components/file-detail/file-detail.component&#x27;
+import { IframeViewerComponent } from &#x27;../../../shared/components/iframe-viewer/iframe-viewer.component&#x27;
+import { PendingVoucherInterface } from &#x27;../../../core/interfaces/pending-voucher&#x27;;
+import { TreeViewComponent } from &#x27;../../../shared/components/tree-view/tree-view.component&#x27;;
+import { ImageEditorComponent } from &#x27;../../../shared/components/image-editor/image-editor.component&#x27;;
+import { TreeInterface } from &#x27;../../../core/interfaces/tree&#x27;;
+import { CameraComponent } from &#x27;../../../shared/components/camera/camera.component&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { OcrService } from &#x27;../../../core/services/ocr.service&#x27;;
+import { TreesService } from &#x27;../../../core/services/trees.service&#x27;;
+import { ScopesService } from &#x27;../../../core/services/scopes.service&#x27;;
+import { ScopeInterface } from &#x27;../../../core/interfaces/scope.interface&#x27;;
+import { PendingVouchersService } from &#x27;../../../core/services/pending-vouchers.service&#x27;;
+
+/**
+ * Espacio de trabajo de digitalización de documentos, captura por cámara WebRTC, preprocesamiento de imágenes y OCR/IA (&#x60;&lt;app-documents&gt;&#x60;)
+ * en &#x60;/admin/user/documents&#x60;.
+ *
+ * @description Implementa una vista de pantalla dividida con un árbol jerárquico filtrado por ámbito (&#x60;&lt;app-tree-view&gt;&#x60;) a la izquierda,
+ * y carga de archivos (&#x60;nz-upload&#x60;), captura de cámara WebRTC en vivo (&#x60;&lt;app-camera&gt;&#x60;), recorte/binarización interactiva de imágenes
+ * (&#x60;&lt;app-image-editor&gt;&#x60;) y cuadrícula de comprobantes pendientes a la derecha.
+ */
+@Component({
+  selector: &#x27;app-documents&#x27;,
+  imports: [
+    FormsModule,
+    NzSelectModule,
+    NzSplitterModule,
+    NzIconModule,
+    NzButtonModule,
+    NzUploadModule,
+    NzImageModule,
+    NzModalModule,
+    NzDrawerModule,
+    NzSpinModule,
+    PdfViewerComponent,
+    FileDetailComponent,
+    TreeViewComponent,
+    ImageEditorComponent,
+    CameraComponent
+  ],
+  templateUrl: &#x27;./documents.component.html&#x27;,
+  styleUrl: &#x27;./documents.component.scss&#x27;
+})
+export class DocumentsComponent {
+
+  /** Nodos del árbol jerárquico que representan Tarjetas -&gt; Períodos de Facturación -&gt; Comprobantes. */
+  public treeData: TreeInterface[] &#x3D; [];
+  /** Indica si se están cargando los comprobantes pendientes o los datos del árbol. */
+  public isLoading &#x3D; false;
+  /** Imagen de marcador de posición en Base64 de respaldo cuando falla la carga de una miniatura. */
+  public fallback: string &#x3D; &#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQvc6UAAABRWlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8LAwSDCIMogwMCcmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsis7PPOq3QdDFcvjV3jOD1boQVTPQrgSkktTgbSf4A4LbmgqISBgTEFyFYuLykAsTuAbJEioKOA7DkgdjqEvQHEToKwj4DVhAQ5A9k3gGyB5IxEoBmML4BsnSQk8XQkNtReEOBxcfXxUQg1Mjc0dyHgXNJBSWpFCYh2zi+oLMpMzyhRcASGUqqCZ16yno6CkYGRAQMDKMwhqj/fAIcloxgHQqxAjIHBEugw5sUIsSQpBobtQPdLciLEVJYzMPBHMDBsayhILEqEO4DxG0txmrERhM29nYGBddr//5/DGRjYNRkY/l7////39v///y4Dmn+LgeHANwDrkl1AuO+pmgAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAwqADAAQAAAABAAAAwwAAAAD9b/HnAAAHlklEQVR4Ae3dP3PTWBSGcbGzM6GCKqlIBRV0dHRJFarQ0eUT8LH4BnRU0NHR0UEFVdIlFRV7TzRksomPY8uykTk/zewQfKw/9znv4yvJynLv4uLiV2dBoDiBf4qP3/ARuCRABEFAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghggQAQZQKAnYEaQBAQaASKIAQJEkAEEegJmBElAoBEgghgg0Aj8i0JO4OzsrPv69Wv+hi2qPHr0qNvf39+iI97soRIh4f3z58/u7du3SXX7Xt7Z2enevHmzfQe+oSN2apSAPj09TSrb+XKI/f379+08+A0cNRE2ANkupk+ACNPvkSPcAAEibACyXUyfABGm3yNHuAECRNgAZLuYPgEirKlHu7u7XdyytGwHAd8jjNyng4OD7vnz51dbPT8/7z58+NB9+/bt6jU/TI+AGWHEnrx48eJ/EsSmHzx40L18+fLyzxF3ZVMjEyDCiEDjMYZZS5wiPXnyZFbJaxMhQIQRGzHvWR7XCyOCXsOmiDAi1HmPMMQjDpbpEiDCiL358eNHurW/5SnWdIBbXiDCiA38/Pnzrce2YyZ4//59F3ePLNMl4PbpiL2J0L979+7yDtHDhw8vtzzvdGnEXdvUigSIsCLAWavHp/+qM0BcXMd/q25n1vF57TYBp0a3mUzilePj4+7k5KSLb6gt6ydAhPUzXnoPR0dHl79WGTNCfBnn1uvSCJdegQhLI1vvCk+fPu2ePXt2tZOYEV6/fn31dz+shwAR1sP1cqvLntbEN9MxA9xcYjsxS1jWR4AIa2Ibzx0tc44fYX/16lV6NDFLXH+YL32jwiACRBiEbf5KcXoTIsQSpzXx4N28Ja4BQoK7rgXiydbHjx/P25TaQAJEGAguWy0+2Q8PD6/Ki4R8EVl+bzBOnZY95fq9rj9zAkTI2SxdidBHqG9+skdw43borCXO/ZcJdraPWdv22uIEiLA4q7nvvCug8WTqzQveOH26fodo7g6uFe/a17W3+nFBAkRYENRdb1vkkz1CH9cPsVy/jrhr27PqMYvENYNlHAIesRiBYwRy0V+8iXP8+/fvX11Mr7L7ECueb/r48eMqm7FuI2BGWDEG8cm+7G3NEOfmdcTQw4h9/55lhm7DekRYKQPZF2ArbXTAyu4kDYB2YxUzwg0gi/41ztHnfQG26HbGel/crVrm7tNY+/1btkOEAZ2M05r4FB7r9GbAIdxaZYrHdOsgJ/wCEQY0J74TmOKnbxxT9n3FgGGWWsVdowHtjt9Nnvf7yQM2aZU/TIAIAxrw6dOnAWtZZcoEnBpNuTuObWMEiLAx1HY0ZQJEmHJ3HNvGCBBhY6jtaMoEiJB0Z29vL6ls58vxPcO8/zfrdo5qvKO+d3Fx8Wu8zf1dW4p/cPzLly/dtv9Ts/EbcvGAHhHyfBIhZ6NSiIBTo0LNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzDTUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzDTUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiECRCjUbEPNCRAhZ6NSiAARCjXbUHMCRMjZqBQiQIRCzTbUnAARcjYqhQgQoVCzDTUnQIScjUohAkQo1GxDzQkQIWejUogAEQo121BzAkTI2agUIkCEQs021JwAEXI2KoUIEKFQsw01J0CEnI1KIQJEKNRsQ80JECFno1KIABEKNdtQcwJEyNmoFCJAhELNNtScABFyNiqFCBChULMNNSdAhJyNSiEC/wGgKKC4YMA4TAAAAABJRU5ErkJggg&#x3D;&#x3D;&#x27;;
+  /** List of scopes available in the filter selector. */
+  public scopes: ScopeInterface[] &#x3D; [];
+  /** Currently selected scope UUID (&#x60;&#x27;ALL&#x27;&#x60; by default). */
+  public selectedScopeUuid: string &#x3D; &#x27;ALL&#x27;;
+  /** List of pending vouchers awaiting OCR/AI analysis or confirmation. */
+  public pendingVouchers: PendingVoucherInterface[] &#x3D; [];
+  /** Upload queue managed by &#x60;nz-upload&#x60;. */
+  public fileList: NzUploadFile[] &#x3D; [];
+  /** Controls visibility of the &#x60;&lt;app-image-editor&gt;&#x60; modal. */
+  public isEditorVisible &#x3D; false;
+  /** Base64 image currently loaded into &#x60;&lt;app-image-editor&gt;&#x60;. */
+  public imageToEdit: string | null &#x3D; null;
+  /** Controls visibility of the fullscreen &#x60;&lt;app-camera&gt;&#x60; modal. */
+  public isCameraActiveView &#x3D; false;
+
+  /**
+   * Initializes the documents component.
+   *
+   * @param modal Ng-Zorro modal service.
+   * @param drawerService Ng-Zorro drawer service for opening &#x60;&lt;app-file-detail&gt;&#x60;.
+   * @param _treesService Service for fetching the cards/periods/vouchers hierarchy.
+   * @param _scopesService Service for fetching user scopes.
+   * @param ocrService Service for OpenCV image preprocessing and OCR events.
+   * @param _pendingVouchersService Service for managing pending vouchers.
+   */
+  constructor(
+    private modal: NzModalService,
+    private drawerService: NzDrawerService,
+    private _treesService: TreesService,
+    private _scopesService: ScopesService,
+    private ocrService: OcrService,
+    private _pendingVouchersService: PendingVouchersService
+  ) { }
+
+  /**
+   * Loads scopes, the hierarchical card tree, and pending vouchers on component initialization.
+   */
+  ngOnInit(): void {
+    this.loadScopes();
+    this.getCardsTree(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, this.selectedScopeUuid);
+    this.getPendingVocuhers(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;);
+
+    this.pendingVouchers &#x3D; this.pendingVouchers.map((item: any) &#x3D;&gt; ({
+      ...item,
+      // Añadimos el prefijo MIME para hacerlo usable
+      //path: this.addMimeType(item.data, item.name),
+      normalizedPath: this.normalizePath(item)
+    }));
+  }
+
+  // --- LÓGICA DE CÁMARA ---
+  
+  /**
+   * Opens the fullscreen WebRTC camera modal (&#x60;&lt;app-camera&gt;&#x60;).
+   */
+  public openFullScreenCamera(): void {
+    this.isCameraActiveView &#x3D; true;
+  }
+
+  /**
+   * Receives the captured Base64 image from &#x60;&lt;app-camera&gt;&#x60; and opens &#x60;&lt;app-image-editor&gt;&#x60;.
+   *
+   * @param base64Image Captured photograph in Base64 format.
+   */
+  public async handleCameraCapture(base64Image: string) {
+    this.isCameraActiveView &#x3D; false;
+    this.imageToEdit &#x3D; base64Image;
+    this.isEditorVisible &#x3D; true;
+  }
+
+  /**
+   * Loads the user&#x27;s scopes and prepends the &#x60;&#x27;ALL&#x27;&#x60; filter option.
+   */
+  public loadScopes(): void {
+    const usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+    this._scopesService.getScopes(usr_uuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        if (response.success &amp;&amp; response.data.length &gt; 0) {
+          const allOption: ScopeInterface &#x3D; {
+            scp_uuid: &#x27;ALL&#x27;,
+            scp_name: &#x27;Todos los ámbitos&#x27;,
+            scp_isshared: false,
+            usr_uuidowner: usr_uuid,
+            scp_active: true,
+            scp_color: &#x27;#108ee9&#x27;
+          };
+          this.scopes &#x3D; [allOption, ...response.data];
+        }
+      },
+      error: (err) &#x3D;&gt; console.error(&#x27;Error fetching scopes:&#x27;, err)
+    });
+  }
+
+  /**
+   * Reloads the hierarchical cards tree when the selected scope filter changes.
+   *
+   * @param scopeUuid Selected scope UUID or &#x60;&#x27;ALL&#x27;&#x60;.
+   */
+  public onScopeChange(scopeUuid: string): void {
+    this.selectedScopeUuid &#x3D; scopeUuid;
+    this.getCardsTree(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, this.selectedScopeUuid);
+  }
+
+  /**
+   * Fetches the hierarchical cards/periods/vouchers tree from {@link TreesService}.
+   *
+   * @param usr_uuid User UUID.
+   * @param scp_uuid Scope UUID filter (&#x60;&#x27;ALL&#x27;&#x60; by default).
+   */
+  private getCardsTree(usr_uuid: string, scp_uuid: string &#x3D; &#x27;ALL&#x27;): void {
+    this._treesService.getCardsTree(usr_uuid, scp_uuid).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.treeData &#x3D; response.data;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Fetches the list of pending vouchers from {@link PendingVouchersService}.
+   *
+   * @param usr_uuid User UUID.
+   */
+  private getPendingVocuhers(usr_uuid: string): void {
+    this.isLoading &#x3D; true;
+    this._pendingVouchersService.getPendingVouchers(usr_uuid).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          this.isLoading &#x3D; false;
+          this.pendingVouchers &#x3D; response.data;
+        } else {
+          this.isLoading &#x3D; false;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Intercepts file uploads in &#x60;nz-upload&#x60;, converts the file to a Data URL,
+   * and opens &#x60;&lt;app-image-editor&gt;&#x60; for images or saves non-image files directly.
+   *
+   * @param file Uploaded file instance.
+   * @returns &#x60;false&#x60; to prevent automatic HTTP upload by &#x60;nz-upload&#x60;.
+   */
+  public beforeUpload &#x3D; (file: NzUploadFile): boolean &#x3D;&gt; {
+    const reader &#x3D; new FileReader();
+    reader.onload &#x3D; (e: any) &#x3D;&gt; {
+      if (file.type?.startsWith(&#x27;image/&#x27;)) {
+        this.imageToEdit &#x3D; e.target.result;
+        this.isEditorVisible &#x3D; true;
+      } else {
+        this.addDocumentToList(file.name, e.target.result);
+      }
+    };
+    reader.readAsDataURL(file as any);
+    return false;
+  };
+
+  /**
+   * Saves the cropped/binarized image emitted by &#x60;&lt;app-image-editor&gt;&#x60; as a new pending voucher.
+   *
+   * @param croppedImage Processed Base64 image string.
+   */
+  public onEditorConfirm(croppedImage: string) {
+    this.addDocumentToList(&#x60;Ticket_${Date.now()}.png&#x60;, croppedImage);
+    this.isEditorVisible &#x3D; false;
+  }
+
+  /**
+   * Persists a new pending voucher record via {@link PendingVouchersService.savePendingVoucher}.
+   *
+   * @param name File name for the pending voucher.
+   * @param path Base64 data URL of the voucher image/document.
+   */
+  private addDocumentToList(name: string, path: string) {
+    this.isLoading &#x3D; true;
+    const newDoc: PendingVoucherInterface &#x3D; { usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, pevou_uuid: &#x27;&#x27;, pevou_name: name, pevou_image: path };
+    this._pendingVouchersService.savePendingVoucher(newDoc).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          this.isLoading &#x3D; false;
+          this.pendingVouchers.push(response.data);
+        } else {
+          this.isLoading &#x3D; false;
+        }
+      },
+      (error: any) &#x3D;&gt;{
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.log(errorMessage);
+          //this.message.success(errorMessage.error.error);
+      }
+    )
+  }
+
+  /**
+   * Normalizes the &#x60;pevou_image&#x60; property of a pending voucher into a valid URL or MIME-prefixed Base64 string.
+   *
+   * @param item Pending voucher record.
+   * @returns Normalized image or document source string.
+   */
+  public normalizePath(item: PendingVoucherInterface): string {
+    const { pevou_image, pevou_name } &#x3D; item;
+
+    // Caso 1: Ya es una data URL (tiene prefijo MIME)
+    if (pevou_image.startsWith(&#x27;&#x27;) &amp;&amp; pevou_image.includes(&#x27;;base64,&#x27;)) {
+      return pevou_image;
+    }
+
+    // Caso 2: Parece una URL (empieza con http, https, /, etc.)
+    if (
+      pevou_image.startsWith(&#x27;http://&#x27;) ||
+      pevou_image.startsWith(&#x27;https://&#x27;) ||
+      pevou_image.startsWith(&#x27;/&#x27;) ||
+      pevou_image.startsWith(&#x27;./&#x27;) ||
+      pevou_image.startsWith(&#x27;../&#x27;)
+    ) {
+      return pevou_image; // lo dejamos como URL
+    }
+
+    // Caso 3: Es base64 SIN prefijo → lo convertimos a data URL
+    if (pevou_name) {
+      return this.addMimeType(pevou_image, pevou_name);
+    }
+
+    // Caso 4: No sabemos qué es → asumimos binario genérico
+    return &#x60;application/octet-stream;base64,${pevou_image}&#x60;;
+  }
+
+  /**
+   * Prepends the appropriate MIME type header to a raw Base64 string based on file extension.
+   *
+   * @param base64 Raw Base64 string.
+   * @param name Optional file name with extension.
+   * @returns MIME-prefixed Base64 string.
+   */
+  private addMimeType(base64: string, name?: string): string {
+    // Si no hay fileName, usamos un tipo genérico
+    if (!name) {
+      return &#x60;application/octet-stream;base64,${base64}&#x60;;
+    }
+
+    const ext &#x3D; name.split(&#x27;.&#x27;).pop()?.toLowerCase() || &#x27;&#x27;;
+    const mimeMap: Record&lt;string, string&gt; &#x3D; {
+      pdf: &#x27;application/pdf&#x27;,
+      png: &#x27;image/png&#x27;,
+      jpg: &#x27;image/jpeg&#x27;,
+      jpeg: &#x27;image/jpeg&#x27;,
+      gif: &#x27;image/gif&#x27;,
+      docx: &#x27;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x27;,
+      doc: &#x27;application/msword&#x27;,
+      xlsx: &#x27;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#x27;,
+      xls: &#x27;application/vnd.ms-excel&#x27;
+    };
+    const mime &#x3D; mimeMap[ext] || &#x27;application/octet-stream&#x27;;
+    return &#x60;${mime};base64,${base64}&#x60;;
+  }
+
+  /**
+   * Determines the file category (&#x60;&#x27;image&#x27; | &#x27;pdf&#x27; | &#x27;doc&#x27; | &#x27;xls&#x27; | &#x27;other&#x27;&#x60;) of a pending voucher.
+   *
+   * @param item Pending voucher record.
+   * @returns Detected file type category.
+   */
+  public getFileType(item: PendingVoucherInterface): &#x27;image&#x27; | &#x27;pdf&#x27; | &#x27;doc&#x27; | &#x27;xls&#x27; | &#x27;other&#x27; {
+    const normalizedPath &#x3D; this.normalizePath(item);
+
+    // Función auxiliar para detectar tipo por extensión
+    const getTypeFromExtension &#x3D; (str: string): &#x27;image&#x27; | &#x27;pdf&#x27; | &#x27;doc&#x27; | &#x27;xls&#x27; | &#x27;other&#x27; &#x3D;&gt; {
+      const lower &#x3D; str.toLowerCase();
+      if (lower.endsWith(&#x27;.pdf&#x27;)) return &#x27;pdf&#x27;;
+      if (/\.(jpg|jpeg|png|gif)$/i.test(lower)) return &#x27;image&#x27;;
+      if (/\.(doc|docx)$/i.test(lower)) return &#x27;doc&#x27;;
+      if (/\.(xls|xlsx)$/i.test(lower)) return &#x27;xls&#x27;;
+      return &#x27;other&#x27;;
+    };
+
+    // Si NO es una data URL (es una URL externa o relativa)
+    if (normalizedPath.startsWith(&#x27;&#x27;)) {
+      // 1. Intenta con name
+      if (item.pevou_name) {
+        const typeFromName &#x3D; getTypeFromExtension(item.pevou_name);
+        if (typeFromName !&#x3D;&#x3D; &#x27;other&#x27;) return typeFromName;
+      }
+
+      // 2. Si no hay name o no se detectó, intenta con la URL misma
+      const typeFromUrl &#x3D; getTypeFromExtension(normalizedPath);
+      return typeFromUrl;
+    }
+
+    // Si ES una data URL, usamos el prefijo MIME
+    if (normalizedPath.startsWith(&#x27;image/&#x27;)) return &#x27;image&#x27;;
+    if (normalizedPath.startsWith(&#x27;application/pdf&#x27;)) return &#x27;pdf&#x27;;
+    if (normalizedPath.includes(&#x27;wordprocessingml&#x27;)) return &#x27;doc&#x27;;
+    if (normalizedPath.includes(&#x27;spreadsheetml&#x27;)) return &#x27;xls&#x27;;
+
+    return &#x27;other&#x27;;
+  }
+
+  /**
+   * Opens a modal preview for a PDF pending voucher using either &#x60;&lt;app-iframe-viewer&gt;&#x60; or &#x60;&lt;app-pdf-viewer&gt;&#x60;.
+   *
+   * @param item Pending voucher record.
+   */
+  public openPdfPreview(item: PendingVoucherInterface): void {
+    let url &#x3D; this.normalizePath(item);
+
+    // Si es una URL externa (no empieza con data:)
+    if (!url.startsWith(&#x27;data:&#x27;)) {
+      this.modal.create({
+        nzTitle: &#x27;PDF&#x27;,
+        nzContent: IframeViewerComponent,
+        nzData: { url: url },
+        nzWidth: &#x27;80%&#x27;,
+        nzFooter: null
+      });
+      return;
+    }
+
+    // Si es base64
+    this.modal.create({
+      nzTitle: &#x27;Vista previa del PDF&#x27;,
+      nzContent: PdfViewerComponent,
+      nzData: { base64Data: url },
+      nzWidth: &#x27;80%&#x27;,
+      nzFooter: null
+    });
+  }
+
+  /**
+   * Opens a Word or Excel document URL in a new browser tab using Google Docs Viewer.
+   *
+   * @param url Document URL to preview.
+   */
+  public openDocPreview(url: string): void {
+    const googleViewerUrl &#x3D; &#x60;https://docs.google.com/gview?url&#x3D;${encodeURIComponent(url)}&amp;embedded&#x3D;true&#x60;;
+    window.open(googleViewerUrl, &#x27;_blank&#x27;);
+  }
+
+  /**
+   * Triggers a browser download for the specified pending voucher file.
+   *
+   * @param item Pending voucher record to download.
+   */
+  public downloadFile(item: PendingVoucherInterface): void {
+    const link &#x3D; document.createElement(&#x27;a&#x27;);
+    link.href &#x3D; item.pevou_image; // debe ser data URL válida
+    link.download &#x3D; item.pevou_name || &#x27;documento&#x27;;
+    link.click();
+  }
+
+  /**
+   * Opens the side drawer (&#x60;&lt;app-file-detail&gt;&#x60;) to inspect the voucher image and run OCR/AI extraction.
+   *
+   * @param item Pending voucher record to inspect.
+   */
+  public viewFile(item: PendingVoucherInterface): void {
+    this.drawerService.create({
+      nzTitle: &#x27;Detalles del archivo&#x27;,
+      nzContent: FileDetailComponent,
+      nzData: item,
+      nzWidth: &#x27;700px&#x27;,
+      nzBodyStyle: {
+        padding: &#x27;0&#x27;,
+        height: &#x27;calc(100vh - 110px)&#x27;, // ajusta según tu diseño (header + footer ≈ 110px)
+        overflow: &#x27;hidden&#x27;, // el scroll lo maneja el contenedor interno
+        display: &#x27;flex&#x27;,
+        flexDirection: &#x27;column&#x27;
+      }
+    });
+  }
+
+  /**
+   * Deletes a pending voucher record via {@link PendingVouchersService.deletePendingVoucher} and refreshes the list.
+   *
+   * @param pendingVoucher Pending voucher record to delete.
+   */
+  public deleteVoucherPending(pendingVoucher: PendingVoucherInterface) {
+    // this._messageService.showCustomMessage({
+    //     title: &quot;¿Estás seguro de eliminar el Rubro?&quot;,
+    //     type: &quot;question&quot;,
+    //     text: &quot;Estás a punto de eliminar el Rubro.&quot;,
+    //     showCancelButton: true,
+    //     confirmButtonColor: &#x27;#3085d6&#x27;,
+    //     cancelButtonColor: &#x27;#d33&#x27;,
+    //     confirmButtonText: &quot;Sí, eliminar!&quot;,
+    //     cancelButtonText: &quot;No, cancelar&quot;
+    //   },
+    //   (result: any) &#x3D;&gt; {
+    //     if (result.value) {
+          this._pendingVouchersService.deletePendingVoucher(pendingVoucher.usr_uuid!, pendingVoucher.pevou_uuid!)
+            .subscribe(
+              response &#x3D;&gt; {
+                console.info(response);
+                this.getPendingVocuhers(pendingVoucher.usr_uuid);
+                //this.message.success(&#x60;Banco eliminado: ${bank.ban_name}&#x60;);
+              },
+              error &#x3D;&gt; {
+                console.log(&lt;any&gt;error);
+              }
+            );
+    //     }
+    //   }
+    // );
+  }
+
+  /**
+   * Callback invoked when a user clicks a node in &#x60;&lt;app-tree-view&gt;&#x60;.
+   *
+   * @param node Selected tree node.
+   */
+  public onNodeSelected(node: any): void {
+    console.log(&#x27;Nodo seleccionado:&#x27;, node);
+    alert(&#x60;Seleccionaste: ${node.title}&#x60;);
+  }
+
+  /**
+   * Callback invoked when a user checks or unchecks a node in &#x60;&lt;app-tree-view&gt;&#x60;.
+   *
+   * @param event Tree check event payload.
+   */
+  public onNodeChecked(event: any): void {
+    console.log(&#x27;Nodo checkeado:&#x27;, event);
+    console.log(&#x27;Nodos checkeados:&#x27;, event.checkedKeys);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nz-splitter&gt;
+    &lt;nz-splitter-panel nzDefaultSize&#x3D;&quot;25%&quot; nzMin&#x3D;&quot;20%&quot; nzMax&#x3D;&quot;50%&quot;&gt;
+        &lt;div class&#x3D;&quot;box&quot;&gt;
+            &lt;div style&#x3D;&quot;max-width: 800px; margin: 10px auto;&quot;&gt;
+                &lt;div style&#x3D;&quot;margin-bottom: 12px;&quot;&gt;
+                    &lt;nz-select 
+                        [(ngModel)]&#x3D;&quot;selectedScopeUuid&quot; 
+                        (ngModelChange)&#x3D;&quot;onScopeChange($event)&quot;
+                        style&#x3D;&quot;width: 100%;&quot;
+                        nzPlaceHolder&#x3D;&quot;Filtrar por ámbito&quot;
+                    &gt;
+                        @for (scope of scopes; track scope.scp_uuid) {
+                            &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;(scope.scp_uuid &#x3D;&#x3D;&#x3D; &#x27;ALL&#x27; ? &#x27;🌐 &#x27; : (scope.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;)) + scope.scp_name&quot;&gt;&lt;/nz-option&gt;
+                        }
+                    &lt;/nz-select&gt;
+                &lt;/div&gt;
+                &lt;app-tree-view
+                    [title]&#x3D;&quot;&#x27;Tarjetas&#x27;&quot;
+                    [description]&#x3D;&quot;&#x27;Seleccione y gestione sus archivos&#x27;&quot;
+                    [nodes]&#x3D;&quot;treeData&quot;
+                    [showToolbar]&#x3D;&quot;false&quot;
+                    [checkable]&#x3D;&quot;false&quot;
+                    [draggable]&#x3D;&quot;false&quot;
+                    [defaultExpandedKeys]&#x3D;&quot;[&#x27;1&#x27;, &#x27;1-3&#x27;]&quot;
+                    [defaultCheckedKeys]&#x3D;&quot;[&#x27;1-1&#x27;]&quot;
+                    (nodeClick)&#x3D;&quot;onNodeSelected($event)&quot;
+                    (nodeCheck)&#x3D;&quot;onNodeChecked($event)&quot;
+                    &gt;
+                &lt;/app-tree-view&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nz-splitter-panel&gt;
+    &lt;nz-splitter-panel&gt;
+        @if (isLoading) {
+            &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+                &lt;nz-spin nzTip&#x3D;&quot;Cargando datos...&quot;&gt;&lt;/nz-spin&gt;
+            &lt;/div&gt;
+        } @else {
+            &lt;div class&#x3D;&quot;documents-wrapper&quot;&gt;
+                &lt;!-- Truco: Referencia oculta para que Angular sepa que PdfViewerComponent se usa --&gt;
+                @if(false) {
+                &lt;ng-container&gt;
+                    &lt;app-pdf-viewer&gt;&lt;/app-pdf-viewer&gt;
+                    &lt;app-file-detail&gt;&lt;/app-file-detail&gt;
+                &lt;/ng-container&gt;
+                }
+                &lt;div class&#x3D;&quot;documents-wrapper-top&quot;&gt;
+                    &lt;nz-upload [(nzFileList)]&#x3D;&quot;fileList&quot; [nzBeforeUpload]&#x3D;&quot;beforeUpload&quot;&gt;
+                        &lt;button nz-button&gt;
+                            &lt;nz-icon nzType&#x3D;&quot;upload&quot; /&gt;
+                            Select File
+                        &lt;/button&gt;
+                    &lt;/nz-upload&gt;
+                    &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;openFullScreenCamera()&quot;&gt;
+                        &lt;nz-icon nzType&#x3D;&quot;camera&quot; /&gt;
+                        Sacar Foto
+                    &lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;documents-wrapper-bottom&quot;&gt;
+                    @for (pendingVoucher of pendingVouchers; track pendingVoucher.pevou_uuid) {
+                    &lt;div class&#x3D;&quot;document-card&quot;&gt;
+                        &lt;div class&#x3D;&quot;file-view&quot;&gt;
+                            @switch (getFileType(pendingVoucher)) {
+                                @case (&#x27;image&#x27;) {
+                                &lt;img nz-image [nzSrc]&#x3D;&quot;normalizePath(pendingVoucher)&quot; [nzFallback]&#x3D;&quot;fallback&quot; width&#x3D;&quot;150px&quot; height&#x3D;&quot;150px&quot;
+                                    alt&#x3D;&quot;Imagen&quot; /&gt;
+                                }
+                                @case (&#x27;pdf&#x27;) {
+                                &lt;div class&#x3D;&quot;preview-pdf&quot; (click)&#x3D;&quot;openPdfPreview(pendingVoucher)&quot;&gt;
+                                    &lt;nz-icon nzType&#x3D;&quot;file-pdf&quot; nzTheme&#x3D;&quot;outline&quot; class&#x3D;&quot;file-icon pdf&quot; /&gt;
+                                    &lt;span&gt;PDF&lt;/span&gt;
+                                &lt;/div&gt;
+                                }
+                                @case (&#x27;doc&#x27;) {
+                                &lt;div class&#x3D;&quot;preview-doc&quot; (click)&#x3D;&quot;downloadFile(pendingVoucher)&quot;&gt;
+                                    &lt;nz-icon nzType&#x3D;&quot;file-word&quot; nzTheme&#x3D;&quot;outline&quot; class&#x3D;&quot;file-icon doc&quot; /&gt;
+                                    &lt;span&gt;DOC&lt;/span&gt;
+                                &lt;/div&gt;
+                                }
+                                @case (&#x27;xls&#x27;) {
+                                &lt;div class&#x3D;&quot;preview-xls&quot; (click)&#x3D;&quot;downloadFile(pendingVoucher)&quot;&gt;
+                                    &lt;nz-icon nzType&#x3D;&quot;file-excel&quot; nzTheme&#x3D;&quot;outline&quot; class&#x3D;&quot;file-icon xls&quot; /&gt;
+                                    &lt;span&gt;XLS&lt;/span&gt;
+                                &lt;/div&gt;
+                                }
+                                @default {
+                                &lt;div class&#x3D;&quot;preview-other&quot; (click)&#x3D;&quot;downloadFile(pendingVoucher)&quot;&gt;
+                                    &lt;nz-icon nzType&#x3D;&quot;file&quot; nzTheme&#x3D;&quot;outline&quot; class&#x3D;&quot;file-icon other&quot; /&gt;
+                                    &lt;span&gt;Archivo&lt;/span&gt;
+                                &lt;/div&gt;
+                                }
+                            }
+                            &lt;button 
+                                nz-button 
+                                nzType&#x3D;&quot;primary&quot; 
+                                nzDanger 
+                                nzShape&#x3D;&quot;circle&quot; 
+                                class&#x3D;&quot;delete-file-btn&quot;
+                                (click)&#x3D;&quot;deleteVoucherPending(pendingVoucher)&quot;&gt;
+                                &lt;span nz-icon nzType&#x3D;&quot;delete&quot;&gt;&lt;/span&gt;
+                            &lt;/button&gt;
+                        &lt;/div&gt;
+                        &lt;!-- Nombre del archivo debajo --&gt;
+                        &lt;div class&#x3D;&quot;file-name&quot; (click)&#x3D;&quot;viewFile(pendingVoucher)&quot;&gt;
+                            {{ pendingVoucher.pevou_name || &#x27;Sin nombre&#x27; }}
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    }
+                &lt;/div&gt;
+            &lt;/div&gt;
+        }
+    &lt;/nz-splitter-panel&gt;
+&lt;/nz-splitter&gt;
+
+@if (isCameraActiveView) {
+  &lt;div class&#x3D;&quot;whatsapp-camera-overlay&quot;&gt;
+    &lt;app-camera 
+      (onPhotoSaved)&#x3D;&quot;handleCameraCapture($any($event))&quot;
+      (onClose)&#x3D;&quot;isCameraActiveView &#x3D; false&quot;&gt;
+    &lt;/app-camera&gt;
+  &lt;/div&gt;
+}
+
+@if (isEditorVisible &amp;&amp; imageToEdit) {
+  &lt;app-image-editor
+    [imageBase64]&#x3D;&quot;imageToEdit&quot;
+    [allowBinarize]&#x3D;&quot;false&quot; 
+    (onConfirm)&#x3D;&quot;onEditorConfirm($event)&quot;
+    (onCancel)&#x3D;&quot;isEditorVisible &#x3D; false&quot;&gt;
+  &lt;/app-image-editor&gt;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./documents.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.documents-wrapper {
+    &amp;-top {
+        margin: 10px 10px 0 10px;
+        padding: 5px;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: row;
+        button {
+            margin: 0 0 0 5px;
+        }
+    }
+    &amp;-bottom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 10px;
+        gap: 16px;
+        flex-wrap: wrap;
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .document-card {
+        margin: 10px 10px 0 0;
+        width: 150px;
+        height: 150px;
+        text-align: center;
+        .file-view {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            &amp;:hover {
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+            .delete-file-btn {
+                position: absolute;
+                bottom: 8px;
+                left: 8px;
+                z-index: 10;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                opacity: 0.8;
+                transition: opacity 0.3s, transform 0.2s;
+
+                &amp;:hover {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+            }
+
+            img, .preview-pdf, .preview-doc, .preview-xls, .preview-other {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+        }
+        .file-name {
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            user-select: none;
+            &amp;:hover {
+                text-decoration: underline;
+            }
+        }
+        .preview-{
+            &amp;pdf, 
+            &amp;doc,
+            &amp;xls,
+            &amp;other {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                .file-icon {
+                    font-size: 48px;
+                    margin-bottom: 8px;
+                }
+            }
+        }
+        
+        .file-icon.pdf { color: #ff4d4f; }
+        .file-icon.doc { color: #1890ff; }
+        .file-icon.xls { color: #52c41a; }
+    }
+}
+
+.whatsapp-camera-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  z-index: 9999; // Por encima de todo
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep {
+  app-camera {
+    width: 100%;
+    height: 100%;
+
+    .camera-wrapper {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      background: #000;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // Llenado total de pantalla
+    }
+    
+    // Si tienes controles sobre el video
+    .camera-wrapper-toolbar {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background: transparent;
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nz-splitter>    <nz-splitter-panel nzDefaultSize="25%" nzMin="20%" nzMax="50%">        <div class="box">            <div style="max-width: 800px; margin: 10px auto;">                <div style="margin-bottom: 12px;">                    <nz-select                         [(ngModel)]="selectedScopeUuid"                         (ngModelChange)="onScopeChange($event)"                        style="width: 100%;"                        nzPlaceHolder="Filtrar por ámbito"                    >                        @for (scope of scopes; track scope.scp_uuid) {                            <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_uuid === \'ALL\' ? \'🌐 \' : (scope.scp_isshared ? \'🏢 \' : \'👤 \')) + scope.scp_name"></nz-option>                        }                    </nz-select>                </div>                <app-tree-view                    [title]="\'Tarjetas\'"                    [description]="\'Seleccione y gestione sus archivos\'"                    [nodes]="treeData"                    [showToolbar]="false"                    [checkable]="false"                    [draggable]="false"                    [defaultExpandedKeys]="[\'1\', \'1-3\']"                    [defaultCheckedKeys]="[\'1-1\']"                    (nodeClick)="onNodeSelected($event)"                    (nodeCheck)="onNodeChecked($event)"                    >                </app-tree-view>            </div>        </div>    </nz-splitter-panel>    <nz-splitter-panel>        @if (isLoading) {            <div class="loading-container">                <nz-spin nzTip="Cargando datos..."></nz-spin>            </div>        } @else {            <div class="documents-wrapper">                <!-- Truco: Referencia oculta para que Angular sepa que PdfViewerComponent se usa -->                @if(false) {                <ng-container>                    <app-pdf-viewer></app-pdf-viewer>                    <app-file-detail></app-file-detail>                </ng-container>                }                <div class="documents-wrapper-top">                    <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">                        <button nz-button>                            <nz-icon nzType="upload" />                            Select File                        </button>                    </nz-upload>                    <button nz-button nzType="primary" (click)="openFullScreenCamera()">                        <nz-icon nzType="camera" />                        Sacar Foto                    </button>                </div>                <div class="documents-wrapper-bottom">                    @for (pendingVoucher of pendingVouchers; track pendingVoucher.pevou_uuid) {                    <div class="document-card">                        <div class="file-view">                            @switch (getFileType(pendingVoucher)) {                                @case (\'image\') {                                <img nz-image [nzSrc]="normalizePath(pendingVoucher)" [nzFallback]="fallback" width="150px" height="150px"                                    alt="Imagen" />                                }                                @case (\'pdf\') {                                <div class="preview-pdf" (click)="openPdfPreview(pendingVoucher)">                                    <nz-icon nzType="file-pdf" nzTheme="outline" class="file-icon pdf" />                                    <span>PDF</span>                                </div>                                }                                @case (\'doc\') {                                <div class="preview-doc" (click)="downloadFile(pendingVoucher)">                                    <nz-icon nzType="file-word" nzTheme="outline" class="file-icon doc" />                                    <span>DOC</span>                                </div>                                }                                @case (\'xls\') {                                <div class="preview-xls" (click)="downloadFile(pendingVoucher)">                                    <nz-icon nzType="file-excel" nzTheme="outline" class="file-icon xls" />                                    <span>XLS</span>                                </div>                                }                                @default {                                <div class="preview-other" (click)="downloadFile(pendingVoucher)">                                    <nz-icon nzType="file" nzTheme="outline" class="file-icon other" />                                    <span>Archivo</span>                                </div>                                }                            }                            <button                                 nz-button                                 nzType="primary"                                 nzDanger                                 nzShape="circle"                                 class="delete-file-btn"                                (click)="deleteVoucherPending(pendingVoucher)">                                <span nz-icon nzType="delete"></span>                            </button>                        </div>                        <!-- Nombre del archivo debajo -->                        <div class="file-name" (click)="viewFile(pendingVoucher)">                            {{ pendingVoucher.pevou_name || \'Sin nombre\' }}                        </div>                    </div>                    }                </div>            </div>        }    </nz-splitter-panel></nz-splitter>@if (isCameraActiveView) {  <div class="whatsapp-camera-overlay">    <app-camera       (onPhotoSaved)="handleCameraCapture($any($event))"      (onClose)="isCameraActiveView = false">    </app-camera>  </div>}@if (isEditorVisible && imageToEdit) {  <app-image-editor    [imageBase64]="imageToEdit"    [allowBinarize]="false"     (onConfirm)="onEditorConfirm($event)"    (onCancel)="isEditorVisible = false">  </app-image-editor>}</div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DocumentsComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/DocumentsComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/DocumentsComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/DocumentsComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DocumentsComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

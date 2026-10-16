@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+/**
+ * Componente contenedor de diseño (`<app-auth-layout>`) para las rutas públicas de autenticación (`/auth/*`).
+ */
 @Component({
   selector: 'app-auth-layout',
   imports: [

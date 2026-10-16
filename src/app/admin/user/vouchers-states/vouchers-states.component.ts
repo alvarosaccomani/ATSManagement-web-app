@@ -12,6 +12,10 @@ import { VoucherStateInterface } from '../../../core/interfaces/voucher-state';
 import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Component for listing and managing voucher state records.
+ * @description Displays a paginated table of voucher states with status badges, icons, and CRUD actions.
+ */
 @Component({
   selector: 'app-vouchers-states',
   standalone: true,
@@ -28,12 +32,18 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './vouchers-states.component.scss'
 })
 export class VouchersStatesComponent implements OnInit {
+  /** Array of loaded voucher state records. */
   voucherStatuses: VoucherStateInterface[] = [];
+  /** Flag indicating whether table data is loading. */
   loading = false;
+  /** Current page index (1-based). */
   pageIndex = 1;
+  /** Number of rows per page. */
   pageSize = 10;
+  /** Total number of voucher state records. */
   total = 0;
 
+  /** Table column definitions. */
   listOfColumns = [
     { key: 'vous_uuid', title: 'ID', width: '80px' },
     { key: 'vous_name', title: 'Nombre', width: '150px' },
@@ -43,6 +53,13 @@ export class VouchersStatesComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
+  /**
+   * Initializes the VouchersStatesComponent.
+   * @param _router Angular Router service.
+   * @param _vouchersStatesService Service for voucher state CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Custom modal alert service.
+   */
   constructor(
     private _router: Router,
     private _vouchersStatesService: VouchersStatesService,
@@ -50,10 +67,18 @@ export class VouchersStatesComponent implements OnInit {
     private _messageService: MessageService
   ) {}
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.loadVoucherStatuses();
   }
 
+  /**
+   * Loads the voucher states list from the backend service.
+   * @returns void
+   */
   loadVoucherStatuses(): void {
     this.loading = true;
     this._vouchersStatesService.getVoucherStates().subscribe(
@@ -78,7 +103,11 @@ export class VouchersStatesComponent implements OnInit {
     )
   }
 
-  // Obtener color del tag según el estado del comprobante
+  /**
+   * Returns the Ng-Zorro badge status color for a voucher state name.
+   * @param statusName Voucher state name.
+   * @returns Badge status color string.
+   */
   getStatusColor(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'confirmado': return 'success';
@@ -89,7 +118,11 @@ export class VouchersStatesComponent implements OnInit {
     }
   }
 
-  // Obtener icono según el estado del comprobante
+  /**
+   * Returns the Ng-Zorro icon name for a voucher state name.
+   * @param statusName Voucher state name.
+   * @returns Icon name string.
+   */
   getStatusIcon(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'confirmado': return 'check-circle';
@@ -100,20 +133,37 @@ export class VouchersStatesComponent implements OnInit {
     }
   }
 
-  // Formatear nombre del estado
+  /**
+   * Capitalizes the first letter of a status name.
+   * @param name Raw status name.
+   * @returns Capitalized status name.
+   */
   formatStatusName(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  // Métodos de acción
+  /**
+   * Navigates to the voucher state creation form.
+   * @returns void
+   */
   createVoucherStatus(): void {
     this._router.navigate(['/admin/user/voucher-state/new']);
   }
 
+  /**
+   * Navigates to the voucher state edit form.
+   * @param status Voucher state record to edit.
+   * @returns void
+   */
   editVoucherStatus(status: VoucherStateInterface): void {
     this._router.navigate(['/admin/user/voucher-state/edit', status.vous_uuid]);
   }
 
+  /**
+   * Prompts for confirmation and deletes a voucher state record.
+   * @param status Voucher state record to delete.
+   * @returns void
+   */
   deleteVoucherStatus(status: VoucherStateInterface): void {
     this._messageService.confirm(
       '¿Estás seguro de eliminar este estado de comprobante?',
@@ -137,17 +187,31 @@ export class VouchersStatesComponent implements OnInit {
     );
   }
 
+  /**
+   * Displays a toast notification with voucher state details.
+   * @param status Voucher state record to inspect.
+   * @returns void
+   */
   viewDetails(status: VoucherStateInterface): void {
     this.message.info(`Nombre: ${this.formatStatusName(status.vous_name)}\nDescripción: ${status.vous_description || 'Sin descripción'}`);
   }
 
-  // Paginación
+  /**
+   * Handles table page size changes.
+   * @param size New page size.
+   * @returns void
+   */
   onPageSizeChange(size: number): void {
     this.pageSize = size;
     this.pageIndex = 1;
     this.loadVoucherStatuses();
   }
 
+  /**
+   * Handles table page index changes.
+   * @param index New page index.
+   * @returns void
+   */
   onPageIndexChange(index: number): void {
     this.pageIndex = index;
     this.loadVoucherStatuses();

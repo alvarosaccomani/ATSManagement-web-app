@@ -23,11 +23,21 @@ import { VouchersFeesService } from '../../../core/services/vouchers-fees.servic
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
+/**
+ * Helper interface mapping a voucher to its parent card and period UUIDs.
+ * @description Used internally to auto-populate card and period fields when a voucher is selected.
+ */
 interface RelatedData {
+  /** Parent card UUID. */
   crd_uuid: string;
+  /** Parent billing period UUID. */
   per_uuid: string;
 }
 
+/**
+ * Component for creating and editing a voucher installment (quota/fee).
+ * @description Manages installment number, amount, due date, status, and linked voucher/card/period data.
+ */
 @Component({
   selector: 'app-voucher-fee',
   standalone: true,
@@ -50,20 +60,40 @@ interface RelatedData {
   styleUrl: './voucher-fee.component.scss'
 })
 export class VoucherFeeComponent implements OnInit {
+  /** Reactive form group for the installment details. */
   form: FormGroup;
+  /** Flag indicating whether a request is in progress. */
   isLoading = false;
+  /** Flag indicating whether the form is in edit mode. */
   isEditing = false;
+  /** UUID of the installment being edited, or null when creating. */
   installmentId: string | null = null;
 
-  // Opciones para selects cargadas desde el backend
+  /** Available installment status options for the select dropdown. */
   installmentStatuses: any[] = [];
+  /** Available voucher options for the select dropdown. */
   vouchers: any[] = [];
+  /** Available card options for the select dropdown. */
   cards: any[] = [];
+  /** Available period options for the select dropdown. */
   periods: any[] = [];
 
-  // Mapeo de datos relacionados
+  /** Internal map linking voucher UUIDs to their parent card and period UUIDs. */
   private relatedDataMap: { [key: string]: RelatedData } = {};
 
+  /**
+   * Initializes the VoucherFeeComponent and builds the reactive form.
+   * @param fb Angular FormBuilder service.
+   * @param route ActivatedRoute for reading route parameters.
+   * @param router Angular Router service.
+   * @param message Ng-Zorro toast message service.
+   * @param _cardsService Service for retrieving cards.
+   * @param _periodsService Service for retrieving billing periods.
+   * @param _vouchersService Service for retrieving vouchers.
+   * @param _vouchersFeeStatusService Service for retrieving installment statuses.
+   * @param _vouchersFeesService Service for installment CRUD operations.
+   * @param _messageService Custom modal alert service.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -88,6 +118,10 @@ export class VoucherFeeComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     const vouf_uuid = this.route.snapshot.paramMap.get('vouf_uuid');
     const crd_uuid = this.route.snapshot.paramMap.get('crd_uuid');
@@ -116,6 +150,10 @@ export class VoucherFeeComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads available installment statuses from the backend.
+   * @returns void
+   */
   loadStatuses(): void {
     this._vouchersFeeStatusService.getVoucherFeeStatus().subscribe({
       next: (response: any) => {
@@ -129,6 +167,10 @@ export class VoucherFeeComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads cards, periods, and vouchers to populate select options and related data mappings.
+   * @returns void
+   */
   loadVouchersData(): void {
     this.isLoading = true;
     this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe({
@@ -241,6 +283,14 @@ export class VoucherFeeComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads an existing installment by its identifiers and populates the form.
+   * @param crd_uuid Card UUID.
+   * @param per_uuid Period UUID.
+   * @param vou_uuid Voucher UUID.
+   * @param vouf_uuid Voucher fee UUID.
+   * @returns void
+   */
   loadInstallment(crd_uuid: string, per_uuid: string, vou_uuid: string, vouf_uuid: string): void {
     this.isLoading = true;
     this._vouchersFeesService.getVoucherFeeById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', crd_uuid, per_uuid, vou_uuid, vouf_uuid).subscribe({
@@ -271,6 +321,11 @@ export class VoucherFeeComponent implements OnInit {
     });
   }
 
+  /**
+   * Populates the card and period form fields associated with a selected voucher.
+   * @param voucherId Selected voucher UUID.
+   * @returns void
+   */
   loadRelatedData(voucherId: string): void {
     if (this.relatedDataMap.hasOwnProperty(voucherId)) {
       const data = this.relatedDataMap[voucherId];
@@ -285,6 +340,10 @@ export class VoucherFeeComponent implements OnInit {
     }
   }
 
+  /**
+   * Validates and submits the form to create or update the installment.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -353,10 +412,19 @@ export class VoucherFeeComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels the operation and navigates back to the installments list.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/vouchers-fees']);
   }
 
+  /**
+   * Retrieves the validation error message for a form control.
+   * @param controlName Name of the form control.
+   * @returns Validation error message or null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {
@@ -371,6 +439,11 @@ export class VoucherFeeComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Formats a numeric period (`YYYYMM`) as `MM/YYYY`.
+   * @param periodNumber Numeric period value.
+   * @returns Formatted period string.
+   */
   formatPeriodNumber(periodNumber: number): string {
     const periodStr = periodNumber.toString();
     const year = periodStr.substring(0, 4);
@@ -378,6 +451,11 @@ export class VoucherFeeComponent implements OnInit {
     return `${month}/${year}`;
   }
 
+  /**
+   * Formats a numeric value as an Argentine Peso currency string.
+   * @param amount Amount value.
+   * @returns Formatted currency string.
+   */
   formatAmount(amount: any): string {
     const amountNum = parseFloat(amount);
     return new Intl.NumberFormat('es-AR', {
@@ -386,11 +464,20 @@ export class VoucherFeeComponent implements OnInit {
     }).format(amountNum);
   }
 
+  /** Currency display formatter function. */
   formatterDollar = formatterDollar;
+  /** Currency input parser function. */
   parserDollar = parserDollar;
+  /** Alias for currency display formatter function. */
   currencyFormatter = formatterDollar;
+  /** Alias for currency input parser function. */
   currencyParser = parserDollar;
 
+  /**
+   * Returns the Ng-Zorro badge status color for an installment status ID.
+   * @param statusId Status identifier.
+   * @returns Badge status string.
+   */
   getStatusColor(statusId: string): string {
     switch (statusId) {
       case '1': return 'processing';
@@ -400,10 +487,20 @@ export class VoucherFeeComponent implements OnInit {
     }
   }
 
+  /**
+   * Capitalizes the first letter of a status name.
+   * @param name Raw status name.
+   * @returns Capitalized status name.
+   */
   formatStatusName(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
+  /**
+   * Resolves the display label for an installment status ID.
+   * @param statusId Status identifier.
+   * @returns Status label string.
+   */
   getStatusLabel(statusId: string): string {
     const status = this.installmentStatuses.find(s => s.value === statusId);
     return status ? status.label : 'Desconocido';

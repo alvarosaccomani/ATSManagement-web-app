@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { StatusPeriodsService } from '../../../core/services/status-periods.service';
 
+/**
+ * Component for creating and editing a billing period status record.
+ * @description Provides a reactive form for managing billing period status name and description.
+ */
 @Component({
   selector: 'app-status-period',
   standalone: true,
@@ -29,11 +33,23 @@ import { StatusPeriodsService } from '../../../core/services/status-periods.serv
   styleUrl: './status-period.component.scss'
 })
 export class StatusPeriodComponent implements OnInit {
+  /** Reactive form group for billing period status fields. */
   form: FormGroup;
+  /** Flag indicating whether a request is in progress. */
   isLoading = false;
+  /** Flag indicating whether the form is in edit mode. */
   isEditing = false;
+  /** UUID of the billing period status being edited, or null when creating. */
   statusPeriodId: string | null = null;
 
+  /**
+   * Initializes the StatusPeriodComponent and builds the reactive form.
+   * @param fb Angular FormBuilder service.
+   * @param route ActivatedRoute for reading route parameters.
+   * @param router Angular Router service.
+   * @param _statusPeriodsService Service for billing period status CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class StatusPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.statusPeriodId = this.route.snapshot.paramMap.get('sper_uuid');
     this.isEditing = !!this.statusPeriodId;
@@ -59,6 +79,10 @@ export class StatusPeriodComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads an existing billing period status record by ID and populates the form.
+   * @returns void
+   */
   loadStatusPeriod(): void {
     this.isLoading = true;
     this._statusPeriodsService.getStatusPeriodById(this.statusPeriodId!).subscribe({
@@ -82,6 +106,10 @@ export class StatusPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates and submits the form to create or update the billing period status.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class StatusPeriodComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels the operation and navigates back to the billing period statuses list.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/status-periods']);
   }
 
+  /**
+   * Retrieves the validation error message for a form control.
+   * @param controlName Name of the form control.
+   * @returns Validation error message or null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { TypeCardsService } from '../../../core/services/type-cards.service';
 
+/**
+ * Component for creating and editing a card type record.
+ * @description Provides a reactive form for managing card type name and description.
+ */
 @Component({
   selector: 'app-type-card',
   standalone: true,
@@ -29,11 +33,23 @@ import { TypeCardsService } from '../../../core/services/type-cards.service';
   styleUrl: './type-card.component.scss'
 })
 export class TypeCardComponent implements OnInit {
+  /** Reactive form group for card type fields. */
   form: FormGroup;
+  /** Flag indicating whether a request is in progress. */
   isLoading = false;
+  /** Flag indicating whether the form is in edit mode. */
   isEditing = false;
+  /** UUID of the card type being edited, or null when creating. */
   typeCardId: string | null = null;
 
+  /**
+   * Initializes the TypeCardComponent and builds the reactive form.
+   * @param fb Angular FormBuilder service.
+   * @param route ActivatedRoute for reading route parameters.
+   * @param router Angular Router service.
+   * @param _typeCardsService Service for card type CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class TypeCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.typeCardId = this.route.snapshot.paramMap.get('tycrd_uuid');
     this.isEditing = !!this.typeCardId;
@@ -59,6 +79,10 @@ export class TypeCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads an existing card type record by ID and populates the form.
+   * @returns void
+   */
   loadTypeCard(): void {
     this.isLoading = true;
     this._typeCardsService.getTypeCardById(this.typeCardId!).subscribe({
@@ -82,6 +106,10 @@ export class TypeCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates and submits the form to create or update the card type.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class TypeCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels the operation and navigates back to the card types list.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/type-cards']);
   }
 
+  /**
+   * Retrieves the validation error message for a form control.
+   * @param controlName Name of the form control.
+   * @returns Validation error message or null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

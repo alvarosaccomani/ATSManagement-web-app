@@ -1,14 +1,26 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
+/**
+ * Servicio que proporciona preprocesamiento de imágenes basado en OpenCV y buses de eventos para flujos de trabajo de OCR.
+ *
+ * @description Utiliza OpenCV.js (`cv`) para detectar contornos de comprobantes, aplicar filtrado bilateral,
+ * detección de bordes de Canny y recorte automático con margen antes de la ejecución de OCR con Tesseract.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class OcrService {
 
+  /** Emisor de eventos que transmite los datos de la imagen seleccionada o preprocesada para su procesamiento por OCR. */
   public cbImage: EventEmitter<any> = new EventEmitter<any>();
+  /** Emisor de eventos que transmite los resultados de texto reconocidos por OCR. */
   public cbText: EventEmitter<any> = new EventEmitter<any>();
+  /** Promesa que se resuelve una vez que el entorno de ejecución global `cv` (OpenCV.js) está inicializado. */
   private cvReady: Promise<void>;
 
+  /**
+   * Inicializa el servicio de OCR y verifica periódicamente hasta que OpenCV (`cv.Mat`) esté disponible en la ventana del navegador.
+   */
   constructor() {
     this.cvReady = new Promise((resolve) => {
       const check = setInterval(() => {
@@ -20,6 +32,12 @@ export class OcrService {
     });
   }
 
+  /**
+   * Preprocesa una imagen de comprobante en Base64 utilizando OpenCV y la recorta alrededor del contorno más grande detectado.
+   *
+   * @param base64 Cadena de imagen de origen codificada en Base64.
+   * @returns Una promesa que se resuelve con la imagen PNG recortada y preprocesada en formato Base64.
+   */
   public async processAndCrop(base64: string): Promise<string> {
     await this.cvReady;
     return new Promise((resolve) => {

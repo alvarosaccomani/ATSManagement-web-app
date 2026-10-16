@@ -1,0 +1,3480 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Digite para pesquisar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  PaymentPeriodComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/payment-period/payment-period.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descrição</h3>
+    </p>
+    <p class="comment">
+        <p>Componente para crear y editar un pago de período de facturación.
+Gestiona la fecha de pago, el monto pagado, el método de pago, la referencia de pago, el estado y el período/tarjeta asociados.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Exemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-payment-period</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>NzFormModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzDividerModule</code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzDatePickerModule</code>
+</div>
+                        <div>    <code>NzInputNumberModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./payment-period.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./payment-period.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./payment-period.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>Nenhum resultado correspondente.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzFormModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDividerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDatePickerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputNumberModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propriedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#cards" >cards</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencyFormatter" >currencyFormatter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencyParser" >currencyParser</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#formatterDollar" >formatterDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isEditing" >isEditing</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#parserDollar" >parserDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#paymentId" >paymentId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#paymentMethods" >paymentMethods</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#paymentStatuses" >paymentStatuses</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#periods" >periods</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#relatedDataMap" >relatedDataMap</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatMethodName" >formatMethodName</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatPeriodNumber" >formatPeriodNumber</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatStatusName" >formatStatusName</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getErrorMessage" >getErrorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getMethodColor" >getMethodColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getMethodIcon" >getMethodIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getMethodLabel" >getMethodLabel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusColor" >getStatusColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusIcon" >getStatusIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusLabel" >getStatusLabel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadPayment" >loadPayment</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadPaymentMethods" >loadPaymentMethods</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadPaymentStatuses" >loadPaymentStatuses</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadPeriodsData" >loadPeriodsData</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadRelatedData" >loadRelatedData</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onCancel" >onCancel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Construtor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _periodsService: <a href="../injectables/PeriodsService.html" target="_self">PeriodsService</a>, _paymentMethodsService: <a href="../injectables/PaymentMethodsService.html" target="_self">PaymentMethodsService</a>, _paymentPeriodsStatusService: <a href="../injectables/PaymentPeriodsStatusService.html" target="_self">PaymentPeriodsStatusService</a>, _paymentPeriodsService: <a href="../injectables/PaymentPeriodsService.html" target="_self">PaymentPeriodsService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="82" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:82</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Inicializa el componente PaymentPeriodComponent y construye el formulario reactivo.</p>
+</div>
+                            <div>
+                                    <b>Parâmetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nome</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descrição</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio FormBuilder de Angular.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ActivatedRoute para leer los parámetros de la ruta.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio Router de Angular.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >NzMessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio de mensajes emergentes de Ng-Zorro.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_cardsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CardsService.html" target="_self" >CardsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para obtener las tarjetas.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_periodsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PeriodsService.html" target="_self" >PeriodsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para obtener los períodos de facturación.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_paymentMethodsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PaymentMethodsService.html" target="_self" >PaymentMethodsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para obtener los métodos de pago.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_paymentPeriodsStatusService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PaymentPeriodsStatusService.html" target="_self" >PaymentPeriodsStatusService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para obtener los estados de pago de períodos.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_paymentPeriodsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PaymentPeriodsService.html" target="_self" >PaymentPeriodsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para operaciones CRUD de pagos de períodos.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio personalizado de alertas modales.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatMethodName"></a>
+                    <span class="name">
+                        <span ><b>formatMethodName</b></span>
+                        <a href="#formatMethodName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatMethodName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="446"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:446</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formatea un nombre de método de pago sin procesar a formato de título.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nombre del método de pago sin procesar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Nombre del método de pago formateado.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatPeriodNumber"></a>
+                    <span class="name">
+                        <span ><b>formatPeriodNumber</b></span>
+                        <a href="#formatPeriodNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatPeriodNumber(periodNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="396"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formatea un período numérico (<code>YYYYMM</code>) como <code>MM/YYYY</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>periodNumber</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Valor numérico del período.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena de período formateada.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatStatusName"></a>
+                    <span class="name">
+                        <span ><b>formatStatusName</b></span>
+                        <a href="#formatStatusName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatStatusName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="455"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:455</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Convierte a mayúscula la primera letra de un nombre de estado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nombre del estado sin procesar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Nombre del estado con inicial mayúscula.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getErrorMessage"></a>
+                    <span class="name">
+                        <span ><b>getErrorMessage</b></span>
+                        <a href="#getErrorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getErrorMessage(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="380"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:380</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el mensaje de error de validación para un control del formulario.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nombre del control del formulario.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>    <code>string | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Mensaje de error de validación o null.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMethodColor"></a>
+                    <span class="name">
+                        <span ><b>getMethodColor</b></span>
+                        <a href="#getMethodColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMethodColor(methodId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="417"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:417</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el color de etiqueta de Ng-Zorro para un ID de método de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>methodId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del método de pago.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con el color de la etiqueta.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMethodIcon"></a>
+                    <span class="name">
+                        <span ><b>getMethodIcon</b></span>
+                        <a href="#getMethodIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMethodIcon(methodId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="432"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:432</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el nombre del ícono de Ng-Zorro para un ID de método de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>methodId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del método de pago.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con el nombre del ícono.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMethodLabel"></a>
+                    <span class="name">
+                        <span ><b>getMethodLabel</b></span>
+                        <a href="#getMethodLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMethodLabel(methodId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="500"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:500</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resuelve la etiqueta de visualización para un ID de método de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>methodId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del método de pago.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con la etiqueta del método.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusColor"></a>
+                    <span class="name">
+                        <span ><b>getStatusColor</b></span>
+                        <a href="#getStatusColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusColor(statusId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="464"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:464</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del estado de pago.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena de estado de la insignia.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusIcon"></a>
+                    <span class="name">
+                        <span ><b>getStatusIcon</b></span>
+                        <a href="#getStatusIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusIcon(statusId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="477"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:477</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del estado de pago.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con el nombre del ícono.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusLabel"></a>
+                    <span class="name">
+                        <span ><b>getStatusLabel</b></span>
+                        <a href="#getStatusLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusLabel(statusId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="490"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:490</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resuelve la etiqueta de visualización para un ID de estado de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del estado de pago.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con la etiqueta del estado.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPayment"></a>
+                    <span class="name">
+                        <span ><b>loadPayment</b></span>
+                        <a href="#loadPayment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPayment(crd_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, per_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, payp_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="253"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:253</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga un registro de pago de período existente y completa el formulario.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>crd_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID de la tarjeta.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>per_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del período.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>payp_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del pago de período.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPaymentMethods"></a>
+                    <span class="name">
+                        <span ><b>loadPaymentMethods</b></span>
+                        <a href="#loadPaymentMethods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPaymentMethods()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="156"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga los métodos de pago disponibles desde el backend.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPaymentStatuses"></a>
+                    <span class="name">
+                        <span ><b>loadPaymentStatuses</b></span>
+                        <a href="#loadPaymentStatuses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPaymentStatuses()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="173"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:173</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga los estados de pago de períodos disponibles desde el backend.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPeriodsData"></a>
+                    <span class="name">
+                        <span ><b>loadPeriodsData</b></span>
+                        <a href="#loadPeriodsData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPeriodsData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="190"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga las tarjetas y sus períodos de facturación para completar las opciones desplegables y las asignaciones de relación.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadRelatedData"></a>
+                    <span class="name">
+                        <span ><b>loadRelatedData</b></span>
+                        <a href="#loadRelatedData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadRelatedData(periodId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="286"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:286</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Completa el control de formulario de tarjeta asociado con un período seleccionado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>periodId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UUID del período seleccionado.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="125"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Gancho del ciclo de vida ejecutado al inicializar el componente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCancel"></a>
+                    <span class="name">
+                        <span ><b>onCancel</b></span>
+                        <a href="#onCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCancel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="371"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:371</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cancela la operación y navega de regreso a la lista de pagos de períodos.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="299"
+                                    class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:299</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida y envía el formulario para crear o actualizar el pago del período.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propriedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cards"></a>
+                    <span class="name">
+                        <span ><b>cards</b></span>
+                        <a href="#cards"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="79" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opciones de tarjetas disponibles para el menú desplegable.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencyFormatter"></a>
+                    <span class="name">
+                        <span ><b>currencyFormatter</b></span>
+                        <a href="#currencyFormatter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="408" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:408</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Alias para la función formateadora de visualización de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencyParser"></a>
+                    <span class="name">
+                        <span ><b>currencyParser</b></span>
+                        <a href="#currencyParser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="410" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:410</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Alias para la función analizadora de entrada de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="64" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Grupo de formulario reactivo para el pago del período.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatterDollar"></a>
+                    <span class="name">
+                        <span ><b>formatterDollar</b></span>
+                        <a href="#formatterDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="404" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:404</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Función formateadora de visualización de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditing"></a>
+                    <span class="name">
+                        <span ><b>isEditing</b></span>
+                        <a href="#isEditing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="68" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicador de si el formulario se encuentra en modo de edición.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="66" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicador de si hay una solicitud en curso.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parserDollar"></a>
+                    <span class="name">
+                        <span ><b>parserDollar</b></span>
+                        <a href="#parserDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="406" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:406</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Función analizadora de entrada de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paymentId"></a>
+                    <span class="name">
+                        <span ><b>paymentId</b></span>
+                        <a href="#paymentId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="70" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>UUID del pago que se está editando, o null al crear uno nuevo.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paymentMethods"></a>
+                    <span class="name">
+                        <span ><b>paymentMethods</b></span>
+                        <a href="#paymentMethods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="73" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opciones de métodos de pago disponibles para el menú desplegable.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paymentStatuses"></a>
+                    <span class="name">
+                        <span ><b>paymentStatuses</b></span>
+                        <a href="#paymentStatuses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="75" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opciones de estados de pago disponibles para el menú desplegable.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periods"></a>
+                    <span class="name">
+                        <span ><b>periods</b></span>
+                        <a href="#periods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="77" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opciones de períodos de facturación disponibles para el menú desplegable.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="relatedDataMap"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>relatedDataMap</b></span>
+                        <a href="#relatedDataMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>{  }</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>{}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="82" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:82</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Mapa interno que vincula los UUID de períodos con los UUID de sus tarjetas padre.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzDatePickerModule } from &#x27;ng-zorro-antd/date-picker&#x27;;
+import { NzInputNumberModule } from &#x27;ng-zorro-antd/input-number&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+
+import { PaymentPeriodInterface } from &#x27;../../../core/interfaces/payment-period&#x27;;
+import { CardsService } from &#x27;../../../core/services/cards.service&#x27;;
+import { PeriodsService } from &#x27;../../../core/services/periods.service&#x27;;
+import { PaymentMethodsService } from &#x27;../../../core/services/payment-methods.service&#x27;;
+import { PaymentPeriodsStatusService } from &#x27;../../../core/services/payment-periods-status.service&#x27;;
+import { PaymentPeriodsService } from &#x27;../../../core/services/payment-periods.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+/**
+ * Interfaz auxiliar que vincula un período con los UUID de su tarjeta padre y de su período.
+ * @description Se utiliza internamente para autocompletar el campo de tarjeta cuando se selecciona un período de facturación.
+ */
+interface RelatedData {
+  /** UUID de la tarjeta padre. */
+  crd_uuid: string;
+  /** UUID del período de facturación. */
+  per_uuid: string;
+}
+
+/**
+ * Componente para crear y editar un pago de período de facturación.
+ * @description Gestiona la fecha de pago, el monto pagado, el método de pago, la referencia de pago, el estado y el período/tarjeta asociados.
+ */
+@Component({
+  selector: &#x27;app-payment-period&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzInputNumberModule,
+    NzTagModule
+  ],
+  templateUrl: &#x27;./payment-period.component.html&#x27;,
+  styleUrl: &#x27;./payment-period.component.scss&#x27;
+})
+export class PaymentPeriodComponent implements OnInit {
+  /** Grupo de formulario reactivo para el pago del período. */
+  form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
+  isLoading &#x3D; false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
+  isEditing &#x3D; false;
+  /** UUID del pago que se está editando, o null al crear uno nuevo. */
+  paymentId: string | null &#x3D; null;
+
+  /** Opciones de métodos de pago disponibles para el menú desplegable. */
+  paymentMethods: any[] &#x3D; [];
+  /** Opciones de estados de pago disponibles para el menú desplegable. */
+  paymentStatuses: any[] &#x3D; [];
+  /** Opciones de períodos de facturación disponibles para el menú desplegable. */
+  periods: any[] &#x3D; [];
+  /** Opciones de tarjetas disponibles para el menú desplegable. */
+  cards: any[] &#x3D; [];
+
+  /** Mapa interno que vincula los UUID de períodos con los UUID de sus tarjetas padre. */
+  private relatedDataMap: { [key: string]: RelatedData } &#x3D; {};
+
+  /**
+   * Inicializa el componente PaymentPeriodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _cardsService Servicio para obtener las tarjetas.
+   * @param _periodsService Servicio para obtener los períodos de facturación.
+   * @param _paymentMethodsService Servicio para obtener los métodos de pago.
+   * @param _paymentPeriodsStatusService Servicio para obtener los estados de pago de períodos.
+   * @param _paymentPeriodsService Servicio para operaciones CRUD de pagos de períodos.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private message: NzMessageService,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _paymentMethodsService: PaymentMethodsService,
+    private _paymentPeriodsStatusService: PaymentPeriodsStatusService,
+    private _paymentPeriodsService: PaymentPeriodsService,
+    private _messageService: MessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      payp_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      payp_paymentdate: [new Date(), Validators.required],
+      payp_amountpaid: [null, [Validators.required, Validators.min(0)]],
+      paym_uuid: [&#x27;&#x27;, Validators.required],
+      payp_paymentreference: [&#x27;&#x27;],
+      payps_uuid: [&#x27;1&#x27;, Validators.required],
+      per_uuid: [&#x27;&#x27;, Validators.required],
+      crd_uuid: [{ value: &#x27;&#x27;, disabled: true }]
+    });
+  }
+
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
+  ngOnInit(): void {
+    const payp_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;payp_uuid&#x27;);
+    const crd_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;crd_uuid&#x27;);
+    const per_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;per_uuid&#x27;);
+
+    this.isEditing &#x3D; !!payp_uuid;
+    this.loadPaymentMethods();
+    this.loadPaymentStatuses();
+    this.loadPeriodsData();
+    
+    if (this.isEditing) {
+      this.paymentId &#x3D; payp_uuid;
+      this.loadPayment(crd_uuid!, per_uuid!, payp_uuid!);
+    } else {
+      this.form.get(&#x27;payp_uuid&#x27;)?.disable();
+    }
+
+    // Escuchar cambios en el período para actualizar la tarjeta relacionada
+    this.form.get(&#x27;per_uuid&#x27;)?.valueChanges.subscribe(periodId &#x3D;&gt; {
+      if (periodId) {
+        this.loadRelatedData(periodId);
+      } else {
+        this.form.get(&#x27;crd_uuid&#x27;)?.setValue(&#x27;&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Carga los métodos de pago disponibles desde el backend.
+   * @returns void
+   */
+  loadPaymentMethods(): void {
+    this._paymentMethodsService.getPaymentMethods().subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
+          this.paymentMethods &#x3D; response.data.map((m: any) &#x3D;&gt; ({
+            value: m.paym_uuid,
+            label: this.formatMethodName(m.paym_name)
+          }));
+        }
+      }
+    });
+  }
+
+  /**
+   * Carga los estados de pago de períodos disponibles desde el backend.
+   * @returns void
+   */
+  loadPaymentStatuses(): void {
+    this._paymentPeriodsStatusService.getPaymentPeriodsStatus().subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
+          this.paymentStatuses &#x3D; response.data.map((s: any) &#x3D;&gt; ({
+            value: s.payps_uuid,
+            label: this.formatStatusName(s.payps_name)
+          }));
+        }
+      }
+    });
+  }
+
+  /**
+   * Carga las tarjetas y sus períodos de facturación para completar las opciones desplegables y las asignaciones de relación.
+   * @returns void
+   */
+  loadPeriodsData(): void {
+    this.isLoading &#x3D; true;
+    this._cardsService.getCards(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;).subscribe({
+      next: (cardResponse: any) &#x3D;&gt; {
+        if (cardResponse.success) {
+          const cardsData &#x3D; cardResponse.data;
+          this.cards &#x3D; cardsData.map((c: any) &#x3D;&gt; ({ value: c.crd_uuid, label: &#x60;**** **** **** ${c.crd_last4digits}&#x60; }));
+          
+          let pendingQueries &#x3D; cardsData.length;
+          if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {
+            this.isLoading &#x3D; false;
+            return;
+          }
+
+          const allPeriods: any[] &#x3D; [];
+          const relatedMap: { [key: string]: RelatedData } &#x3D; {};
+
+          cardsData.forEach((card: any) &#x3D;&gt; {
+            this._periodsService.getPedriods(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, card.crd_uuid).subscribe({
+              next: (periodResponse: any) &#x3D;&gt; {
+                if (periodResponse.success) {
+                  periodResponse.data.forEach((p: any) &#x3D;&gt; {
+                    allPeriods.push({ value: p.per_uuid, label: &#x60;Período ${this.formatPeriodNumber(p.per_periodnumber)}&#x60; });
+                    relatedMap[p.per_uuid] &#x3D; {
+                      crd_uuid: card.crd_uuid,
+                      per_uuid: p.per_uuid
+                    };
+                  });
+                }
+                pendingQueries--;
+                if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {
+                  this.periods &#x3D; allPeriods;
+                  this.relatedDataMap &#x3D; relatedMap;
+                  this.isLoading &#x3D; false;
+                }
+              },
+              error: () &#x3D;&gt; {
+                pendingQueries--;
+                if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {
+                  this.periods &#x3D; allPeriods;
+                  this.relatedDataMap &#x3D; relatedMap;
+                  this.isLoading &#x3D; false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading &#x3D; false;
+        }
+      },
+      error: () &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+      }
+    });
+  }
+
+  /**
+   * Carga un registro de pago de período existente y completa el formulario.
+   * @param crd_uuid UUID de la tarjeta.
+   * @param per_uuid UUID del período.
+   * @param payp_uuid UUID del pago de período.
+   * @returns void
+   */
+  loadPayment(crd_uuid: string, per_uuid: string, payp_uuid: string): void {
+    this.isLoading &#x3D; true;
+    this._paymentPeriodsService.getPaymentPeriodById(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, crd_uuid, per_uuid, payp_uuid).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        if (response.success) {
+          const payment &#x3D; {
+            ...response.data,
+            payp_paymentdate: new Date(response.data.payp_paymentdate)
+          };
+
+          this.form.get(&#x27;payp_uuid&#x27;)?.enable();
+          this.form.get(&#x27;crd_uuid&#x27;)?.enable();
+
+          this.form.patchValue(payment);
+
+          this.form.get(&#x27;payp_uuid&#x27;)?.disable();
+          this.form.get(&#x27;crd_uuid&#x27;)?.disable();
+        }
+      },
+      error: error &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
+        this._messageService.error(&#x27;Error&#x27;, &#x27;No se pudo cargar la información del pago&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Completa el control de formulario de tarjeta asociado con un período seleccionado.
+   * @param periodId UUID del período seleccionado.
+   * @returns void
+   */
+  loadRelatedData(periodId: string): void {
+    if (this.relatedDataMap.hasOwnProperty(periodId)) {
+      const data &#x3D; this.relatedDataMap[periodId];
+      this.form.get(&#x27;crd_uuid&#x27;)?.enable();
+      this.form.get(&#x27;crd_uuid&#x27;)?.setValue(data.crd_uuid);
+      this.form.get(&#x27;crd_uuid&#x27;)?.disable();
+    }
+  }
+
+  /**
+   * Valida y envía el formulario para crear o actualizar el pago del período.
+   * @returns void
+   */
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this._messageService.error(&#x27;Formulario Inválido&#x27;, &#x27;Por favor complete todos los campos obligatorios&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+    const rawValue &#x3D; this.form.getRawValue();
+    const payload &#x3D; {
+      ...rawValue,
+      usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;
+    };
+
+    if (!this.isEditing) {
+      this._paymentPeriodsService.savePaymentPeriod(payload).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if (response.success) {
+            this._messageService.success(
+              &#x27;Pago Registrado&#x27;, 
+              &#x27;El pago se registró correctamente en el período.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/payment-periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo registrar el pago&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage?.error?.error || &#x27;Hubo un problema al registrar el pago&#x27;);
+        }
+      });
+    } else {
+      this._paymentPeriodsService.updatePaymentPeriod(payload.usr_uuid, payload.crd_uuid, payload.per_uuid, payload.payp_uuid, payload).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if (response.success) {
+            this._messageService.success(
+              &#x27;Pago Actualizado&#x27;, 
+              &#x27;El pago se actualizó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/payment-periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar el pago&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage?.error?.error || &#x27;Hubo un problema al actualizar el pago&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancela la operación y navega de regreso a la lista de pagos de períodos.
+   * @returns void
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/payment-periods&#x27;]);
+  }
+
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
+  getErrorMessage(controlName: string): string | null {
+    const control &#x3D; this.form.get(controlName);
+    if (control?.hasError(&#x27;required&#x27;)) {
+      return &#x27;Este campo es obligatorio&#x27;;
+    }
+    if (control?.hasError(&#x27;min&#x27;)) {
+      return &#x27;El valor mínimo es &#x27; + control.errors?.[&#x27;min&#x27;].min;
+    }
+    return null;
+  }
+
+  /**
+   * Formatea un período numérico (&#x60;YYYYMM&#x60;) como &#x60;MM/YYYY&#x60;.
+   * @param periodNumber Valor numérico del período.
+   * @returns Cadena de período formateada.
+   */
+  formatPeriodNumber(periodNumber: number): string {
+    const periodStr &#x3D; periodNumber.toString();
+    const year &#x3D; periodStr.substring(0, 4);
+    const month &#x3D; periodStr.substring(4, 6);
+    return &#x60;${month}/${year}&#x60;;
+  }
+
+  /** Función formateadora de visualización de moneda. */
+  formatterDollar &#x3D; formatterDollar;
+  /** Función analizadora de entrada de moneda. */
+  parserDollar &#x3D; parserDollar;
+  /** Alias para la función formateadora de visualización de moneda. */
+  currencyFormatter &#x3D; formatterDollar;
+  /** Alias para la función analizadora de entrada de moneda. */
+  currencyParser &#x3D; parserDollar;
+
+  /**
+   * Devuelve el color de etiqueta de Ng-Zorro para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con el color de la etiqueta.
+   */
+  getMethodColor(methodId: string): string {
+    const label &#x3D; this.getMethodLabel(methodId).toLowerCase();
+    if (label.includes(&#x27;banco&#x27;)) return &#x27;blue&#x27;;
+    if (label.includes(&#x27;transferencia&#x27;)) return &#x27;geekblue&#x27;;
+    if (label.includes(&#x27;rapipago&#x27;)) return &#x27;gold&#x27;;
+    if (label.includes(&#x27;mercado&#x27;)) return &#x27;volcano&#x27;;
+    if (label.includes(&#x27;fácil&#x27;)) return &#x27;orange&#x27;;
+    return &#x27;default&#x27;;
+  }
+
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
+  getMethodIcon(methodId: string): string {
+    const label &#x3D; this.getMethodLabel(methodId).toLowerCase();
+    if (label.includes(&#x27;banco&#x27;)) return &#x27;bank&#x27;;
+    if (label.includes(&#x27;transferencia&#x27;)) return &#x27;swap&#x27;;
+    if (label.includes(&#x27;rapipago&#x27;) || label.includes(&#x27;fácil&#x27;)) return &#x27;barcode&#x27;;
+    if (label.includes(&#x27;mercado&#x27;) || label.includes(&#x27;wallet&#x27;)) return &#x27;wallet&#x27;;
+    return &#x27;credit-card&#x27;;
+  }
+
+  /**
+   * Formatea un nombre de método de pago sin procesar a formato de título.
+   * @param name Nombre del método de pago sin procesar.
+   * @returns Nombre del método de pago formateado.
+   */
+  formatMethodName(name: string): string {
+    return name.replace(/_/g, &#x27; &#x27;).replace(/\b\w/g, char &#x3D;&gt; char.toUpperCase());
+  }
+
+  /**
+   * Convierte a mayúscula la primera letra de un nombre de estado.
+   * @param name Nombre del estado sin procesar.
+   * @returns Nombre del estado con inicial mayúscula.
+   */
+  formatStatusName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena de estado de la insignia.
+   */
+  getStatusColor(statusId: string): string {
+    const label &#x3D; this.getStatusLabel(statusId).toLowerCase();
+    if (label.includes(&#x27;confirmado&#x27;)) return &#x27;success&#x27;;
+    if (label.includes(&#x27;procesado&#x27;)) return &#x27;processing&#x27;;
+    if (label.includes(&#x27;rechazado&#x27;)) return &#x27;error&#x27;;
+    return &#x27;default&#x27;;
+  }
+
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
+  getStatusIcon(statusId: string): string {
+    const label &#x3D; this.getStatusLabel(statusId).toLowerCase();
+    if (label.includes(&#x27;confirmado&#x27;)) return &#x27;check-circle&#x27;;
+    if (label.includes(&#x27;procesado&#x27;)) return &#x27;sync&#x27;;
+    if (label.includes(&#x27;rechazado&#x27;)) return &#x27;close-circle&#x27;;
+    return &#x27;info-circle&#x27;;
+  }
+
+  /**
+   * Resuelve la etiqueta de visualización para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena con la etiqueta del estado.
+   */
+  getStatusLabel(statusId: string): string {
+    const status &#x3D; this.paymentStatuses.find(s &#x3D;&gt; s.value &#x3D;&#x3D;&#x3D; statusId);
+    return status ? status.label : &#x27;Desconocido&#x27;;
+  }
+
+  /**
+   * Resuelve la etiqueta de visualización para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con la etiqueta del método.
+   */
+  getMethodLabel(methodId: string): string {
+    const method &#x3D; this.paymentMethods.find(m &#x3D;&gt; m.value &#x3D;&#x3D;&#x3D; methodId);
+    return method ? method.label : &#x27;Desconocido&#x27;;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;payment-period-form-container&quot;&gt;
+  &lt;div class&#x3D;&quot;form-header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;pay-circle&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      {{ isEditing ? &#x27;Editar Pago&#x27; : &#x27;Nuevo Pago&#x27; }}
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;onCancel()&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;close&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+  @if (isLoading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando datos...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  } @else {
+    &lt;form nz-form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot;&gt;
+      &lt;!-- Información básica --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;payp_uuid&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              ID de Pago
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;input nz-input formControlName&#x3D;&quot;payp_uuid&quot; placeholder&#x3D;&quot;ID autogenerado&quot; readonly /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;payp_paymentdate&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Fecha de Pago
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;payp_paymentdate&#x27;)?.dirty &amp;&amp; form.get(&#x27;payp_paymentdate&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione fecha de pago&quot;
+            &gt;
+              &lt;nz-date-picker 
+                formControlName&#x3D;&quot;payp_paymentdate&quot; 
+                nzShowTime
+                nzFormat&#x3D;&quot;dd/MM/yyyy HH:mm&quot;
+                nzPlaceHolder&#x3D;&quot;Seleccione fecha y hora&quot;
+                nzSize&#x3D;&quot;large&quot;
+                style&#x3D;&quot;width: 100%&quot;
+              &gt;&lt;/nz-date-picker&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;payp_amountpaid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Monto Pagado
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;payp_amountpaid&#x27;)?.dirty &amp;&amp; form.get(&#x27;payp_amountpaid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;payp_amountpaid&#x27;) }}&quot;
+            &gt;
+              &lt;nz-input-number 
+                formControlName&#x3D;&quot;payp_amountpaid&quot; 
+                nzPlaceHolder&#x3D;&quot;0.00&quot;
+                [nzMin]&#x3D;&quot;0&quot;
+                [nzStep]&#x3D;&quot;1000&quot;
+                [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                [nzParser]&#x3D;&quot;parserDollar&quot;
+                style&#x3D;&quot;width: 100%&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;&lt;/nz-input-number&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Método de pago --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Método de Pago&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;paym_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Método de Pago
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;paym_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;paym_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un método de pago&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;paym_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione método&quot;
+                nzSize&#x3D;&quot;large&quot;
+                nzShowSearch
+              &gt;
+                @for (method of paymentMethods; track method.value) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;method.value&quot; [nzLabel]&#x3D;&quot;method.label&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;payp_paymentreference&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              Referencia de Pago
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;payp_paymentreference&#x27;)?.dirty &amp;&amp; form.get(&#x27;payp_paymentreference&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;payp_paymentreference&quot; 
+                placeholder&#x3D;&quot;Ingrese referencia (opcional)&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Número de comprobante, transferencia, etc.&lt;/small&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Vista previa del método de pago --&gt;
+      @if (form.get(&#x27;paym_uuid&#x27;)?.value) {
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label [nzSpan]&#x3D;&quot;24&quot;&gt;
+                Vista Previa del Método
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-tag [nzColor]&#x3D;&quot;getMethodColor(form.get(&#x27;paym_uuid&#x27;)?.value)&quot;&gt;
+                  &lt;i nz-icon [nzType]&#x3D;&quot;getMethodIcon(form.get(&#x27;paym_uuid&#x27;)?.value)&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                  &lt;strong&gt;{{ getMethodLabel(form.get(&#x27;paym_uuid&#x27;)?.value) }}&lt;/strong&gt;
+                &lt;/nz-tag&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;!-- Período y tarjeta relacionados --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Información Relacionada&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Período
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un período&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;per_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione período&quot;
+                nzSize&#x3D;&quot;large&quot;
+                nzShowSearch
+              &gt;
+                @for (period of periods; track period.value) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;period.value&quot; [nzLabel]&#x3D;&quot;period.label&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;crd_uuid&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              Tarjeta
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;crd_uuid&quot; 
+                placeholder&#x3D;&quot;Se actualiza automáticamente&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;
+                @for (card of cards; track card.value) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;card.value&quot; [nzLabel]&#x3D;&quot;card.label&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Se selecciona según el período&lt;/small&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Estado del pago --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Estado del Pago&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;payps_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Estado
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;payps_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;payps_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un estado&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;payps_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione estado&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;
+                @for (status of paymentStatuses; track status.value) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;status.value&quot; [nzLabel]&#x3D;&quot;status.label&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Vista previa del estado --&gt;
+      @if (form.get(&#x27;payps_uuid&#x27;)?.value) {
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label [nzSpan]&#x3D;&quot;24&quot;&gt;
+                Vista Previa del Estado
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-tag [nzColor]&#x3D;&quot;getStatusColor(form.get(&#x27;payps_uuid&#x27;)?.value)&quot;&gt;
+                  &lt;i nz-icon [nzType]&#x3D;&quot;getStatusIcon(form.get(&#x27;payps_uuid&#x27;)?.value)&quot; nzTheme&#x3D;&quot;fill&quot;&gt;&lt;/i&gt;
+                  &lt;strong&gt;{{ getStatusLabel(form.get(&#x27;payps_uuid&#x27;)?.value) }}&lt;/strong&gt;
+                &lt;/nz-tag&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+      &lt;div class&#x3D;&quot;form-actions&quot;&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;default&quot; 
+          (click)&#x3D;&quot;onCancel()&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;rollback&quot;&gt;&lt;/i&gt;
+          Cancelar
+        &lt;/button&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;primary&quot; 
+          type&#x3D;&quot;submit&quot;
+          [nzLoading]&#x3D;&quot;isLoading&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;save&quot;&gt;&lt;/i&gt;
+          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Registrar Pago&#x27; }}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  }
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./payment-period.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.payment-period-form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  max-width: 1200px;
+  margin: 20px auto;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #2f54eb;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      padding: 0;
+      height: auto;
+      line-height: 1;
+      font-size: 16px;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  nz-row {
+    margin-bottom: 24px;
+  }
+
+  nz-form-item {
+    margin-bottom: 0;
+  }
+
+  nz-form-label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+    
+    &amp;::after {
+      content: &#x27;:&#x27;;
+      margin: 0 8px 0 2px;
+    }
+  }
+
+  nz-form-control {
+    .ant-form-item-explain {
+      margin-top: 4px;
+    }
+
+    .form-text {
+      display: block;
+      margin-top: 4px;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 12px;
+    }
+  }
+
+  nz-divider {
+    margin: 24px 0;
+    
+    &amp;.ant-divider-with-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    nz-row {
+      margin-bottom: 16px;
+    }
+
+    nz-col {
+      margin-bottom: 16px;
+    }
+
+    nz-form-label {
+      margin-bottom: 8px;
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento HTML</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento HTML com diretiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="payment-period-form-container">  <div class="form-header">    <h2>      <i nz-icon nzType="pay-circle" nzTheme="outline"></i>      {{ isEditing ? \'Editar Pago\' : \'Nuevo Pago\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()">      <i nz-icon nzType="close"></i>    </button>  </div>  <nz-divider></nz-divider>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando datos..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">      <!-- Información básica -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="payp_uuid" [nzSpan]="24">              ID de Pago            </nz-form-label>            <nz-form-control [nzSpan]="24">              <input nz-input formControlName="payp_uuid" placeholder="ID autogenerado" readonly />            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="payp_paymentdate" [nzSpan]="24" nzRequired>              Fecha de Pago            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'payp_paymentdate\')?.dirty && form.get(\'payp_paymentdate\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione fecha de pago"            >              <nz-date-picker                 formControlName="payp_paymentdate"                 nzShowTime                nzFormat="dd/MM/yyyy HH:mm"                nzPlaceHolder="Seleccione fecha y hora"                nzSize="large"                style="width: 100%"              ></nz-date-picker>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="payp_amountpaid" [nzSpan]="24" nzRequired>              Monto Pagado            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'payp_amountpaid\')?.dirty && form.get(\'payp_amountpaid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'payp_amountpaid\') }}"            >              <nz-input-number                 formControlName="payp_amountpaid"                 nzPlaceHolder="0.00"                [nzMin]="0"                [nzStep]="1000"                [nzFormatter]="formatterDollar"                [nzParser]="parserDollar"                style="width: 100%"                nzSize="large"              ></nz-input-number>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Método de pago -->      <nz-divider nzText="Método de Pago" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="paym_uuid" [nzSpan]="24" nzRequired>              Método de Pago            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'paym_uuid\')?.dirty && form.get(\'paym_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un método de pago"            >              <nz-select                 formControlName="paym_uuid"                 placeholder="Seleccione método"                nzSize="large"                nzShowSearch              >                @for (method of paymentMethods; track method.value) {                  <nz-option [nzValue]="method.value" [nzLabel]="method.label"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="payp_paymentreference" [nzSpan]="24">              Referencia de Pago            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'payp_paymentreference\')?.dirty && form.get(\'payp_paymentreference\')?.invalid ? \'error\' : \'\'"            >              <input                 nz-input                 formControlName="payp_paymentreference"                 placeholder="Ingrese referencia (opcional)"                nzSize="large"              />              <small class="form-text">Número de comprobante, transferencia, etc.</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Vista previa del método de pago -->      @if (form.get(\'paym_uuid\')?.value) {        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24">            <nz-form-item>              <nz-form-label [nzSpan]="24">                Vista Previa del Método              </nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-tag [nzColor]="getMethodColor(form.get(\'paym_uuid\')?.value)">                  <i nz-icon [nzType]="getMethodIcon(form.get(\'paym_uuid\')?.value)" nzTheme="outline"></i>                  <strong>{{ getMethodLabel(form.get(\'paym_uuid\')?.value) }}</strong>                </nz-tag>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <!-- Período y tarjeta relacionados -->      <nz-divider nzText="Información Relacionada" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="per_uuid" [nzSpan]="24" nzRequired>              Período            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_uuid\')?.dirty && form.get(\'per_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un período"            >              <nz-select                 formControlName="per_uuid"                 placeholder="Seleccione período"                nzSize="large"                nzShowSearch              >                @for (period of periods; track period.value) {                  <nz-option [nzValue]="period.value" [nzLabel]="period.label"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">              Tarjeta            </nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-select                 formControlName="crd_uuid"                 placeholder="Se actualiza automáticamente"                nzSize="large"              >                @for (card of cards; track card.value) {                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>                }              </nz-select>              <small class="form-text">Se selecciona según el período</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Estado del pago -->      <nz-divider nzText="Estado del Pago" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="payps_uuid" [nzSpan]="24" nzRequired>              Estado            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'payps_uuid\')?.dirty && form.get(\'payps_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un estado"            >              <nz-select                 formControlName="payps_uuid"                 placeholder="Seleccione estado"                nzSize="large"              >                @for (status of paymentStatuses; track status.value) {                  <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Vista previa del estado -->      @if (form.get(\'payps_uuid\')?.value) {        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24">            <nz-form-item>              <nz-form-label [nzSpan]="24">                Vista Previa del Estado              </nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-tag [nzColor]="getStatusColor(form.get(\'payps_uuid\')?.value)">                  <i nz-icon [nzType]="getStatusIcon(form.get(\'payps_uuid\')?.value)" nzTheme="fill"></i>                  <strong>{{ getStatusLabel(form.get(\'payps_uuid\')?.value) }}</strong>                </nz-tag>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <nz-divider></nz-divider>      <div class="form-actions">        <button           nz-button           nzType="default"           (click)="onCancel()"          nzSize="large"        >          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        <button           nz-button           nzType="primary"           type="submit"          [nzLoading]="isLoading"          nzSize="large"        >          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Registrar Pago\' }}        </button>      </div>    </form>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PaymentPeriodComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> resultados correspondentes "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">Nenhum resultado correspondente "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/PaymentPeriodComponent.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/PaymentPeriodComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/PaymentPeriodComponent.html" selected>🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PaymentPeriodComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'pt');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

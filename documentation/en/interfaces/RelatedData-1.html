@@ -1,0 +1,832 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  RelatedData</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/period/period.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Interfaz auxiliar que representa los datos de tarjeta relacionados para un período.
+Contiene la referencia al UUID de la tarjeta padre.</p>
+
+            </p>
+
+
+            </div>
+
+    <div class="tab-pane fade " id="api"><section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-3">
+                    <h6><b>Properties</b></h6>
+                </td>
+                <td class="col-md-9">
+                    <ul class="index-list">
+                        <li>
+                                <a href="#crd_uuid" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">crd_uuid</span>
+                                </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="crd_uuid"></a>
+                                <span class="name "><b>crd_uuid</b>
+                                    <a href="#crd_uuid">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>crd_uuid:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/admin/user/period/period.component.ts:30</a></div>
+                                </td>
+                            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>UUID de la tarjeta padre.</p>
+</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ChangeDetectorRef, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzDatePickerModule } from &#x27;ng-zorro-antd/date-picker&#x27;;
+import { NzInputNumberModule } from &#x27;ng-zorro-antd/input-number&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { CardInterface } from &#x27;../../../core/interfaces/card&#x27;;
+import { StatusPeriodInterface } from &#x27;../../../core/interfaces/status-period&#x27;;
+import { CardsService } from &#x27;../../../core/services/cards.service&#x27;;
+import { PeriodsService } from &#x27;../../../core/services/periods.service&#x27;;
+import { StatusPeriodsService } from &#x27;../../../core/services/status-periods.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+/**
+ * Interfaz auxiliar que representa los datos de tarjeta relacionados para un período.
+ * @description Contiene la referencia al UUID de la tarjeta padre.
+ */
+interface RelatedData {
+  /** UUID de la tarjeta padre. */
+  crd_uuid: string;
+}
+
+/**
+ * Componente para crear y editar un período de facturación de tarjeta.
+ * @description Gestiona el número de período de facturación (&#x60;YYYYMM&#x60;), fechas de inicio/fin/vencimiento, saldo anterior, intereses y estado.
+ */
+@Component({
+  selector: &#x27;app-period&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzInputNumberModule,
+    NzTagModule
+  ],
+  templateUrl: &#x27;./period.component.html&#x27;,
+  styleUrl: &#x27;./period.component.scss&#x27;
+})
+export class PeriodComponent implements OnInit {
+  /** Grupo de formulario reactivo para el período de facturación. */
+  form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
+  isLoading &#x3D; false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
+  isEditing &#x3D; false;
+  /** UUID de la tarjeta padre obtenido de los parámetros de la ruta. */
+  cardId: string | null &#x3D; null;
+  /** UUID del período que se está editando, o null al crear uno nuevo. */
+  periodId: string | null &#x3D; null;
+
+  /** Lista de estados de período disponibles para el menú desplegable. */
+  periodStatuses: StatusPeriodInterface[] &#x3D; [];
+
+  /** Lista de tarjetas del usuario para el menú desplegable. */
+  cards: CardInterface[] &#x3D; [];
+
+  /**
+   * Inicializa el componente PeriodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param cdr Servicio ChangeDetectorRef de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _cardsService Servicio para obtener las tarjetas.
+   * @param _periodsService Servicio para operaciones CRUD de períodos de facturación.
+   * @param _statusPeriodsService Servicio para obtener los estados de períodos.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _statusPeriodsService: StatusPeriodsService,
+    private message: NzMessageService,
+    private _messageService: MessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      usr_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      crd_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      per_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      per_periodnumber: [&#x27;&#x27;, [Validators.required, Validators.pattern(/^\d{6}$/)]],
+      per_startdate: [null, Validators.required],
+      per_enddate: [null, Validators.required],
+      per_duedate: [null, Validators.required],
+      sper_uuid: [&#x27;1&#x27;, Validators.required],
+      per_previousbalance: [0, [Validators.min(0)]],
+      per_interest: [0, [Validators.min(0)]]
+    });
+  }
+
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
+  ngOnInit(): void {
+    this.cardId &#x3D; this.route.snapshot.paramMap.get(&#x27;crd_uuid&#x27;);
+    this.periodId &#x3D; this.route.snapshot.paramMap.get(&#x27;per_uuid&#x27;);
+    this.isEditing &#x3D; !!this.periodId;
+    this.loadCards();
+    this.loadStatusPeriods();
+    
+    if (this.isEditing) {
+      this.loadPeriod();
+    } else {
+      this.form.patchValue({
+        usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;,
+        crd_uuid: &#x27;1&#x27;
+      })
+      this.form.get(&#x27;per_uuid&#x27;)?.disable();
+    }
+
+    // Escuchar cambios en el número de período para formatear automáticamente
+    this.form.get(&#x27;per_periodnumber&#x27;)?.valueChanges.subscribe(value &#x3D;&gt; {
+      if (value &amp;&amp; typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+        // Limpiar y formatear (solo números, máximo 6 dígitos)
+        const cleaned &#x3D; value.replace(/\D/g, &#x27;&#x27;).slice(0, 6);
+        if (value !&#x3D;&#x3D; cleaned) {
+          this.form.get(&#x27;per_periodnumber&#x27;)?.setValue(cleaned, { emitEvent: false });
+        }
+      }
+    });
+  }
+
+  /**
+   * Carga un período de facturación existente por su ID y completa el formulario.
+   * @returns void
+   */
+  loadPeriod(): void {
+    this.isLoading &#x3D; true;
+
+    this._periodsService.getPeriodById(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, this.cardId!, this.periodId!).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          const period &#x3D; {
+            ...response.data,
+            per_startdate: new Date(response.data.per_startdate + &#x27;T00:00:00&#x27;),
+            per_enddate: new Date(response.data.per_enddate + &#x27;T00:00:00&#x27;),
+            per_duedate: new Date(response.data.per_duedate + &#x27;T00:00:00&#x27;)
+          };
+
+          this.form.get(&#x27;per_uuid&#x27;)?.enable();
+          this.form.patchValue(period);
+          this.form.get(&#x27;per_uuid&#x27;)?.disable();
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Carga los estados de período disponibles desde el backend.
+   * @returns void
+   */
+  loadStatusPeriods(): void {
+    this.isLoading &#x3D; true;
+
+    this._statusPeriodsService.getStatusPeriods().subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.periodStatuses &#x3D; response.data;
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Carga las tarjetas del usuario disponibles desde el backend.
+   * @returns void
+   */
+  loadCards(): void {
+    this.isLoading &#x3D; true;
+
+    this._cardsService.getCards(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.cards &#x3D; response.data;
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Valida el orden de las fechas y los controles del formulario, y luego crea o actualiza el período de facturación.
+   * @returns void
+   */
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this._messageService.error(&#x27;Formulario Inválido&#x27;, &#x27;Por favor complete todos los campos obligatorios&#x27;);
+      return;
+    }
+
+    // Validar que la fecha de inicio sea anterior a la fecha de fin
+    const startDate &#x3D; this.form.get(&#x27;per_startdate&#x27;)?.value;
+    const endDate &#x3D; this.form.get(&#x27;per_enddate&#x27;)?.value;
+    const dueDate &#x3D; this.form.get(&#x27;per_duedate&#x27;)?.value;
+
+    if (startDate &amp;&amp; endDate &amp;&amp; startDate &gt;&#x3D; endDate) {
+      this._messageService.error(&#x27;Error de Fechas&#x27;, &#x27;La fecha de inicio debe ser anterior a la fecha de fin&#x27;);
+      return;
+    }
+
+    if (endDate &amp;&amp; dueDate &amp;&amp; endDate &gt;&#x3D; dueDate) {
+      this._messageService.error(&#x27;Error de Fechas&#x27;, &#x27;La fecha de fin debe ser anterior a la fecha de vencimiento&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+
+    if(!this.isEditing) {
+      this._periodsService.savePeriod(this.form.getRawValue()).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this._messageService.success(
+              &#x27;Período Creado&#x27;, 
+              &#x27;El período se agregó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo guardar el período&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al guardar el período&#x27;);
+        }
+      });
+    } else {
+      this._periodsService.updatePeriod(this.form.getRawValue()).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this._messageService.success(
+              &#x27;Período Actualizado&#x27;, 
+              &#x27;El período se actualizó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar el período&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al actualizar el período&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancela la operación y navega de regreso a la lista de períodos.
+   * @returns void
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/periods&#x27;]);
+  }
+
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
+  getErrorMessage(controlName: string): string | null {
+    const control &#x3D; this.form.get(controlName);
+    if (control?.hasError(&#x27;required&#x27;)) {
+      return &#x27;Este campo es obligatorio&#x27;;
+    }
+    if (control?.hasError(&#x27;pattern&#x27;)) {
+      if (controlName &#x3D;&#x3D;&#x3D; &#x27;per_periodnumber&#x27;) {
+        return &#x27;Ingrese exactamente 6 dígitos (YYYYMM)&#x27;;
+      }
+      return &#x27;Formato inválido&#x27;;
+    }
+    if (control?.hasError(&#x27;min&#x27;)) {
+      return &#x27;El valor mínimo es &#x27; + control.errors?.[&#x27;min&#x27;].min;
+    }
+    return null;
+  }
+
+  /** Función formateadora de visualización de moneda. */
+  formatterDollar &#x3D; formatterDollar;
+  /** Función analizadora de entrada de moneda. */
+  parserDollar &#x3D; parserDollar;
+  /** Alias para la función formateadora de visualización de moneda. */
+  currencyFormatter &#x3D; formatterDollar;
+  /** Alias para la función analizadora de entrada de moneda. */
+  currencyParser &#x3D; parserDollar;
+
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena de estado de la insignia.
+   */
+  getStatusColor(statusId: string): string {
+    switch (statusId) {
+      case &#x27;1&#x27;: return &#x27;success&#x27;;    // Abierto
+      case &#x27;2&#x27;: return &#x27;default&#x27;;    // Cerrado
+      case &#x27;3&#x27;: return &#x27;processing&#x27;; // Pagado
+      case &#x27;4&#x27;: return &#x27;error&#x27;;      // Vencido
+      default: return &#x27;default&#x27;;
+    }
+  }
+
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena con el nombre del ícono.
+   */
+  getStatusIcon(statusId: string): string {
+    switch (statusId) {
+      case &#x27;1&#x27;: return &#x27;unlock&#x27;;            // Abierto
+      case &#x27;2&#x27;: return &#x27;lock&#x27;;              // Cerrado
+      case &#x27;3&#x27;: return &#x27;check-circle&#x27;;      // Pagado
+      case &#x27;4&#x27;: return &#x27;exclamation-circle&#x27;; // Vencido
+      default: return &#x27;info-circle&#x27;;
+    }
+  }
+
+  /**
+   * Resuelve la etiqueta de visualización para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena con la etiqueta del estado.
+   */
+  getStatusLabel(statusId: string): string {
+    const status &#x3D; this.periodStatuses.find(s &#x3D;&gt; s.sper_uuid &#x3D;&#x3D;&#x3D; statusId);
+    return status ? status.sper_name : &#x27;Desconocido&#x27;;
+  }
+
+  /**
+   * Formatea una cadena de período de 6 dígitos (&#x60;YYYYMM&#x60;) como &#x60;MM/YYYY&#x60;.
+   * @param value Cadena de período de 6 dígitos sin procesar.
+   * @returns Cadena de período formateada.
+   */
+  formatPeriodNumber(value: string): string {
+    if (!value || value.length !&#x3D;&#x3D; 6) return value;
+    const year &#x3D; value.substring(0, 4);
+    const month &#x3D; value.substring(4, 6);
+    return &#x60;${month}/${year}&#x60;;
+  }
+}</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/interfaces/RelatedData-1.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/interfaces/RelatedData-1.html" selected>🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/interfaces/RelatedData-1.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'RelatedData-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'en');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

@@ -21,11 +21,19 @@ import { StatusPeriodsService } from '../../../core/services/status-periods.serv
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
-// Definir interfaz para datos relacionados
+/**
+ * Interfaz auxiliar que representa los datos de tarjeta relacionados para un período.
+ * @description Contiene la referencia al UUID de la tarjeta padre.
+ */
 interface RelatedData {
+  /** UUID de la tarjeta padre. */
   crd_uuid: string;
 }
 
+/**
+ * Componente para crear y editar un período de facturación de tarjeta.
+ * @description Gestiona el número de período de facturación (`YYYYMM`), fechas de inicio/fin/vencimiento, saldo anterior, intereses y estado.
+ */
 @Component({
   selector: 'app-period',
   standalone: true,
@@ -48,17 +56,35 @@ interface RelatedData {
   styleUrl: './period.component.scss'
 })
 export class PeriodComponent implements OnInit {
+  /** Grupo de formulario reactivo para el período de facturación. */
   form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
   isLoading = false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
   isEditing = false;
+  /** UUID de la tarjeta padre obtenido de los parámetros de la ruta. */
   cardId: string | null = null;
+  /** UUID del período que se está editando, o null al crear uno nuevo. */
   periodId: string | null = null;
 
-  // Opciones para selects
+  /** Lista de estados de período disponibles para el menú desplegable. */
   periodStatuses: StatusPeriodInterface[] = [];
 
+  /** Lista de tarjetas del usuario para el menú desplegable. */
   cards: CardInterface[] = [];
 
+  /**
+   * Inicializa el componente PeriodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param cdr Servicio ChangeDetectorRef de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _cardsService Servicio para obtener las tarjetas.
+   * @param _periodsService Servicio para operaciones CRUD de períodos de facturación.
+   * @param _statusPeriodsService Servicio para obtener los estados de períodos.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -84,6 +110,10 @@ export class PeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.cardId = this.route.snapshot.paramMap.get('crd_uuid');
     this.periodId = this.route.snapshot.paramMap.get('per_uuid');
@@ -113,6 +143,10 @@ export class PeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga un período de facturación existente por su ID y completa el formulario.
+   * @returns void
+   */
   loadPeriod(): void {
     this.isLoading = true;
 
@@ -147,6 +181,10 @@ export class PeriodComponent implements OnInit {
     )
   }
 
+  /**
+   * Carga los estados de período disponibles desde el backend.
+   * @returns void
+   */
   loadStatusPeriods(): void {
     this.isLoading = true;
 
@@ -172,6 +210,10 @@ export class PeriodComponent implements OnInit {
     )
   }
 
+  /**
+   * Carga las tarjetas del usuario disponibles desde el backend.
+   * @returns void
+   */
   loadCards(): void {
     this.isLoading = true;
 
@@ -197,6 +239,10 @@ export class PeriodComponent implements OnInit {
     )
   }
 
+  /**
+   * Valida el orden de las fechas y los controles del formulario, y luego crea o actualiza el período de facturación.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -275,10 +321,19 @@ export class PeriodComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la operación y navega de regreso a la lista de períodos.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/periods']);
   }
 
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {
@@ -296,12 +351,20 @@ export class PeriodComponent implements OnInit {
     return null;
   }
 
+  /** Función formateadora de visualización de moneda. */
   formatterDollar = formatterDollar;
+  /** Función analizadora de entrada de moneda. */
   parserDollar = parserDollar;
+  /** Alias para la función formateadora de visualización de moneda. */
   currencyFormatter = formatterDollar;
+  /** Alias para la función analizadora de entrada de moneda. */
   currencyParser = parserDollar;
 
-  // Obtener color del estado para mostrar en el formulario
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena de estado de la insignia.
+   */
   getStatusColor(statusId: string): string {
     switch (statusId) {
       case '1': return 'success';    // Abierto
@@ -312,7 +375,11 @@ export class PeriodComponent implements OnInit {
     }
   }
 
-  // Obtener icono del estado
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena con el nombre del ícono.
+   */
   getStatusIcon(statusId: string): string {
     switch (statusId) {
       case '1': return 'unlock';            // Abierto
@@ -323,13 +390,21 @@ export class PeriodComponent implements OnInit {
     }
   }
 
-  // Obtener etiqueta del estado
+  /**
+   * Resuelve la etiqueta de visualización para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena con la etiqueta del estado.
+   */
   getStatusLabel(statusId: string): string {
     const status = this.periodStatuses.find(s => s.sper_uuid === statusId);
     return status ? status.sper_name : 'Desconocido';
   }
 
-  // Formatear número de período (YYYYMM → MM/YYYY)
+  /**
+   * Formatea una cadena de período de 6 dígitos (`YYYYMM`) como `MM/YYYY`.
+   * @param value Cadena de período de 6 dígitos sin procesar.
+   * @returns Cadena de período formateada.
+   */
   formatPeriodNumber(value: string): string {
     if (!value || value.length !== 6) return value;
     const year = value.substring(0, 4);

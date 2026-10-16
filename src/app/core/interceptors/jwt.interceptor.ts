@@ -2,6 +2,17 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { SessionService } from '../services/session.service';
 
+/**
+ * Interceptor HTTP que adjunta el token JWT Bearer a las solicitudes salientes.
+ *
+ * @description Obtiene el token JWT actual desde {@link SessionService} (o recurre
+ * a la lectura de la sesión serializada desde `localStorage`) y clona la solicitud HTTP
+ * con un encabezado `Authorization: Bearer <token>` cuando está disponible.
+ *
+ * @param req La solicitud HTTP saliente.
+ * @param next El siguiente manejador en la cadena de interceptores HTTP.
+ * @returns Un observable del flujo de eventos HTTP.
+ */
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const sessionService = inject(SessionService);
   const session = sessionService.getCurrentSession();

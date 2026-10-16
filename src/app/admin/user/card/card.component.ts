@@ -25,6 +25,14 @@ import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
+/**
+ * Componente de formulario (`<app-card>`) para crear y editar tarjetas de crédito/débito
+ * en `/admin/user/card/new` y `/admin/user/card/edit/:crd_uuid`.
+ *
+ * @description Gestiona los atributos de la tarjeta incluyendo la asignación de ámbito, tipo de tarjeta (`tycrd_uuid`),
+ * marca (`brcrd_uuid`), banco emisor (`ban_uuid`), fecha de vencimiento y la limpieza automática
+ * de `crd_creditlimit` cuando el tipo de tarjeta es Débito (`tycrd_uuid === '1'`).
+ */
 @Component({
   selector: 'app-card',
   standalone: true,
@@ -47,17 +55,38 @@ import { formatterDollar, parserDollar } from '../../../core/utils/currency-form
   styleUrl: './card.component.scss'
 })
 export class CardComponent implements OnInit {
+  /** Grupo de formulario reactivo para los campos de la tarjeta. */
   form: FormGroup;
+  /** Indica si se están cargando los datos de catálogo o el envío del formulario. */
   isLoading = false;
+  /** Indica si el componente está editando una tarjeta existente (`true`) o creando una nueva (`false`). */
   isEditing = false;
+  /** UUID de la tarjeta que se está editando, o `null` al crear una nueva tarjeta. */
   cardId: string | null = null;
 
-  // Opciones para selects
+  /** Tipos de tarjeta disponibles (p. ej., Débito, Crédito). */
   cardTypes: TypeCardInterface[] = [];
+  /** Marcas de tarjeta disponibles (p. ej., Visa, Mastercard). */
   cardBrands: BrandCardInterface[] = [];
+  /** Bancos emisores disponibles. */
   banks: BankInterface[] = [];
+  /** Ámbitos contables disponibles. */
   scopes: ScopeInterface[] = [];
 
+  /**
+   * Inicializa el componente de formulario de tarjeta.
+   *
+   * @param fb Instancia de `FormBuilder` de Angular.
+   * @param route Instantánea de la ruta activa.
+   * @param router Instancia de `Router` de Angular.
+   * @param _typeCardsService Servicio para obtener los tipos de tarjeta.
+   * @param _brandCardsService Servicio para obtener las marcas de tarjeta.
+   * @param _banksService Servicio para obtener los bancos.
+   * @param _cardsService Servicio para operaciones CRUD de tarjetas.
+   * @param _scopesService Servicio para obtener los ámbitos.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _messageService Servicio de alertas modales.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -86,6 +115,10 @@ export class CardComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga los catálogos paramétricos (ámbitos, tipos de tarjeta, marcas, bancos), obtiene los detalles de la tarjeta si se está editando,
+   * y se suscribe a los cambios de `tycrd_uuid` para limpiar `crd_creditlimit` en tarjetas de Débito.
+   */
   ngOnInit(): void {
     this.cardId = this.route.snapshot.paramMap.get('crd_uuid');
     this.isEditing = !!this.cardId;
@@ -111,6 +144,9 @@ export class CardComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga los ámbitos del usuario y selecciona el primer ámbito si no hay ninguno establecido.
+   */
   loadScopes(): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this._scopesService.getScopes(usr_uuid).subscribe({
@@ -125,6 +161,9 @@ export class CardComponent implements OnInit {
     });
   }
 
+  /**
+   * Obtiene un registro de tarjeta existente por su UUID y completa el formulario.
+   */
   loadCard(): void {
     this.isLoading = true;
 
@@ -154,6 +193,9 @@ export class CardComponent implements OnInit {
     )
   }
 
+  /**
+   * Carga los tipos de tarjeta disponibles desde {@link TypeCardsService}.
+   */
   loadTypeCards(): void {
     this.isLoading = true;
 
@@ -179,6 +221,9 @@ export class CardComponent implements OnInit {
     )
   }
 
+  /**
+   * Carga las marcas de tarjeta disponibles desde {@link BrandCardsService}.
+   */
   loadBrandCards(): void {
     this.isLoading = true;
 
@@ -204,6 +249,9 @@ export class CardComponent implements OnInit {
     )
   }
 
+  /**
+   * Carga los bancos disponibles para el usuario desde {@link BanksService}.
+   */
   loadBanks(): void {
     this.isLoading = true;
 
@@ -229,6 +277,9 @@ export class CardComponent implements OnInit {
     )
   }
 
+  /**
+   * Valida y envía el formulario de tarjeta para crear o actualizar el registro de la tarjeta.
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -294,10 +345,19 @@ export class CardComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la edición y regresa a la lista de tarjetas (`/admin/user/cards`).
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/cards']);
   }
 
+  /**
+   * Devuelve un mensaje de error de validación comprensible para el usuario para un control de formulario determinado.
+   *
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o `null`.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {
@@ -312,11 +372,20 @@ export class CardComponent implements OnInit {
     return null;
   }
 
+  /** Función formateadora de visualización de moneda. */
   formatterDollar = formatterDollar;
+  /** Función analizadora de entrada de moneda. */
   parserDollar = parserDollar;
+  /** Alias para el formateador de visualización de moneda. */
   currencyFormatter = formatterDollar;
+  /** Alias para el analizador de entrada de moneda. */
   currencyParser = parserDollar;
 
+  /**
+   * Manejador opcional para los cambios en el interruptor de cuotas.
+   *
+   * @param value Nuevo estado del interruptor de cuotas.
+   */
   onInstallmentsChange(value: boolean): void {
     // Esta función puede ser usada si necesitas lógica adicional al cambiar cuotas
   }

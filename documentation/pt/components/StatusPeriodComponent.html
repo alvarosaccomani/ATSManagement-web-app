@@ -1,0 +1,1501 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Digite para pesquisar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  StatusPeriodComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/status-period/status-period.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descrição</h3>
+    </p>
+    <p class="comment">
+        <p>Component for creating and editing a billing period status record.
+Provides a reactive form for managing billing period status name and description.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Exemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-status-period</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>NzFormModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzDividerModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./status-period.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./status-period.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./status-period.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>Nenhum resultado correspondente.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzFormModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDividerModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propriedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isEditing" >isEditing</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#statusPeriodId" >statusPeriodId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getErrorMessage" >getErrorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadStatusPeriod" >loadStatusPeriod</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onCancel" >onCancel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Construtor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _statusPeriodsService: <a href="../injectables/StatusPeriodsService.html" target="_self">StatusPeriodsService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="43" class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the StatusPeriodComponent and builds the reactive form.</p>
+</div>
+                            <div>
+                                    <b>Parâmetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nome</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descrição</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular FormBuilder service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ActivatedRoute for reading route parameters.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular Router service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_statusPeriodsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StatusPeriodsService.html" target="_self" >StatusPeriodsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for billing period status CRUD operations.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >NzMessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Ng-Zorro toast message service.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getErrorMessage"></a>
+                    <span class="name">
+                        <span ><b>getErrorMessage</b></span>
+                        <a href="#getErrorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getErrorMessage(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="177"
+                                    class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:177</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves the validation error message for a form control.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Name of the form control.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>    <code>string | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Validation error message or null.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadStatusPeriod"></a>
+                    <span class="name">
+                        <span ><b>loadStatusPeriod</b></span>
+                        <a href="#loadStatusPeriod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadStatusPeriod()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="86"
+                                    class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads an existing billing period status record by ID and populates the form.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="71"
+                                    class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook executed on component initialization.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCancel"></a>
+                    <span class="name">
+                        <span ><b>onCancel</b></span>
+                        <a href="#onCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCancel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="168"
+                                    class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cancels the operation and navigates back to the billing period statuses list.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="113"
+                                    class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates and submits the form to create or update the billing period status.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propriedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="37" class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reactive form group for billing period status fields.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditing"></a>
+                    <span class="name">
+                        <span ><b>isEditing</b></span>
+                        <a href="#isEditing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="41" class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flag indicating whether the form is in edit mode.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="39" class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flag indicating whether a request is in progress.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="statusPeriodId"></a>
+                    <span class="name">
+                        <span ><b>statusPeriodId</b></span>
+                        <a href="#statusPeriodId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="43" class="link-to-prism">src/app/admin/user/status-period/status-period.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>UUID of the billing period status being edited, or null when creating.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { StatusPeriodsService } from &#x27;../../../core/services/status-periods.service&#x27;;
+
+/**
+ * Component for creating and editing a billing period status record.
+ * @description Provides a reactive form for managing billing period status name and description.
+ */
+@Component({
+  selector: &#x27;app-status-period&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule
+  ],
+  templateUrl: &#x27;./status-period.component.html&#x27;,
+  styleUrl: &#x27;./status-period.component.scss&#x27;
+})
+export class StatusPeriodComponent implements OnInit {
+  /** Reactive form group for billing period status fields. */
+  form: FormGroup;
+  /** Flag indicating whether a request is in progress. */
+  isLoading &#x3D; false;
+  /** Flag indicating whether the form is in edit mode. */
+  isEditing &#x3D; false;
+  /** UUID of the billing period status being edited, or null when creating. */
+  statusPeriodId: string | null &#x3D; null;
+
+  /**
+   * Initializes the StatusPeriodComponent and builds the reactive form.
+   * @param fb Angular FormBuilder service.
+   * @param route ActivatedRoute for reading route parameters.
+   * @param router Angular Router service.
+   * @param _statusPeriodsService Service for billing period status CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _statusPeriodsService: StatusPeriodsService,
+    private message: NzMessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      sper_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      sper_name: [&#x27;&#x27;, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      sper_description: [&#x27;&#x27;, [Validators.maxLength(255)]]
+    });
+  }
+
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
+  ngOnInit(): void {
+    this.statusPeriodId &#x3D; this.route.snapshot.paramMap.get(&#x27;sper_uuid&#x27;);
+    this.isEditing &#x3D; !!this.statusPeriodId;
+    
+    if (this.isEditing) {
+      this.loadStatusPeriod();
+    } else {
+      this.form.get(&#x27;sper_uuid&#x27;)?.disable();
+    }
+  }
+
+  /**
+   * Loads an existing billing period status record by ID and populates the form.
+   * @returns void
+   */
+  loadStatusPeriod(): void {
+    this.isLoading &#x3D; true;
+    this._statusPeriodsService.getStatusPeriodById(this.statusPeriodId!).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if(response.success) {
+          const statusPeriod &#x3D; response.data;
+          this.form.get(&#x27;sper_uuid&#x27;)?.enable();
+          this.form.patchValue(statusPeriod);
+          this.form.get(&#x27;sper_uuid&#x27;)?.disable();
+          this.isLoading &#x3D; false;
+        } else {
+          this.isLoading &#x3D; false;
+          this.message.error(&#x27;No se pudo cargar la información del estado del período&#x27;);
+        }
+      },
+      error: (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
+        this.message.error(&#x27;Error de conexión al cargar el estado del período&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Validates and submits the form to create or update the billing period status.
+   * @returns void
+   */
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this.message.error(&#x27;Por favor complete todos los campos obligatorios&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+
+    if(!this.isEditing) {
+      this._statusPeriodsService.saveStatusPeriod(this.form.getRawValue()).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this.message.success(&#x27;Estado del período creado correctamente&#x27;);
+            this.router.navigate([&#x27;/admin/user/status-periods&#x27;]);
+          } else {
+            this.message.error(response.message || &#x27;Error al guardar el estado del período&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          console.error(error);
+          this.message.error(error?.error?.error || &#x27;Error de conexión con el servidor&#x27;);
+        }
+      });
+    } else {
+      this._statusPeriodsService.updateStatusPeriod(this.statusPeriodId!, this.form.getRawValue()).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this.message.success(&#x27;Estado del período actualizado correctamente&#x27;);
+            this.router.navigate([&#x27;/admin/user/status-periods&#x27;]);
+          } else {
+            this.message.error(response.message || &#x27;Error al actualizar el estado del período&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          console.error(error);
+          this.message.error(error?.error?.error || &#x27;Error de conexión con el servidor&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancels the operation and navigates back to the billing period statuses list.
+   * @returns void
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/status-periods&#x27;]);
+  }
+
+  /**
+   * Retrieves the validation error message for a form control.
+   * @param controlName Name of the form control.
+   * @returns Validation error message or null.
+   */
+  getErrorMessage(controlName: string): string | null {
+    const control &#x3D; this.form.get(controlName);
+    if (control?.hasError(&#x27;required&#x27;)) {
+      return &#x27;Este campo es obligatorio&#x27;;
+    }
+    if (control?.hasError(&#x27;minlength&#x27;)) {
+      return &#x60;Mínimo ${control.errors?.[&#x27;minlength&#x27;].requiredLength} caracteres&#x60;;
+    }
+    if (control?.hasError(&#x27;maxlength&#x27;)) {
+      return &#x60;Máximo ${control.errors?.[&#x27;maxlength&#x27;].requiredLength} caracteres&#x60;;
+    }
+    return null;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;bank-form-container&quot;&gt;
+  &lt;div class&#x3D;&quot;form-header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;calendar&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      {{ isEditing ? &#x27;Editar Estado de Período&#x27; : &#x27;Nuevo Estado de Período&#x27; }}
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;onCancel()&quot; type&#x3D;&quot;button&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;close&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  @if (isLoading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando datos...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  } @else {
+    &lt;form nz-form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot;&gt;
+      &lt;nz-form-item&gt;
+        &lt;nz-form-label nzFor&#x3D;&quot;sper_uuid&quot; nzSpan&#x3D;&quot;24&quot; nzMdSpan&#x3D;&quot;6&quot;&gt;
+          ID
+        &lt;/nz-form-label&gt;
+        &lt;nz-form-control nzSpan&#x3D;&quot;24&quot; nzMdSpan&#x3D;&quot;18&quot;&gt;
+          &lt;input nz-input formControlName&#x3D;&quot;sper_uuid&quot; placeholder&#x3D;&quot;ID autogenerado&quot; readonly /&gt;
+        &lt;/nz-form-control&gt;
+      &lt;/nz-form-item&gt;
+
+      &lt;nz-form-item&gt;
+        &lt;nz-form-label nzFor&#x3D;&quot;sper_name&quot; nzSpan&#x3D;&quot;24&quot; nzMdSpan&#x3D;&quot;6&quot; nzRequired&gt;
+          Nombre
+        &lt;/nz-form-label&gt;
+        &lt;nz-form-control 
+          nzSpan&#x3D;&quot;24&quot; 
+          nzMdSpan&#x3D;&quot;18&quot;
+          [nzValidateStatus]&#x3D;&quot;form.get(&#x27;sper_name&#x27;)?.dirty &amp;&amp; form.get(&#x27;sper_name&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+          nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;sper_name&#x27;) }}&quot;
+        &gt;
+          &lt;input 
+            nz-input 
+            formControlName&#x3D;&quot;sper_name&quot; 
+            placeholder&#x3D;&quot;Ingrese el nombre del estado (ej. Abierto, Cerrado)&quot;
+            nzSize&#x3D;&quot;large&quot;
+          /&gt;
+        &lt;/nz-form-control&gt;
+      &lt;/nz-form-item&gt;
+
+      &lt;nz-form-item&gt;
+        &lt;nz-form-label nzFor&#x3D;&quot;sper_description&quot; nzSpan&#x3D;&quot;24&quot; nzMdSpan&#x3D;&quot;6&quot;&gt;
+          Descripción
+        &lt;/nz-form-label&gt;
+        &lt;nz-form-control 
+          nzSpan&#x3D;&quot;24&quot; 
+          nzMdSpan&#x3D;&quot;18&quot;
+          [nzValidateStatus]&#x3D;&quot;form.get(&#x27;sper_description&#x27;)?.dirty &amp;&amp; form.get(&#x27;sper_description&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+          nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;sper_description&#x27;) }}&quot;
+        &gt;
+          &lt;textarea 
+            nz-input 
+            formControlName&#x3D;&quot;sper_description&quot; 
+            placeholder&#x3D;&quot;Ingrese una descripción (opcional)&quot;
+            rows&#x3D;&quot;4&quot;
+            [nzAutosize]&#x3D;&quot;{ minRows: 2, maxRows: 6 }&quot;
+          &gt;&lt;/textarea&gt;
+        &lt;/nz-form-control&gt;
+      &lt;/nz-form-item&gt;
+
+      &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+      &lt;div class&#x3D;&quot;form-actions&quot;&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;default&quot; 
+          (click)&#x3D;&quot;onCancel()&quot;
+          nzSize&#x3D;&quot;large&quot;
+          type&#x3D;&quot;button&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;rollback&quot;&gt;&lt;/i&gt;
+          Cancelar
+        &lt;/button&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;primary&quot; 
+          type&#x3D;&quot;submit&quot;
+          [nzLoading]&#x3D;&quot;isLoading&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;save&quot;&gt;&lt;/i&gt;
+          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Crear Estado&#x27; }}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  }
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./status-period.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.bank-form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  max-width: 1000px;
+  margin: 20px auto;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #1890ff;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      padding: 0;
+      height: auto;
+      line-height: 1;
+      font-size: 16px;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  nz-form-item {
+    margin-bottom: 24px;
+  }
+
+  nz-form-label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+    
+    &amp;::after {
+      content: &#x27;:&#x27;;
+      margin: 0 8px 0 2px;
+    }
+  }
+
+  nz-form-control {
+    .ant-form-item-explain {
+      margin-top: 4px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    
+    nz-form-item {
+      margin-bottom: 16px;
+    }
+
+    nz-form-label {
+      margin-bottom: 8px;
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento HTML</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento HTML com diretiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="bank-form-container">  <div class="form-header">    <h2>      <i nz-icon nzType="calendar" nzTheme="outline"></i>      {{ isEditing ? \'Editar Estado de Período\' : \'Nuevo Estado de Período\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()" type="button">      <i nz-icon nzType="close"></i>    </button>  </div>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando datos..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">      <nz-form-item>        <nz-form-label nzFor="sper_uuid" nzSpan="24" nzMdSpan="6">          ID        </nz-form-label>        <nz-form-control nzSpan="24" nzMdSpan="18">          <input nz-input formControlName="sper_uuid" placeholder="ID autogenerado" readonly />        </nz-form-control>      </nz-form-item>      <nz-form-item>        <nz-form-label nzFor="sper_name" nzSpan="24" nzMdSpan="6" nzRequired>          Nombre        </nz-form-label>        <nz-form-control           nzSpan="24"           nzMdSpan="18"          [nzValidateStatus]="form.get(\'sper_name\')?.dirty && form.get(\'sper_name\')?.invalid ? \'error\' : \'\'"          nzErrorTip="{{ getErrorMessage(\'sper_name\') }}"        >          <input             nz-input             formControlName="sper_name"             placeholder="Ingrese el nombre del estado (ej. Abierto, Cerrado)"            nzSize="large"          />        </nz-form-control>      </nz-form-item>      <nz-form-item>        <nz-form-label nzFor="sper_description" nzSpan="24" nzMdSpan="6">          Descripción        </nz-form-label>        <nz-form-control           nzSpan="24"           nzMdSpan="18"          [nzValidateStatus]="form.get(\'sper_description\')?.dirty && form.get(\'sper_description\')?.invalid ? \'error\' : \'\'"          nzErrorTip="{{ getErrorMessage(\'sper_description\') }}"        >          <textarea             nz-input             formControlName="sper_description"             placeholder="Ingrese una descripción (opcional)"            rows="4"            [nzAutosize]="{ minRows: 2, maxRows: 6 }"          ></textarea>        </nz-form-control>      </nz-form-item>      <nz-divider></nz-divider>      <div class="form-actions">        <button           nz-button           nzType="default"           (click)="onCancel()"          nzSize="large"          type="button"        >          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        <button           nz-button           nzType="primary"           type="submit"          [nzLoading]="isLoading"          nzSize="large"        >          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Crear Estado\' }}        </button>      </div>    </form>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'StatusPeriodComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> resultados correspondentes "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">Nenhum resultado correspondente "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/StatusPeriodComponent.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/StatusPeriodComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/StatusPeriodComponent.html" selected>🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'StatusPeriodComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'pt');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

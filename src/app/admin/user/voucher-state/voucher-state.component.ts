@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
 
+/**
+ * Component for creating and editing a voucher state record.
+ * @description Provides a reactive form for managing voucher state name and description.
+ */
 @Component({
   selector: 'app-voucher-state',
   standalone: true,
@@ -29,11 +33,23 @@ import { VouchersStatesService } from '../../../core/services/vouchers-states.se
   styleUrl: './voucher-state.component.scss'
 })
 export class VoucherStateComponent implements OnInit {
+  /** Reactive form group for voucher state fields. */
   form: FormGroup;
+  /** Flag indicating whether a request is in progress. */
   isLoading = false;
+  /** Flag indicating whether the form is in edit mode. */
   isEditing = false;
+  /** UUID of the voucher state being edited, or null when creating. */
   voucherStateId: string | null = null;
 
+  /**
+   * Initializes the VoucherStateComponent and builds the reactive form.
+   * @param fb Angular FormBuilder service.
+   * @param route ActivatedRoute for reading route parameters.
+   * @param router Angular Router service.
+   * @param _vouchersStatesService Service for voucher state CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class VoucherStateComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.voucherStateId = this.route.snapshot.paramMap.get('vous_uuid');
     this.isEditing = !!this.voucherStateId;
@@ -59,6 +79,10 @@ export class VoucherStateComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads an existing voucher state record by ID and populates the form.
+   * @returns void
+   */
   loadVoucherState(): void {
     this.isLoading = true;
     this._vouchersStatesService.getVoucherStateById(this.voucherStateId!).subscribe({
@@ -82,6 +106,10 @@ export class VoucherStateComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates and submits the form to create or update the voucher state.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class VoucherStateComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels the operation and navigates back to the voucher states list.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/vouchers-states']);
   }
 
+  /**
+   * Retrieves the validation error message for a form control.
+   * @param controlName Name of the form control.
+   * @returns Validation error message or null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guard/auth.guard';
 
+/**
+ * Rutas de nivel superior de la aplicación.
+ * @description Define las rutas de carga diferida (lazy-loaded) para los módulos de autenticación (`auth`) y de administración protegida (`admin`).
+ */
 export const routes: Routes = [
     {
         path: 'auth',

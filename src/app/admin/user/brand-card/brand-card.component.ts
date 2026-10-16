@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { BrandCardsService } from '../../../core/services/brand-cards.service';
 
+/**
+ * Componente para crear y editar un registro de marca de tarjeta.
+ * @description Proporciona un formulario reactivo para gestionar el nombre y la descripción de la marca de tarjeta.
+ */
 @Component({
   selector: 'app-brand-card',
   standalone: true,
@@ -29,11 +33,23 @@ import { BrandCardsService } from '../../../core/services/brand-cards.service';
   styleUrl: './brand-card.component.scss'
 })
 export class BrandCardComponent implements OnInit {
+  /** Grupo de formulario reactivo para los campos de marca de tarjeta. */
   form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
   isLoading = false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
   isEditing = false;
+  /** UUID de la marca de tarjeta que se está editando, o null al crear una nueva. */
   brandCardId: string | null = null;
 
+  /**
+   * Inicializa el componente BrandCardComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _brandCardsService Servicio para operaciones CRUD de marcas de tarjeta.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class BrandCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.brandCardId = this.route.snapshot.paramMap.get('brcrd_uuid');
     this.isEditing = !!this.brandCardId;
@@ -59,6 +79,10 @@ export class BrandCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Carga un registro de marca de tarjeta existente por su ID y completa el formulario.
+   * @returns void
+   */
   loadBrandCard(): void {
     this.isLoading = true;
     this._brandCardsService.getBrandCardById(this.brandCardId!).subscribe({
@@ -82,6 +106,10 @@ export class BrandCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Valida y envía el formulario para crear o actualizar la marca de tarjeta.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class BrandCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la operación y navega de regreso a la lista de marcas de tarjeta.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/brand-cards']);
   }
 
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

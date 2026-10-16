@@ -1,0 +1,2206 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TransactionsListComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/transactions-list/transactions-list.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Cash-flow ledger list component (<code>&lt;app-transactions-list&gt;</code>) at <code>/admin/user/transactions</code>.</p>
+<p>Displays all recorded cash movements with combined filtering by scope,
+movement type (<code>INGRESO</code>, <code>EGRESO</code>, <code>TRANSFERENCIA</code>), and real-time text search.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-transactions-list</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>    <code>NzTableModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzCardModule</code>
+</div>
+                        <div>    <code>NzSegmentedModule</code>
+</div>
+                        <div>    <code>NzToolTipModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./transactions-list.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./transactions-list.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./transactions-list.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzTableModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzCardModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSegmentedModule</code>
+                                </li>
+                                <li>
+                                        <code>NzToolTipModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#filteredTransactions" >filteredTransactions</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#scopes" >scopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#searchValue" >searchValue</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#selectedScopeUuid" >selectedScopeUuid</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#selectedType" >selectedType</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#transactions" >transactions</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#applyFilter" >applyFilter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#deleteTransaction" >deleteTransaction</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editTransaction" >editTransaction</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatAmount" >formatAmount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getTypeColor" >getTypeColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getTypeIcon" >getTypeIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadScopes" >loadScopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadTransactions" >loadTransactions</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#newTransaction" >newTransaction</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onScopeChange" >onScopeChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onTypeChange" >onTypeChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_transactionsService: <a href="../injectables/TransactionsService.html" target="_self">TransactionsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>, _router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the transactions list component.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_transactionsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TransactionsService.html" target="_self" >TransactionsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for querying and deleting transactions.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_scopesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ScopesService.html" target="_self" >ScopesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for querying user scopes.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for displaying modal notifications.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular <code>Router</code> instance.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <span ><b>applyFilter</b></span>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filters <code>transactions</code> by <code>searchValue</code> across concept, associated person name, and notes.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteTransaction"></a>
+                    <span class="name">
+                        <span ><b>deleteTransaction</b></span>
+                        <a href="#deleteTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteTransaction(trx: <a href="../interfaces/TransactionInterface.html" target="_self">TransactionInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="197"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:197</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Prompts for confirmation and deletes the selected transaction record.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>trx</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TransactionInterface.html" target="_self" >TransactionInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Transaction record to delete.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editTransaction"></a>
+                    <span class="name">
+                        <span ><b>editTransaction</b></span>
+                        <a href="#editTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editTransaction(trx: <a href="../interfaces/TransactionInterface.html" target="_self">TransactionInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="188"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:188</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the edit form for the selected transaction (<code>/admin/user/transaction/edit/:trx_uuid</code>).</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>trx</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TransactionInterface.html" target="_self" >TransactionInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Transaction record to edit.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatAmount"></a>
+                    <span class="name">
+                        <span ><b>formatAmount</b></span>
+                        <a href="#formatAmount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatAmount(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="256"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:256</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats a numeric amount into Argentine Peso (<code>ARS</code>) currency notation.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>amount</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Numeric amount to format.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted currency string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTypeColor"></a>
+                    <span class="name">
+                        <span ><b>getTypeColor</b></span>
+                        <a href="#getTypeColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTypeColor(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="226"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:226</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maps a transaction type to an Ng-Zorro tag status color.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Movement type (<code>&#39;INGRESO&#39; | &#39;EGRESO&#39; | &#39;TRANSFERENCIA&#39;</code>).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Tag color string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTypeIcon"></a>
+                    <span class="name">
+                        <span ><b>getTypeIcon</b></span>
+                        <a href="#getTypeIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTypeIcon(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="241"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:241</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maps a transaction type to an Ng-Zorro icon name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Movement type (<code>&#39;INGRESO&#39; | &#39;EGRESO&#39; | &#39;TRANSFERENCIA&#39;</code>).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Icon name string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadScopes"></a>
+                    <span class="name">
+                        <span ><b>loadScopes</b></span>
+                        <a href="#loadScopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadScopes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches user scopes, prepends <code>&#39;ALL&#39;</code>, and triggers initial transaction loading.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTransactions"></a>
+                    <span class="name">
+                        <span ><b>loadTransactions</b></span>
+                        <a href="#loadTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadTransactions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches transactions matching <code>selectedScopeUuid</code> and <code>selectedType</code> from <a href="../injectables/TransactionsService.html">TransactionsService</a>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newTransaction"></a>
+                    <span class="name">
+                        <span ><b>newTransaction</b></span>
+                        <a href="#newTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>newTransaction()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="176"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:176</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the new transaction form (<code>/admin/user/transaction/new</code>), passing the active scope if selected.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads scopes and transactions on component initialization.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onScopeChange"></a>
+                    <span class="name">
+                        <span ><b>onScopeChange</b></span>
+                        <a href="#onScopeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onScopeChange(scopeUuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reloads transactions when the selected scope filter changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>scopeUuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Selected scope UUID or <code>&#39;ALL&#39;</code>.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTypeChange"></a>
+                    <span class="name">
+                        <span ><b>onTypeChange</b></span>
+                        <a href="#onTypeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onTypeChange(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reloads transactions when the selected movement type filter changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Selected movement type (<code>&#39;ALL&#39; | &#39;INGRESO&#39; | &#39;EGRESO&#39; | &#39;TRANSFERENCIA&#39;</code>).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredTransactions"></a>
+                    <span class="name">
+                        <span ><b>filteredTransactions</b></span>
+                        <a href="#filteredTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TransactionInterface.html" target="_self" >TransactionInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Transactions matching the client-side text search filter.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicates whether the transactions list is currently loading.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scopes"></a>
+                    <span class="name">
+                        <span ><b>scopes</b></span>
+                        <a href="#scopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ScopeInterface.html" target="_self" >ScopeInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available scopes for the scope filter dropdown.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchValue"></a>
+                    <span class="name">
+                        <span ><b>searchValue</b></span>
+                        <a href="#searchValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current text search query string.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedScopeUuid"></a>
+                    <span class="name">
+                        <span ><b>selectedScopeUuid</b></span>
+                        <a href="#selectedScopeUuid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;11111111-1111-1111-1111-111111111111&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currently selected scope UUID (<code>&#39;ALL&#39;</code> after initialization).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedType"></a>
+                    <span class="name">
+                        <span ><b>selectedType</b></span>
+                        <a href="#selectedType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;ALL&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currently selected movement type filter (<code>&#39;ALL&#39; | &#39;INGRESO&#39; | &#39;EGRESO&#39; | &#39;TRANSFERENCIA&#39;</code>).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transactions"></a>
+                    <span class="name">
+                        <span ><b>transactions</b></span>
+                        <a href="#transactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TransactionInterface.html" target="_self" >TransactionInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/admin/user/transactions-list/transactions-list.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Unfiltered transactions returned by the backend for the selected scope and type.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+
+import { NzTableModule } from &#x27;ng-zorro-antd/table&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzCardModule } from &#x27;ng-zorro-antd/card&#x27;;
+import { NzSegmentedModule } from &#x27;ng-zorro-antd/segmented&#x27;;
+import { NzToolTipModule } from &#x27;ng-zorro-antd/tooltip&#x27;;
+
+import { TransactionInterface } from &#x27;../../../core/interfaces/transaction.interface&#x27;;
+import { ScopeInterface } from &#x27;../../../core/interfaces/scope.interface&#x27;;
+import { TransactionsService } from &#x27;../../../core/services/transactions.service&#x27;;
+import { ScopesService } from &#x27;../../../core/services/scopes.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+
+/**
+ * Cash-flow ledger list component (&#x60;&lt;app-transactions-list&gt;&#x60;) at &#x60;/admin/user/transactions&#x60;.
+ *
+ * @description Displays all recorded cash movements with combined filtering by scope,
+ * movement type (&#x60;INGRESO&#x60;, &#x60;EGRESO&#x60;, &#x60;TRANSFERENCIA&#x60;), and real-time text search.
+ */
+@Component({
+  selector: &#x27;app-transactions-list&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzTableModule,
+    NzButtonModule,
+    NzIconModule,
+    NzInputModule,
+    NzSelectModule,
+    NzTagModule,
+    NzSpinModule,
+    NzCardModule,
+    NzSegmentedModule,
+    NzToolTipModule
+  ],
+  templateUrl: &#x27;./transactions-list.component.html&#x27;,
+  styleUrl: &#x27;./transactions-list.component.scss&#x27;
+})
+export class TransactionsListComponent implements OnInit {
+  /** Indicates whether the transactions list is currently loading. */
+  isLoading &#x3D; false;
+  /** Unfiltered transactions returned by the backend for the selected scope and type. */
+  transactions: TransactionInterface[] &#x3D; [];
+  /** Transactions matching the client-side text search filter. */
+  filteredTransactions: TransactionInterface[] &#x3D; [];
+  /** Available scopes for the scope filter dropdown. */
+  scopes: ScopeInterface[] &#x3D; [];
+  /** Currently selected scope UUID (&#x60;&#x27;ALL&#x27;&#x60; after initialization). */
+  selectedScopeUuid: string &#x3D; &#x27;11111111-1111-1111-1111-111111111111&#x27;; // Default Personal Scope
+  /** Currently selected movement type filter (&#x60;&#x27;ALL&#x27; | &#x27;INGRESO&#x27; | &#x27;EGRESO&#x27; | &#x27;TRANSFERENCIA&#x27;&#x60;). */
+  selectedType: string &#x3D; &#x27;ALL&#x27;;
+  /** Current text search query string. */
+  searchValue: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Initializes the transactions list component.
+   *
+   * @param _transactionsService Service for querying and deleting transactions.
+   * @param _scopesService Service for querying user scopes.
+   * @param _messageService Service for displaying modal notifications.
+   * @param _router Angular &#x60;Router&#x60; instance.
+   */
+  constructor(
+    private _transactionsService: TransactionsService,
+    private _scopesService: ScopesService,
+    private _messageService: MessageService,
+    private _router: Router
+  ) {}
+
+  /**
+   * Loads scopes and transactions on component initialization.
+   */
+  ngOnInit(): void {
+    this.loadScopes();
+  }
+
+  /**
+   * Fetches user scopes, prepends &#x60;&#x27;ALL&#x27;&#x60;, and triggers initial transaction loading.
+   */
+  loadScopes(): void {
+    const usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+    this._scopesService.getScopes(usr_uuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        if (response.success &amp;&amp; response.data.length &gt; 0) {
+          const allOption: ScopeInterface &#x3D; {
+            scp_uuid: &#x27;ALL&#x27;,
+            scp_name: &#x27;Todos los ámbitos&#x27;,
+            scp_isshared: false,
+            usr_uuidowner: usr_uuid,
+            scp_active: true,
+            scp_color: &#x27;#108ee9&#x27;
+          };
+          this.scopes &#x3D; [allOption, ...response.data];
+          this.selectedScopeUuid &#x3D; &#x27;ALL&#x27;;
+          this.loadTransactions();
+        }
+      },
+      error: (error) &#x3D;&gt; {
+        console.error(error);
+      }
+    });
+  }
+
+  /**
+   * Fetches transactions matching &#x60;selectedScopeUuid&#x60; and &#x60;selectedType&#x60; from {@link TransactionsService}.
+   */
+  loadTransactions(): void {
+    if (!this.selectedScopeUuid) return;
+    this.isLoading &#x3D; true;
+    const typeFilter &#x3D; this.selectedType &#x3D;&#x3D;&#x3D; &#x27;ALL&#x27; ? undefined : this.selectedType;
+    this._transactionsService.getTransactions(this.selectedScopeUuid, typeFilter).subscribe({
+      next: (response) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        if (response.success) {
+          this.transactions &#x3D; response.data;
+          this.applyFilter();
+        }
+      },
+      error: (error) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
+        this._messageService.error(&#x27;Error&#x27;, &#x27;No se pudieron cargar los movimientos&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Reloads transactions when the selected scope filter changes.
+   *
+   * @param scopeUuid Selected scope UUID or &#x60;&#x27;ALL&#x27;&#x60;.
+   */
+  onScopeChange(scopeUuid: string): void {
+    this.selectedScopeUuid &#x3D; scopeUuid;
+    this.loadTransactions();
+  }
+
+  /**
+   * Reloads transactions when the selected movement type filter changes.
+   *
+   * @param type Selected movement type (&#x60;&#x27;ALL&#x27; | &#x27;INGRESO&#x27; | &#x27;EGRESO&#x27; | &#x27;TRANSFERENCIA&#x27;&#x60;).
+   */
+  onTypeChange(type: string): void {
+    this.selectedType &#x3D; type;
+    this.loadTransactions();
+  }
+
+  /**
+   * Filters &#x60;transactions&#x60; by &#x60;searchValue&#x60; across concept, associated person name, and notes.
+   */
+  applyFilter(): void {
+    if (!this.searchValue.trim()) {
+      this.filteredTransactions &#x3D; [...this.transactions];
+      return;
+    }
+    const term &#x3D; this.searchValue.toLowerCase();
+    this.filteredTransactions &#x3D; this.transactions.filter(t &#x3D;&gt; 
+      t.trx_concept.toLowerCase().includes(term) ||
+      (t.prs?.prs_name &amp;&amp; t.prs.prs_name.toLowerCase().includes(term)) ||
+      (t.trx_notes &amp;&amp; t.trx_notes.toLowerCase().includes(term))
+    );
+  }
+
+  /**
+   * Navigates to the new transaction form (&#x60;/admin/user/transaction/new&#x60;), passing the active scope if selected.
+   */
+  newTransaction(): void {
+    const queryParams &#x3D; (this.selectedScopeUuid &amp;&amp; this.selectedScopeUuid !&#x3D;&#x3D; &#x27;ALL&#x27;)
+      ? { scp_uuid: this.selectedScopeUuid }
+      : {};
+    this._router.navigate([&#x27;/admin/user/transaction/new&#x27;], { queryParams });
+  }
+
+  /**
+   * Navigates to the edit form for the selected transaction (&#x60;/admin/user/transaction/edit/:trx_uuid&#x60;).
+   *
+   * @param trx Transaction record to edit.
+   */
+  editTransaction(trx: TransactionInterface): void {
+    this._router.navigate([&#x27;/admin/user/transaction/edit&#x27;, trx.trx_uuid]);
+  }
+
+  /**
+   * Prompts for confirmation and deletes the selected transaction record.
+   *
+   * @param trx Transaction record to delete.
+   */
+  deleteTransaction(trx: TransactionInterface): void {
+    this._messageService.confirm(
+      &#x27;¿Eliminar Movimiento?&#x27;,
+      &#x60;¿Está seguro de eliminar &quot;${trx.trx_concept}&quot; de $ ${trx.trx_amount}?&#x60;,
+      () &#x3D;&gt; {
+        this._transactionsService.deleteTransaction(trx.trx_uuid).subscribe({
+          next: (response) &#x3D;&gt; {
+            if (response.success) {
+              this._messageService.success(&#x27;Movimiento Eliminado&#x27;, &#x27;El registro fue eliminado correctamente.&#x27;);
+              this.loadTransactions();
+            } else {
+              this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo eliminar el movimiento.&#x27;);
+            }
+          },
+          error: (error) &#x3D;&gt; {
+            console.error(error);
+            this._messageService.error(&#x27;Error&#x27;, &#x27;Hubo un problema al eliminar el movimiento.&#x27;);
+          }
+        });
+      }
+    );
+  }
+
+  /**
+   * Maps a transaction type to an Ng-Zorro tag status color.
+   *
+   * @param type Movement type (&#x60;&#x27;INGRESO&#x27; | &#x27;EGRESO&#x27; | &#x27;TRANSFERENCIA&#x27;&#x60;).
+   * @returns Tag color string.
+   */
+  getTypeColor(type: string): string {
+    switch (type) {
+      case &#x27;INGRESO&#x27;: return &#x27;success&#x27;;
+      case &#x27;EGRESO&#x27;: return &#x27;error&#x27;;
+      case &#x27;TRANSFERENCIA&#x27;: return &#x27;processing&#x27;;
+      default: return &#x27;default&#x27;;
+    }
+  }
+
+  /**
+   * Maps a transaction type to an Ng-Zorro icon name.
+   *
+   * @param type Movement type (&#x60;&#x27;INGRESO&#x27; | &#x27;EGRESO&#x27; | &#x27;TRANSFERENCIA&#x27;&#x60;).
+   * @returns Icon name string.
+   */
+  getTypeIcon(type: string): string {
+    switch (type) {
+      case &#x27;INGRESO&#x27;: return &#x27;arrow-down&#x27;;
+      case &#x27;EGRESO&#x27;: return &#x27;arrow-up&#x27;;
+      case &#x27;TRANSFERENCIA&#x27;: return &#x27;swap&#x27;;
+      default: return &#x27;info-circle&#x27;;
+    }
+  }
+
+  /**
+   * Formats a numeric amount into Argentine Peso (&#x60;ARS&#x60;) currency notation.
+   *
+   * @param amount Numeric amount to format.
+   * @returns Formatted currency string.
+   */
+  formatAmount(amount: number): string {
+    return new Intl.NumberFormat(&#x27;es-AR&#x27;, { style: &#x27;currency&#x27;, currency: &#x27;ARS&#x27; }).format(amount);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;transactions-container&quot;&gt;
+  &lt;div class&#x3D;&quot;header-actions&quot;&gt;
+    &lt;div class&#x3D;&quot;title-section&quot;&gt;
+      &lt;h2&gt;
+        &lt;i nz-icon nzType&#x3D;&quot;wallet&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+        Movimientos Financieros
+      &lt;/h2&gt;
+      &lt;p class&#x3D;&quot;subtitle&quot;&gt;Gestión unificada de Ingresos, Egresos y Transferencias&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;action-buttons&quot;&gt;
+      &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;newTransaction()&quot; nzSize&#x3D;&quot;large&quot;&gt;
+        &lt;i nz-icon nzType&#x3D;&quot;plus&quot;&gt;&lt;/i&gt;
+        ＋ Cargar Gasto / Movimiento
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;nz-card class&#x3D;&quot;filter-card&quot;&gt;
+    &lt;div class&#x3D;&quot;filter-row&quot;&gt;
+      &lt;div class&#x3D;&quot;filter-item&quot;&gt;
+        &lt;label&gt;Ámbito / Contexto:&lt;/label&gt;
+        &lt;nz-select [ngModel]&#x3D;&quot;selectedScopeUuid&quot; (ngModelChange)&#x3D;&quot;onScopeChange($event)&quot; style&#x3D;&quot;width: 220px;&quot; nzSize&#x3D;&quot;large&quot;&gt;
+          @for (scope of scopes; track scope.scp_uuid) {
+            &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;(scope.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;) + scope.scp_name&quot;&gt;&lt;/nz-option&gt;
+          }
+        &lt;/nz-select&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;filter-item&quot;&gt;
+        &lt;label&gt;Tipo:&lt;/label&gt;
+        &lt;nz-select [ngModel]&#x3D;&quot;selectedType&quot; (ngModelChange)&#x3D;&quot;onTypeChange($event)&quot; style&#x3D;&quot;width: 180px;&quot; nzSize&#x3D;&quot;large&quot;&gt;
+          &lt;nz-option nzValue&#x3D;&quot;ALL&quot; nzLabel&#x3D;&quot;🌐 Todos&quot;&gt;&lt;/nz-option&gt;
+          &lt;nz-option nzValue&#x3D;&quot;INGRESO&quot; nzLabel&#x3D;&quot;🟢 Ingresos&quot;&gt;&lt;/nz-option&gt;
+          &lt;nz-option nzValue&#x3D;&quot;EGRESO&quot; nzLabel&#x3D;&quot;🔴 Egresos&quot;&gt;&lt;/nz-option&gt;
+          &lt;nz-option nzValue&#x3D;&quot;TRANSFERENCIA&quot; nzLabel&#x3D;&quot;🔵 Transferencias&quot;&gt;&lt;/nz-option&gt;
+        &lt;/nz-select&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;filter-item search-item&quot;&gt;
+        &lt;label&gt;Buscar:&lt;/label&gt;
+        &lt;nz-input-group [nzSuffix]&#x3D;&quot;suffixIconSearch&quot; nzSize&#x3D;&quot;large&quot;&gt;
+          &lt;input type&#x3D;&quot;text&quot; nz-input [(ngModel)]&#x3D;&quot;searchValue&quot; (ngModelChange)&#x3D;&quot;applyFilter()&quot; placeholder&#x3D;&quot;Buscar concepto o persona...&quot; /&gt;
+        &lt;/nz-input-group&gt;
+        &lt;ng-template #suffixIconSearch&gt;
+          &lt;i nz-icon nzType&#x3D;&quot;search&quot;&gt;&lt;/i&gt;
+        &lt;/ng-template&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/nz-card&gt;
+
+  @if (isLoading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando movimientos...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  } @else {
+    &lt;nz-table #basicTable [nzData]&#x3D;&quot;filteredTransactions&quot; [nzPageSize]&#x3D;&quot;10&quot; nzShowPagination&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Fecha&lt;/th&gt;
+          &lt;th&gt;Ámbito&lt;/th&gt;
+          &lt;th&gt;Tipo&lt;/th&gt;
+          &lt;th&gt;Concepto / Comercio&lt;/th&gt;
+          &lt;th&gt;Monto&lt;/th&gt;
+          &lt;th&gt;Persona / Referencia&lt;/th&gt;
+          &lt;th&gt;Notas&lt;/th&gt;
+          &lt;th nzWidth&#x3D;&quot;120px&quot;&gt;Acciones&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        @for (data of basicTable.data; track data.trx_uuid) {
+          &lt;tr&gt;
+            &lt;td&gt;{{ data.trx_datetime | date:&#x27;dd/MM/yyyy HH:mm&#x27; }}&lt;/td&gt;
+            &lt;td&gt;
+              @if (data.scp) {
+                &lt;nz-tag [nzColor]&#x3D;&quot;data.scp.scp_color || &#x27;cyan&#x27;&quot;&gt;
+                  {{ data.scp.scp_name }}
+                &lt;/nz-tag&gt;
+              } @else {
+                &lt;span class&#x3D;&quot;text-muted&quot;&gt;-&lt;/span&gt;
+              }
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;getTypeColor(data.trx_type)&quot;&gt;
+                &lt;i nz-icon [nzType]&#x3D;&quot;getTypeIcon(data.trx_type)&quot;&gt;&lt;/i&gt;
+                &lt;strong&gt;{{ data.trx_type }}&lt;/strong&gt;
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;strong&gt;{{ data.trx_concept }}&lt;/strong&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;span [class.income-amount]&#x3D;&quot;data.trx_type &#x3D;&#x3D;&#x3D; &#x27;INGRESO&#x27;&quot; [class.expense-amount]&#x3D;&quot;data.trx_type &#x3D;&#x3D;&#x3D; &#x27;EGRESO&#x27;&quot;&gt;
+                {{ formatAmount(data.trx_amount) }}
+              &lt;/span&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              @if (data.prs) {
+                &lt;nz-tag nzColor&#x3D;&quot;blue&quot;&gt;👤 {{ data.prs.prs_name }} ({{ data.prs.prs_type }})&lt;/nz-tag&gt;
+              } @else {
+                &lt;span class&#x3D;&quot;text-muted&quot;&gt;-&lt;/span&gt;
+              }
+            &lt;/td&gt;
+            &lt;td&gt;{{ data.trx_notes || &#x27;-&#x27; }}&lt;/td&gt;
+            &lt;td&gt;
+              &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;editTransaction(data)&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Editar&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;edit&quot;&gt;&lt;/i&gt;
+              &lt;/button&gt;
+              &lt;button nz-button nzType&#x3D;&quot;text&quot; nzDanger (click)&#x3D;&quot;deleteTransaction(data)&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Eliminar&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;delete&quot;&gt;&lt;/i&gt;
+              &lt;/button&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        }
+      &lt;/tbody&gt;
+    &lt;/nz-table&gt;
+  }
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./transactions-list.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.transactions-container {
+  padding: 24px;
+
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .title-section {
+      h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #1f2937;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .subtitle {
+        margin: 4px 0 0 0;
+        color: #6b7280;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .filter-card {
+    margin-bottom: 24px;
+    border-radius: 8px;
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+
+      .filter-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        label {
+          font-weight: 600;
+          color: #374151;
+        }
+
+        &amp;.search-item {
+          flex: 1;
+          min-width: 260px;
+        }
+      }
+    }
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 48px;
+  }
+
+  .income-amount {
+    color: #3f8600;
+    font-weight: 600;
+  }
+
+  .expense-amount {
+    color: #cf1322;
+    font-weight: 600;
+  }
+
+  .text-muted {
+    color: #9ca3af;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="transactions-container">  <div class="header-actions">    <div class="title-section">      <h2>        <i nz-icon nzType="wallet" nzTheme="outline"></i>        Movimientos Financieros      </h2>      <p class="subtitle">Gestión unificada de Ingresos, Egresos y Transferencias</p>    </div>    <div class="action-buttons">      <button nz-button nzType="primary" (click)="newTransaction()" nzSize="large">        <i nz-icon nzType="plus"></i>        ＋ Cargar Gasto / Movimiento      </button>    </div>  </div>  <nz-card class="filter-card">    <div class="filter-row">      <div class="filter-item">        <label>Ámbito / Contexto:</label>        <nz-select [ngModel]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="width: 220px;" nzSize="large">          @for (scope of scopes; track scope.scp_uuid) {            <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? \'🏢 \' : \'👤 \') + scope.scp_name"></nz-option>          }        </nz-select>      </div>      <div class="filter-item">        <label>Tipo:</label>        <nz-select [ngModel]="selectedType" (ngModelChange)="onTypeChange($event)" style="width: 180px;" nzSize="large">          <nz-option nzValue="ALL" nzLabel="🌐 Todos"></nz-option>          <nz-option nzValue="INGRESO" nzLabel="🟢 Ingresos"></nz-option>          <nz-option nzValue="EGRESO" nzLabel="🔴 Egresos"></nz-option>          <nz-option nzValue="TRANSFERENCIA" nzLabel="🔵 Transferencias"></nz-option>        </nz-select>      </div>      <div class="filter-item search-item">        <label>Buscar:</label>        <nz-input-group [nzSuffix]="suffixIconSearch" nzSize="large">          <input type="text" nz-input [(ngModel)]="searchValue" (ngModelChange)="applyFilter()" placeholder="Buscar concepto o persona..." />        </nz-input-group>        <ng-template #suffixIconSearch>          <i nz-icon nzType="search"></i>        </ng-template>      </div>    </div>  </nz-card>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando movimientos..."></nz-spin>    </div>  } @else {    <nz-table #basicTable [nzData]="filteredTransactions" [nzPageSize]="10" nzShowPagination>      <thead>        <tr>          <th>Fecha</th>          <th>Ámbito</th>          <th>Tipo</th>          <th>Concepto / Comercio</th>          <th>Monto</th>          <th>Persona / Referencia</th>          <th>Notas</th>          <th nzWidth="120px">Acciones</th>        </tr>      </thead>      <tbody>        @for (data of basicTable.data; track data.trx_uuid) {          <tr>            <td>{{ data.trx_datetime | date:\'dd/MM/yyyy HH:mm\' }}</td>            <td>              @if (data.scp) {                <nz-tag [nzColor]="data.scp.scp_color || \'cyan\'">                  {{ data.scp.scp_name }}                </nz-tag>              } @else {                <span class="text-muted">-</span>              }            </td>            <td>              <nz-tag [nzColor]="getTypeColor(data.trx_type)">                <i nz-icon [nzType]="getTypeIcon(data.trx_type)"></i>                <strong>{{ data.trx_type }}</strong>              </nz-tag>            </td>            <td>              <strong>{{ data.trx_concept }}</strong>            </td>            <td>              <span [class.income-amount]="data.trx_type === \'INGRESO\'" [class.expense-amount]="data.trx_type === \'EGRESO\'">                {{ formatAmount(data.trx_amount) }}              </span>            </td>            <td>              @if (data.prs) {                <nz-tag nzColor="blue">👤 {{ data.prs.prs_name }} ({{ data.prs.prs_type }})</nz-tag>              } @else {                <span class="text-muted">-</span>              }            </td>            <td>{{ data.trx_notes || \'-\' }}</td>            <td>              <button nz-button nzType="text" (click)="editTransaction(data)" nz-tooltip nzTooltipTitle="Editar">                <i nz-icon nzType="edit"></i>              </button>              <button nz-button nzType="text" nzDanger (click)="deleteTransaction(data)" nz-tooltip nzTooltipTitle="Eliminar">                <i nz-icon nzType="delete"></i>              </button>            </td>          </tr>        }      </tbody>    </nz-table>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TransactionsListComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/TransactionsListComponent.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/TransactionsListComponent.html" selected>🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/TransactionsListComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TransactionsListComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'en');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

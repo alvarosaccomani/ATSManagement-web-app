@@ -39,6 +39,10 @@ import { PersonComponent } from './person/person.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SellerCommissionsComponent } from './seller-commissions/seller-commissions.component';
 
+/**
+ * Rutas del espacio de trabajo del usuario bajo `/admin/user`.
+ * @description Asigna todas las vistas de panel de control, finanzas, documentos, tarjetas, comprobantes, períodos y CRUD paramétricos dentro de `UserLayoutComponent`.
+ */
 export const USER_ROUTES: Routes = [
     {
         path: '',

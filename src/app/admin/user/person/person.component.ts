@@ -18,6 +18,14 @@ import { PersonsService } from '../../../core/services/persons.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Componente de formulario (`<app-person>`) para crear y editar contactos/personas
+ * en `/admin/user/person/new` y `/admin/user/person/edit/:prs_uuid`.
+ *
+ * @description Permite asignar un contacto a un ámbito, seleccionar múltiples roles (`VENDEDOR`, `SOCIO`,
+ * `CLIENTE`, `PROVEEDOR`, `AMIGO`, `OTRO`), configurar un porcentaje de comisión de ventas (`prs_commissionrate`),
+ * y almacenar la identificación fiscal (`prs_taxid`).
+ */
 @Component({
   selector: 'app-person',
   standalone: true,
@@ -39,12 +47,18 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './person.component.scss'
 })
 export class PersonComponent implements OnInit {
+  /** Grupo de formulario reactivo para los atributos del contacto/persona. */
   form: FormGroup;
+  /** Indica si los datos se están cargando o enviando. */
   isLoading = false;
+  /** Indica si el componente está editando una persona existente (`true`) o creando una nueva (`false`). */
   isEditing = false;
+  /** UUID de la persona que se está editando, o `null` al crear un nuevo registro. */
   prs_uuid: string | null = null;
+  /** Ámbitos disponibles para asignar el contacto. */
   scopes: ScopeInterface[] = [];
 
+  /** Opciones de roles seleccionables para el contacto (`SOCIO`, `VENDEDOR`, `CLIENTE`, `PROVEEDOR`, `AMIGO`, `OTRO`). */
   typeOptions = [
     { label: 'Socio / Miembro', value: 'SOCIO', checked: false },
     { label: 'Vendedor', value: 'VENDEDOR', checked: false },
@@ -54,6 +68,16 @@ export class PersonComponent implements OnInit {
     { label: 'Otro', value: 'OTRO', checked: false }
   ];
 
+  /**
+   * Inicializa el componente de formulario de persona.
+   *
+   * @param fb Instancia de `FormBuilder` de Angular.
+   * @param route Instantánea de la ruta activa.
+   * @param router Instancia de `Router` de Angular.
+   * @param _personsService Servicio para operaciones CRUD de personas.
+   * @param _scopesService Servicio para obtener los ámbitos del usuario.
+   * @param _messageService Servicio para mostrar notificaciones modales.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -75,6 +99,9 @@ export class PersonComponent implements OnInit {
     });
   }
 
+  /**
+   * Inicializa el formulario, carga los ámbitos y completa los datos de la persona existente si se está editando.
+   */
   ngOnInit(): void {
     this.prs_uuid = this.route.snapshot.paramMap.get('prs_uuid');
     this.isEditing = !!this.prs_uuid;
@@ -92,6 +119,11 @@ export class PersonComponent implements OnInit {
     }
   }
 
+  /**
+   * Carga los ámbitos disponibles y establece el valor predeterminado del control `scp_uuid`.
+   *
+   * @param defaultScopeUuid UUID de ámbito opcional pasado mediante parámetros de consulta.
+   */
   loadScopes(defaultScopeUuid?: string | null): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this._scopesService.getScopes(usr_uuid).subscribe({
@@ -107,6 +139,11 @@ export class PersonComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga un registro de persona existente por su UUID y completa el formulario y las casillas de verificación de roles.
+   *
+   * @param prs_uuid Identificador único de la persona a cargar.
+   */
   loadPerson(prs_uuid: string): void {
     this.isLoading = true;
     this._personsService.getPersonById(prs_uuid).subscribe({
@@ -130,6 +167,10 @@ export class PersonComponent implements OnInit {
     });
   }
 
+  /**
+   * Valida el formulario, serializa los roles seleccionados en una cadena `prs_type` separada por comas,
+   * y guarda o actualiza el registro de la persona.
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -198,6 +239,9 @@ export class PersonComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la edición y navega de regreso a la lista de personas (`/admin/user/persons`).
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/persons']);
   }

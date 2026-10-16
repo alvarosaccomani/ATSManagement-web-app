@@ -15,6 +15,9 @@ import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * List component (`<app-scopes-list>`) for viewing and managing accounting scopes at `/admin/user/scopes`.
+ */
 @Component({
   selector: 'app-scopes-list',
   standalone: true,
@@ -33,19 +36,34 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './scopes-list.component.scss'
 })
 export class ScopesListComponent implements OnInit {
+  /** Indicates whether the scopes table is currently loading. */
   isLoading = false;
+  /** Array of accounting scopes displayed in the table. */
   scopes: ScopeInterface[] = [];
 
+  /**
+   * Initializes the scopes list component.
+   *
+   * @param _scopesService Service for fetching and deleting scopes.
+   * @param _messageService Service for displaying confirmation and status modals.
+   * @param _router Angular `Router` instance.
+   */
   constructor(
     private _scopesService: ScopesService,
     private _messageService: MessageService,
     private _router: Router
   ) {}
 
+  /**
+   * Loads the user's scopes when the component initializes.
+   */
   ngOnInit(): void {
     this.loadScopes();
   }
 
+  /**
+   * Fetches all scopes for the user via {@link ScopesService.getScopes}.
+   */
   loadScopes(): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this.isLoading = true;
@@ -64,14 +82,27 @@ export class ScopesListComponent implements OnInit {
     });
   }
 
+  /**
+   * Navigates to the new scope creation form (`/admin/user/scope/new`).
+   */
   newScope(): void {
     this._router.navigate(['/admin/user/scope/new']);
   }
 
+  /**
+   * Navigates to the edit form for the selected scope (`/admin/user/scope/edit/:scp_uuid`).
+   *
+   * @param scope Scope record to edit.
+   */
   editScope(scope: ScopeInterface): void {
     this._router.navigate(['/admin/user/scope/edit', scope.scp_uuid]);
   }
 
+  /**
+   * Prompts for confirmation and deletes the selected scope via {@link ScopesService.deleteScope}.
+   *
+   * @param scope Scope record to delete.
+   */
   deleteScope(scope: ScopeInterface): void {
     this._messageService.confirm(
       '¿Eliminar Ámbito?',

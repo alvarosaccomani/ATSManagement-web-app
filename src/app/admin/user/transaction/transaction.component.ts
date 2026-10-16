@@ -24,6 +24,14 @@ import { CardsService } from '../../../core/services/cards.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
+/**
+ * Cash-flow transaction form component (`<app-transaction>`)
+ * at `/admin/user/transaction/new` and `/admin/user/transaction/edit/:trx_uuid`.
+ *
+ * @description Manages creation and editing of `INGRESO`, `EGRESO`, and `TRANSFERENCIA` movements,
+ * including dynamic required validation for `target_crduuid` on transfers, automatic seller commission
+ * calculation on income movements, and a fast batch-entry mode ("Guardar y Cargar Otro").
+ */
 @Component({
   selector: 'app-transaction',
   standalone: true,
@@ -46,17 +54,37 @@ import { formatterDollar, parserDollar } from '../../../core/utils/currency-form
   styleUrl: './transaction.component.scss'
 })
 export class TransactionComponent implements OnInit {
+  /** Reactive form group for transaction fields. */
   form: FormGroup;
+  /** Indicates whether data is being loaded or submitted. */
   isLoading = false;
+  /** Indicates whether the component is editing an existing transaction (`true`) or creating a new one (`false`). */
   isEditing = false;
+  /** UUID of the transaction being edited, or `null` when creating a new record. */
   trx_uuid: string | null = null;
 
+  /** Available accounting scopes. */
   scopes: ScopeInterface[] = [];
+  /** Available persons/contacts belonging to the currently selected scope. */
   persons: PersonInterface[] = [];
+  /** Available cards/accounts for source and target account selection. */
   cards: any[] = [];
 
+  /** Reference to the concept `<input>` element for auto-focusing in fast batch-entry mode. */
   @ViewChild('conceptInput') conceptInput!: ElementRef;
 
+  /**
+   * Initializes the transaction form component.
+   *
+   * @param fb Angular `FormBuilder` instance.
+   * @param route Activated route snapshot.
+   * @param router Angular `Router` instance.
+   * @param _transactionsService Service for transaction CRUD operations.
+   * @param _scopesService Service for fetching scopes.
+   * @param _personsService Service for fetching scope contacts.
+   * @param _cardsService Service for fetching user cards/accounts.
+   * @param _messageService Service for displaying modal notifications.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -84,6 +112,10 @@ export class TransactionComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets up reactive subscriptions for dynamic transfer validation, scope-based contact loading,
+   * automatic seller commission calculation, and loads initial reference data.
+   */
   ngOnInit(): void {
     this.trx_uuid = this.route.snapshot.paramMap.get('trx_uuid');
     this.isEditing = !!this.trx_uuid;
@@ -140,6 +172,11 @@ export class TransactionComponent implements OnInit {
     }
   }
 
+  /**
+   * Loads user scopes and initializes the default `scp_uuid` selection.
+   *
+   * @param defaultScopeUuid Optional scope UUID from query parameters.
+   */
   loadScopes(defaultScopeUuid?: string | null): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this._scopesService.getScopes(usr_uuid).subscribe({
@@ -157,6 +194,11 @@ export class TransactionComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads contacts/persons belonging to the specified scope.
+   *
+   * @param scp_uuid Scope UUID.
+   */
   loadPersons(scp_uuid: string): void {
     if (!scp_uuid || scp_uuid === 'ALL') {
       this.persons = [];
@@ -171,6 +213,9 @@ export class TransactionComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads the user's cards/accounts for the source and target account selectors.
+   */
   loadCards(): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this._cardsService.getCards(usr_uuid).subscribe({
@@ -189,6 +234,11 @@ export class TransactionComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads an existing transaction by its UUID and patches the form.
+   *
+   * @param trx_uuid Unique identifier of the transaction to load.
+   */
   loadTransaction(trx_uuid: string): void {
     this.isLoading = true;
     this._transactionsService.getTransactionById(trx_uuid).subscribe({
@@ -210,6 +260,12 @@ export class TransactionComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates and submits the transaction form.
+   *
+   * @param andLoadAnother When `true`, keeps the user on the form preserving scope, type, date,
+   * and account while resetting concept, amount, and notes for fast batch entry.
+   */
   onSubmit(andLoadAnother: boolean = false): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -284,10 +340,15 @@ export class TransactionComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels editing and navigates back to the transactions list (`/admin/user/transactions`).
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/transactions']);
   }
 
+  /** Currency display formatter function for `nz-input-number`. */
   formatterDollar = formatterDollar;
+  /** Currency input parser function for `nz-input-number`. */
   parserDollar = parserDollar;
 }

@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { PaymentMethodsService } from '../../../core/services/payment-methods.service';
 
+/**
+ * Componente para crear y editar un registro de método de pago.
+ * @description Proporciona un formulario reactivo para gestionar el nombre y la descripción del método de pago.
+ */
 @Component({
   selector: 'app-payment-method',
   standalone: true,
@@ -29,11 +33,23 @@ import { PaymentMethodsService } from '../../../core/services/payment-methods.se
   styleUrl: './payment-method.component.scss'
 })
 export class PaymentMethodComponent implements OnInit {
+  /** Grupo de formulario reactivo para los campos del método de pago. */
   form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
   isLoading = false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
   isEditing = false;
+  /** UUID del método de pago que se está editando, o null al crear uno nuevo. */
   paymentMethodId: string | null = null;
 
+  /**
+   * Inicializa el componente PaymentMethodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _paymentMethodsService Servicio para operaciones CRUD de métodos de pago.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,6 +64,10 @@ export class PaymentMethodComponent implements OnInit {
     });
   }
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.paymentMethodId = this.route.snapshot.paramMap.get('paym_uuid');
     this.isEditing = !!this.paymentMethodId;
@@ -59,6 +79,10 @@ export class PaymentMethodComponent implements OnInit {
     }
   }
 
+  /**
+   * Carga un registro de método de pago existente por su ID y completa el formulario.
+   * @returns void
+   */
   loadPaymentMethod(): void {
     this.isLoading = true;
     this._paymentMethodsService.getPaymentMethodById(this.paymentMethodId!).subscribe({
@@ -82,6 +106,10 @@ export class PaymentMethodComponent implements OnInit {
     });
   }
 
+  /**
+   * Valida y envía el formulario para crear o actualizar el método de pago.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -133,10 +161,19 @@ export class PaymentMethodComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la operación y navega de regreso a la lista de métodos de pago.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/payment-methods']);
   }
 
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

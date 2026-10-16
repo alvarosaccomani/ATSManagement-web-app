@@ -23,11 +23,21 @@ import { PaymentPeriodsService } from '../../../core/services/payment-periods.se
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
+/**
+ * Interfaz auxiliar que vincula un período con los UUID de su tarjeta padre y de su período.
+ * @description Se utiliza internamente para autocompletar el campo de tarjeta cuando se selecciona un período de facturación.
+ */
 interface RelatedData {
+  /** UUID de la tarjeta padre. */
   crd_uuid: string;
+  /** UUID del período de facturación. */
   per_uuid: string;
 }
 
+/**
+ * Componente para crear y editar un pago de período de facturación.
+ * @description Gestiona la fecha de pago, el monto pagado, el método de pago, la referencia de pago, el estado y el período/tarjeta asociados.
+ */
 @Component({
   selector: 'app-payment-period',
   standalone: true,
@@ -50,20 +60,40 @@ interface RelatedData {
   styleUrl: './payment-period.component.scss'
 })
 export class PaymentPeriodComponent implements OnInit {
+  /** Grupo de formulario reactivo para el pago del período. */
   form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
   isLoading = false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
   isEditing = false;
+  /** UUID del pago que se está editando, o null al crear uno nuevo. */
   paymentId: string | null = null;
 
-  // Opciones para selects cargadas desde el backend
+  /** Opciones de métodos de pago disponibles para el menú desplegable. */
   paymentMethods: any[] = [];
+  /** Opciones de estados de pago disponibles para el menú desplegable. */
   paymentStatuses: any[] = [];
+  /** Opciones de períodos de facturación disponibles para el menú desplegable. */
   periods: any[] = [];
+  /** Opciones de tarjetas disponibles para el menú desplegable. */
   cards: any[] = [];
 
-  // Mapeo de datos relacionados
+  /** Mapa interno que vincula los UUID de períodos con los UUID de sus tarjetas padre. */
   private relatedDataMap: { [key: string]: RelatedData } = {};
 
+  /**
+   * Inicializa el componente PaymentPeriodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _cardsService Servicio para obtener las tarjetas.
+   * @param _periodsService Servicio para obtener los períodos de facturación.
+   * @param _paymentMethodsService Servicio para obtener los métodos de pago.
+   * @param _paymentPeriodsStatusService Servicio para obtener los estados de pago de períodos.
+   * @param _paymentPeriodsService Servicio para operaciones CRUD de pagos de períodos.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -88,6 +118,10 @@ export class PaymentPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     const payp_uuid = this.route.snapshot.paramMap.get('payp_uuid');
     const crd_uuid = this.route.snapshot.paramMap.get('crd_uuid');
@@ -115,6 +149,10 @@ export class PaymentPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga los métodos de pago disponibles desde el backend.
+   * @returns void
+   */
   loadPaymentMethods(): void {
     this._paymentMethodsService.getPaymentMethods().subscribe({
       next: (response: any) => {
@@ -128,6 +166,10 @@ export class PaymentPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga los estados de pago de períodos disponibles desde el backend.
+   * @returns void
+   */
   loadPaymentStatuses(): void {
     this._paymentPeriodsStatusService.getPaymentPeriodsStatus().subscribe({
       next: (response: any) => {
@@ -141,6 +183,10 @@ export class PaymentPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga las tarjetas y sus períodos de facturación para completar las opciones desplegables y las asignaciones de relación.
+   * @returns void
+   */
   loadPeriodsData(): void {
     this.isLoading = true;
     this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe({
@@ -197,6 +243,13 @@ export class PaymentPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga un registro de pago de período existente y completa el formulario.
+   * @param crd_uuid UUID de la tarjeta.
+   * @param per_uuid UUID del período.
+   * @param payp_uuid UUID del pago de período.
+   * @returns void
+   */
   loadPayment(crd_uuid: string, per_uuid: string, payp_uuid: string): void {
     this.isLoading = true;
     this._paymentPeriodsService.getPaymentPeriodById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', crd_uuid, per_uuid, payp_uuid).subscribe({
@@ -225,6 +278,11 @@ export class PaymentPeriodComponent implements OnInit {
     });
   }
 
+  /**
+   * Completa el control de formulario de tarjeta asociado con un período seleccionado.
+   * @param periodId UUID del período seleccionado.
+   * @returns void
+   */
   loadRelatedData(periodId: string): void {
     if (this.relatedDataMap.hasOwnProperty(periodId)) {
       const data = this.relatedDataMap[periodId];
@@ -234,6 +292,10 @@ export class PaymentPeriodComponent implements OnInit {
     }
   }
 
+  /**
+   * Valida y envía el formulario para crear o actualizar el pago del período.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -302,10 +364,19 @@ export class PaymentPeriodComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la operación y navega de regreso a la lista de pagos de períodos.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/payment-periods']);
   }
 
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {
@@ -317,6 +388,11 @@ export class PaymentPeriodComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Formatea un período numérico (`YYYYMM`) como `MM/YYYY`.
+   * @param periodNumber Valor numérico del período.
+   * @returns Cadena de período formateada.
+   */
   formatPeriodNumber(periodNumber: number): string {
     const periodStr = periodNumber.toString();
     const year = periodStr.substring(0, 4);
@@ -324,11 +400,20 @@ export class PaymentPeriodComponent implements OnInit {
     return `${month}/${year}`;
   }
 
+  /** Función formateadora de visualización de moneda. */
   formatterDollar = formatterDollar;
+  /** Función analizadora de entrada de moneda. */
   parserDollar = parserDollar;
+  /** Alias para la función formateadora de visualización de moneda. */
   currencyFormatter = formatterDollar;
+  /** Alias para la función analizadora de entrada de moneda. */
   currencyParser = parserDollar;
 
+  /**
+   * Devuelve el color de etiqueta de Ng-Zorro para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con el color de la etiqueta.
+   */
   getMethodColor(methodId: string): string {
     const label = this.getMethodLabel(methodId).toLowerCase();
     if (label.includes('banco')) return 'blue';
@@ -339,6 +424,11 @@ export class PaymentPeriodComponent implements OnInit {
     return 'default';
   }
 
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
   getMethodIcon(methodId: string): string {
     const label = this.getMethodLabel(methodId).toLowerCase();
     if (label.includes('banco')) return 'bank';
@@ -348,14 +438,29 @@ export class PaymentPeriodComponent implements OnInit {
     return 'credit-card';
   }
 
+  /**
+   * Formatea un nombre de método de pago sin procesar a formato de título.
+   * @param name Nombre del método de pago sin procesar.
+   * @returns Nombre del método de pago formateado.
+   */
   formatMethodName(name: string): string {
     return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
 
+  /**
+   * Convierte a mayúscula la primera letra de un nombre de estado.
+   * @param name Nombre del estado sin procesar.
+   * @returns Nombre del estado con inicial mayúscula.
+   */
   formatStatusName(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena de estado de la insignia.
+   */
   getStatusColor(statusId: string): string {
     const label = this.getStatusLabel(statusId).toLowerCase();
     if (label.includes('confirmado')) return 'success';
@@ -364,6 +469,11 @@ export class PaymentPeriodComponent implements OnInit {
     return 'default';
   }
 
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
   getStatusIcon(statusId: string): string {
     const label = this.getStatusLabel(statusId).toLowerCase();
     if (label.includes('confirmado')) return 'check-circle';
@@ -372,11 +482,21 @@ export class PaymentPeriodComponent implements OnInit {
     return 'info-circle';
   }
 
+  /**
+   * Resuelve la etiqueta de visualización para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena con la etiqueta del estado.
+   */
   getStatusLabel(statusId: string): string {
     const status = this.paymentStatuses.find(s => s.value === statusId);
     return status ? status.label : 'Desconocido';
   }
 
+  /**
+   * Resuelve la etiqueta de visualización para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con la etiqueta del método.
+   */
   getMethodLabel(methodId: string): string {
     const method = this.paymentMethods.find(m => m.value === methodId);
     return method ? method.label : 'Desconocido';

@@ -21,6 +21,14 @@ import { VouchersService } from '../../../core/services/vouchers.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
+/**
+ * Form component (`<app-voucher>`) for creating and editing card purchase vouchers
+ * at `/admin/user/voucher/new` and `/admin/user/voucher/edit/:vou_uuid`.
+ *
+ * @description Manages voucher details (authorization code, transaction number, merchant CUIT,
+ * amount, operation type, status) and automatically generates monthly installment schedules (`fees`)
+ * when `vou_installments` is enabled.
+ */
 @Component({
   selector: 'app-voucher',
   standalone: true,
@@ -43,24 +51,45 @@ import { formatterDollar, parserDollar } from '../../../core/utils/currency-form
   styleUrl: './voucher.component.scss'
 })
 export class VoucherComponent implements OnInit {
+  /** Reactive form group for voucher fields. */
   form: FormGroup;
+  /** Indicates whether data is loading or being submitted. */
   isLoading = false;
+  /** Indicates whether the component is editing an existing voucher (`true`) or creating a new one (`false`). */
   isEditing = false;
+  /** Card UUID associated with the voucher. */
   cardId: string | null = '1';
+  /** Billing period UUID associated with the voucher. */
   periodId: string | null = '1';
+  /** Voucher UUID when editing an existing record. */
   voucherId: string | null = null;
+  /** Existing installment records loaded when editing a voucher. */
   existingFees: any[] = [];
 
-  // Opciones para selects
+  /** Available operation types from the parametric catalog. */
   operationTypes: TypeOperationInterface[] = [];
 
+  /** Available voucher states from the parametric catalog. */
   voucherStatuses: VoucherStateInterface[] = [];
 
+  /** Supported currency options. */
   currencies = [
     { value: 'ARS', label: 'Pesos Argentinos ($)' },
     { value: 'USD', label: 'Dólares Americanos (US$)' }
   ];
 
+  /**
+   * Initializes the voucher form component.
+   *
+   * @param fb Angular `FormBuilder` instance.
+   * @param route Activated route snapshot.
+   * @param router Angular `Router` instance.
+   * @param _typeOperationsService Service for fetching operation types.
+   * @param _vouchersStatesService Service for fetching voucher states.
+   * @param _vouchersService Service for voucher CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Modal notification service.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -93,6 +122,10 @@ export class VoucherComponent implements OnInit {
     });
   }
 
+  /**
+   * Reads route parameters, loads operation types and voucher states, and sets up dynamic
+   * installment count validators when `vou_installments` changes.
+   */
   ngOnInit(): void {
     this.voucherId = this.route.snapshot.paramMap.get('vou_uuid') || this.route.snapshot.paramMap.get('id');
     this.cardId = this.route.snapshot.paramMap.get('crd_uuid') || '1';
@@ -126,6 +159,9 @@ export class VoucherComponent implements OnInit {
     });
   }
 
+  /**
+   * Fetches an existing voucher record by its composite identifiers and populates the form.
+   */
   loadVoucher(): void {
     this.isLoading = true;
     const cid = this.cardId || '1';
@@ -160,6 +196,9 @@ export class VoucherComponent implements OnInit {
     )
   }
 
+  /**
+   * Loads operation types from {@link TypeOperationsService}.
+   */
   loadTypeOperations(): void {
     this.isLoading = true;
 
@@ -185,6 +224,9 @@ export class VoucherComponent implements OnInit {
     )
   }
 
+  /**
+   * Loads voucher states from {@link VouchersStatesService}.
+   */
   loadVouchersStates(): void {
     this.isLoading = true;
 
@@ -210,6 +252,10 @@ export class VoucherComponent implements OnInit {
     )
   }
 
+  /**
+   * Validates the form, generates the monthly installment schedule (`fees`) when `vou_installments` is enabled,
+   * and saves or updates the voucher via {@link VouchersService}.
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -305,10 +351,19 @@ export class VoucherComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels editing and returns to the vouchers list (`/admin/user/vouchers`).
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/vouchers']);
   }
 
+  /**
+   * Returns a human-readable validation error message for a given form control.
+   *
+   * @param controlName Name of the form control.
+   * @returns Validation error string or `null`.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {
@@ -335,8 +390,12 @@ export class VoucherComponent implements OnInit {
     return null;
   }
 
+  /** Currency display formatter function. */
   formatterDollar = formatterDollar;
+  /** Currency input parser function. */
   parserDollar = parserDollar;
+  /** Alias for currency display formatter. */
   currencyFormatter = formatterDollar;
+  /** Alias for currency input parser. */
   currencyParser = parserDollar;
 }

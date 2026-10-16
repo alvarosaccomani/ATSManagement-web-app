@@ -1,0 +1,2556 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  VoucherComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/voucher/voucher.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Form component (<code>&lt;app-voucher&gt;</code>) for creating and editing card purchase vouchers
+at <code>/admin/user/voucher/new</code> and <code>/admin/user/voucher/edit/:vou_uuid</code>.</p>
+<p>Manages voucher details (authorization code, transaction number, merchant CUIT,
+amount, operation type, status) and automatically generates monthly installment schedules (<code>fees</code>)
+when <code>vou_installments</code> is enabled.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-voucher</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>NzFormModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzDividerModule</code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzDatePickerModule</code>
+</div>
+                        <div>    <code>NzSwitchModule</code>
+</div>
+                        <div>    <code>NzInputNumberModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./voucher.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./voucher.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./voucher.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzFormModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDividerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDatePickerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSwitchModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputNumberModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#cardId" >cardId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencies" >currencies</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencyFormatter" >currencyFormatter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencyParser" >currencyParser</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#existingFees" >existingFees</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#formatterDollar" >formatterDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isEditing" >isEditing</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#operationTypes" >operationTypes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#parserDollar" >parserDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#periodId" >periodId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#voucherId" >voucherId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#voucherStatuses" >voucherStatuses</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getErrorMessage" >getErrorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadTypeOperations" >loadTypeOperations</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadVoucher" >loadVoucher</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadVouchersStates" >loadVouchersStates</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onCancel" >onCancel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _typeOperationsService: <a href="../injectables/TypeOperationsService.html" target="_self">TypeOperationsService</a>, _vouchersStatesService: <a href="../injectables/VouchersStatesService.html" target="_self">VouchersStatesService</a>, _vouchersService: <a href="../injectables/VouchersService.html" target="_self">VouchersService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:79</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the voucher form component.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular <code>FormBuilder</code> instance.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Activated route snapshot.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular <code>Router</code> instance.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_typeOperationsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TypeOperationsService.html" target="_self" >TypeOperationsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching operation types.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_vouchersStatesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/VouchersStatesService.html" target="_self" >VouchersStatesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching voucher states.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_vouchersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/VouchersService.html" target="_self" >VouchersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for voucher CRUD operations.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >NzMessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Ng-Zorro toast message service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Modal notification service.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getErrorMessage"></a>
+                    <span class="name">
+                        <span ><b>getErrorMessage</b></span>
+                        <a href="#getErrorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getErrorMessage(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="367"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:367</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns a human-readable validation error message for a given form control.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Name of the form control.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Validation error string or <code>null</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTypeOperations"></a>
+                    <span class="name">
+                        <span ><b>loadTypeOperations</b></span>
+                        <a href="#loadTypeOperations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadTypeOperations()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="202"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads operation types from <a href="../injectables/TypeOperationsService.html">TypeOperationsService</a>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadVoucher"></a>
+                    <span class="name">
+                        <span ><b>loadVoucher</b></span>
+                        <a href="#loadVoucher"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadVoucher()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:165</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches an existing voucher record by its composite identifiers and populates the form.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadVouchersStates"></a>
+                    <span class="name">
+                        <span ><b>loadVouchersStates</b></span>
+                        <a href="#loadVouchersStates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadVouchersStates()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="230"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:230</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads voucher states from <a href="../injectables/VouchersStatesService.html">VouchersStatesService</a>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reads route parameters, loads operation types and voucher states, and sets up dynamic
+installment count validators when <code>vou_installments</code> changes.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCancel"></a>
+                    <span class="name">
+                        <span ><b>onCancel</b></span>
+                        <a href="#onCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCancel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="357"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:357</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cancels editing and returns to the vouchers list (<code>/admin/user/vouchers</code>).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:259</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates the form, generates the monthly installment schedule (<code>fees</code>) when <code>vou_installments</code> is enabled,
+and saves or updates the voucher via <a href="../injectables/VouchersService.html">VouchersService</a>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardId"></a>
+                    <span class="name">
+                        <span ><b>cardId</b></span>
+                        <a href="#cardId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;1&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Card UUID associated with the voucher.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencies"></a>
+                    <span class="name">
+                        <span ><b>currencies</b></span>
+                        <a href="#currencies"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { value: &#x27;ARS&#x27;, label: &#x27;Pesos Argentinos ($)&#x27; },
+    { value: &#x27;USD&#x27;, label: &#x27;Dólares Americanos (US$)&#x27; }
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Supported currency options.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencyFormatter"></a>
+                    <span class="name">
+                        <span ><b>currencyFormatter</b></span>
+                        <a href="#currencyFormatter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="398" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:398</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Alias for currency display formatter.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencyParser"></a>
+                    <span class="name">
+                        <span ><b>currencyParser</b></span>
+                        <a href="#currencyParser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="400" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:400</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Alias for currency input parser.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="existingFees"></a>
+                    <span class="name">
+                        <span ><b>existingFees</b></span>
+                        <a href="#existingFees"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Existing installment records loaded when editing a voucher.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.dev/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reactive form group for voucher fields.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatterDollar"></a>
+                    <span class="name">
+                        <span ><b>formatterDollar</b></span>
+                        <a href="#formatterDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="394" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:394</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currency display formatter function.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditing"></a>
+                    <span class="name">
+                        <span ><b>isEditing</b></span>
+                        <a href="#isEditing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicates whether the component is editing an existing voucher (<code>true</code>) or creating a new one (<code>false</code>).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicates whether data is loading or being submitted.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="operationTypes"></a>
+                    <span class="name">
+                        <span ><b>operationTypes</b></span>
+                        <a href="#operationTypes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TypeOperationInterface.html" target="_self" >TypeOperationInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available operation types from the parametric catalog.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parserDollar"></a>
+                    <span class="name">
+                        <span ><b>parserDollar</b></span>
+                        <a href="#parserDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="396" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:396</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currency input parser function.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periodId"></a>
+                    <span class="name">
+                        <span ><b>periodId</b></span>
+                        <a href="#periodId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;1&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Billing period UUID associated with the voucher.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="voucherId"></a>
+                    <span class="name">
+                        <span ><b>voucherId</b></span>
+                        <a href="#voucherId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Voucher UUID when editing an existing record.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="voucherStatuses"></a>
+                    <span class="name">
+                        <span ><b>voucherStatuses</b></span>
+                        <a href="#voucherStatuses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/VoucherStateInterface.html" target="_self" >VoucherStateInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/admin/user/voucher/voucher.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available voucher states from the parametric catalog.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzDatePickerModule } from &#x27;ng-zorro-antd/date-picker&#x27;;
+import { NzSwitchModule } from &#x27;ng-zorro-antd/switch&#x27;;
+import { NzInputNumberModule } from &#x27;ng-zorro-antd/input-number&#x27;;
+import { TypeOperationInterface } from &#x27;../../../core/interfaces/type-operation&#x27;;
+import { VoucherStateInterface } from &#x27;../../../core/interfaces/voucher-state&#x27;;
+import { TypeOperationsService } from &#x27;../../../core/services/type-operations.service&#x27;;
+import { VouchersStatesService } from &#x27;../../../core/services/vouchers-states.service&#x27;;
+import { VouchersService } from &#x27;../../../core/services/vouchers.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+/**
+ * Form component (&#x60;&lt;app-voucher&gt;&#x60;) for creating and editing card purchase vouchers
+ * at &#x60;/admin/user/voucher/new&#x60; and &#x60;/admin/user/voucher/edit/:vou_uuid&#x60;.
+ *
+ * @description Manages voucher details (authorization code, transaction number, merchant CUIT,
+ * amount, operation type, status) and automatically generates monthly installment schedules (&#x60;fees&#x60;)
+ * when &#x60;vou_installments&#x60; is enabled.
+ */
+@Component({
+  selector: &#x27;app-voucher&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzSwitchModule,
+    NzInputNumberModule
+  ],
+  templateUrl: &#x27;./voucher.component.html&#x27;,
+  styleUrl: &#x27;./voucher.component.scss&#x27;
+})
+export class VoucherComponent implements OnInit {
+  /** Reactive form group for voucher fields. */
+  form: FormGroup;
+  /** Indicates whether data is loading or being submitted. */
+  isLoading &#x3D; false;
+  /** Indicates whether the component is editing an existing voucher (&#x60;true&#x60;) or creating a new one (&#x60;false&#x60;). */
+  isEditing &#x3D; false;
+  /** Card UUID associated with the voucher. */
+  cardId: string | null &#x3D; &#x27;1&#x27;;
+  /** Billing period UUID associated with the voucher. */
+  periodId: string | null &#x3D; &#x27;1&#x27;;
+  /** Voucher UUID when editing an existing record. */
+  voucherId: string | null &#x3D; null;
+  /** Existing installment records loaded when editing a voucher. */
+  existingFees: any[] &#x3D; [];
+
+  /** Available operation types from the parametric catalog. */
+  operationTypes: TypeOperationInterface[] &#x3D; [];
+
+  /** Available voucher states from the parametric catalog. */
+  voucherStatuses: VoucherStateInterface[] &#x3D; [];
+
+  /** Supported currency options. */
+  currencies &#x3D; [
+    { value: &#x27;ARS&#x27;, label: &#x27;Pesos Argentinos ($)&#x27; },
+    { value: &#x27;USD&#x27;, label: &#x27;Dólares Americanos (US$)&#x27; }
+  ];
+
+  /**
+   * Initializes the voucher form component.
+   *
+   * @param fb Angular &#x60;FormBuilder&#x60; instance.
+   * @param route Activated route snapshot.
+   * @param router Angular &#x60;Router&#x60; instance.
+   * @param _typeOperationsService Service for fetching operation types.
+   * @param _vouchersStatesService Service for fetching voucher states.
+   * @param _vouchersService Service for voucher CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Modal notification service.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _typeOperationsService: TypeOperationsService,
+    private _vouchersStatesService: VouchersStatesService,
+    private _vouchersService: VouchersService,
+    private message: NzMessageService,
+    private _messageService: MessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      usr_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      crd_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      per_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      vou_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      vou_authorizationnumber: [&#x27;&#x27;, [Validators.required, Validators.maxLength(50)]],
+      vou_transactionnumber: [&#x27;&#x27;, [Validators.required, Validators.maxLength(50)]],
+      vou_datetime: [new Date(), Validators.required],
+      vou_amount: [null, [Validators.required, Validators.min(0)]],
+      vou_currency: [&#x27;ARS&#x27;, Validators.required],
+      vou_commercename: [&#x27;&#x27;, [Validators.required, Validators.maxLength(200)]],
+      vou_commercecuit: [&#x27;&#x27;, [Validators.pattern(/^\d{11}$/)]],
+      vou_commercecategory: [&#x27;&#x27;, Validators.maxLength(100)],
+      tyop_uuid: [&#x27;1&#x27;, Validators.required],
+      vou_installments: [false],
+      vou_installmentcount: [1],
+      vou_installmentinterest: [0],
+      vous_uuid: [&#x27;1&#x27;, Validators.required],
+      vou_notes: [&#x27;&#x27;]
+    });
+  }
+
+  /**
+   * Reads route parameters, loads operation types and voucher states, and sets up dynamic
+   * installment count validators when &#x60;vou_installments&#x60; changes.
+   */
+  ngOnInit(): void {
+    this.voucherId &#x3D; this.route.snapshot.paramMap.get(&#x27;vou_uuid&#x27;) || this.route.snapshot.paramMap.get(&#x27;id&#x27;);
+    this.cardId &#x3D; this.route.snapshot.paramMap.get(&#x27;crd_uuid&#x27;) || &#x27;1&#x27;;
+    this.periodId &#x3D; this.route.snapshot.paramMap.get(&#x27;per_uuid&#x27;) || &#x27;1&#x27;;
+    this.isEditing &#x3D; !!this.voucherId;
+    this.loadTypeOperations();
+    this.loadVouchersStates();
+    
+    if (this.isEditing) {
+      this.loadVoucher();
+    } else {
+      this.form.patchValue({
+        usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;,
+        crd_uuid: this.cardId,
+        per_uuid: this.periodId
+      })
+      this.form.get(&#x27;vou_uuid&#x27;)?.disable();
+    }
+
+    // Escuchar cambios en cuotas para validar cantidad
+    this.form.get(&#x27;vou_installments&#x27;)?.valueChanges.subscribe(value &#x3D;&gt; {
+      const countControl &#x3D; this.form.get(&#x27;vou_installmentcount&#x27;);
+      if (value) {
+        countControl?.setValidators([Validators.required, Validators.min(2), Validators.max(36)]);
+      } else {
+        countControl?.clearValidators();
+        countControl?.setValue(1);
+        this.form.get(&#x27;vou_installmentinterest&#x27;)?.setValue(0);
+      }
+      countControl?.updateValueAndValidity();
+    });
+  }
+
+  /**
+   * Fetches an existing voucher record by its composite identifiers and populates the form.
+   */
+  loadVoucher(): void {
+    this.isLoading &#x3D; true;
+    const cid &#x3D; this.cardId || &#x27;1&#x27;;
+    const pid &#x3D; this.periodId || &#x27;1&#x27;;
+
+    this._vouchersService.getVocuherById(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, cid, pid, this.voucherId!).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          const voucher &#x3D; {
+            ...response.data,
+            vou_datetime: new Date(response.data.vou_datetime)
+          };
+
+          this.existingFees &#x3D; response.data.fees || [];
+
+          this.form.get(&#x27;vou_uuid&#x27;)?.enable();
+          this.form.patchValue(voucher);
+          this.form.get(&#x27;vou_uuid&#x27;)?.disable();
+          
+          this.isLoading &#x3D; false;
+        } else {
+          this.isLoading &#x3D; false;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+        this.message.error(errorMessage?.error?.error || &#x27;Error al recuperar el comprobante&#x27;);
+      }
+    )
+  }
+
+  /**
+   * Loads operation types from {@link TypeOperationsService}.
+   */
+  loadTypeOperations(): void {
+    this.isLoading &#x3D; true;
+
+    this._typeOperationsService.getTypeOperations().subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.operationTypes &#x3D; response.data;
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Loads voucher states from {@link VouchersStatesService}.
+   */
+  loadVouchersStates(): void {
+    this.isLoading &#x3D; true;
+
+    this._vouchersStatesService.getVoucherStates().subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.voucherStatuses &#x3D; response.data;
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Validates the form, generates the monthly installment schedule (&#x60;fees&#x60;) when &#x60;vou_installments&#x60; is enabled,
+   * and saves or updates the voucher via {@link VouchersService}.
+   */
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this._messageService.error(&#x27;Formulario Inválido&#x27;, &#x27;Por favor complete todos los campos obligatorios&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+
+    const rawValue &#x3D; this.form.getRawValue();
+    const vou_amount &#x3D; rawValue.vou_amount || 0;
+    const count &#x3D; rawValue.vou_installments ? (rawValue.vou_installmentcount || 1) : 1;
+    const fees: any[] &#x3D; [];
+
+    if (rawValue.vou_installments &amp;&amp; count &gt; 1) {
+      const amountPerInstallment &#x3D; parseFloat((vou_amount / count).toFixed(2));
+      const lastAmount &#x3D; parseFloat((vou_amount - (amountPerInstallment * (count - 1))).toFixed(2));
+      const baseDate &#x3D; new Date(rawValue.vou_datetime || new Date());
+
+      for (let i &#x3D; 1; i &lt;&#x3D; count; i++) {
+        const dueDate &#x3D; new Date(baseDate);
+        dueDate.setMonth(baseDate.getMonth() + i);
+        const formattedDate &#x3D; dueDate.toISOString().split(&#x27;T&#x27;)[0];
+
+        const existingFee &#x3D; this.existingFees.find(ef &#x3D;&gt; ef.vouf_quotanumber &#x3D;&#x3D;&#x3D; i);
+
+        fees.push({
+          vouf_uuid: existingFee ? existingFee.vouf_uuid : undefined,
+          vouf_quotanumber: i,
+          vouf_quotaamount: i &#x3D;&#x3D;&#x3D; count ? lastAmount : amountPerInstallment,
+          vouf_quotaduedate: formattedDate,
+          voufs_uuid: existingFee ? existingFee.voufs_uuid : &#x27;1&#x27;
+        });
+      }
+    }
+
+    const payload &#x3D; {
+      ...rawValue,
+      fees
+    };
+
+    if(!this.isEditing) {
+      this._vouchersService.saveVoucher(payload).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this._messageService.success(
+              &#x27;Comprobante Creado&#x27;, 
+              &#x27;El comprobante se agregó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/vouchers&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo guardar el comprobante&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage?.error?.error || &#x27;Hubo un problema al guardar el comprobante&#x27;);
+        }
+      });
+    } else {
+      this._vouchersService.updateVoucher(payload).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this._messageService.success(
+              &#x27;Comprobante Actualizado&#x27;, 
+              &#x27;El comprobante se actualizó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/vouchers&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar el comprobante&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage?.error?.error || &#x27;Hubo un problema al actualizar el comprobante&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancels editing and returns to the vouchers list (&#x60;/admin/user/vouchers&#x60;).
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/vouchers&#x27;]);
+  }
+
+  /**
+   * Returns a human-readable validation error message for a given form control.
+   *
+   * @param controlName Name of the form control.
+   * @returns Validation error string or &#x60;null&#x60;.
+   */
+  getErrorMessage(controlName: string): string | null {
+    const control &#x3D; this.form.get(controlName);
+    if (control?.hasError(&#x27;required&#x27;)) {
+      return &#x27;Este campo es obligatorio&#x27;;
+    }
+    if (control?.hasError(&#x27;pattern&#x27;)) {
+      if (controlName &#x3D;&#x3D;&#x3D; &#x27;vou_commercecuit&#x27;) {
+        return &#x27;Ingrese un CUIT válido (11 dígitos)&#x27;;
+      }
+      return &#x27;Formato inválido&#x27;;
+    }
+    if (control?.hasError(&#x27;minlength&#x27;)) {
+      return &#x60;Mínimo ${control.errors?.[&#x27;minlength&#x27;].requiredLength} caracteres&#x60;;
+    }
+    if (control?.hasError(&#x27;maxlength&#x27;)) {
+      return &#x60;Máximo ${control.errors?.[&#x27;maxlength&#x27;].requiredLength} caracteres&#x60;;
+    }
+    if (control?.hasError(&#x27;min&#x27;)) {
+      return &#x27;El valor mínimo es &#x27; + control.errors?.[&#x27;min&#x27;].min;
+    }
+    if (control?.hasError(&#x27;max&#x27;)) {
+      return &#x27;El valor máximo es &#x27; + control.errors?.[&#x27;max&#x27;].max;
+    }
+    return null;
+  }
+
+  /** Currency display formatter function. */
+  formatterDollar &#x3D; formatterDollar;
+  /** Currency input parser function. */
+  parserDollar &#x3D; parserDollar;
+  /** Alias for currency display formatter. */
+  currencyFormatter &#x3D; formatterDollar;
+  /** Alias for currency input parser. */
+  currencyParser &#x3D; parserDollar;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;voucher-form-container&quot;&gt;
+  &lt;div class&#x3D;&quot;form-header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;file-text&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      {{ isEditing ? &#x27;Editar Voucher&#x27; : &#x27;Nuevo Voucher&#x27; }}
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;onCancel()&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;close&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+  @if (isLoading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando datos...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  } @else {
+    &lt;form nz-form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot;&gt;
+      &lt;!-- Números de transacción --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_authorizationnumber&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Número de Autorización
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_authorizationnumber&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_authorizationnumber&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;vou_authorizationnumber&#x27;) }}&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;vou_authorizationnumber&quot; 
+                placeholder&#x3D;&quot;Ingrese número de autorización&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_transactionnumber&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Número de Transacción
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_transactionnumber&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_transactionnumber&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;vou_transactionnumber&#x27;) }}&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;vou_transactionnumber&quot; 
+                placeholder&#x3D;&quot;Ingrese número de transacción&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Fecha y monto --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_datetime&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Fecha y Hora
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_datetime&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_datetime&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione fecha y hora&quot;
+            &gt;
+              &lt;nz-date-picker 
+                formControlName&#x3D;&quot;vou_datetime&quot; 
+                nzShowTime
+                nzFormat&#x3D;&quot;dd/MM/yyyy HH:mm&quot;
+                nzPlaceHolder&#x3D;&quot;Seleccione fecha y hora&quot;
+                nzSize&#x3D;&quot;large&quot;
+                style&#x3D;&quot;width: 100%&quot;
+              &gt;&lt;/nz-date-picker&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_amount&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Monto
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_amount&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_amount&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;vou_amount&#x27;) }}&quot;
+            &gt;
+              &lt;nz-input-number 
+                formControlName&#x3D;&quot;vou_amount&quot; 
+                nzPlaceHolder&#x3D;&quot;0.00&quot;
+                [nzMin]&#x3D;&quot;0&quot;
+                [nzStep]&#x3D;&quot;100&quot;
+                [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                [nzParser]&#x3D;&quot;parserDollar&quot;
+                style&#x3D;&quot;width: 100%&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;&lt;/nz-input-number&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_currency&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Moneda
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;vou_currency&quot; 
+                placeholder&#x3D;&quot;Seleccione moneda&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;
+                @for (currency of currencies; track currency.value) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;currency.value&quot; [nzLabel]&#x3D;&quot;currency.label&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Comercio --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Información del Comercio&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_commercename&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Nombre del Comercio
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_commercename&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_commercename&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;vou_commercename&#x27;) }}&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;vou_commercename&quot; 
+                placeholder&#x3D;&quot;Ingrese nombre del comercio&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;6&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_commercecuit&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              CUIT
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_commercecuit&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_commercecuit&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;vou_commercecuit&#x27;) }}&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;vou_commercecuit&quot; 
+                placeholder&#x3D;&quot;11111111111&quot;
+                maxlength&#x3D;&quot;11&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;6&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_commercecategory&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              Categoría
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_commercecategory&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_commercecategory&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;vou_commercecategory&#x27;) }}&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;vou_commercecategory&quot; 
+                placeholder&#x3D;&quot;Ej: Supermercados&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Tipo y estado --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Detalles de la Operación&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;tyop_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Tipo de Operación
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;tyop_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;tyop_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un tipo de operación&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;tyop_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione tipo&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;
+                @for (type of operationTypes; track type.tyop_uuid) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;type.tyop_uuid&quot; [nzLabel]&#x3D;&quot;type.tyop_name&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vous_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Estado
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vous_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;vous_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un estado&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;vous_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione estado&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;
+                @for (status of voucherStatuses; track status.vous_uuid) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;status.vous_uuid&quot; [nzLabel]&#x3D;&quot;status.vous_name&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_installments&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              En Cuotas
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;nz-switch 
+                formControlName&#x3D;&quot;vou_installments&quot; 
+                nzCheckedChildren&#x3D;&quot;Sí&quot; 
+                nzUnCheckedChildren&#x3D;&quot;No&quot;
+              &gt;&lt;/nz-switch&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Cuotas (condicional) --&gt;
+      @if (form.get(&#x27;vou_installments&#x27;)?.value) {
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;vou_installmentcount&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Cantidad de Cuotas
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;vou_installmentcount&#x27;)?.dirty &amp;&amp; form.get(&#x27;vou_installmentcount&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;Seleccione cantidad de cuotas (2-36)&quot;
+              &gt;
+                &lt;nz-input-number 
+                  formControlName&#x3D;&quot;vou_installmentcount&quot; 
+                  [nzMin]&#x3D;&quot;2&quot;
+                  [nzMax]&#x3D;&quot;36&quot;
+                  [nzStep]&#x3D;&quot;1&quot;
+                  style&#x3D;&quot;width: 100%&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                &gt;&lt;/nz-input-number&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;vou_installmentinterest&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+                Interés Total
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-input-number 
+                  formControlName&#x3D;&quot;vou_installmentinterest&quot; 
+                  nzPlaceHolder&#x3D;&quot;0.00&quot;
+                  [nzMin]&#x3D;&quot;0&quot;
+                  [nzStep]&#x3D;&quot;100&quot;
+                  [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                  [nzParser]&#x3D;&quot;parserDollar&quot;
+                  style&#x3D;&quot;width: 100%&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                &gt;&lt;/nz-input-number&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;!-- Notas --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Notas&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;vou_notes&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              Notas
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;textarea 
+                nz-input 
+                formControlName&#x3D;&quot;vou_notes&quot; 
+                placeholder&#x3D;&quot;Notas adicionales (opcional)&quot;
+                rows&#x3D;&quot;3&quot;
+                [nzAutosize]&#x3D;&quot;{ minRows: 2, maxRows: 6 }&quot;
+              &gt;&lt;/textarea&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+      &lt;div class&#x3D;&quot;form-actions&quot;&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;default&quot; 
+          (click)&#x3D;&quot;onCancel()&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;rollback&quot;&gt;&lt;/i&gt;
+          Cancelar
+        &lt;/button&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;primary&quot; 
+          type&#x3D;&quot;submit&quot;
+          [nzLoading]&#x3D;&quot;isLoading&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;save&quot;&gt;&lt;/i&gt;
+          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Crear Voucher&#x27; }}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  }
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./voucher.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.voucher-form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  max-width: 1400px;
+  margin: 20px auto;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #2f54eb;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      padding: 0;
+      height: auto;
+      line-height: 1;
+      font-size: 16px;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  nz-row {
+    margin-bottom: 24px;
+  }
+
+  nz-form-item {
+    margin-bottom: 0;
+  }
+
+  nz-form-label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+    
+    &amp;::after {
+      content: &#x27;:&#x27;;
+      margin: 0 8px 0 2px;
+    }
+  }
+
+  nz-form-control {
+    .ant-form-item-explain {
+      margin-top: 4px;
+    }
+
+    .form-text {
+      display: block;
+      margin-top: 4px;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 12px;
+    }
+  }
+
+  nz-divider {
+    margin: 24px 0;
+    
+    &amp;.ant-divider-with-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    nz-row {
+      margin-bottom: 16px;
+    }
+
+    nz-col {
+      margin-bottom: 16px;
+    }
+
+    nz-form-label {
+      margin-bottom: 8px;
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="voucher-form-container">  <div class="form-header">    <h2>      <i nz-icon nzType="file-text" nzTheme="outline"></i>      {{ isEditing ? \'Editar Voucher\' : \'Nuevo Voucher\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()">      <i nz-icon nzType="close"></i>    </button>  </div>  <nz-divider></nz-divider>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando datos..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">      <!-- Números de transacción -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="vou_authorizationnumber" [nzSpan]="24" nzRequired>              Número de Autorización            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_authorizationnumber\')?.dirty && form.get(\'vou_authorizationnumber\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'vou_authorizationnumber\') }}"            >              <input                 nz-input                 formControlName="vou_authorizationnumber"                 placeholder="Ingrese número de autorización"                nzSize="large"              />            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="vou_transactionnumber" [nzSpan]="24" nzRequired>              Número de Transacción            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_transactionnumber\')?.dirty && form.get(\'vou_transactionnumber\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'vou_transactionnumber\') }}"            >              <input                 nz-input                 formControlName="vou_transactionnumber"                 placeholder="Ingrese número de transacción"                nzSize="large"              />            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Fecha y monto -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="vou_datetime" [nzSpan]="24" nzRequired>              Fecha y Hora            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_datetime\')?.dirty && form.get(\'vou_datetime\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione fecha y hora"            >              <nz-date-picker                 formControlName="vou_datetime"                 nzShowTime                nzFormat="dd/MM/yyyy HH:mm"                nzPlaceHolder="Seleccione fecha y hora"                nzSize="large"                style="width: 100%"              ></nz-date-picker>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="vou_amount" [nzSpan]="24" nzRequired>              Monto            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_amount\')?.dirty && form.get(\'vou_amount\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'vou_amount\') }}"            >              <nz-input-number                 formControlName="vou_amount"                 nzPlaceHolder="0.00"                [nzMin]="0"                [nzStep]="100"                [nzFormatter]="formatterDollar"                [nzParser]="parserDollar"                style="width: 100%"                nzSize="large"              ></nz-input-number>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="vou_currency" [nzSpan]="24" nzRequired>              Moneda            </nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-select                 formControlName="vou_currency"                 placeholder="Seleccione moneda"                nzSize="large"              >                @for (currency of currencies; track currency.value) {                  <nz-option [nzValue]="currency.value" [nzLabel]="currency.label"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Comercio -->      <nz-divider nzText="Información del Comercio" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="vou_commercename" [nzSpan]="24" nzRequired>              Nombre del Comercio            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_commercename\')?.dirty && form.get(\'vou_commercename\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'vou_commercename\') }}"            >              <input                 nz-input                 formControlName="vou_commercename"                 placeholder="Ingrese nombre del comercio"                nzSize="large"              />            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="6">          <nz-form-item>            <nz-form-label nzFor="vou_commercecuit" [nzSpan]="24">              CUIT            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_commercecuit\')?.dirty && form.get(\'vou_commercecuit\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'vou_commercecuit\') }}"            >              <input                 nz-input                 formControlName="vou_commercecuit"                 placeholder="11111111111"                maxlength="11"                nzSize="large"              />            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="6">          <nz-form-item>            <nz-form-label nzFor="vou_commercecategory" [nzSpan]="24">              Categoría            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vou_commercecategory\')?.dirty && form.get(\'vou_commercecategory\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'vou_commercecategory\') }}"            >              <input                 nz-input                 formControlName="vou_commercecategory"                 placeholder="Ej: Supermercados"                nzSize="large"              />            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Tipo y estado -->      <nz-divider nzText="Detalles de la Operación" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="tyop_uuid" [nzSpan]="24" nzRequired>              Tipo de Operación            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'tyop_uuid\')?.dirty && form.get(\'tyop_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un tipo de operación"            >              <nz-select                 formControlName="tyop_uuid"                 placeholder="Seleccione tipo"                nzSize="large"              >                @for (type of operationTypes; track type.tyop_uuid) {                  <nz-option [nzValue]="type.tyop_uuid" [nzLabel]="type.tyop_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="vous_uuid" [nzSpan]="24" nzRequired>              Estado            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'vous_uuid\')?.dirty && form.get(\'vous_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un estado"            >              <nz-select                 formControlName="vous_uuid"                 placeholder="Seleccione estado"                nzSize="large"              >                @for (status of voucherStatuses; track status.vous_uuid) {                  <nz-option [nzValue]="status.vous_uuid" [nzLabel]="status.vous_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="vou_installments" [nzSpan]="24">              En Cuotas            </nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-switch                 formControlName="vou_installments"                 nzCheckedChildren="Sí"                 nzUnCheckedChildren="No"              ></nz-switch>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Cuotas (condicional) -->      @if (form.get(\'vou_installments\')?.value) {        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24" [nzMd]="8">            <nz-form-item>              <nz-form-label nzFor="vou_installmentcount" [nzSpan]="24" nzRequired>                Cantidad de Cuotas              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'vou_installmentcount\')?.dirty && form.get(\'vou_installmentcount\')?.invalid ? \'error\' : \'\'"                nzErrorTip="Seleccione cantidad de cuotas (2-36)"              >                <nz-input-number                   formControlName="vou_installmentcount"                   [nzMin]="2"                  [nzMax]="36"                  [nzStep]="1"                  style="width: 100%"                  nzSize="large"                ></nz-input-number>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="8">            <nz-form-item>              <nz-form-label nzFor="vou_installmentinterest" [nzSpan]="24">                Interés Total              </nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-input-number                   formControlName="vou_installmentinterest"                   nzPlaceHolder="0.00"                  [nzMin]="0"                  [nzStep]="100"                  [nzFormatter]="formatterDollar"                  [nzParser]="parserDollar"                  style="width: 100%"                  nzSize="large"                ></nz-input-number>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <!-- Notas -->      <nz-divider nzText="Notas" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24">          <nz-form-item>            <nz-form-label nzFor="vou_notes" [nzSpan]="24">              Notas            </nz-form-label>            <nz-form-control [nzSpan]="24">              <textarea                 nz-input                 formControlName="vou_notes"                 placeholder="Notas adicionales (opcional)"                rows="3"                [nzAutosize]="{ minRows: 2, maxRows: 6 }"              ></textarea>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-divider></nz-divider>      <div class="form-actions">        <button           nz-button           nzType="default"           (click)="onCancel()"          nzSize="large"        >          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        <button           nz-button           nzType="primary"           type="submit"          [nzLoading]="isLoading"          nzSize="large"        >          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Crear Voucher\' }}        </button>      </div>    </form>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'VoucherComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/VoucherComponent.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/VoucherComponent.html" selected>🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/VoucherComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'VoucherComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'en');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

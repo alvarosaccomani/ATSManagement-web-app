@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Autenticación y Acceso SSO",
+    "file": "autenticacion-y-sso.md"
+  },
+  {
+    "title": "Dashboard, Caja, Ámbitos y Comisiones",
+    "file": "finanzas-caja-y-comisiones.md"
+  },
+  {
+    "title": "Digitalización, Cámara, OCR e IA",
+    "file": "documentos-ocr-e-ia.md"
+  },
+  {
+    "title": "Tarjetas, Vouchers, Cuotas y Parámetros",
+    "file": "tarjetas-vouchers-y-parametros.md"
+  }
+]

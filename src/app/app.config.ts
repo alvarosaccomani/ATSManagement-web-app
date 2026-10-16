@@ -12,6 +12,10 @@ import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 registerLocaleData(en);
 
+/**
+ * Configuración raíz de la aplicación.
+ * @description Configura la detección de cambios de zona, el enrutamiento, la internacionalización (i18n) de Ng-Zorro, las animaciones asíncronas y el cliente HTTP con intercepción JWT.
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

@@ -1,0 +1,1761 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  ImageEditorComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/shared/components/image-editor/image-editor.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Componente interactivo de edición de imágenes (<code>&lt;app-image-editor&gt;</code>) para recortar, rotar, hacer zoom
+y aplicar contraste de umbral binario (binarización) a fotografías de comprobantes antes del OCR.</p>
+
+    </p>
+
+
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-image-editor</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>    <code>ImageCropperComponent</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzToolTipModule</code>
+</div>
+                        <div>    <code>NzSwitchModule</code>
+</div>
+                        <div>    <code>NzSliderModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./image-editor.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./image-editor.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./image-editor.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../components/DocumentsComponent.html" target="_self" >DocumentsComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>ImageCropperComponent</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzToolTipModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSwitchModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSliderModule</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#croppedImageBase64" >croppedImageBase64</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#highContrastMode" >highContrastMode</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#initialTransform" >initialTransform</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#transform" >transform</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#binarizeFinalImage" >binarizeFinalImage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#confirm" >confirm</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageCropped" >imageCropped</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#resetImage" >resetImage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#rotateLeft" >rotateLeft</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#rotateRight" >rotateRight</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#toggleHighContrast" >toggleHighContrast</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#zoomIn" >zoomIn</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#zoomOut" >zoomOut</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Entradas</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#allowBinarize" >allowBinarize</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#imageBase64" >imageBase64</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Salidas</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">O</span><a href="#onCancel" >onCancel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">O</span><a href="#onConfirm" >onConfirm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Entradas</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="allowBinarize"></a>
+                        <b>allowBinarize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="35" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:35</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indica si se debe mostrar el interruptor de binarización de alto contraste en la barra de herramientas.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="imageBase64"></a>
+                        <b>imageBase64</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="33" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:33</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Imagen de origen en formato Base64 para cargar en el recortador.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Salidas</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onCancel"></a>
+                        <b>onCancel</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="39" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:39</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Se emite cuando el usuario cancela la edición.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onConfirm"></a>
+                        <b>onConfirm</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Definido en <a href="" data-line="37" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:37</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emite la cadena final de la imagen recortada (y opcionalmente binarizada) en formato Base64.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="binarizeFinalImage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>binarizeFinalImage</b></span>
+                        <a href="#binarizeFinalImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>binarizeFinalImage(base64: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="146"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Convierte una imagen en formato Base64 a blanco y negro puro (umbral binario = 128) utilizando un <code>&lt;canvas&gt;</code> fuera de pantalla.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>base64</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Imagen de origen recortada en formato Base64.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Una promesa que se resuelve con la imagen PNG binarizada en formato Base64.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirm"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>confirm</b></span>
+                        <a href="#confirm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>confirm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="127"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Confirma la edición, aplicando opcionalmente binarización a nivel de píxel si <code>highContrastMode</code> está activo,
+y emite la cadena Base64 resultante mediante <code>onConfirm</code>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageCropped"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageCropped</b></span>
+                        <a href="#imageCropped"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>imageCropped(event: ImageCroppedEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="63"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Callback que se invoca cada vez que el usuario ajusta el cuadro de recorte.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>ImageCroppedEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Evento del recortador que contiene la imagen recortada en formato Base64.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetImage"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>resetImage</b></span>
+                        <a href="#resetImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetImage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="109"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Restablece todas las transformaciones de rotación, zoom y alto contraste a su estado inicial.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateLeft"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>rotateLeft</b></span>
+                        <a href="#rotateLeft"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>rotateLeft()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="71"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Rota la imagen 90 grados en sentido antihorario.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateRight"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>rotateRight</b></span>
+                        <a href="#rotateRight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>rotateRight()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="81"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Rota la imagen 90 grados en sentido horario.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleHighContrast"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>toggleHighContrast</b></span>
+                        <a href="#toggleHighContrast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toggleHighContrast()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="117"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Alterna el modo de vista previa de binarización de alto contraste.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomIn"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>zoomIn</b></span>
+                        <a href="#zoomIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>zoomIn()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="91"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Acerca la imagen incrementando la escala en pasos de 0.1.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomOut"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>zoomOut</b></span>
+                        <a href="#zoomOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>zoomOut()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="100"
+                                    class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:100</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Aleja la imagen reduciendo la escala en pasos de 0.1 (mínimo 0.1).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="croppedImageBase64"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>croppedImageBase64</b></span>
+                        <a href="#croppedImageBase64"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="42" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Almacena la salida actual de la imagen recortada en formato Base64.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="highContrastMode"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>highContrastMode</b></span>
+                        <a href="#highContrastMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="56" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si la umbralización binaria de alto contraste está habilitada.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initialTransform"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>initialTransform</b></span>
+                        <a href="#initialTransform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>ImageTransform</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>{
+    rotate: 0,
+    flipH: false,
+    flipV: false,
+    scale: 1
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="45" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Estado de transformación inicial predeterminado para <code>ngx-image-cropper</code>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transform"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>transform</b></span>
+                        <a href="#transform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>ImageTransform</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>{ ...this.initialTransform }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="53" class="link-to-prism">src/app/shared/components/image-editor/image-editor.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Estado de transformación activo actual aplicado al recortador de imágenes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { ImageCropperComponent, ImageCroppedEvent, ImageTransform } from &#x27;ngx-image-cropper&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzToolTipModule } from &#x27;ng-zorro-antd/tooltip&#x27;;
+import { NzSwitchModule } from &#x27;ng-zorro-antd/switch&#x27;;
+import { NzSliderModule } from &#x27;ng-zorro-antd/slider&#x27;;
+
+/**
+ * Componente interactivo de edición de imágenes (&#x60;&lt;app-image-editor&gt;&#x60;) para recortar, rotar, hacer zoom
+ * y aplicar contraste de umbral binario (binarización) a fotografías de comprobantes antes del OCR.
+ */
+@Component({
+  selector: &#x27;app-image-editor&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ImageCropperComponent,
+    NzIconModule,
+    NzButtonModule,
+    NzToolTipModule,
+    NzSwitchModule,
+    NzSliderModule
+  ],
+  templateUrl: &#x27;./image-editor.component.html&#x27;,
+  styleUrl: &#x27;./image-editor.component.scss&#x27;
+})
+export class ImageEditorComponent {
+  /** Imagen de origen en formato Base64 para cargar en el recortador. */
+  @Input() imageBase64: string | null &#x3D; null;
+  /** Indica si se debe mostrar el interruptor de binarización de alto contraste en la barra de herramientas. */
+  @Input() allowBinarize: boolean &#x3D; false;
+  /** Emite la cadena final de la imagen recortada (y opcionalmente binarizada) en formato Base64. */
+  @Output() onConfirm &#x3D; new EventEmitter&lt;string&gt;();
+  /** Se emite cuando el usuario cancela la edición. */
+  @Output() onCancel &#x3D; new EventEmitter&lt;void&gt;();
+
+  /** Almacena la salida actual de la imagen recortada en formato Base64. */
+  public croppedImageBase64: string | null &#x3D; null;
+  
+  /** Estado de transformación inicial predeterminado para &#x60;ngx-image-cropper&#x60;. */
+  public initialTransform: ImageTransform &#x3D; {
+    rotate: 0,
+    flipH: false,
+    flipV: false,
+    scale: 1
+  };
+
+  /** Estado de transformación activo actual aplicado al recortador de imágenes. */
+  public transform: ImageTransform &#x3D; { ...this.initialTransform };
+
+  /** Indica si la umbralización binaria de alto contraste está habilitada. */
+  public highContrastMode &#x3D; false;
+
+  /**
+   * Callback que se invoca cada vez que el usuario ajusta el cuadro de recorte.
+   *
+   * @param event Evento del recortador que contiene la imagen recortada en formato Base64.
+   */
+  public imageCropped(event: ImageCroppedEvent) {
+    // Obtenemos el base64 del recorte actual
+    this.croppedImageBase64 &#x3D; event.base64 || null;
+  }
+
+  /**
+   * Rota la imagen 90 grados en sentido antihorario.
+   */
+  public rotateLeft() {
+    this.transform &#x3D; {
+      ...this.transform,
+      rotate: (this.transform.rotate || 0) - 90
+    };
+  }
+
+  /**
+   * Rota la imagen 90 grados en sentido horario.
+   */
+  public rotateRight() {
+    this.transform &#x3D; {
+      ...this.transform,
+      rotate: (this.transform.rotate || 0) + 90
+    };
+  }
+
+  /**
+   * Acerca la imagen incrementando la escala en pasos de 0.1.
+   */
+  public zoomIn() { 
+    this.transform &#x3D; { 
+      ...this.transform, scale: (this.transform.scale || 1) + 0.1
+    };
+  }
+
+  /**
+   * Aleja la imagen reduciendo la escala en pasos de 0.1 (mínimo 0.1).
+   */
+  public zoomOut() {
+    this.transform &#x3D; {
+      ...this.transform, scale: Math.max((this.transform.scale || 1) - 0.1, 0.1)
+    };
+  }
+
+  /**
+   * Restablece todas las transformaciones de rotación, zoom y alto contraste a su estado inicial.
+   */
+  public resetImage() {
+    this.transform &#x3D; { ...this.initialTransform };
+    this.highContrastMode &#x3D; false;
+  }
+
+  /**
+   * Alterna el modo de vista previa de binarización de alto contraste.
+   */
+  public toggleHighContrast() {
+    // Al cambiar la binarización, el cropper debe re-procesar la imagen
+    // No necesitamos hacer nada extra aquí, el CSS binarizará la vista
+    // y el cropper tomará la imagen resultante.
+  }
+
+  /**
+   * Confirma la edición, aplicando opcionalmente binarización a nivel de píxel si &#x60;highContrastMode&#x60; está activo,
+   * y emite la cadena Base64 resultante mediante &#x60;onConfirm&#x60;.
+   */
+  public confirm() {
+    if (this.croppedImageBase64) {
+      // Si el modo alto contraste está activo, binarizamos la imagen final antes de enviarla
+      if (this.highContrastMode) {
+        this.binarizeFinalImage(this.croppedImageBase64).then(binarizedBase64 &#x3D;&gt; {
+          this.onConfirm.emit(binarizedBase64);
+        });
+      } else {
+        this.onConfirm.emit(this.croppedImageBase64);
+      }
+    }
+  }
+
+  /**
+   * Convierte una imagen en formato Base64 a blanco y negro puro (umbral binario &#x3D; 128) utilizando un &#x60;&lt;canvas&gt;&#x60; fuera de pantalla.
+   *
+   * @param base64 Imagen de origen recortada en formato Base64.
+   * @returns Una promesa que se resuelve con la imagen PNG binarizada en formato Base64.
+   */
+  private binarizeFinalImage(base64: string): Promise&lt;string&gt; {
+    return new Promise((resolve) &#x3D;&gt; {
+      const img &#x3D; new Image();
+      img.onload &#x3D; () &#x3D;&gt; {
+        const canvas &#x3D; document.createElement(&#x27;canvas&#x27;);
+        canvas.width &#x3D; img.width;
+        canvas.height &#x3D; img.height;
+        const ctx &#x3D; canvas.getContext(&#x27;2d&#x27;);
+        
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          const imageData &#x3D; ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data &#x3D; imageData.data;
+          
+          // Algoritmo de binarización simple (Otsu o Umbral Fijo)
+          const threshold &#x3D; 128; // Umbral medio
+          
+          for (let i &#x3D; 0; i &lt; data.length; i +&#x3D; 4) {
+            // Convertir a escala de grises (luminosidad)
+            const avg &#x3D; (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
+            // Aplicar umbral
+            const val &#x3D; avg &gt;&#x3D; threshold ? 255 : 0;
+            data[i] &#x3D; val;     // R
+            data[i + 1] &#x3D; val; // G
+            data[i + 2] &#x3D; val; // B
+            // data[i+3] is Alpha (keep it)
+          }
+          ctx.putImageData(imageData, 0, 0);
+          resolve(canvas.toDataURL(&#x27;image/png&#x27;));
+        } else {
+          resolve(base64); // Fallback
+        }
+      };
+      img.src &#x3D; base64;
+    });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;full-screen-editor&quot;&gt;
+  &lt;div class&#x3D;&quot;editor-header&quot;&gt;
+    &lt;div class&#x3D;&quot;header-left&quot;&gt;
+      &lt;button class&#x3D;&quot;btn-back&quot; (click)&#x3D;&quot;onCancel.emit()&quot;&gt;
+        &lt;span nz-icon nzType&#x3D;&quot;arrow-left&quot;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;span class&#x3D;&quot;title&quot;&gt;Recortar Comprobante&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;header-right&quot;&gt;
+      @if (allowBinarize) {
+        &lt;div class&#x3D;&quot;contrast-switch&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Mejorar lectura del OCR (B&amp;N)&quot;&gt;
+          &lt;span nz-icon nzType&#x3D;&quot;read&quot;&gt;&lt;/span&gt;
+          &lt;nz-switch [(ngModel)]&#x3D;&quot;highContrastMode&quot;&gt;&lt;/nz-switch&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;divider&quot;&gt;&lt;/div&gt;
+      }
+
+      &lt;button class&#x3D;&quot;btn-action&quot; (click)&#x3D;&quot;resetImage()&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Restablecer&quot;&gt;
+        &lt;span nz-icon nzType&#x3D;&quot;sync&quot;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;cropper-area&quot; [class.binarize-view]&#x3D;&quot;allowBinarize &amp;&amp; highContrastMode&quot;&gt;
+    &lt;image-cropper
+      [imageBase64]&#x3D;&quot;imageBase64!&quot;
+      [maintainAspectRatio]&#x3D;&quot;false&quot;
+      [transform]&#x3D;&quot;transform&quot;
+      [imageQuality]&#x3D;&quot;100&quot;
+      [output]&#x3D;&quot;&#x27;base64&#x27;&quot;
+      (imageCropped)&#x3D;&quot;imageCropped($event)&quot;&gt;
+    &lt;/image-cropper&gt;
+
+    &lt;div class&#x3D;&quot;touch-toolbar&quot;&gt;
+      &lt;button class&#x3D;&quot;btn-touch&quot; (click)&#x3D;&quot;zoomOut()&quot;&gt;&lt;span nz-icon nzType&#x3D;&quot;zoom-out&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+      &lt;nz-slider class&#x3D;&quot;zoom-slider&quot; [nzMin]&#x3D;&quot;0.1&quot; [nzMax]&#x3D;&quot;3&quot; [nzStep]&#x3D;&quot;0.1&quot; [(ngModel)]&#x3D;&quot;transform.scale&quot;&gt;&lt;/nz-slider&gt;
+      &lt;button class&#x3D;&quot;btn-touch&quot; (click)&#x3D;&quot;zoomIn()&quot;&gt;&lt;span nz-icon nzType&#x3D;&quot;zoom-in&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+      &lt;div class&#x3D;&quot;divider&quot;&gt;&lt;/div&gt;
+      &lt;button class&#x3D;&quot;btn-touch&quot; (click)&#x3D;&quot;rotateLeft()&quot;&gt;&lt;span nz-icon nzType&#x3D;&quot;rotate-left&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+      &lt;button class&#x3D;&quot;btn-touch&quot; (click)&#x3D;&quot;rotateRight()&quot;&gt;&lt;span nz-icon nzType&#x3D;&quot;rotate-right&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;editor-footer&quot;&gt;
+    &lt;button class&#x3D;&quot;btn-descartar&quot; (click)&#x3D;&quot;onCancel.emit()&quot;&gt;DESCARTAR&lt;/button&gt;
+    &lt;button class&#x3D;&quot;btn-save&quot; (click)&#x3D;&quot;confirm()&quot;&gt;
+      GUARDAR &lt;span nz-icon nzType&#x3D;&quot;check&quot;&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./image-editor.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.full-screen-editor {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+
+  .editor-header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    background: rgba(0,0,0,0.9);
+    color: #fff;
+    border-bottom: 1px solid #222;
+
+    .header-left, .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .title { font-weight: 500; font-size: 16px; }
+    
+    button { 
+      background: none; 
+      border: none; 
+      color: #fff; 
+      cursor: pointer; 
+      font-size: 18px;
+      padding: 8px;
+      transition: background 0.2s;
+      
+      &amp;:hover { background: rgba(255,255,255,0.1); }
+    }
+
+    .contrast-switch {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #aaa;
+      span { font-size: 18px; }
+    }
+  }
+
+  .cropper-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    position: relative; // Fundamental para posicionar la toolbar
+
+    &amp;.binarize-view {
+      filter: contrast(2000%) grayscale(100%);
+    }
+
+    ::ng-deep image-cropper {
+      max-height: 75vh;
+      .cropper { outline: 2px solid #25d366 !important; }
+      .move { background-color: #25d366 !important; width: 22px !important; height: 22px !important; border-radius: 50%; border: 2px solid #fff; }
+    }
+
+    // --- NUEVO: BARRA DE HERRAMIENTAS TÁCTIL ---
+    .touch-toolbar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 10001;
+      backdrop-filter: blur(5px);
+      border: 1px solid #333;
+
+      .btn-touch {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 8px;
+        
+        &amp;:hover { color: #25d366; }
+      }
+
+      .zoom-slider {
+        width: 150px;
+        margin: 0 10px;
+        ::ng-deep .ant-slider-rail { background-color: #444; }
+        ::ng-deep .ant-slider-track { background-color: #25d366; }
+        ::ng-deep .ant-slider-handle { border-color: #25d366; }
+      }
+
+      .divider {
+        width: 1px;
+        height: 24px;
+        background: #444;
+      }
+    }
+  }
+
+  .editor-footer {
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #000;
+    padding-bottom: env(safe-area-inset-bottom);
+
+    button {
+      padding: 14px 40px;
+      border-radius: 30px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-descartar { background: #333; color: #fff; }
+    .btn-save { background: #25d366; color: #fff; display: flex; align-items: center; gap: 8px; }
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="full-screen-editor">  <div class="editor-header">    <div class="header-left">      <button class="btn-back" (click)="onCancel.emit()">        <span nz-icon nzType="arrow-left"></span>      </button>      <span class="title">Recortar Comprobante</span>    </div>    <div class="header-right">      @if (allowBinarize) {        <div class="contrast-switch" nz-tooltip nzTooltipTitle="Mejorar lectura del OCR (B&N)">          <span nz-icon nzType="read"></span>          <nz-switch [(ngModel)]="highContrastMode"></nz-switch>        </div>        <div class="divider"></div>      }      <button class="btn-action" (click)="resetImage()" nz-tooltip nzTooltipTitle="Restablecer">        <span nz-icon nzType="sync"></span>      </button>    </div>  </div>  <div class="cropper-area" [class.binarize-view]="allowBinarize && highContrastMode">    <image-cropper      [imageBase64]="imageBase64!"      [maintainAspectRatio]="false"      [transform]="transform"      [imageQuality]="100"      [output]="\'base64\'"      (imageCropped)="imageCropped($event)">    </image-cropper>    <div class="touch-toolbar">      <button class="btn-touch" (click)="zoomOut()"><span nz-icon nzType="zoom-out"></span></button>      <nz-slider class="zoom-slider" [nzMin]="0.1" [nzMax]="3" [nzStep]="0.1" [(ngModel)]="transform.scale"></nz-slider>      <button class="btn-touch" (click)="zoomIn()"><span nz-icon nzType="zoom-in"></span></button>      <div class="divider"></div>      <button class="btn-touch" (click)="rotateLeft()"><span nz-icon nzType="rotate-left"></span></button>      <button class="btn-touch" (click)="rotateRight()"><span nz-icon nzType="rotate-right"></span></button>    </div>  </div>  <div class="editor-footer">    <button class="btn-descartar" (click)="onCancel.emit()">DESCARTAR</button>    <button class="btn-save" (click)="confirm()">      GUARDAR <span nz-icon nzType="check"></span>    </button>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ImageEditorComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/ImageEditorComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/ImageEditorComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/ImageEditorComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ImageEditorComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

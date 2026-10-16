@@ -1,0 +1,2708 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Digite para pesquisar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  PeriodComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/period/period.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descrição</h3>
+    </p>
+    <p class="comment">
+        <p>Componente para crear y editar un período de facturación de tarjeta.
+Gestiona el número de período de facturación (<code>YYYYMM</code>), fechas de inicio/fin/vencimiento, saldo anterior, intereses y estado.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Exemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-period</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>NzFormModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzDividerModule</code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzDatePickerModule</code>
+</div>
+                        <div>    <code>NzInputNumberModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./period.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./period.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./period.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>Nenhum resultado correspondente.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzFormModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDividerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDatePickerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputNumberModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propriedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#cardId" >cardId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#cards" >cards</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencyFormatter" >currencyFormatter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currencyParser" >currencyParser</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#formatterDollar" >formatterDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isEditing" >isEditing</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#parserDollar" >parserDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#periodId" >periodId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#periodStatuses" >periodStatuses</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatPeriodNumber" >formatPeriodNumber</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getErrorMessage" >getErrorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusColor" >getStatusColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusIcon" >getStatusIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusLabel" >getStatusLabel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadCards" >loadCards</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadPeriod" >loadPeriod</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadStatusPeriods" >loadStatusPeriods</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onCancel" >onCancel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Construtor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, cdr: <a href="https://angular.dev/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _periodsService: <a href="../injectables/PeriodsService.html" target="_self">PeriodsService</a>, _statusPeriodsService: <a href="../injectables/StatusPeriodsService.html" target="_self">StatusPeriodsService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="74" class="link-to-prism">src/app/admin/user/period/period.component.ts:74</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Inicializa el componente PeriodComponent y construye el formulario reactivo.</p>
+</div>
+                            <div>
+                                    <b>Parâmetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nome</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descrição</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio FormBuilder de Angular.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio ChangeDetectorRef de Angular.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>ActivatedRoute para leer los parámetros de la ruta.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio Router de Angular.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_cardsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CardsService.html" target="_self" >CardsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para obtener las tarjetas.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_periodsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PeriodsService.html" target="_self" >PeriodsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para operaciones CRUD de períodos de facturación.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_statusPeriodsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StatusPeriodsService.html" target="_self" >StatusPeriodsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para obtener los estados de períodos.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >NzMessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio de mensajes emergentes de Ng-Zorro.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio personalizado de alertas modales.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatPeriodNumber"></a>
+                    <span class="name">
+                        <span ><b>formatPeriodNumber</b></span>
+                        <a href="#formatPeriodNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatPeriodNumber(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="408"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:408</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formatea una cadena de período de 6 dígitos (<code>YYYYMM</code>) como <code>MM/YYYY</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Cadena de período de 6 dígitos sin procesar.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena de período formateada.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getErrorMessage"></a>
+                    <span class="name">
+                        <span ><b>getErrorMessage</b></span>
+                        <a href="#getErrorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getErrorMessage(controlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="337"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:337</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el mensaje de error de validación para un control del formulario.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>controlName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nombre del control del formulario.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>    <code>string | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Mensaje de error de validación o null.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusColor"></a>
+                    <span class="name">
+                        <span ><b>getStatusColor</b></span>
+                        <a href="#getStatusColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusColor(statusId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="368"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:368</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de período.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Identificador del estado.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena de estado de la insignia.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusIcon"></a>
+                    <span class="name">
+                        <span ><b>getStatusIcon</b></span>
+                        <a href="#getStatusIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusIcon(statusId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="383"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:383</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de período.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Identificador del estado.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con el nombre del ícono.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusLabel"></a>
+                    <span class="name">
+                        <span ><b>getStatusLabel</b></span>
+                        <a href="#getStatusLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusLabel(statusId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="398"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:398</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resuelve la etiqueta de visualización para un ID de estado de período.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Identificador del estado.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Cadena con la etiqueta del estado.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadCards"></a>
+                    <span class="name">
+                        <span ><b>loadCards</b></span>
+                        <a href="#loadCards"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadCards()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="217"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:217</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga las tarjetas del usuario disponibles desde el backend.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPeriod"></a>
+                    <span class="name">
+                        <span ><b>loadPeriod</b></span>
+                        <a href="#loadPeriod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPeriod()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="150"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga un período de facturación existente por su ID y completa el formulario.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadStatusPeriods"></a>
+                    <span class="name">
+                        <span ><b>loadStatusPeriods</b></span>
+                        <a href="#loadStatusPeriods"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadStatusPeriods()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="188"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:188</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga los estados de período disponibles desde el backend.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="117"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Gancho del ciclo de vida ejecutado al inicializar el componente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCancel"></a>
+                    <span class="name">
+                        <span ><b>onCancel</b></span>
+                        <a href="#onCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCancel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="328"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:328</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cancela la operación y navega de regreso a la lista de períodos.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="246"
+                                    class="link-to-prism">src/app/admin/user/period/period.component.ts:246</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida el orden de las fechas y los controles del formulario, y luego crea o actualiza el período de facturación.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propriedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardId"></a>
+                    <span class="name">
+                        <span ><b>cardId</b></span>
+                        <a href="#cardId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="66" class="link-to-prism">src/app/admin/user/period/period.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>UUID de la tarjeta padre obtenido de los parámetros de la ruta.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cards"></a>
+                    <span class="name">
+                        <span ><b>cards</b></span>
+                        <a href="#cards"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/CardInterface.html" target="_self" >CardInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="74" class="link-to-prism">src/app/admin/user/period/period.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de tarjetas del usuario para el menú desplegable.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencyFormatter"></a>
+                    <span class="name">
+                        <span ><b>currencyFormatter</b></span>
+                        <a href="#currencyFormatter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="359" class="link-to-prism">src/app/admin/user/period/period.component.ts:359</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Alias para la función formateadora de visualización de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currencyParser"></a>
+                    <span class="name">
+                        <span ><b>currencyParser</b></span>
+                        <a href="#currencyParser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="361" class="link-to-prism">src/app/admin/user/period/period.component.ts:361</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Alias para la función analizadora de entrada de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="60" class="link-to-prism">src/app/admin/user/period/period.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Grupo de formulario reactivo para el período de facturación.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatterDollar"></a>
+                    <span class="name">
+                        <span ><b>formatterDollar</b></span>
+                        <a href="#formatterDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="355" class="link-to-prism">src/app/admin/user/period/period.component.ts:355</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Función formateadora de visualización de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditing"></a>
+                    <span class="name">
+                        <span ><b>isEditing</b></span>
+                        <a href="#isEditing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="64" class="link-to-prism">src/app/admin/user/period/period.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicador de si el formulario se encuentra en modo de edición.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="62" class="link-to-prism">src/app/admin/user/period/period.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicador de si hay una solicitud en curso.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parserDollar"></a>
+                    <span class="name">
+                        <span ><b>parserDollar</b></span>
+                        <a href="#parserDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="357" class="link-to-prism">src/app/admin/user/period/period.component.ts:357</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Función analizadora de entrada de moneda.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periodId"></a>
+                    <span class="name">
+                        <span ><b>periodId</b></span>
+                        <a href="#periodId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="68" class="link-to-prism">src/app/admin/user/period/period.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>UUID del período que se está editando, o null al crear uno nuevo.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periodStatuses"></a>
+                    <span class="name">
+                        <span ><b>periodStatuses</b></span>
+                        <a href="#periodStatuses"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>StatusPeriodInterface[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="71" class="link-to-prism">src/app/admin/user/period/period.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de estados de período disponibles para el menú desplegable.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ChangeDetectorRef, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzDatePickerModule } from &#x27;ng-zorro-antd/date-picker&#x27;;
+import { NzInputNumberModule } from &#x27;ng-zorro-antd/input-number&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { CardInterface } from &#x27;../../../core/interfaces/card&#x27;;
+import { StatusPeriodInterface } from &#x27;../../../core/interfaces/status-period&#x27;;
+import { CardsService } from &#x27;../../../core/services/cards.service&#x27;;
+import { PeriodsService } from &#x27;../../../core/services/periods.service&#x27;;
+import { StatusPeriodsService } from &#x27;../../../core/services/status-periods.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+/**
+ * Interfaz auxiliar que representa los datos de tarjeta relacionados para un período.
+ * @description Contiene la referencia al UUID de la tarjeta padre.
+ */
+interface RelatedData {
+  /** UUID de la tarjeta padre. */
+  crd_uuid: string;
+}
+
+/**
+ * Componente para crear y editar un período de facturación de tarjeta.
+ * @description Gestiona el número de período de facturación (&#x60;YYYYMM&#x60;), fechas de inicio/fin/vencimiento, saldo anterior, intereses y estado.
+ */
+@Component({
+  selector: &#x27;app-period&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzInputNumberModule,
+    NzTagModule
+  ],
+  templateUrl: &#x27;./period.component.html&#x27;,
+  styleUrl: &#x27;./period.component.scss&#x27;
+})
+export class PeriodComponent implements OnInit {
+  /** Grupo de formulario reactivo para el período de facturación. */
+  form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
+  isLoading &#x3D; false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
+  isEditing &#x3D; false;
+  /** UUID de la tarjeta padre obtenido de los parámetros de la ruta. */
+  cardId: string | null &#x3D; null;
+  /** UUID del período que se está editando, o null al crear uno nuevo. */
+  periodId: string | null &#x3D; null;
+
+  /** Lista de estados de período disponibles para el menú desplegable. */
+  periodStatuses: StatusPeriodInterface[] &#x3D; [];
+
+  /** Lista de tarjetas del usuario para el menú desplegable. */
+  cards: CardInterface[] &#x3D; [];
+
+  /**
+   * Inicializa el componente PeriodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param cdr Servicio ChangeDetectorRef de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _cardsService Servicio para obtener las tarjetas.
+   * @param _periodsService Servicio para operaciones CRUD de períodos de facturación.
+   * @param _statusPeriodsService Servicio para obtener los estados de períodos.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _statusPeriodsService: StatusPeriodsService,
+    private message: NzMessageService,
+    private _messageService: MessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      usr_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      crd_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      per_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      per_periodnumber: [&#x27;&#x27;, [Validators.required, Validators.pattern(/^\d{6}$/)]],
+      per_startdate: [null, Validators.required],
+      per_enddate: [null, Validators.required],
+      per_duedate: [null, Validators.required],
+      sper_uuid: [&#x27;1&#x27;, Validators.required],
+      per_previousbalance: [0, [Validators.min(0)]],
+      per_interest: [0, [Validators.min(0)]]
+    });
+  }
+
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
+  ngOnInit(): void {
+    this.cardId &#x3D; this.route.snapshot.paramMap.get(&#x27;crd_uuid&#x27;);
+    this.periodId &#x3D; this.route.snapshot.paramMap.get(&#x27;per_uuid&#x27;);
+    this.isEditing &#x3D; !!this.periodId;
+    this.loadCards();
+    this.loadStatusPeriods();
+    
+    if (this.isEditing) {
+      this.loadPeriod();
+    } else {
+      this.form.patchValue({
+        usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;,
+        crd_uuid: &#x27;1&#x27;
+      })
+      this.form.get(&#x27;per_uuid&#x27;)?.disable();
+    }
+
+    // Escuchar cambios en el número de período para formatear automáticamente
+    this.form.get(&#x27;per_periodnumber&#x27;)?.valueChanges.subscribe(value &#x3D;&gt; {
+      if (value &amp;&amp; typeof value &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+        // Limpiar y formatear (solo números, máximo 6 dígitos)
+        const cleaned &#x3D; value.replace(/\D/g, &#x27;&#x27;).slice(0, 6);
+        if (value !&#x3D;&#x3D; cleaned) {
+          this.form.get(&#x27;per_periodnumber&#x27;)?.setValue(cleaned, { emitEvent: false });
+        }
+      }
+    });
+  }
+
+  /**
+   * Carga un período de facturación existente por su ID y completa el formulario.
+   * @returns void
+   */
+  loadPeriod(): void {
+    this.isLoading &#x3D; true;
+
+    this._periodsService.getPeriodById(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, this.cardId!, this.periodId!).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          const period &#x3D; {
+            ...response.data,
+            per_startdate: new Date(response.data.per_startdate + &#x27;T00:00:00&#x27;),
+            per_enddate: new Date(response.data.per_enddate + &#x27;T00:00:00&#x27;),
+            per_duedate: new Date(response.data.per_duedate + &#x27;T00:00:00&#x27;)
+          };
+
+          this.form.get(&#x27;per_uuid&#x27;)?.enable();
+          this.form.patchValue(period);
+          this.form.get(&#x27;per_uuid&#x27;)?.disable();
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Carga los estados de período disponibles desde el backend.
+   * @returns void
+   */
+  loadStatusPeriods(): void {
+    this.isLoading &#x3D; true;
+
+    this._statusPeriodsService.getStatusPeriods().subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.periodStatuses &#x3D; response.data;
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Carga las tarjetas del usuario disponibles desde el backend.
+   * @returns void
+   */
+  loadCards(): void {
+    this.isLoading &#x3D; true;
+
+    this._cardsService.getCards(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.cards &#x3D; response.data;
+          
+          this.isLoading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Valida el orden de las fechas y los controles del formulario, y luego crea o actualiza el período de facturación.
+   * @returns void
+   */
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this._messageService.error(&#x27;Formulario Inválido&#x27;, &#x27;Por favor complete todos los campos obligatorios&#x27;);
+      return;
+    }
+
+    // Validar que la fecha de inicio sea anterior a la fecha de fin
+    const startDate &#x3D; this.form.get(&#x27;per_startdate&#x27;)?.value;
+    const endDate &#x3D; this.form.get(&#x27;per_enddate&#x27;)?.value;
+    const dueDate &#x3D; this.form.get(&#x27;per_duedate&#x27;)?.value;
+
+    if (startDate &amp;&amp; endDate &amp;&amp; startDate &gt;&#x3D; endDate) {
+      this._messageService.error(&#x27;Error de Fechas&#x27;, &#x27;La fecha de inicio debe ser anterior a la fecha de fin&#x27;);
+      return;
+    }
+
+    if (endDate &amp;&amp; dueDate &amp;&amp; endDate &gt;&#x3D; dueDate) {
+      this._messageService.error(&#x27;Error de Fechas&#x27;, &#x27;La fecha de fin debe ser anterior a la fecha de vencimiento&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+
+    if(!this.isEditing) {
+      this._periodsService.savePeriod(this.form.getRawValue()).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this._messageService.success(
+              &#x27;Período Creado&#x27;, 
+              &#x27;El período se agregó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo guardar el período&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al guardar el período&#x27;);
+        }
+      });
+    } else {
+      this._periodsService.updatePeriod(this.form.getRawValue()).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if(response.success) {
+            this._messageService.success(
+              &#x27;Período Actualizado&#x27;, 
+              &#x27;El período se actualizó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar el período&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al actualizar el período&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancela la operación y navega de regreso a la lista de períodos.
+   * @returns void
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/periods&#x27;]);
+  }
+
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
+  getErrorMessage(controlName: string): string | null {
+    const control &#x3D; this.form.get(controlName);
+    if (control?.hasError(&#x27;required&#x27;)) {
+      return &#x27;Este campo es obligatorio&#x27;;
+    }
+    if (control?.hasError(&#x27;pattern&#x27;)) {
+      if (controlName &#x3D;&#x3D;&#x3D; &#x27;per_periodnumber&#x27;) {
+        return &#x27;Ingrese exactamente 6 dígitos (YYYYMM)&#x27;;
+      }
+      return &#x27;Formato inválido&#x27;;
+    }
+    if (control?.hasError(&#x27;min&#x27;)) {
+      return &#x27;El valor mínimo es &#x27; + control.errors?.[&#x27;min&#x27;].min;
+    }
+    return null;
+  }
+
+  /** Función formateadora de visualización de moneda. */
+  formatterDollar &#x3D; formatterDollar;
+  /** Función analizadora de entrada de moneda. */
+  parserDollar &#x3D; parserDollar;
+  /** Alias para la función formateadora de visualización de moneda. */
+  currencyFormatter &#x3D; formatterDollar;
+  /** Alias para la función analizadora de entrada de moneda. */
+  currencyParser &#x3D; parserDollar;
+
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena de estado de la insignia.
+   */
+  getStatusColor(statusId: string): string {
+    switch (statusId) {
+      case &#x27;1&#x27;: return &#x27;success&#x27;;    // Abierto
+      case &#x27;2&#x27;: return &#x27;default&#x27;;    // Cerrado
+      case &#x27;3&#x27;: return &#x27;processing&#x27;; // Pagado
+      case &#x27;4&#x27;: return &#x27;error&#x27;;      // Vencido
+      default: return &#x27;default&#x27;;
+    }
+  }
+
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena con el nombre del ícono.
+   */
+  getStatusIcon(statusId: string): string {
+    switch (statusId) {
+      case &#x27;1&#x27;: return &#x27;unlock&#x27;;            // Abierto
+      case &#x27;2&#x27;: return &#x27;lock&#x27;;              // Cerrado
+      case &#x27;3&#x27;: return &#x27;check-circle&#x27;;      // Pagado
+      case &#x27;4&#x27;: return &#x27;exclamation-circle&#x27;; // Vencido
+      default: return &#x27;info-circle&#x27;;
+    }
+  }
+
+  /**
+   * Resuelve la etiqueta de visualización para un ID de estado de período.
+   * @param statusId Identificador del estado.
+   * @returns Cadena con la etiqueta del estado.
+   */
+  getStatusLabel(statusId: string): string {
+    const status &#x3D; this.periodStatuses.find(s &#x3D;&gt; s.sper_uuid &#x3D;&#x3D;&#x3D; statusId);
+    return status ? status.sper_name : &#x27;Desconocido&#x27;;
+  }
+
+  /**
+   * Formatea una cadena de período de 6 dígitos (&#x60;YYYYMM&#x60;) como &#x60;MM/YYYY&#x60;.
+   * @param value Cadena de período de 6 dígitos sin procesar.
+   * @returns Cadena de período formateada.
+   */
+  formatPeriodNumber(value: string): string {
+    if (!value || value.length !&#x3D;&#x3D; 6) return value;
+    const year &#x3D; value.substring(0, 4);
+    const month &#x3D; value.substring(4, 6);
+    return &#x60;${month}/${year}&#x60;;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;period-form-container&quot;&gt;
+  &lt;div class&#x3D;&quot;form-header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;calendar&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      {{ isEditing ? &#x27;Editar Período&#x27; : &#x27;Nuevo Período&#x27; }}
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;onCancel()&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;close&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+  @if (isLoading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando datos...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  } @else {
+    &lt;form nz-form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot;&gt;
+      &lt;!-- Información básica --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_uuid&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              ID de Período
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;input nz-input formControlName&#x3D;&quot;per_uuid&quot; placeholder&#x3D;&quot;ID autogenerado&quot; readonly /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_periodnumber&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Número de Período
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_periodnumber&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_periodnumber&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;per_periodnumber&#x27;) }}&quot;
+            &gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;per_periodnumber&quot; 
+                placeholder&#x3D;&quot;202601&quot;
+                maxlength&#x3D;&quot;6&quot;
+                nzSize&#x3D;&quot;large&quot;
+              /&gt;
+              @if (form.get(&#x27;per_periodnumber&#x27;)?.value) {
+                &lt;small class&#x3D;&quot;form-text&quot;&gt;Formateado: {{ formatPeriodNumber(form.get(&#x27;per_periodnumber&#x27;)?.value) }}&lt;/small&gt;
+              }
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Formato: AAAAMM (ej: 202601)&lt;/small&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;crd_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Tarjeta
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione una tarjeta&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;crd_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione tarjeta&quot;
+                nzSize&#x3D;&quot;large&quot;
+                nzShowSearch
+              &gt;
+                @for (card of cards; track card.crd_uuid) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;card.crd_uuid&quot; [nzLabel]&#x3D;&quot;card.crd_maskedcardnumber&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Fechas del período --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Fechas del Período&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_startdate&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Fecha de Inicio
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_startdate&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_startdate&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione fecha de inicio&quot;
+            &gt;
+              &lt;nz-date-picker 
+                formControlName&#x3D;&quot;per_startdate&quot; 
+                nzFormat&#x3D;&quot;dd/MM/yyyy&quot;
+                nzPlaceHolder&#x3D;&quot;Seleccione fecha&quot;
+                nzSize&#x3D;&quot;large&quot;
+                style&#x3D;&quot;width: 100%&quot;
+              &gt;&lt;/nz-date-picker&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_enddate&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Fecha de Fin
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_enddate&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_enddate&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione fecha de fin&quot;
+            &gt;
+              &lt;nz-date-picker 
+                formControlName&#x3D;&quot;per_enddate&quot; 
+                nzFormat&#x3D;&quot;dd/MM/yyyy&quot;
+                nzPlaceHolder&#x3D;&quot;Seleccione fecha&quot;
+                nzSize&#x3D;&quot;large&quot;
+                style&#x3D;&quot;width: 100%&quot;
+              &gt;&lt;/nz-date-picker&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_duedate&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Fecha de Vencimiento
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_duedate&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_duedate&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione fecha de vencimiento&quot;
+            &gt;
+              &lt;nz-date-picker 
+                formControlName&#x3D;&quot;per_duedate&quot; 
+                nzFormat&#x3D;&quot;dd/MM/yyyy&quot;
+                nzPlaceHolder&#x3D;&quot;Seleccione fecha&quot;
+                nzSize&#x3D;&quot;large&quot;
+                style&#x3D;&quot;width: 100%&quot;
+              &gt;&lt;/nz-date-picker&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Fecha límite para pago&lt;/small&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Estado y montos --&gt;
+      &lt;nz-divider nzText&#x3D;&quot;Estado y Montos&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;sper_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+              Estado
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;sper_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;sper_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un estado&quot;
+            &gt;
+              &lt;nz-select 
+                formControlName&#x3D;&quot;sper_uuid&quot; 
+                placeholder&#x3D;&quot;Seleccione estado&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;
+                @for (status of periodStatuses; track status.sper_uuid) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;status.sper_uuid&quot; [nzLabel]&#x3D;&quot;status.sper_name&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_previousbalance&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              Saldo Anterior
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_previousbalance&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_previousbalance&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;per_previousbalance&#x27;) }}&quot;
+            &gt;
+              &lt;nz-input-number 
+                formControlName&#x3D;&quot;per_previousbalance&quot; 
+                nzPlaceHolder&#x3D;&quot;0.00&quot;
+                [nzMin]&#x3D;&quot;0&quot;
+                [nzStep]&#x3D;&quot;1000&quot;
+                [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                [nzParser]&#x3D;&quot;parserDollar&quot;
+                style&#x3D;&quot;width: 100%&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;&lt;/nz-input-number&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;per_interest&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+              Interés
+            &lt;/nz-form-label&gt;
+            &lt;nz-form-control 
+              [nzSpan]&#x3D;&quot;24&quot;
+              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;per_interest&#x27;)?.dirty &amp;&amp; form.get(&#x27;per_interest&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;per_interest&#x27;) }}&quot;
+            &gt;
+              &lt;nz-input-number 
+                formControlName&#x3D;&quot;per_interest&quot; 
+                nzPlaceHolder&#x3D;&quot;0.00&quot;
+                [nzMin]&#x3D;&quot;0&quot;
+                [nzStep]&#x3D;&quot;100&quot;
+                [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                [nzParser]&#x3D;&quot;parserDollar&quot;
+                style&#x3D;&quot;width: 100%&quot;
+                nzSize&#x3D;&quot;large&quot;
+              &gt;&lt;/nz-input-number&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Vista previa del estado --&gt;
+      @if (form.get(&#x27;sper_uuid&#x27;)?.value) {
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label [nzSpan]&#x3D;&quot;24&quot;&gt;
+                Vista Previa del Estado
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-tag [nzColor]&#x3D;&quot;getStatusColor(form.get(&#x27;sper_uuid&#x27;)?.value)&quot;&gt;
+                  &lt;i nz-icon [nzType]&#x3D;&quot;getStatusIcon(form.get(&#x27;sper_uuid&#x27;)?.value)&quot; nzTheme&#x3D;&quot;fill&quot;&gt;&lt;/i&gt;
+                  &lt;strong&gt;{{ getStatusLabel(form.get(&#x27;sper_uuid&#x27;)?.value) }}&lt;/strong&gt;
+                &lt;/nz-tag&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+      &lt;div class&#x3D;&quot;form-actions&quot;&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;default&quot; 
+          (click)&#x3D;&quot;onCancel()&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;rollback&quot;&gt;&lt;/i&gt;
+          Cancelar
+        &lt;/button&gt;
+        &lt;button 
+          nz-button 
+          nzType&#x3D;&quot;primary&quot; 
+          type&#x3D;&quot;submit&quot;
+          [nzLoading]&#x3D;&quot;isLoading&quot;
+          nzSize&#x3D;&quot;large&quot;
+        &gt;
+          &lt;i nz-icon nzType&#x3D;&quot;save&quot;&gt;&lt;/i&gt;
+          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Crear Período&#x27; }}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  }
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./period.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.period-form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  max-width: 1200px;
+  margin: 20px auto;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #13c2c2;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      padding: 0;
+      height: auto;
+      line-height: 1;
+      font-size: 16px;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  nz-row {
+    margin-bottom: 24px;
+  }
+
+  nz-form-item {
+    margin-bottom: 0;
+  }
+
+  nz-form-label {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+    
+    &amp;::after {
+      content: &#x27;:&#x27;;
+      margin: 0 8px 0 2px;
+    }
+  }
+
+  nz-form-control {
+    .ant-form-item-explain {
+      margin-top: 4px;
+    }
+
+    .form-text {
+      display: block;
+      margin-top: 4px;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 12px;
+    }
+  }
+
+  nz-divider {
+    margin: 24px 0;
+    
+    &amp;.ant-divider-with-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    nz-row {
+      margin-bottom: 16px;
+    }
+
+    nz-col {
+      margin-bottom: 16px;
+    }
+
+    nz-form-label {
+      margin-bottom: 8px;
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento HTML</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento HTML com diretiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="period-form-container">  <div class="form-header">    <h2>      <i nz-icon nzType="calendar" nzTheme="outline"></i>      {{ isEditing ? \'Editar Período\' : \'Nuevo Período\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()">      <i nz-icon nzType="close"></i>    </button>  </div>  <nz-divider></nz-divider>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando datos..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">      <!-- Información básica -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_uuid" [nzSpan]="24">              ID de Período            </nz-form-label>            <nz-form-control [nzSpan]="24">              <input nz-input formControlName="per_uuid" placeholder="ID autogenerado" readonly />            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_periodnumber" [nzSpan]="24" nzRequired>              Número de Período            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_periodnumber\')?.dirty && form.get(\'per_periodnumber\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'per_periodnumber\') }}"            >              <input                 nz-input                 formControlName="per_periodnumber"                 placeholder="202601"                maxlength="6"                nzSize="large"              />              @if (form.get(\'per_periodnumber\')?.value) {                <small class="form-text">Formateado: {{ formatPeriodNumber(form.get(\'per_periodnumber\')?.value) }}</small>              }              <small class="form-text">Formato: AAAAMM (ej: 202601)</small>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="crd_uuid" [nzSpan]="24" nzRequired>              Tarjeta            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'crd_uuid\')?.dirty && form.get(\'crd_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione una tarjeta"            >              <nz-select                 formControlName="crd_uuid"                 placeholder="Seleccione tarjeta"                nzSize="large"                nzShowSearch              >                @for (card of cards; track card.crd_uuid) {                  <nz-option [nzValue]="card.crd_uuid" [nzLabel]="card.crd_maskedcardnumber"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Fechas del período -->      <nz-divider nzText="Fechas del Período" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_startdate" [nzSpan]="24" nzRequired>              Fecha de Inicio            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_startdate\')?.dirty && form.get(\'per_startdate\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione fecha de inicio"            >              <nz-date-picker                 formControlName="per_startdate"                 nzFormat="dd/MM/yyyy"                nzPlaceHolder="Seleccione fecha"                nzSize="large"                style="width: 100%"              ></nz-date-picker>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_enddate" [nzSpan]="24" nzRequired>              Fecha de Fin            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_enddate\')?.dirty && form.get(\'per_enddate\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione fecha de fin"            >              <nz-date-picker                 formControlName="per_enddate"                 nzFormat="dd/MM/yyyy"                nzPlaceHolder="Seleccione fecha"                nzSize="large"                style="width: 100%"              ></nz-date-picker>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_duedate" [nzSpan]="24" nzRequired>              Fecha de Vencimiento            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_duedate\')?.dirty && form.get(\'per_duedate\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione fecha de vencimiento"            >              <nz-date-picker                 formControlName="per_duedate"                 nzFormat="dd/MM/yyyy"                nzPlaceHolder="Seleccione fecha"                nzSize="large"                style="width: 100%"              ></nz-date-picker>              <small class="form-text">Fecha límite para pago</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Estado y montos -->      <nz-divider nzText="Estado y Montos" nzOrientation="left"></nz-divider>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="sper_uuid" [nzSpan]="24" nzRequired>              Estado            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'sper_uuid\')?.dirty && form.get(\'sper_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un estado"            >              <nz-select                 formControlName="sper_uuid"                 placeholder="Seleccione estado"                nzSize="large"              >                @for (status of periodStatuses; track status.sper_uuid) {                  <nz-option [nzValue]="status.sper_uuid" [nzLabel]="status.sper_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_previousbalance" [nzSpan]="24">              Saldo Anterior            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_previousbalance\')?.dirty && form.get(\'per_previousbalance\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'per_previousbalance\') }}"            >              <nz-input-number                 formControlName="per_previousbalance"                 nzPlaceHolder="0.00"                [nzMin]="0"                [nzStep]="1000"                [nzFormatter]="formatterDollar"                [nzParser]="parserDollar"                style="width: 100%"                nzSize="large"              ></nz-input-number>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="per_interest" [nzSpan]="24">              Interés            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'per_interest\')?.dirty && form.get(\'per_interest\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'per_interest\') }}"            >              <nz-input-number                 formControlName="per_interest"                 nzPlaceHolder="0.00"                [nzMin]="0"                [nzStep]="100"                [nzFormatter]="formatterDollar"                [nzParser]="parserDollar"                style="width: 100%"                nzSize="large"              ></nz-input-number>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Vista previa del estado -->      @if (form.get(\'sper_uuid\')?.value) {        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24">            <nz-form-item>              <nz-form-label [nzSpan]="24">                Vista Previa del Estado              </nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-tag [nzColor]="getStatusColor(form.get(\'sper_uuid\')?.value)">                  <i nz-icon [nzType]="getStatusIcon(form.get(\'sper_uuid\')?.value)" nzTheme="fill"></i>                  <strong>{{ getStatusLabel(form.get(\'sper_uuid\')?.value) }}</strong>                </nz-tag>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <nz-divider></nz-divider>      <div class="form-actions">        <button           nz-button           nzType="default"           (click)="onCancel()"          nzSize="large"        >          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        <button           nz-button           nzType="primary"           type="submit"          [nzLoading]="isLoading"          nzSize="large"        >          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Crear Período\' }}        </button>      </div>    </form>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PeriodComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> resultados correspondentes "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">Nenhum resultado correspondente "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/PeriodComponent.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/PeriodComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/PeriodComponent.html" selected>🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PeriodComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'pt');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

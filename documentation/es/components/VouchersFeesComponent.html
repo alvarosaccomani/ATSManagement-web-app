@@ -1,0 +1,2573 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  VouchersFeesComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/vouchers-fees/vouchers-fees.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Component for listing and managing voucher installments (quotas/fees).
+Displays a paginated table of installments with due date countdowns, status badges, and CRUD actions.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-vouchers-fees</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>    <code>NzTableModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzEmptyModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./vouchers-fees.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./vouchers-fees.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./vouchers-fees.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzTableModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzEmptyModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#installments" >installments</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#listOfColumns" >listOfColumns</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pageIndex" >pageIndex</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#total" >total</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#createInstallment" >createInstallment</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#deleteInstallment" >deleteInstallment</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editInstallment" >editInstallment</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatAmount" >formatAmount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatDate" >formatDate</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatStatusName" >formatStatusName</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getDaysLeft" >getDaysLeft</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusColor" >getStatusColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getStatusIcon" >getStatusIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadInstallments" >loadInstallments</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#markAsPaid" >markAsPaid</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#markAsPending" >markAsPending</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onPageIndexChange" >onPageIndexChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onPageSizeChange" >onPageSizeChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#viewDetails" >viewDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _vouchersFeesService: <a href="../injectables/VouchersFeesService.html" target="_self">VouchersFeesService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="55" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:55</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the VouchersFeesComponent.</p>
+</div>
+                            <div>
+                                    <b>Parámetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descripción</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular Router service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_vouchersFeesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/VouchersFeesService.html" target="_self" >VouchersFeesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for installment CRUD operations.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >NzMessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Ng-Zorro toast message service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Custom modal alert service.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createInstallment"></a>
+                    <span class="name">
+                        <span ><b>createInstallment</b></span>
+                        <a href="#createInstallment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createInstallment()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="197"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:197</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the installment creation form.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteInstallment"></a>
+                    <span class="name">
+                        <span ><b>deleteInstallment</b></span>
+                        <a href="#deleteInstallment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteInstallment(installment: <a href="../interfaces/VoucherFeeInterface.html" target="_self">VoucherFeeInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="215"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:215</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Prompts for confirmation and deletes an installment record.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>installment</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherFeeInterface.html" target="_self" >VoucherFeeInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Installment record to delete.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editInstallment"></a>
+                    <span class="name">
+                        <span ><b>editInstallment</b></span>
+                        <a href="#editInstallment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editInstallment(installment: <a href="../interfaces/VoucherFeeInterface.html" target="_self">VoucherFeeInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="206"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:206</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the installment edit form.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>installment</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherFeeInterface.html" target="_self" >VoucherFeeInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Installment record to edit.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatAmount"></a>
+                    <span class="name">
+                        <span ><b>formatAmount</b></span>
+                        <a href="#formatAmount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatAmount(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="125"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats a numeric amount as an Argentine Peso currency string.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>amount</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Numeric amount.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted currency string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatDate"></a>
+                    <span class="name">
+                        <span ><b>formatDate</b></span>
+                        <a href="#formatDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatDate(dateString: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="112"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:112</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats an ISO date string into <code>DD/MM/YYYY</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dateString</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>ISO date string.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted date string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatStatusName"></a>
+                    <span class="name">
+                        <span ><b>formatStatusName</b></span>
+                        <a href="#formatStatusName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatStatusName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="167"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:167</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Capitalizes the first letter of a status name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Raw status name.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Capitalized status name.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDaysLeft"></a>
+                    <span class="name">
+                        <span ><b>getDaysLeft</b></span>
+                        <a href="#getDaysLeft"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDaysLeft(dueDate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="176"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:176</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Calculates the remaining days until the installment due date and returns badge metadata.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dueDate</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Due date string.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>{ days: number; color: string; text: string }</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Object containing day difference, badge color, and label text.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusColor"></a>
+                    <span class="name">
+                        <span ><b>getStatusColor</b></span>
+                        <a href="#getStatusColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusColor(statusName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="139"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Ng-Zorro badge status color for an installment status name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Status name string.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Badge status color string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusIcon"></a>
+                    <span class="name">
+                        <span ><b>getStatusIcon</b></span>
+                        <a href="#getStatusIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusIcon(statusName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="153"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Ng-Zorro icon name for an installment status name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Status name string.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Icon name string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadInstallments"></a>
+                    <span class="name">
+                        <span ><b>loadInstallments</b></span>
+                        <a href="#loadInstallments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadInstallments()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="83"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads the installments list from the backend service.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="markAsPaid"></a>
+                    <span class="name">
+                        <span ><b>markAsPaid</b></span>
+                        <a href="#markAsPaid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>markAsPaid(installment: <a href="../interfaces/VoucherFeeInterface.html" target="_self">VoucherFeeInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="255"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:255</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Marks an installment as paid in the UI.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>installment</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherFeeInterface.html" target="_self" >VoucherFeeInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Installment record to update.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="markAsPending"></a>
+                    <span class="name">
+                        <span ><b>markAsPending</b></span>
+                        <a href="#markAsPending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>markAsPending(installment: <a href="../interfaces/VoucherFeeInterface.html" target="_self">VoucherFeeInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="265"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:265</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Marks an installment as pending in the UI.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>installment</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherFeeInterface.html" target="_self" >VoucherFeeInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Installment record to update.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="75"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook executed on component initialization.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageIndexChange"></a>
+                    <span class="name">
+                        <span ><b>onPageIndexChange</b></span>
+                        <a href="#onPageIndexChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageIndexChange(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="286"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:286</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles table page index changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New page index.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageSizeChange"></a>
+                    <span class="name">
+                        <span ><b>onPageSizeChange</b></span>
+                        <a href="#onPageSizeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageSizeChange(size: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="275"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:275</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles table page size changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>size</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New page size.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewDetails"></a>
+                    <span class="name">
+                        <span ><b>viewDetails</b></span>
+                        <a href="#viewDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewDetails(installment: <a href="../interfaces/VoucherFeeInterface.html" target="_self">VoucherFeeInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="246"
+                                    class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:246</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Displays a toast notification with installment details.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>installment</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherFeeInterface.html" target="_self" >VoucherFeeInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Installment record to inspect.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="installments"></a>
+                    <span class="name">
+                        <span ><b>installments</b></span>
+                        <a href="#installments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/VoucherFeeInterface.html" target="_self" >VoucherFeeInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="36" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Array of loaded voucher installment records.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listOfColumns"></a>
+                    <span class="name">
+                        <span ><b>listOfColumns</b></span>
+                        <a href="#listOfColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[
+    { key: &#x27;vouf_uuid&#x27;, title: &#x27;ID&#x27;, width: &#x27;80px&#x27; },
+    { key: &#x27;quota_number&#x27;, title: &#x27;Cuota&#x27;, width: &#x27;100px&#x27; },
+    { key: &#x27;amount&#x27;, title: &#x27;Monto&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;due_date&#x27;, title: &#x27;Vencimiento&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;status&#x27;, title: &#x27;Estado&#x27;, width: &#x27;110px&#x27; },
+    { key: &#x27;days_left&#x27;, title: &#x27;Días Restantes&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;action&#x27;, title: &#x27;Acciones&#x27;, width: &#x27;180px&#x27; }
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Table column definitions.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="38" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flag indicating whether table data is loading.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageIndex"></a>
+                    <span class="name">
+                        <span ><b>pageIndex</b></span>
+                        <a href="#pageIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="40" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current page index (1-based).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="42" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Number of rows per page.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="total"></a>
+                    <span class="name">
+                        <span ><b>total</b></span>
+                        <a href="#total"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="44" class="link-to-prism">src/app/admin/user/vouchers-fees/vouchers-fees.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Total number of installment records.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { NzTableModule } from &#x27;ng-zorro-antd/table&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzEmptyModule } from &#x27;ng-zorro-antd/empty&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { VoucherFeeInterface } from &#x27;../../../core/interfaces/voucher-fee&#x27;;
+import { VouchersFeesService } from &#x27;../../../core/services/vouchers-fees.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+
+/**
+ * Component for listing and managing voucher installments (quotas/fees).
+ * @description Displays a paginated table of installments with due date countdowns, status badges, and CRUD actions.
+ */
+@Component({
+  selector: &#x27;app-vouchers-fees&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    NzTableModule,
+    NzButtonModule,
+    NzIconModule,
+    NzEmptyModule,
+    NzSpinModule,
+    NzTagModule
+  ],
+  templateUrl: &#x27;./vouchers-fees.component.html&#x27;,
+  styleUrl: &#x27;./vouchers-fees.component.scss&#x27;
+})
+export class VouchersFeesComponent implements OnInit {
+  /** Array of loaded voucher installment records. */
+  installments: VoucherFeeInterface[] &#x3D; [];
+  /** Flag indicating whether table data is loading. */
+  loading &#x3D; false;
+  /** Current page index (1-based). */
+  pageIndex &#x3D; 1;
+  /** Number of rows per page. */
+  pageSize &#x3D; 10;
+  /** Total number of installment records. */
+  total &#x3D; 0;
+
+  /** Table column definitions. */
+  listOfColumns &#x3D; [
+    { key: &#x27;vouf_uuid&#x27;, title: &#x27;ID&#x27;, width: &#x27;80px&#x27; },
+    { key: &#x27;quota_number&#x27;, title: &#x27;Cuota&#x27;, width: &#x27;100px&#x27; },
+    { key: &#x27;amount&#x27;, title: &#x27;Monto&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;due_date&#x27;, title: &#x27;Vencimiento&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;status&#x27;, title: &#x27;Estado&#x27;, width: &#x27;110px&#x27; },
+    { key: &#x27;days_left&#x27;, title: &#x27;Días Restantes&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;action&#x27;, title: &#x27;Acciones&#x27;, width: &#x27;180px&#x27; }
+  ];
+
+  /**
+   * Initializes the VouchersFeesComponent.
+   * @param _router Angular Router service.
+   * @param _vouchersFeesService Service for installment CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Custom modal alert service.
+   */
+  constructor(
+    private _router: Router,
+    private _vouchersFeesService: VouchersFeesService,
+    private message: NzMessageService,
+    private _messageService: MessageService
+  ) {}
+
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
+  ngOnInit(): void {
+    this.loadInstallments();
+  }
+
+  /**
+   * Loads the installments list from the backend service.
+   * @returns void
+   */
+  loadInstallments(): void {
+    this.loading &#x3D; true;
+    this._vouchersFeesService.getVoucherFees(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, &#x27;1&#x27;, &#x27;1&#x27;, &#x27;1&#x27;).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.installments &#x3D; response.data;
+          this.total &#x3D; this.installments.length;
+          this.loading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Formats an ISO date string into &#x60;DD/MM/YYYY&#x60;.
+   * @param dateString ISO date string.
+   * @returns Formatted date string.
+   */
+  formatDate(dateString: string): string {
+    const date &#x3D; new Date(dateString);
+    const day &#x3D; String(date.getDate()).padStart(2, &#x27;0&#x27;);
+    const month &#x3D; String(date.getMonth() + 1).padStart(2, &#x27;0&#x27;);
+    const year &#x3D; date.getFullYear();
+    return &#x60;${day}/${month}/${year}&#x60;;
+  }
+
+  /**
+   * Formats a numeric amount as an Argentine Peso currency string.
+   * @param amount Numeric amount.
+   * @returns Formatted currency string.
+   */
+  formatAmount(amount: number): string {
+    return new Intl.NumberFormat(&#x27;es-AR&#x27;, {
+      style: &#x27;currency&#x27;,
+      currency: &#x27;ARS&#x27;,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+  }
+
+  /**
+   * Returns the Ng-Zorro badge status color for an installment status name.
+   * @param statusName Status name string.
+   * @returns Badge status color string.
+   */
+  getStatusColor(statusName: string): string {
+    switch (statusName.toLowerCase()) {
+      case &#x27;pagado&#x27;: return &#x27;success&#x27;;
+      case &#x27;pendiente&#x27;: return &#x27;processing&#x27;;
+      case &#x27;vencido&#x27;: return &#x27;error&#x27;;
+      default: return &#x27;default&#x27;;
+    }
+  }
+
+  /**
+   * Returns the Ng-Zorro icon name for an installment status name.
+   * @param statusName Status name string.
+   * @returns Icon name string.
+   */
+  getStatusIcon(statusName: string): string {
+    switch (statusName.toLowerCase()) {
+      case &#x27;pagado&#x27;: return &#x27;check-circle&#x27;;
+      case &#x27;pendiente&#x27;: return &#x27;clock-circle&#x27;;
+      case &#x27;vencido&#x27;: return &#x27;exclamation-circle&#x27;;
+      default: return &#x27;info-circle&#x27;;
+    }
+  }
+
+  /**
+   * Capitalizes the first letter of a status name.
+   * @param name Raw status name.
+   * @returns Capitalized status name.
+   */
+  formatStatusName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  /**
+   * Calculates the remaining days until the installment due date and returns badge metadata.
+   * @param dueDate Due date string.
+   * @returns Object containing day difference, badge color, and label text.
+   */
+  getDaysLeft(dueDate: string): { days: number; color: string; text: string } {
+    const due &#x3D; new Date(dueDate);
+    const today &#x3D; new Date();
+    const diffTime &#x3D; due.getTime() - today.getTime();
+    const diffDays &#x3D; Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays &lt; 0) {
+      return { days: diffDays, color: &#x27;error&#x27;, text: &#x60;${Math.abs(diffDays)} días de atraso&#x60; };
+    } else if (diffDays &#x3D;&#x3D;&#x3D; 0) {
+      return { days: 0, color: &#x27;warning&#x27;, text: &#x27;Hoy&#x27; };
+    } else if (diffDays &lt;&#x3D; 3) {
+      return { days: diffDays, color: &#x27;warning&#x27;, text: &#x60;${diffDays} días&#x60; };
+    } else {
+      return { days: diffDays, color: &#x27;success&#x27;, text: &#x60;${diffDays} días&#x60; };
+    }
+  }
+
+  /**
+   * Navigates to the installment creation form.
+   * @returns void
+   */
+  createInstallment(): void {
+    this._router.navigate([&#x27;/admin/user/voucher-fee/new&#x27;]);
+  }
+
+  /**
+   * Navigates to the installment edit form.
+   * @param installment Installment record to edit.
+   * @returns void
+   */
+  editInstallment(installment: VoucherFeeInterface): void {
+    this._router.navigate([&#x27;/admin/user/voucher-fee/edit&#x27;, installment.crd_uuid, installment.per_uuid, installment.vou_uuid, installment.vouf_uuid]);
+  }
+
+  /**
+   * Prompts for confirmation and deletes an installment record.
+   * @param installment Installment record to delete.
+   * @returns void
+   */
+  deleteInstallment(installment: VoucherFeeInterface): void {
+    this._messageService.confirm(
+      &#x27;¿Estás seguro de eliminar esta cuota?&#x27;,
+      &#x60;Vas a eliminar la cuota número ${installment.vouf_quotanumber}. Esta acción no se puede deshacer.&#x60;,
+      () &#x3D;&gt; {
+        this.loading &#x3D; true;
+        this._vouchersFeesService.deleteVoucherFee(installment.usr_uuid, installment.crd_uuid, installment.per_uuid, installment.vou_uuid, installment.vouf_uuid).subscribe({
+          next: (response: any) &#x3D;&gt; {
+            this.loading &#x3D; false;
+            if (response.success) {
+              this._messageService.success(&#x27;Cuota eliminada&#x27;, &#x27;La cuota se eliminó correctamente&#x27;);
+              this.loadInstallments();
+            } else {
+              this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo eliminar la cuota&#x27;);
+            }
+          },
+          error: (error: any) &#x3D;&gt; {
+            this.loading &#x3D; false;
+            console.error(error);
+            this._messageService.error(&#x27;Error&#x27;, &#x27;Hubo un problema de conexión al eliminar la cuota&#x27;);
+          }
+        });
+      }
+    );
+  }
+
+  /**
+   * Displays a toast notification with installment details.
+   * @param installment Installment record to inspect.
+   * @returns void
+   */
+  viewDetails(installment: VoucherFeeInterface): void {
+    this.message.info(&#x60;Detalles de la cuota #${installment.vouf_quotanumber}&#x60;);
+  }
+
+  /**
+   * Marks an installment as paid in the UI.
+   * @param installment Installment record to update.
+   * @returns void
+   */
+  markAsPaid(installment: VoucherFeeInterface): void {
+    installment.voufs.voufs_name &#x3D; &#x27;pagado&#x27;;
+    this.message.success(&#x60;Cuota #${installment.vouf_quotanumber} marcada como pagada&#x60;);
+  }
+
+  /**
+   * Marks an installment as pending in the UI.
+   * @param installment Installment record to update.
+   * @returns void
+   */
+  markAsPending(installment: VoucherFeeInterface): void {
+    installment.voufs.voufs_name &#x3D; &#x27;pendiente&#x27;;
+    this.message.info(&#x60;Cuota #${installment.vouf_quotanumber} marcada como pendiente&#x60;);
+  }
+
+  /**
+   * Handles table page size changes.
+   * @param size New page size.
+   * @returns void
+   */
+  onPageSizeChange(size: number): void {
+    this.pageSize &#x3D; size;
+    this.pageIndex &#x3D; 1;
+    this.loadInstallments();
+  }
+
+  /**
+   * Handles table page index changes.
+   * @param index New page index.
+   * @returns void
+   */
+  onPageIndexChange(index: number): void {
+    this.pageIndex &#x3D; index;
+    this.loadInstallments();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;voucher-installment-list-container&quot;&gt;
+  &lt;div class&#x3D;&quot;header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;reconciliation&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      Cuotas de Comprobantes
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;createInstallment()&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;plus&quot;&gt;&lt;/i&gt;
+      Nueva Cuota
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  @if (loading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando cuotas...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  }
+
+  @if (!loading &amp;&amp; installments.length &#x3D;&#x3D;&#x3D; 0) {
+    &lt;div class&#x3D;&quot;empty-container&quot;&gt;
+      &lt;nz-empty
+        nzNotFoundImage&#x3D;&quot;simple&quot;
+        nzNotFoundContent&#x3D;&quot;No hay cuotas registradas&quot;
+        nzNotFoundFooter&#x3D;&quot;&quot;
+      &gt;&lt;/nz-empty&gt;
+    &lt;/div&gt;
+  }
+
+  @if (!loading &amp;&amp; installments.length &gt; 0) {
+    &lt;nz-table
+      [nzData]&#x3D;&quot;installments&quot;
+      [nzPageSize]&#x3D;&quot;pageSize&quot;
+      [nzPageIndex]&#x3D;&quot;pageIndex&quot;
+      [nzTotal]&#x3D;&quot;total&quot;
+      nzShowSizeChanger
+      [nzPageSizeOptions]&#x3D;&quot;[10, 20, 30]&quot;
+      (nzPageSizeChange)&#x3D;&quot;onPageSizeChange($event)&quot;
+      (nzPageIndexChange)&#x3D;&quot;onPageIndexChange($event)&quot;
+      nzBordered
+      nzTableLayout&#x3D;&quot;fixed&quot;
+    &gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          @for (column of listOfColumns; track column.key) {
+            &lt;th [nzWidth]&#x3D;&quot;column.width&quot;&gt;
+              {{ column.title }}
+            &lt;/th&gt;
+          }
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        @for (installment of installments; track installment.vouf_uuid) {
+          &lt;tr&gt;
+            &lt;td&gt;{{ installment.vouf_uuid }}&lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag nzColor&#x3D;&quot;blue&quot;&gt;
+                &lt;strong&gt;Cuota {{ installment.vouf_quotanumber }}&lt;/strong&gt;
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;strong class&#x3D;&quot;amount&quot;&gt;{{ formatAmount(installment.vouf_quotaamount) }}&lt;/strong&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;getDaysLeft(installment.vouf_quotaduedate).color&quot;&gt;
+                {{ formatDate(installment.vouf_quotaduedate) }}
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;getStatusColor(installment.voufs.voufs_name)&quot;&gt;
+                &lt;i nz-icon [nzType]&#x3D;&quot;getStatusIcon(installment.voufs.voufs_name)&quot; nzTheme&#x3D;&quot;fill&quot;&gt;&lt;/i&gt;
+                &lt;strong&gt;{{ formatStatusName(installment.voufs.voufs_name) }}&lt;/strong&gt;
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;getDaysLeft(installment.vouf_quotaduedate).color&quot;&gt;
+                {{ getDaysLeft(installment.vouf_quotaduedate).text }}
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td class&#x3D;&quot;actions&quot;&gt;
+              &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; (click)&#x3D;&quot;viewDetails(installment)&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;eye&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                Ver
+              &lt;/button&gt;
+              &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; (click)&#x3D;&quot;editInstallment(installment)&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;edit&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                Editar
+              &lt;/button&gt;
+              @if (installment.voufs.voufs_name.toLowerCase() &#x3D;&#x3D;&#x3D; &#x27;pendiente&#x27;) {
+                &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; (click)&#x3D;&quot;markAsPaid(installment)&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;check-circle&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                  Pagar
+                &lt;/button&gt;
+              }
+              @if (installment.voufs.voufs_name.toLowerCase() &#x3D;&#x3D;&#x3D; &#x27;pagado&#x27;) {
+                &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; nzDanger (click)&#x3D;&quot;markAsPending(installment)&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;rollback&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                  Revertir
+                &lt;/button&gt;
+              }
+              &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzDanger (click)&#x3D;&quot;deleteInstallment(installment)&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;delete&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                Eliminar
+              &lt;/button&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        }
+        @empty {
+          &lt;tr&gt;
+            &lt;td [colSpan]&#x3D;&quot;listOfColumns.length&quot; class&#x3D;&quot;text-center&quot;&gt;
+              No hay datos disponibles
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        }
+      &lt;/tbody&gt;
+    &lt;/nz-table&gt;
+  }
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./vouchers-fees.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.voucher-installment-list-container {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  height: calc(100vh - 50px);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #13c2c2; // Turquesa para cuotas
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .loading-container,
+  .empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    padding: 24px;
+  }
+
+  nz-table {
+    margin-top: 16px;
+
+    .amount {
+      color: #52c41a;
+      font-size: 14px;
+    }
+
+    nz-tag {
+      margin-right: 4px;
+      
+      &amp;:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .actions {
+      button {
+        margin-right: 8px;
+        
+        &amp;:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .text-center {
+    text-align: center;
+    padding: 24px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="voucher-installment-list-container">  <div class="header">    <h2>      <i nz-icon nzType="reconciliation" nzTheme="outline"></i>      Cuotas de Comprobantes    </h2>    <button nz-button nzType="primary" (click)="createInstallment()">      <i nz-icon nzType="plus"></i>      Nueva Cuota    </button>  </div>  @if (loading) {    <div class="loading-container">      <nz-spin nzTip="Cargando cuotas..."></nz-spin>    </div>  }  @if (!loading && installments.length === 0) {    <div class="empty-container">      <nz-empty        nzNotFoundImage="simple"        nzNotFoundContent="No hay cuotas registradas"        nzNotFoundFooter=""      ></nz-empty>    </div>  }  @if (!loading && installments.length > 0) {    <nz-table      [nzData]="installments"      [nzPageSize]="pageSize"      [nzPageIndex]="pageIndex"      [nzTotal]="total"      nzShowSizeChanger      [nzPageSizeOptions]="[10, 20, 30]"      (nzPageSizeChange)="onPageSizeChange($event)"      (nzPageIndexChange)="onPageIndexChange($event)"      nzBordered      nzTableLayout="fixed"    >      <thead>        <tr>          @for (column of listOfColumns; track column.key) {            <th [nzWidth]="column.width">              {{ column.title }}            </th>          }        </tr>      </thead>      <tbody>        @for (installment of installments; track installment.vouf_uuid) {          <tr>            <td>{{ installment.vouf_uuid }}</td>            <td>              <nz-tag nzColor="blue">                <strong>Cuota {{ installment.vouf_quotanumber }}</strong>              </nz-tag>            </td>            <td>              <strong class="amount">{{ formatAmount(installment.vouf_quotaamount) }}</strong>            </td>            <td>              <nz-tag [nzColor]="getDaysLeft(installment.vouf_quotaduedate).color">                {{ formatDate(installment.vouf_quotaduedate) }}              </nz-tag>            </td>            <td>              <nz-tag [nzColor]="getStatusColor(installment.voufs.voufs_name)">                <i nz-icon [nzType]="getStatusIcon(installment.voufs.voufs_name)" nzTheme="fill"></i>                <strong>{{ formatStatusName(installment.voufs.voufs_name) }}</strong>              </nz-tag>            </td>            <td>              <nz-tag [nzColor]="getDaysLeft(installment.vouf_quotaduedate).color">                {{ getDaysLeft(installment.vouf_quotaduedate).text }}              </nz-tag>            </td>            <td class="actions">              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(installment)">                <i nz-icon nzType="eye" nzTheme="outline"></i>                Ver              </button>              <button nz-button nzSize="small" nzType="link" (click)="editInstallment(installment)">                <i nz-icon nzType="edit" nzTheme="outline"></i>                Editar              </button>              @if (installment.voufs.voufs_name.toLowerCase() === \'pendiente\') {                <button nz-button nzSize="small" nzType="link" (click)="markAsPaid(installment)">                  <i nz-icon nzType="check-circle" nzTheme="outline"></i>                  Pagar                </button>              }              @if (installment.voufs.voufs_name.toLowerCase() === \'pagado\') {                <button nz-button nzSize="small" nzType="link" nzDanger (click)="markAsPending(installment)">                  <i nz-icon nzType="rollback" nzTheme="outline"></i>                  Revertir                </button>              }              <button nz-button nzSize="small" nzDanger (click)="deleteInstallment(installment)">                <i nz-icon nzType="delete" nzTheme="outline"></i>                Eliminar              </button>            </td>          </tr>        }        @empty {          <tr>            <td [colSpan]="listOfColumns.length" class="text-center">              No hay datos disponibles            </td>          </tr>        }      </tbody>    </nz-table>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'VouchersFeesComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/VouchersFeesComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/VouchersFeesComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/VouchersFeesComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'VouchersFeesComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

@@ -1,0 +1,972 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  RelatedData</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/payment-period/payment-period.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+            <p class="comment">
+                <h3>Descripción</h3>
+            </p>
+            <p class="comment">
+                <p>Interfaz auxiliar que vincula un período con los UUID de su tarjeta padre y de su período.
+Se utiliza internamente para autocompletar el campo de tarjeta cuando se selecciona un período de facturación.</p>
+
+            </p>
+
+
+            </div>
+
+    <div class="tab-pane fade " id="api"><section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-3">
+                    <h6><b>Propiedades</b></h6>
+                </td>
+                <td class="col-md-9">
+                    <ul class="index-list">
+                        <li>
+                                <a href="#crd_uuid" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">crd_uuid</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#per_uuid" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">per_uuid</span>
+                                </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+        <h3 id="inputs">Propiedades</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="crd_uuid"></a>
+                                <span class="name "><b>crd_uuid</b>
+                                    <a href="#crd_uuid">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>crd_uuid:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="32" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:32</a></div>
+                                </td>
+                            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>UUID de la tarjeta padre.</p>
+</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="per_uuid"></a>
+                                <span class="name "><b>per_uuid</b>
+                                    <a href="#per_uuid">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>per_uuid:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="34" class="link-to-prism">src/app/admin/user/payment-period/payment-period.component.ts:34</a></div>
+                                </td>
+                            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>UUID del período de facturación.</p>
+</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzDatePickerModule } from &#x27;ng-zorro-antd/date-picker&#x27;;
+import { NzInputNumberModule } from &#x27;ng-zorro-antd/input-number&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+
+import { PaymentPeriodInterface } from &#x27;../../../core/interfaces/payment-period&#x27;;
+import { CardsService } from &#x27;../../../core/services/cards.service&#x27;;
+import { PeriodsService } from &#x27;../../../core/services/periods.service&#x27;;
+import { PaymentMethodsService } from &#x27;../../../core/services/payment-methods.service&#x27;;
+import { PaymentPeriodsStatusService } from &#x27;../../../core/services/payment-periods-status.service&#x27;;
+import { PaymentPeriodsService } from &#x27;../../../core/services/payment-periods.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+/**
+ * Interfaz auxiliar que vincula un período con los UUID de su tarjeta padre y de su período.
+ * @description Se utiliza internamente para autocompletar el campo de tarjeta cuando se selecciona un período de facturación.
+ */
+interface RelatedData {
+  /** UUID de la tarjeta padre. */
+  crd_uuid: string;
+  /** UUID del período de facturación. */
+  per_uuid: string;
+}
+
+/**
+ * Componente para crear y editar un pago de período de facturación.
+ * @description Gestiona la fecha de pago, el monto pagado, el método de pago, la referencia de pago, el estado y el período/tarjeta asociados.
+ */
+@Component({
+  selector: &#x27;app-payment-period&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzInputNumberModule,
+    NzTagModule
+  ],
+  templateUrl: &#x27;./payment-period.component.html&#x27;,
+  styleUrl: &#x27;./payment-period.component.scss&#x27;
+})
+export class PaymentPeriodComponent implements OnInit {
+  /** Grupo de formulario reactivo para el pago del período. */
+  form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
+  isLoading &#x3D; false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
+  isEditing &#x3D; false;
+  /** UUID del pago que se está editando, o null al crear uno nuevo. */
+  paymentId: string | null &#x3D; null;
+
+  /** Opciones de métodos de pago disponibles para el menú desplegable. */
+  paymentMethods: any[] &#x3D; [];
+  /** Opciones de estados de pago disponibles para el menú desplegable. */
+  paymentStatuses: any[] &#x3D; [];
+  /** Opciones de períodos de facturación disponibles para el menú desplegable. */
+  periods: any[] &#x3D; [];
+  /** Opciones de tarjetas disponibles para el menú desplegable. */
+  cards: any[] &#x3D; [];
+
+  /** Mapa interno que vincula los UUID de períodos con los UUID de sus tarjetas padre. */
+  private relatedDataMap: { [key: string]: RelatedData } &#x3D; {};
+
+  /**
+   * Inicializa el componente PaymentPeriodComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _cardsService Servicio para obtener las tarjetas.
+   * @param _periodsService Servicio para obtener los períodos de facturación.
+   * @param _paymentMethodsService Servicio para obtener los métodos de pago.
+   * @param _paymentPeriodsStatusService Servicio para obtener los estados de pago de períodos.
+   * @param _paymentPeriodsService Servicio para operaciones CRUD de pagos de períodos.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private message: NzMessageService,
+    private _cardsService: CardsService,
+    private _periodsService: PeriodsService,
+    private _paymentMethodsService: PaymentMethodsService,
+    private _paymentPeriodsStatusService: PaymentPeriodsStatusService,
+    private _paymentPeriodsService: PaymentPeriodsService,
+    private _messageService: MessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      payp_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      payp_paymentdate: [new Date(), Validators.required],
+      payp_amountpaid: [null, [Validators.required, Validators.min(0)]],
+      paym_uuid: [&#x27;&#x27;, Validators.required],
+      payp_paymentreference: [&#x27;&#x27;],
+      payps_uuid: [&#x27;1&#x27;, Validators.required],
+      per_uuid: [&#x27;&#x27;, Validators.required],
+      crd_uuid: [{ value: &#x27;&#x27;, disabled: true }]
+    });
+  }
+
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
+  ngOnInit(): void {
+    const payp_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;payp_uuid&#x27;);
+    const crd_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;crd_uuid&#x27;);
+    const per_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;per_uuid&#x27;);
+
+    this.isEditing &#x3D; !!payp_uuid;
+    this.loadPaymentMethods();
+    this.loadPaymentStatuses();
+    this.loadPeriodsData();
+    
+    if (this.isEditing) {
+      this.paymentId &#x3D; payp_uuid;
+      this.loadPayment(crd_uuid!, per_uuid!, payp_uuid!);
+    } else {
+      this.form.get(&#x27;payp_uuid&#x27;)?.disable();
+    }
+
+    // Escuchar cambios en el período para actualizar la tarjeta relacionada
+    this.form.get(&#x27;per_uuid&#x27;)?.valueChanges.subscribe(periodId &#x3D;&gt; {
+      if (periodId) {
+        this.loadRelatedData(periodId);
+      } else {
+        this.form.get(&#x27;crd_uuid&#x27;)?.setValue(&#x27;&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Carga los métodos de pago disponibles desde el backend.
+   * @returns void
+   */
+  loadPaymentMethods(): void {
+    this._paymentMethodsService.getPaymentMethods().subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
+          this.paymentMethods &#x3D; response.data.map((m: any) &#x3D;&gt; ({
+            value: m.paym_uuid,
+            label: this.formatMethodName(m.paym_name)
+          }));
+        }
+      }
+    });
+  }
+
+  /**
+   * Carga los estados de pago de períodos disponibles desde el backend.
+   * @returns void
+   */
+  loadPaymentStatuses(): void {
+    this._paymentPeriodsStatusService.getPaymentPeriodsStatus().subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
+          this.paymentStatuses &#x3D; response.data.map((s: any) &#x3D;&gt; ({
+            value: s.payps_uuid,
+            label: this.formatStatusName(s.payps_name)
+          }));
+        }
+      }
+    });
+  }
+
+  /**
+   * Carga las tarjetas y sus períodos de facturación para completar las opciones desplegables y las asignaciones de relación.
+   * @returns void
+   */
+  loadPeriodsData(): void {
+    this.isLoading &#x3D; true;
+    this._cardsService.getCards(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;).subscribe({
+      next: (cardResponse: any) &#x3D;&gt; {
+        if (cardResponse.success) {
+          const cardsData &#x3D; cardResponse.data;
+          this.cards &#x3D; cardsData.map((c: any) &#x3D;&gt; ({ value: c.crd_uuid, label: &#x60;**** **** **** ${c.crd_last4digits}&#x60; }));
+          
+          let pendingQueries &#x3D; cardsData.length;
+          if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {
+            this.isLoading &#x3D; false;
+            return;
+          }
+
+          const allPeriods: any[] &#x3D; [];
+          const relatedMap: { [key: string]: RelatedData } &#x3D; {};
+
+          cardsData.forEach((card: any) &#x3D;&gt; {
+            this._periodsService.getPedriods(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, card.crd_uuid).subscribe({
+              next: (periodResponse: any) &#x3D;&gt; {
+                if (periodResponse.success) {
+                  periodResponse.data.forEach((p: any) &#x3D;&gt; {
+                    allPeriods.push({ value: p.per_uuid, label: &#x60;Período ${this.formatPeriodNumber(p.per_periodnumber)}&#x60; });
+                    relatedMap[p.per_uuid] &#x3D; {
+                      crd_uuid: card.crd_uuid,
+                      per_uuid: p.per_uuid
+                    };
+                  });
+                }
+                pendingQueries--;
+                if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {
+                  this.periods &#x3D; allPeriods;
+                  this.relatedDataMap &#x3D; relatedMap;
+                  this.isLoading &#x3D; false;
+                }
+              },
+              error: () &#x3D;&gt; {
+                pendingQueries--;
+                if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {
+                  this.periods &#x3D; allPeriods;
+                  this.relatedDataMap &#x3D; relatedMap;
+                  this.isLoading &#x3D; false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading &#x3D; false;
+        }
+      },
+      error: () &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+      }
+    });
+  }
+
+  /**
+   * Carga un registro de pago de período existente y completa el formulario.
+   * @param crd_uuid UUID de la tarjeta.
+   * @param per_uuid UUID del período.
+   * @param payp_uuid UUID del pago de período.
+   * @returns void
+   */
+  loadPayment(crd_uuid: string, per_uuid: string, payp_uuid: string): void {
+    this.isLoading &#x3D; true;
+    this._paymentPeriodsService.getPaymentPeriodById(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, crd_uuid, per_uuid, payp_uuid).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        if (response.success) {
+          const payment &#x3D; {
+            ...response.data,
+            payp_paymentdate: new Date(response.data.payp_paymentdate)
+          };
+
+          this.form.get(&#x27;payp_uuid&#x27;)?.enable();
+          this.form.get(&#x27;crd_uuid&#x27;)?.enable();
+
+          this.form.patchValue(payment);
+
+          this.form.get(&#x27;payp_uuid&#x27;)?.disable();
+          this.form.get(&#x27;crd_uuid&#x27;)?.disable();
+        }
+      },
+      error: error &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
+        this._messageService.error(&#x27;Error&#x27;, &#x27;No se pudo cargar la información del pago&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Completa el control de formulario de tarjeta asociado con un período seleccionado.
+   * @param periodId UUID del período seleccionado.
+   * @returns void
+   */
+  loadRelatedData(periodId: string): void {
+    if (this.relatedDataMap.hasOwnProperty(periodId)) {
+      const data &#x3D; this.relatedDataMap[periodId];
+      this.form.get(&#x27;crd_uuid&#x27;)?.enable();
+      this.form.get(&#x27;crd_uuid&#x27;)?.setValue(data.crd_uuid);
+      this.form.get(&#x27;crd_uuid&#x27;)?.disable();
+    }
+  }
+
+  /**
+   * Valida y envía el formulario para crear o actualizar el pago del período.
+   * @returns void
+   */
+  onSubmit(): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this._messageService.error(&#x27;Formulario Inválido&#x27;, &#x27;Por favor complete todos los campos obligatorios&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+    const rawValue &#x3D; this.form.getRawValue();
+    const payload &#x3D; {
+      ...rawValue,
+      usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;
+    };
+
+    if (!this.isEditing) {
+      this._paymentPeriodsService.savePaymentPeriod(payload).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if (response.success) {
+            this._messageService.success(
+              &#x27;Pago Registrado&#x27;, 
+              &#x27;El pago se registró correctamente en el período.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/payment-periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo registrar el pago&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage?.error?.error || &#x27;Hubo un problema al registrar el pago&#x27;);
+        }
+      });
+    } else {
+      this._paymentPeriodsService.updatePaymentPeriod(payload.usr_uuid, payload.crd_uuid, payload.per_uuid, payload.payp_uuid, payload).subscribe({
+        next: response &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if (response.success) {
+            this._messageService.success(
+              &#x27;Pago Actualizado&#x27;, 
+              &#x27;El pago se actualizó correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/payment-periods&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar el pago&#x27;);
+          }
+        },
+        error: error &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.error(errorMessage);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage?.error?.error || &#x27;Hubo un problema al actualizar el pago&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancela la operación y navega de regreso a la lista de pagos de períodos.
+   * @returns void
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/payment-periods&#x27;]);
+  }
+
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
+  getErrorMessage(controlName: string): string | null {
+    const control &#x3D; this.form.get(controlName);
+    if (control?.hasError(&#x27;required&#x27;)) {
+      return &#x27;Este campo es obligatorio&#x27;;
+    }
+    if (control?.hasError(&#x27;min&#x27;)) {
+      return &#x27;El valor mínimo es &#x27; + control.errors?.[&#x27;min&#x27;].min;
+    }
+    return null;
+  }
+
+  /**
+   * Formatea un período numérico (&#x60;YYYYMM&#x60;) como &#x60;MM/YYYY&#x60;.
+   * @param periodNumber Valor numérico del período.
+   * @returns Cadena de período formateada.
+   */
+  formatPeriodNumber(periodNumber: number): string {
+    const periodStr &#x3D; periodNumber.toString();
+    const year &#x3D; periodStr.substring(0, 4);
+    const month &#x3D; periodStr.substring(4, 6);
+    return &#x60;${month}/${year}&#x60;;
+  }
+
+  /** Función formateadora de visualización de moneda. */
+  formatterDollar &#x3D; formatterDollar;
+  /** Función analizadora de entrada de moneda. */
+  parserDollar &#x3D; parserDollar;
+  /** Alias para la función formateadora de visualización de moneda. */
+  currencyFormatter &#x3D; formatterDollar;
+  /** Alias para la función analizadora de entrada de moneda. */
+  currencyParser &#x3D; parserDollar;
+
+  /**
+   * Devuelve el color de etiqueta de Ng-Zorro para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con el color de la etiqueta.
+   */
+  getMethodColor(methodId: string): string {
+    const label &#x3D; this.getMethodLabel(methodId).toLowerCase();
+    if (label.includes(&#x27;banco&#x27;)) return &#x27;blue&#x27;;
+    if (label.includes(&#x27;transferencia&#x27;)) return &#x27;geekblue&#x27;;
+    if (label.includes(&#x27;rapipago&#x27;)) return &#x27;gold&#x27;;
+    if (label.includes(&#x27;mercado&#x27;)) return &#x27;volcano&#x27;;
+    if (label.includes(&#x27;fácil&#x27;)) return &#x27;orange&#x27;;
+    return &#x27;default&#x27;;
+  }
+
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
+  getMethodIcon(methodId: string): string {
+    const label &#x3D; this.getMethodLabel(methodId).toLowerCase();
+    if (label.includes(&#x27;banco&#x27;)) return &#x27;bank&#x27;;
+    if (label.includes(&#x27;transferencia&#x27;)) return &#x27;swap&#x27;;
+    if (label.includes(&#x27;rapipago&#x27;) || label.includes(&#x27;fácil&#x27;)) return &#x27;barcode&#x27;;
+    if (label.includes(&#x27;mercado&#x27;) || label.includes(&#x27;wallet&#x27;)) return &#x27;wallet&#x27;;
+    return &#x27;credit-card&#x27;;
+  }
+
+  /**
+   * Formatea un nombre de método de pago sin procesar a formato de título.
+   * @param name Nombre del método de pago sin procesar.
+   * @returns Nombre del método de pago formateado.
+   */
+  formatMethodName(name: string): string {
+    return name.replace(/_/g, &#x27; &#x27;).replace(/\b\w/g, char &#x3D;&gt; char.toUpperCase());
+  }
+
+  /**
+   * Convierte a mayúscula la primera letra de un nombre de estado.
+   * @param name Nombre del estado sin procesar.
+   * @returns Nombre del estado con inicial mayúscula.
+   */
+  formatStatusName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena de estado de la insignia.
+   */
+  getStatusColor(statusId: string): string {
+    const label &#x3D; this.getStatusLabel(statusId).toLowerCase();
+    if (label.includes(&#x27;confirmado&#x27;)) return &#x27;success&#x27;;
+    if (label.includes(&#x27;procesado&#x27;)) return &#x27;processing&#x27;;
+    if (label.includes(&#x27;rechazado&#x27;)) return &#x27;error&#x27;;
+    return &#x27;default&#x27;;
+  }
+
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
+  getStatusIcon(statusId: string): string {
+    const label &#x3D; this.getStatusLabel(statusId).toLowerCase();
+    if (label.includes(&#x27;confirmado&#x27;)) return &#x27;check-circle&#x27;;
+    if (label.includes(&#x27;procesado&#x27;)) return &#x27;sync&#x27;;
+    if (label.includes(&#x27;rechazado&#x27;)) return &#x27;close-circle&#x27;;
+    return &#x27;info-circle&#x27;;
+  }
+
+  /**
+   * Resuelve la etiqueta de visualización para un ID de estado de pago.
+   * @param statusId UUID del estado de pago.
+   * @returns Cadena con la etiqueta del estado.
+   */
+  getStatusLabel(statusId: string): string {
+    const status &#x3D; this.paymentStatuses.find(s &#x3D;&gt; s.value &#x3D;&#x3D;&#x3D; statusId);
+    return status ? status.label : &#x27;Desconocido&#x27;;
+  }
+
+  /**
+   * Resuelve la etiqueta de visualización para un ID de método de pago.
+   * @param methodId UUID del método de pago.
+   * @returns Cadena con la etiqueta del método.
+   */
+  getMethodLabel(methodId: string): string {
+    const method &#x3D; this.paymentMethods.find(m &#x3D;&gt; m.value &#x3D;&#x3D;&#x3D; methodId);
+    return method ? method.label : &#x27;Desconocido&#x27;;
+  }
+}</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/interfaces/RelatedData.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/interfaces/RelatedData.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/interfaces/RelatedData.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'RelatedData.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

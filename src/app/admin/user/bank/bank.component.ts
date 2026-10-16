@@ -11,6 +11,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { BanksService } from '../../../core/services/banks.service';
 
+/**
+ * Componente para crear y editar una entidad bancaria.
+ * @description Proporciona un formulario reactivo para gestionar el nombre y la descripción del banco.
+ */
 @Component({
   selector: 'app-bank',
   standalone: true,
@@ -29,11 +33,23 @@ import { BanksService } from '../../../core/services/banks.service';
   styleUrl: './bank.component.scss'
 })
 export class BankComponent implements OnInit {
+  /** Grupo de formulario reactivo para los campos del banco. */
   form: FormGroup;
+  /** Indicador de si hay una solicitud en curso. */
   isLoading = false;
+  /** Indicador de si el formulario se encuentra en modo de edición. */
   isEditing = false;
+  /** UUID del banco que se está editando, o null al crear uno nuevo. */
   bankId: string | null = null;
 
+  /**
+   * Inicializa el componente BankComponent y construye el formulario reactivo.
+   * @param fb Servicio FormBuilder de Angular.
+   * @param route ActivatedRoute para leer los parámetros de la ruta.
+   * @param router Servicio Router de Angular.
+   * @param _banksService Servicio para operaciones CRUD de bancos.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -49,6 +65,10 @@ export class BankComponent implements OnInit {
     });
   }
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.bankId = this.route.snapshot.paramMap.get('ban_uuid');
     this.isEditing = !!this.bankId;
@@ -64,6 +84,10 @@ export class BankComponent implements OnInit {
     }
   }
 
+  /**
+   * Carga un registro de banco existente por su ID y completa el formulario.
+   * @returns void
+   */
   loadBank(): void {
     this.isLoading = true;
 
@@ -93,6 +117,10 @@ export class BankComponent implements OnInit {
     )
   }
 
+  /**
+   * Valida y envía el formulario para crear o actualizar el banco.
+   * @returns void
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -113,29 +141,15 @@ export class BankComponent implements OnInit {
           if(response.success) {
             this.isLoading = false;
             const item = response.item;
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Rubro fue agregado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/banks']);
-            //   }
-            // );
             this.router.navigate(['/admin/user/banks']);
           } else {
             this.isLoading = false;
-            //this.status = 'error'
           }
         },
         error =>{
             this.isLoading = false;
             let errorMessage = <any>error;
             console.log(errorMessage);
-            // if(errorMessage != null) {
-            //   this._messageService.error(
-            //     "Error", 
-            //     errorMessage.error.error
-            //   );
-            // }
             this.message.success(errorMessage.error.error);
         }
       )
@@ -146,16 +160,8 @@ export class BankComponent implements OnInit {
             this.isLoading = false;
             const item = response.item;
             this.router.navigate(['/admin/user/banks']);
-            // this._messageService.success(
-            //   "Informacion", 
-            //   "El Banco fue actualizado correctamente.",
-            //   () => {
-            //     this.router.navigate(['/admin/user/banks']);
-            //   }
-            // );
           } else {
             this.isLoading = false;
-            //this.status = 'error'
           }
         },
         error => {
@@ -163,10 +169,6 @@ export class BankComponent implements OnInit {
             let errorMessage = <any>error;
             console.log(errorMessage);
             if(errorMessage != null) {
-              // this._messageService.error(
-              //   "Error", 
-              //   errorMessage.error.error
-              // );
               this.message.success(errorMessage.error.error);
             }
         }
@@ -174,10 +176,19 @@ export class BankComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancela la operación y navega de regreso a la lista de bancos.
+   * @returns void
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/banks']);
   }
 
+  /**
+   * Obtiene el mensaje de error de validación para un control del formulario.
+   * @param controlName Nombre del control del formulario.
+   * @returns Mensaje de error de validación o null.
+   */
   getErrorMessage(controlName: string): string | null {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {

@@ -13,6 +13,10 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Form component (`<app-scope>`) for creating and editing accounting scopes (contexts)
+ * at `/admin/user/scope/new` and `/admin/user/scope/edit/:scp_uuid`.
+ */
 @Component({
   selector: 'app-scope',
   standalone: true,
@@ -31,11 +35,24 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './scope.component.scss'
 })
 export class ScopeComponent implements OnInit {
+  /** Reactive form group for scope attributes. */
   form: FormGroup;
+  /** Indicates whether data is being loaded or submitted. */
   isLoading = false;
+  /** Indicates whether the component is editing an existing scope (`true`) or creating a new one (`false`). */
   isEditing = false;
+  /** UUID of the scope being edited, or `null` when creating a new scope. */
   scp_uuid: string | null = null;
 
+  /**
+   * Initializes the scope form component.
+   *
+   * @param fb Angular `FormBuilder` instance.
+   * @param route Activated route used to extract `scp_uuid`.
+   * @param router Angular `Router` instance.
+   * @param _scopesService Service for scope CRUD operations.
+   * @param _messageService Service for displaying modal notifications.
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -54,6 +71,9 @@ export class ScopeComponent implements OnInit {
     });
   }
 
+  /**
+   * Checks route parameters for `scp_uuid` and loads existing scope data if editing.
+   */
   ngOnInit(): void {
     this.scp_uuid = this.route.snapshot.paramMap.get('scp_uuid');
     this.isEditing = !!this.scp_uuid;
@@ -63,6 +83,11 @@ export class ScopeComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetches an existing scope record by its UUID and patches the form values.
+   *
+   * @param scp_uuid Unique identifier of the scope to load.
+   */
   loadScope(scp_uuid: string): void {
     this.isLoading = true;
     this._scopesService.getScopeById(scp_uuid).subscribe({
@@ -80,6 +105,9 @@ export class ScopeComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates and submits the scope form to create or update the scope record.
+   */
   onSubmit(): void {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {
@@ -145,6 +173,9 @@ export class ScopeComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels editing and returns to the scopes list (`/admin/user/scopes`).
+   */
   onCancel(): void {
     this.router.navigate(['/admin/user/scopes']);
   }

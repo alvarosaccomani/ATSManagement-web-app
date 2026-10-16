@@ -1,0 +1,2814 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  VouchersComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/vouchers/vouchers.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Component for listing and managing card vouchers.
+Displays a paginated table of vouchers with operation type indicators, installment details, and status actions.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-vouchers</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>    <code>NzTableModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzEmptyModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./vouchers.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./vouchers.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./vouchers.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzTableModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzEmptyModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#listOfColumns" >listOfColumns</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pageIndex" >pageIndex</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pageSize" >pageSize</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#total" >total</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#vouchers" >vouchers</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#confirmVoucher" >confirmVoucher</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#createVoucher" >createVoucher</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#deleteVoucher" >deleteVoucher</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editVoucher" >editVoucher</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatAmount" >formatAmount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatDateTime" >formatDateTime</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatInstallments" >formatInstallments</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatOperationTypeName" >formatOperationTypeName</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatVoucherStatusName" >formatVoucherStatusName</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getOperationTypeColor" >getOperationTypeColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getOperationTypeIcon" >getOperationTypeIcon</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#getVoucherStatusColor" >getVoucherStatusColor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadVouchers" >loadVouchers</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onPageIndexChange" >onPageIndexChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onPageSizeChange" >onPageSizeChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#rejectVoucher" >rejectVoucher</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#viewDetails" >viewDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _vouchersService: <a href="../injectables/VouchersService.html" target="_self">VouchersService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the VouchersComponent.</p>
+</div>
+                            <div>
+                                    <b>Parámetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descripción</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular Router service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_vouchersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/VouchersService.html" target="_self" >VouchersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for voucher CRUD operations.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >NzMessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Ng-Zorro toast message service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Custom modal alert service.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmVoucher"></a>
+                    <span class="name">
+                        <span ><b>confirmVoucher</b></span>
+                        <a href="#confirmVoucher"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>confirmVoucher(voucher: <a href="../interfaces/VoucherInterface.html" target="_self">VoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="281"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:281</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Marks a voucher as confirmed in the UI.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>voucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher record to confirm.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createVoucher"></a>
+                    <span class="name">
+                        <span ><b>createVoucher</b></span>
+                        <a href="#createVoucher"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createVoucher()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="223"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:223</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the voucher creation form.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteVoucher"></a>
+                    <span class="name">
+                        <span ><b>deleteVoucher</b></span>
+                        <a href="#deleteVoucher"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteVoucher(voucher: <a href="../interfaces/VoucherInterface.html" target="_self">VoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="241"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:241</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Prompts for confirmation and deletes a voucher record.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>voucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher record to delete.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editVoucher"></a>
+                    <span class="name">
+                        <span ><b>editVoucher</b></span>
+                        <a href="#editVoucher"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editVoucher(voucher: <a href="../interfaces/VoucherInterface.html" target="_self">VoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="232"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:232</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the voucher edit form.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>voucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher record to edit.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatAmount"></a>
+                    <span class="name">
+                        <span ><b>formatAmount</b></span>
+                        <a href="#formatAmount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatAmount(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, currency: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="130"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats an amount string as a localized currency string.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>amount</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Numeric amount string.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>currency</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Currency ISO code (e.g., <code>&#39;ARS&#39;</code>, <code>&#39;USD&#39;</code>).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted currency string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatDateTime"></a>
+                    <span class="name">
+                        <span ><b>formatDateTime</b></span>
+                        <a href="#formatDateTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatDateTime(dateTimeString: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="114"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:114</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats an ISO datetime string into <code>DD/MM/YYYY HH:mm</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dateTimeString</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>ISO datetime string.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted datetime string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatInstallments"></a>
+                    <span class="name">
+                        <span ><b>formatInstallments</b></span>
+                        <a href="#formatInstallments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatInstallments(voucher: <a href="../interfaces/VoucherInterface.html" target="_self">VoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="210"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:210</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats the installment summary text for a voucher.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>voucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher record.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Human-readable installment description.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatOperationTypeName"></a>
+                    <span class="name">
+                        <span ><b>formatOperationTypeName</b></span>
+                        <a href="#formatOperationTypeName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatOperationTypeName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="175"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:175</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats an operation type name into title case.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Raw operation type name.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted operation type name.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatVoucherStatusName"></a>
+                    <span class="name">
+                        <span ><b>formatVoucherStatusName</b></span>
+                        <a href="#formatVoucherStatusName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatVoucherStatusName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="201"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Capitalizes the first letter of a voucher status name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Raw status name.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Capitalized status name.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOperationTypeColor"></a>
+                    <span class="name">
+                        <span ><b>getOperationTypeColor</b></span>
+                        <a href="#getOperationTypeColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOperationTypeColor(typeName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="145"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Ng-Zorro tag color for an operation type name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>typeName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Operation type name.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Tag color identifier.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOperationTypeIcon"></a>
+                    <span class="name">
+                        <span ><b>getOperationTypeIcon</b></span>
+                        <a href="#getOperationTypeIcon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOperationTypeIcon(typeName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="160"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Ng-Zorro icon identifier for an operation type name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>typeName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Operation type name.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Icon name string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVoucherStatusColor"></a>
+                    <span class="name">
+                        <span ><b>getVoucherStatusColor</b></span>
+                        <a href="#getVoucherStatusColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getVoucherStatusColor(statusName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="186"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:186</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Ng-Zorro badge status color for a voucher state name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>statusName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher status name.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Status badge color string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadVouchers"></a>
+                    <span class="name">
+                        <span ><b>loadVouchers</b></span>
+                        <a href="#loadVouchers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadVouchers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="85"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads the vouchers list from the backend service.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="77"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook executed on component initialization.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageIndexChange"></a>
+                    <span class="name">
+                        <span ><b>onPageIndexChange</b></span>
+                        <a href="#onPageIndexChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageIndexChange(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="312"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:312</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles table page index changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New page index.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPageSizeChange"></a>
+                    <span class="name">
+                        <span ><b>onPageSizeChange</b></span>
+                        <a href="#onPageSizeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPageSizeChange(size: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="301"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:301</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles table page size changes.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>size</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>New page size.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rejectVoucher"></a>
+                    <span class="name">
+                        <span ><b>rejectVoucher</b></span>
+                        <a href="#rejectVoucher"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>rejectVoucher(voucher: <a href="../interfaces/VoucherInterface.html" target="_self">VoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="291"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Marks a voucher as rejected in the UI.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>voucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher record to reject.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewDetails"></a>
+                    <span class="name">
+                        <span ><b>viewDetails</b></span>
+                        <a href="#viewDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewDetails(voucher: <a href="../interfaces/VoucherInterface.html" target="_self">VoucherInterface</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="272"
+                                    class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:272</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Displays a toast notification with voucher transaction details.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>voucher</td>
+                                            <td>
+                                                            <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Voucher record to inspect.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listOfColumns"></a>
+                    <span class="name">
+                        <span ><b>listOfColumns</b></span>
+                        <a href="#listOfColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[
+    { key: &#x27;vou_uuid&#x27;, title: &#x27;ID&#x27;, width: &#x27;80px&#x27; },
+    { key: &#x27;transaction&#x27;, title: &#x27;Transacción&#x27;, width: &#x27;140px&#x27; },
+    { key: &#x27;datetime&#x27;, title: &#x27;Fecha/Hora&#x27;, width: &#x27;140px&#x27; },
+    { key: &#x27;amount&#x27;, title: &#x27;Monto&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;commerce&#x27;, title: &#x27;Comercio&#x27;, width: &#x27;180px&#x27; },
+    { key: &#x27;operation_type&#x27;, title: &#x27;Tipo&#x27;, width: &#x27;110px&#x27; },
+    { key: &#x27;installments&#x27;, title: &#x27;Cuotas&#x27;, width: &#x27;100px&#x27; },
+    { key: &#x27;status&#x27;, title: &#x27;Estado&#x27;, width: &#x27;110px&#x27; },
+    { key: &#x27;action&#x27;, title: &#x27;Acciones&#x27;, width: &#x27;180px&#x27; }
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Table column definitions.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="38" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flag indicating whether table data is loading.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageIndex"></a>
+                    <span class="name">
+                        <span ><b>pageIndex</b></span>
+                        <a href="#pageIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="40" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current page index (1-based).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageSize"></a>
+                    <span class="name">
+                        <span ><b>pageSize</b></span>
+                        <a href="#pageSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>10</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="42" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Number of rows per page.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="total"></a>
+                    <span class="name">
+                        <span ><b>total</b></span>
+                        <a href="#total"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="44" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Total number of voucher records.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="vouchers"></a>
+                    <span class="name">
+                        <span ><b>vouchers</b></span>
+                        <a href="#vouchers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/VoucherInterface.html" target="_self" >VoucherInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="36" class="link-to-prism">src/app/admin/user/vouchers/vouchers.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Array of loaded voucher records.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { NzTableModule } from &#x27;ng-zorro-antd/table&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzEmptyModule } from &#x27;ng-zorro-antd/empty&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { NzMessageService } from &#x27;ng-zorro-antd/message&#x27;;
+import { VoucherInterface } from &#x27;../../../core/interfaces/voucher&#x27;;
+import { VouchersService } from &#x27;../../../core/services/vouchers.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+
+/**
+ * Component for listing and managing card vouchers.
+ * @description Displays a paginated table of vouchers with operation type indicators, installment details, and status actions.
+ */
+@Component({
+  selector: &#x27;app-vouchers&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    NzTableModule,
+    NzButtonModule,
+    NzIconModule,
+    NzEmptyModule,
+    NzSpinModule,
+    NzTagModule
+  ],
+  templateUrl: &#x27;./vouchers.component.html&#x27;,
+  styleUrl: &#x27;./vouchers.component.scss&#x27;
+})
+export class VouchersComponent implements OnInit {
+  /** Array of loaded voucher records. */
+  vouchers: VoucherInterface[] &#x3D; [];
+  /** Flag indicating whether table data is loading. */
+  loading &#x3D; false;
+  /** Current page index (1-based). */
+  pageIndex &#x3D; 1;
+  /** Number of rows per page. */
+  pageSize &#x3D; 10;
+  /** Total number of voucher records. */
+  total &#x3D; 0;
+
+  /** Table column definitions. */
+  listOfColumns &#x3D; [
+    { key: &#x27;vou_uuid&#x27;, title: &#x27;ID&#x27;, width: &#x27;80px&#x27; },
+    { key: &#x27;transaction&#x27;, title: &#x27;Transacción&#x27;, width: &#x27;140px&#x27; },
+    { key: &#x27;datetime&#x27;, title: &#x27;Fecha/Hora&#x27;, width: &#x27;140px&#x27; },
+    { key: &#x27;amount&#x27;, title: &#x27;Monto&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;commerce&#x27;, title: &#x27;Comercio&#x27;, width: &#x27;180px&#x27; },
+    { key: &#x27;operation_type&#x27;, title: &#x27;Tipo&#x27;, width: &#x27;110px&#x27; },
+    { key: &#x27;installments&#x27;, title: &#x27;Cuotas&#x27;, width: &#x27;100px&#x27; },
+    { key: &#x27;status&#x27;, title: &#x27;Estado&#x27;, width: &#x27;110px&#x27; },
+    { key: &#x27;action&#x27;, title: &#x27;Acciones&#x27;, width: &#x27;180px&#x27; }
+  ];
+
+  /**
+   * Initializes the VouchersComponent.
+   * @param _router Angular Router service.
+   * @param _vouchersService Service for voucher CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Custom modal alert service.
+   */
+  constructor(
+    private _router: Router,
+    private _vouchersService: VouchersService,
+    private message: NzMessageService,
+    private _messageService: MessageService
+  ) {}
+
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
+  ngOnInit(): void {
+    this.loadVouchers();
+  }
+
+  /**
+   * Loads the vouchers list from the backend service.
+   * @returns void
+   */
+  loadVouchers(): void {
+    this.loading &#x3D; true;
+    this._vouchersService.getVouchers(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, &#x27;1&#x27;, &#x27;1&#x27;).subscribe(
+      (response: any) &#x3D;&gt; {
+        if(response.success) {
+          console.info(response.data);
+          this.vouchers &#x3D; response.data;
+          this.total &#x3D; this.vouchers.length;
+          this.loading &#x3D; false;
+        } else {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      },
+      (error: any) &#x3D;&gt; {
+        let errorMessage &#x3D; &lt;any&gt;error;
+        console.log(errorMessage);
+
+        if(errorMessage !&#x3D; null) {
+          //this.status &#x3D; &#x27;error&#x27;
+        }
+      }
+    )
+  }
+
+  /**
+   * Formats an ISO datetime string into &#x60;DD/MM/YYYY HH:mm&#x60;.
+   * @param dateTimeString ISO datetime string.
+   * @returns Formatted datetime string.
+   */
+  formatDateTime(dateTimeString: string): string {
+    const date &#x3D; new Date(dateTimeString);
+    const day &#x3D; String(date.getDate()).padStart(2, &#x27;0&#x27;);
+    const month &#x3D; String(date.getMonth() + 1).padStart(2, &#x27;0&#x27;);
+    const year &#x3D; date.getFullYear();
+    const hours &#x3D; String(date.getHours()).padStart(2, &#x27;0&#x27;);
+    const minutes &#x3D; String(date.getMinutes()).padStart(2, &#x27;0&#x27;);
+    return &#x60;${day}/${month}/${year} ${hours}:${minutes}&#x60;;
+  }
+
+  /**
+   * Formats an amount string as a localized currency string.
+   * @param amount Numeric amount string.
+   * @param currency Currency ISO code (e.g., &#x60;&#x27;ARS&#x27;&#x60;, &#x60;&#x27;USD&#x27;&#x60;).
+   * @returns Formatted currency string.
+   */
+  formatAmount(amount: string, currency: string): string {
+    const amountNum &#x3D; parseFloat(amount);
+    return new Intl.NumberFormat(&#x27;es-AR&#x27;, {
+      style: &#x27;currency&#x27;,
+      currency: currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amountNum);
+  }
+
+  /**
+   * Returns the Ng-Zorro tag color for an operation type name.
+   * @param typeName Operation type name.
+   * @returns Tag color identifier.
+   */
+  getOperationTypeColor(typeName: string): string {
+    switch (typeName.toLowerCase()) {
+      case &#x27;compra&#x27;: return &#x27;green&#x27;;
+      case &#x27;devolucion&#x27;: return &#x27;red&#x27;;
+      case &#x27;extraccion&#x27;: return &#x27;orange&#x27;;
+      case &#x27;pago_servicio&#x27;: return &#x27;blue&#x27;;
+      default: return &#x27;default&#x27;;
+    }
+  }
+
+  /**
+   * Returns the Ng-Zorro icon identifier for an operation type name.
+   * @param typeName Operation type name.
+   * @returns Icon name string.
+   */
+  getOperationTypeIcon(typeName: string): string {
+    switch (typeName.toLowerCase()) {
+      case &#x27;compra&#x27;: return &#x27;shopping-cart&#x27;;
+      case &#x27;devolucion&#x27;: return &#x27;rollback&#x27;;
+      case &#x27;extraccion&#x27;: return &#x27;bank&#x27;;
+      case &#x27;pago_servicio&#x27;: return &#x27;pay-circle&#x27;;
+      default: return &#x27;transaction&#x27;;
+    }
+  }
+
+  /**
+   * Formats an operation type name into title case.
+   * @param name Raw operation type name.
+   * @returns Formatted operation type name.
+   */
+  formatOperationTypeName(name: string): string {
+    return name
+      .replace(/_/g, &#x27; &#x27;)
+      .replace(/\b\w/g, char &#x3D;&gt; char.toUpperCase());
+  }
+
+  /**
+   * Returns the Ng-Zorro badge status color for a voucher state name.
+   * @param statusName Voucher status name.
+   * @returns Status badge color string.
+   */
+  getVoucherStatusColor(statusName: string): string {
+    switch (statusName.toLowerCase()) {
+      case &#x27;confirmado&#x27;: return &#x27;success&#x27;;
+      case &#x27;pendiente&#x27;: return &#x27;processing&#x27;;
+      case &#x27;rechazado&#x27;: return &#x27;error&#x27;;
+      case &#x27;anulado&#x27;: return &#x27;default&#x27;;
+      default: return &#x27;default&#x27;;
+    }
+  }
+
+  /**
+   * Capitalizes the first letter of a voucher status name.
+   * @param name Raw status name.
+   * @returns Capitalized status name.
+   */
+  formatVoucherStatusName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  /**
+   * Formats the installment summary text for a voucher.
+   * @param voucher Voucher record.
+   * @returns Human-readable installment description.
+   */
+  formatInstallments(voucher: VoucherInterface): string {
+    if (!voucher.vou_installments) {
+      return &#x27;Contado&#x27;;
+    }
+    const count &#x3D; voucher.vou_installmentcount;
+    const interest &#x3D; parseFloat(voucher.vou_installmentinterest);
+    return &#x60;${count} cuota${count &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;}${interest &gt; 0 ? &#x27; + interés&#x27; : &#x27;&#x27;}&#x60;;
+  }
+
+  /**
+   * Navigates to the voucher creation form.
+   * @returns void
+   */
+  createVoucher(): void {
+    this._router.navigate([&#x27;/admin/user/voucher/new&#x27;]);
+  }
+
+  /**
+   * Navigates to the voucher edit form.
+   * @param voucher Voucher record to edit.
+   * @returns void
+   */
+  editVoucher(voucher: VoucherInterface): void {
+    this._router.navigate([&#x27;/admin/user/voucher/edit&#x27;, voucher.vou_uuid]);
+  }
+
+  /**
+   * Prompts for confirmation and deletes a voucher record.
+   * @param voucher Voucher record to delete.
+   * @returns void
+   */
+  deleteVoucher(voucher: VoucherInterface): void {
+    this._messageService.confirm(
+      &#x27;¿Estás seguro de eliminar este comprobante?&#x27;,
+      &#x60;Vas a eliminar la transacción &quot;${voucher.vou_transactionnumber}&quot;. Esta acción no se puede deshacer.&#x60;,
+      () &#x3D;&gt; {
+        this.loading &#x3D; true;
+        this._vouchersService.deleteVoucher(voucher.usr_uuid, voucher.crd_uuid, voucher.per_uuid, voucher.vou_uuid).subscribe({
+          next: (response: any) &#x3D;&gt; {
+            this.loading &#x3D; false;
+            if (response.success) {
+              this._messageService.success(&#x27;Comprobante eliminado&#x27;, &#x27;El comprobante se eliminó correctamente&#x27;);
+              this.loadVouchers();
+            } else {
+              this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo eliminar el comprobante&#x27;);
+            }
+          },
+          error: (error: any) &#x3D;&gt; {
+            this.loading &#x3D; false;
+            console.error(error);
+            this._messageService.error(&#x27;Error&#x27;, &#x27;Hubo un problema de conexión al eliminar el comprobante&#x27;);
+          }
+        });
+      }
+    );
+  }
+
+  /**
+   * Displays a toast notification with voucher transaction details.
+   * @param voucher Voucher record to inspect.
+   * @returns void
+   */
+  viewDetails(voucher: VoucherInterface): void {
+    this.message.info(&#x60;Detalles del voucher: ${voucher.vou_transactionnumber}&#x60;);
+  }
+
+  /**
+   * Marks a voucher as confirmed in the UI.
+   * @param voucher Voucher record to confirm.
+   * @returns void
+   */
+  confirmVoucher(voucher: VoucherInterface): void {
+    voucher.vous.vous_name &#x3D; &#x27;confirmado&#x27;;
+    this.message.success(&#x27;Voucher confirmado correctamente&#x27;);
+  }
+
+  /**
+   * Marks a voucher as rejected in the UI.
+   * @param voucher Voucher record to reject.
+   * @returns void
+   */
+  rejectVoucher(voucher: VoucherInterface): void {
+    voucher.vous.vous_name &#x3D; &#x27;rechazado&#x27;;
+    this.message.error(&#x27;Voucher rechazado&#x27;);
+  }
+
+  /**
+   * Handles table page size changes.
+   * @param size New page size.
+   * @returns void
+   */
+  onPageSizeChange(size: number): void {
+    this.pageSize &#x3D; size;
+    this.pageIndex &#x3D; 1;
+    this.loadVouchers();
+  }
+
+  /**
+   * Handles table page index changes.
+   * @param index New page index.
+   * @returns void
+   */
+  onPageIndexChange(index: number): void {
+    this.pageIndex &#x3D; index;
+    this.loadVouchers();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;voucher-list-container&quot;&gt;
+  &lt;div class&#x3D;&quot;header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;file-text&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      Vouchers (Comprobantes)
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;createVoucher()&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;plus&quot;&gt;&lt;/i&gt;
+      Nuevo Voucher
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  @if (loading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando vouchers...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  }
+
+  @if (!loading &amp;&amp; vouchers.length &#x3D;&#x3D;&#x3D; 0) {
+    &lt;div class&#x3D;&quot;empty-container&quot;&gt;
+      &lt;nz-empty
+        nzNotFoundImage&#x3D;&quot;simple&quot;
+        nzNotFoundContent&#x3D;&quot;No hay vouchers registrados&quot;
+        nzNotFoundFooter&#x3D;&quot;&quot;
+      &gt;&lt;/nz-empty&gt;
+    &lt;/div&gt;
+  }
+
+  @if (!loading &amp;&amp; vouchers.length &gt; 0) {
+    &lt;nz-table
+      [nzData]&#x3D;&quot;vouchers&quot;
+      [nzPageSize]&#x3D;&quot;pageSize&quot;
+      [nzPageIndex]&#x3D;&quot;pageIndex&quot;
+      [nzTotal]&#x3D;&quot;total&quot;
+      nzShowSizeChanger
+      [nzPageSizeOptions]&#x3D;&quot;[10, 20, 30]&quot;
+      (nzPageSizeChange)&#x3D;&quot;onPageSizeChange($event)&quot;
+      (nzPageIndexChange)&#x3D;&quot;onPageIndexChange($event)&quot;
+      nzBordered
+      nzTableLayout&#x3D;&quot;fixed&quot;
+    &gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          @for (column of listOfColumns; track column.key) {
+            &lt;th [nzWidth]&#x3D;&quot;column.width&quot;&gt;
+              {{ column.title }}
+            &lt;/th&gt;
+          }
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        @for (voucher of vouchers; track voucher.vou_uuid) {
+          &lt;tr&gt;
+            &lt;td&gt;{{ voucher.vou_uuid }}&lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class&#x3D;&quot;transaction-info&quot;&gt;
+                &lt;div class&#x3D;&quot;auth-number&quot;&gt;
+                  &lt;small&gt;Autorización:&lt;/small&gt;
+                  &lt;strong&gt;{{ voucher.vou_authorizationnumber }}&lt;/strong&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;txn-number&quot;&gt;
+                  &lt;small&gt;Transacción:&lt;/small&gt;
+                  {{ voucher.vou_transactionnumber }}
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td&gt;{{ formatDateTime(voucher.vou_datetime) }}&lt;/td&gt;
+            &lt;td&gt;
+              &lt;strong class&#x3D;&quot;amount&quot;&gt;{{ formatAmount(voucher.vou_amount, voucher.vou_currency) }}&lt;/strong&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;div class&#x3D;&quot;commerce-info&quot;&gt;
+                &lt;div&gt;&lt;strong&gt;{{ voucher.vou_commercename }}&lt;/strong&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;category&quot;&gt;{{ voucher.vou_commercecategory }}&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;getOperationTypeColor(voucher.tyop.tyop_name)&quot;&gt;
+                &lt;i nz-icon [nzType]&#x3D;&quot;getOperationTypeIcon(voucher.tyop.tyop_name)&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                {{ formatOperationTypeName(voucher.tyop.tyop_name) }}
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;voucher.vou_installments ? &#x27;orange&#x27; : &#x27;default&#x27;&quot;&gt;
+                {{ formatInstallments(voucher) }}
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag [nzColor]&#x3D;&quot;getVoucherStatusColor(voucher.vous.vous_name)&quot;&gt;
+                &lt;strong&gt;{{ formatVoucherStatusName(voucher.vous.vous_name) }}&lt;/strong&gt;
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td class&#x3D;&quot;actions&quot;&gt;
+              &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; (click)&#x3D;&quot;viewDetails(voucher)&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;eye&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                Ver
+              &lt;/button&gt;
+              &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; (click)&#x3D;&quot;editVoucher(voucher)&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;edit&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                Editar
+              &lt;/button&gt;
+              @if (voucher.vous.vous_name.toLowerCase() &#x3D;&#x3D;&#x3D; &#x27;pendiente&#x27;) {
+                &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; nzDanger (click)&#x3D;&quot;rejectVoucher(voucher)&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;close-circle&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                  Rechazar
+                &lt;/button&gt;
+                &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzType&#x3D;&quot;link&quot; (click)&#x3D;&quot;confirmVoucher(voucher)&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;check-circle&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                  Confirmar
+                &lt;/button&gt;
+              }
+              &lt;button nz-button nzSize&#x3D;&quot;small&quot; nzDanger (click)&#x3D;&quot;deleteVoucher(voucher)&quot;&gt;
+                &lt;i nz-icon nzType&#x3D;&quot;delete&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+                Eliminar
+              &lt;/button&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        }
+        @empty {
+          &lt;tr&gt;
+            &lt;td [colSpan]&#x3D;&quot;listOfColumns.length&quot; class&#x3D;&quot;text-center&quot;&gt;
+              No hay datos disponibles
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        }
+      &lt;/tbody&gt;
+    &lt;/nz-table&gt;
+  }
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./vouchers.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.voucher-list-container {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  height: calc(100vh - 50px);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0;
+      color: #2f54eb; // Azul índigo para vouchers
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .loading-container,
+  .empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    padding: 24px;
+  }
+
+  nz-table {
+    margin-top: 16px;
+
+    .transaction-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      
+      .auth-number,
+      .txn-number {
+        font-size: 12px;
+        
+        small {
+          color: rgba(0, 0, 0, 0.45);
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .amount {
+      color: #52c41a;
+      font-size: 14px;
+    }
+
+    .commerce-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      
+      .category {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+
+    nz-tag {
+      margin-right: 4px;
+      
+      &amp;:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .actions {
+      button {
+        margin-right: 8px;
+        
+        &amp;:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .text-center {
+    text-align: center;
+    padding: 24px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="voucher-list-container">  <div class="header">    <h2>      <i nz-icon nzType="file-text" nzTheme="outline"></i>      Vouchers (Comprobantes)    </h2>    <button nz-button nzType="primary" (click)="createVoucher()">      <i nz-icon nzType="plus"></i>      Nuevo Voucher    </button>  </div>  @if (loading) {    <div class="loading-container">      <nz-spin nzTip="Cargando vouchers..."></nz-spin>    </div>  }  @if (!loading && vouchers.length === 0) {    <div class="empty-container">      <nz-empty        nzNotFoundImage="simple"        nzNotFoundContent="No hay vouchers registrados"        nzNotFoundFooter=""      ></nz-empty>    </div>  }  @if (!loading && vouchers.length > 0) {    <nz-table      [nzData]="vouchers"      [nzPageSize]="pageSize"      [nzPageIndex]="pageIndex"      [nzTotal]="total"      nzShowSizeChanger      [nzPageSizeOptions]="[10, 20, 30]"      (nzPageSizeChange)="onPageSizeChange($event)"      (nzPageIndexChange)="onPageIndexChange($event)"      nzBordered      nzTableLayout="fixed"    >      <thead>        <tr>          @for (column of listOfColumns; track column.key) {            <th [nzWidth]="column.width">              {{ column.title }}            </th>          }        </tr>      </thead>      <tbody>        @for (voucher of vouchers; track voucher.vou_uuid) {          <tr>            <td>{{ voucher.vou_uuid }}</td>            <td>              <div class="transaction-info">                <div class="auth-number">                  <small>Autorización:</small>                  <strong>{{ voucher.vou_authorizationnumber }}</strong>                </div>                <div class="txn-number">                  <small>Transacción:</small>                  {{ voucher.vou_transactionnumber }}                </div>              </div>            </td>            <td>{{ formatDateTime(voucher.vou_datetime) }}</td>            <td>              <strong class="amount">{{ formatAmount(voucher.vou_amount, voucher.vou_currency) }}</strong>            </td>            <td>              <div class="commerce-info">                <div><strong>{{ voucher.vou_commercename }}</strong></div>                <div class="category">{{ voucher.vou_commercecategory }}</div>              </div>            </td>            <td>              <nz-tag [nzColor]="getOperationTypeColor(voucher.tyop.tyop_name)">                <i nz-icon [nzType]="getOperationTypeIcon(voucher.tyop.tyop_name)" nzTheme="outline"></i>                {{ formatOperationTypeName(voucher.tyop.tyop_name) }}              </nz-tag>            </td>            <td>              <nz-tag [nzColor]="voucher.vou_installments ? \'orange\' : \'default\'">                {{ formatInstallments(voucher) }}              </nz-tag>            </td>            <td>              <nz-tag [nzColor]="getVoucherStatusColor(voucher.vous.vous_name)">                <strong>{{ formatVoucherStatusName(voucher.vous.vous_name) }}</strong>              </nz-tag>            </td>            <td class="actions">              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(voucher)">                <i nz-icon nzType="eye" nzTheme="outline"></i>                Ver              </button>              <button nz-button nzSize="small" nzType="link" (click)="editVoucher(voucher)">                <i nz-icon nzType="edit" nzTheme="outline"></i>                Editar              </button>              @if (voucher.vous.vous_name.toLowerCase() === \'pendiente\') {                <button nz-button nzSize="small" nzType="link" nzDanger (click)="rejectVoucher(voucher)">                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>                  Rechazar                </button>                <button nz-button nzSize="small" nzType="link" (click)="confirmVoucher(voucher)">                  <i nz-icon nzType="check-circle" nzTheme="outline"></i>                  Confirmar                </button>              }              <button nz-button nzSize="small" nzDanger (click)="deleteVoucher(voucher)">                <i nz-icon nzType="delete" nzTheme="outline"></i>                Eliminar              </button>            </td>          </tr>        }        @empty {          <tr>            <td [colSpan]="listOfColumns.length" class="text-center">              No hay datos disponibles            </td>          </tr>        }      </tbody>    </nz-table>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'VouchersComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/VouchersComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/VouchersComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/VouchersComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'VouchersComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

@@ -18,6 +18,13 @@ import { CommissionsService } from '../../../core/services/commissions.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Seller commissions settlement and tracking component (`<app-seller-commissions>`)
+ * at `/admin/user/seller-commissions`.
+ *
+ * @description Displays commercial performance KPIs (`total_sales`, `total_commission`, `sales_count`)
+ * and a detailed settlement table of commissionable sales filtered by scope.
+ */
 @Component({
   selector: 'app-seller-commissions',
   standalone: true,
@@ -38,22 +45,40 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './seller-commissions.component.scss'
 })
 export class SellerCommissionsComponent implements OnInit {
+  /** Indicates whether commission metrics are currently loading. */
   isLoading = false;
+  /** Active user UUID. */
   usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+  /** Currently selected scope filter (`'ALL'` by default). */
   selectedScopeUuid: string = 'ALL';
+  /** Available scopes for the filter dropdown. */
   scopes: ScopeInterface[] = [];
+  /** Seller commission summary data returned by the backend. */
   summary: SellerCommissionSummary | null = null;
 
+  /**
+   * Initializes the seller commissions component.
+   *
+   * @param _commissionsService Service for querying seller commission summaries.
+   * @param _scopesService Service for querying user scopes.
+   * @param _messageService Service for displaying modal error messages.
+   */
   constructor(
     private _commissionsService: CommissionsService,
     private _scopesService: ScopesService,
     private _messageService: MessageService
   ) {}
 
+  /**
+   * Loads scopes and commission data on component initialization.
+   */
   ngOnInit(): void {
     this.loadScopes();
   }
 
+  /**
+   * Fetches user scopes, prepends `'ALL'`, and loads the initial commission summary.
+   */
   loadScopes(): void {
     this._scopesService.getScopes(this.usr_uuid).subscribe({
       next: (response) => {
@@ -73,6 +98,9 @@ export class SellerCommissionsComponent implements OnInit {
     });
   }
 
+  /**
+   * Fetches the seller commission summary for `selectedScopeUuid` via {@link CommissionsService.getSellerCommissions}.
+   */
   loadCommissions(): void {
     this.isLoading = true;
     this._commissionsService.getSellerCommissions(this.usr_uuid, this.selectedScopeUuid).subscribe({
@@ -90,11 +118,22 @@ export class SellerCommissionsComponent implements OnInit {
     });
   }
 
+  /**
+   * Reloads commission data when the user changes the scope filter.
+   *
+   * @param scp_uuid Selected scope UUID or `'ALL'`.
+   */
   onScopeChange(scp_uuid: string): void {
     this.selectedScopeUuid = scp_uuid;
     this.loadCommissions();
   }
 
+  /**
+   * Formats a numeric amount into Argentine Peso (`ARS`) currency notation.
+   *
+   * @param amount Numeric value to format.
+   * @returns Formatted currency string.
+   */
   formatAmount(amount: number): string {
     return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(amount || 0);
   }

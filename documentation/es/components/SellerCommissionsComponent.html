@@ -1,0 +1,1418 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  SellerCommissionsComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/seller-commissions/seller-commissions.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Seller commissions settlement and tracking component (<code>&lt;app-seller-commissions&gt;</code>)
+at <code>/admin/user/seller-commissions</code>.</p>
+<p>Displays commercial performance KPIs (<code>total_sales</code>, <code>total_commission</code>, <code>sales_count</code>)
+and a detailed settlement table of commissionable sales filtered by scope.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-seller-commissions</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>    <code>NzCardModule</code>
+</div>
+                        <div>    <code>NzStatisticModule</code>
+</div>
+                        <div>    <code>NzGridModule</code>
+</div>
+                        <div>    <code>NzTableModule</code>
+</div>
+                        <div>    <code>NzTagModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./seller-commissions.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./seller-commissions.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./seller-commissions.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzCardModule</code>
+                                </li>
+                                <li>
+                                        <code>NzStatisticModule</code>
+                                </li>
+                                <li>
+                                        <code>NzGridModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTableModule</code>
+                                </li>
+                                <li>
+                                        <code>NzTagModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#scopes" >scopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#selectedScopeUuid" >selectedScopeUuid</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#summary" >summary</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#usr_uuid" >usr_uuid</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatAmount" >formatAmount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadCommissions" >loadCommissions</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadScopes" >loadScopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onScopeChange" >onScopeChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_commissionsService: <a href="../injectables/CommissionsService.html" target="_self">CommissionsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the seller commissions component.</p>
+</div>
+                            <div>
+                                    <b>Parámetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descripción</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_commissionsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CommissionsService.html" target="_self" >CommissionsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for querying seller commission summaries.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_scopesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ScopesService.html" target="_self" >ScopesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for querying user scopes.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for displaying modal error messages.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatAmount"></a>
+                    <span class="name">
+                        <span ><b>formatAmount</b></span>
+                        <a href="#formatAmount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatAmount(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="137"
+                                    class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats a numeric amount into Argentine Peso (<code>ARS</code>) currency notation.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>amount</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Numeric value to format.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Formatted currency string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadCommissions"></a>
+                    <span class="name">
+                        <span ><b>loadCommissions</b></span>
+                        <a href="#loadCommissions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadCommissions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="104"
+                                    class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:104</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the seller commission summary for <code>selectedScopeUuid</code> via <a href="CommissionsService.getSellerCommissions">CommissionsService.getSellerCommissions</a>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadScopes"></a>
+                    <span class="name">
+                        <span ><b>loadScopes</b></span>
+                        <a href="#loadScopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadScopes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="82"
+                                    class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches user scopes, prepends <code>&#39;ALL&#39;</code>, and loads the initial commission summary.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="75"
+                                    class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads scopes and commission data on component initialization.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onScopeChange"></a>
+                    <span class="name">
+                        <span ><b>onScopeChange</b></span>
+                        <a href="#onScopeChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onScopeChange(scp_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="126"
+                                    class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reloads commission data when the user changes the scope filter.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>scp_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Selected scope UUID or <code>&#39;ALL&#39;</code>.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="49" class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicates whether commission metrics are currently loading.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scopes"></a>
+                    <span class="name">
+                        <span ><b>scopes</b></span>
+                        <a href="#scopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/ScopeInterface.html" target="_self" >ScopeInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="55" class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available scopes for the filter dropdown.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedScopeUuid"></a>
+                    <span class="name">
+                        <span ><b>selectedScopeUuid</b></span>
+                        <a href="#selectedScopeUuid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;ALL&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="53" class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currently selected scope filter (<code>&#39;ALL&#39;</code> by default).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="summary"></a>
+                    <span class="name">
+                        <span ><b>summary</b></span>
+                        <a href="#summary"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/SellerCommissionSummary.html" target="_self" >SellerCommissionSummary | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Seller commission summary data returned by the backend.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usr_uuid"></a>
+                    <span class="name">
+                        <span ><b>usr_uuid</b></span>
+                        <a href="#usr_uuid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="51" class="link-to-prism">src/app/admin/user/seller-commissions/seller-commissions.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Active user UUID.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+
+import { NzCardModule } from &#x27;ng-zorro-antd/card&#x27;;
+import { NzStatisticModule } from &#x27;ng-zorro-antd/statistic&#x27;;
+import { NzGridModule } from &#x27;ng-zorro-antd/grid&#x27;;
+import { NzTableModule } from &#x27;ng-zorro-antd/table&#x27;;
+import { NzTagModule } from &#x27;ng-zorro-antd/tag&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+
+import { SellerCommissionSummary } from &#x27;../../../core/interfaces/commission.interface&#x27;;
+import { ScopeInterface } from &#x27;../../../core/interfaces/scope.interface&#x27;;
+import { CommissionsService } from &#x27;../../../core/services/commissions.service&#x27;;
+import { ScopesService } from &#x27;../../../core/services/scopes.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+
+/**
+ * Seller commissions settlement and tracking component (&#x60;&lt;app-seller-commissions&gt;&#x60;)
+ * at &#x60;/admin/user/seller-commissions&#x60;.
+ *
+ * @description Displays commercial performance KPIs (&#x60;total_sales&#x60;, &#x60;total_commission&#x60;, &#x60;sales_count&#x60;)
+ * and a detailed settlement table of commissionable sales filtered by scope.
+ */
+@Component({
+  selector: &#x27;app-seller-commissions&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzCardModule,
+    NzStatisticModule,
+    NzGridModule,
+    NzTableModule,
+    NzTagModule,
+    NzSpinModule,
+    NzSelectModule,
+    NzButtonModule,
+    NzIconModule
+  ],
+  templateUrl: &#x27;./seller-commissions.component.html&#x27;,
+  styleUrl: &#x27;./seller-commissions.component.scss&#x27;
+})
+export class SellerCommissionsComponent implements OnInit {
+  /** Indicates whether commission metrics are currently loading. */
+  isLoading &#x3D; false;
+  /** Active user UUID. */
+  usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+  /** Currently selected scope filter (&#x60;&#x27;ALL&#x27;&#x60; by default). */
+  selectedScopeUuid: string &#x3D; &#x27;ALL&#x27;;
+  /** Available scopes for the filter dropdown. */
+  scopes: ScopeInterface[] &#x3D; [];
+  /** Seller commission summary data returned by the backend. */
+  summary: SellerCommissionSummary | null &#x3D; null;
+
+  /**
+   * Initializes the seller commissions component.
+   *
+   * @param _commissionsService Service for querying seller commission summaries.
+   * @param _scopesService Service for querying user scopes.
+   * @param _messageService Service for displaying modal error messages.
+   */
+  constructor(
+    private _commissionsService: CommissionsService,
+    private _scopesService: ScopesService,
+    private _messageService: MessageService
+  ) {}
+
+  /**
+   * Loads scopes and commission data on component initialization.
+   */
+  ngOnInit(): void {
+    this.loadScopes();
+  }
+
+  /**
+   * Fetches user scopes, prepends &#x60;&#x27;ALL&#x27;&#x60;, and loads the initial commission summary.
+   */
+  loadScopes(): void {
+    this._scopesService.getScopes(this.usr_uuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        if (response.success) {
+          const allOption: ScopeInterface &#x3D; {
+            scp_uuid: &#x27;ALL&#x27;,
+            scp_name: &#x27;Todos los ámbitos&#x27;,
+            scp_isshared: false,
+            usr_uuidowner: this.usr_uuid,
+            scp_active: true,
+            scp_color: &#x27;#108ee9&#x27;
+          };
+          this.scopes &#x3D; [allOption, ...response.data];
+          this.loadCommissions();
+        }
+      }
+    });
+  }
+
+  /**
+   * Fetches the seller commission summary for &#x60;selectedScopeUuid&#x60; via {@link CommissionsService.getSellerCommissions}.
+   */
+  loadCommissions(): void {
+    this.isLoading &#x3D; true;
+    this._commissionsService.getSellerCommissions(this.usr_uuid, this.selectedScopeUuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        if (response.success) {
+          this.summary &#x3D; response.data;
+        }
+      },
+      error: (error) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
+        this._messageService.error(&#x27;Error&#x27;, &#x27;No se pudieron cargar las comisiones.&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Reloads commission data when the user changes the scope filter.
+   *
+   * @param scp_uuid Selected scope UUID or &#x60;&#x27;ALL&#x27;&#x60;.
+   */
+  onScopeChange(scp_uuid: string): void {
+    this.selectedScopeUuid &#x3D; scp_uuid;
+    this.loadCommissions();
+  }
+
+  /**
+   * Formats a numeric amount into Argentine Peso (&#x60;ARS&#x60;) currency notation.
+   *
+   * @param amount Numeric value to format.
+   * @returns Formatted currency string.
+   */
+  formatAmount(amount: number): string {
+    return new Intl.NumberFormat(&#x27;es-AR&#x27;, { style: &#x27;currency&#x27;, currency: &#x27;ARS&#x27; }).format(amount || 0);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nz-spin [nzSpinning]&#x3D;&quot;isLoading&quot;&gt;
+  &lt;div style&#x3D;&quot;padding: 16px;&quot;&gt;
+    &lt;!-- Header --&gt;
+    &lt;div style&#x3D;&quot;display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;&quot;&gt;
+      &lt;div&gt;
+        &lt;h2 style&#x3D;&quot;margin: 0; font-weight: 600;&quot;&gt;
+          &lt;i nz-icon nzType&#x3D;&quot;dollar&quot; nzTheme&#x3D;&quot;outline&quot; style&#x3D;&quot;margin-right: 8px;&quot;&gt;&lt;/i&gt;
+          Mis Ventas y Comisiones
+        &lt;/h2&gt;
+        &lt;p style&#x3D;&quot;margin: 4px 0 0 0; color: #8c8c8c;&quot;&gt;Seguimiento detallado de ventas realizadas y ganancias por comisión&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div style&#x3D;&quot;display: flex; gap: 12px; align-items: center;&quot;&gt;
+        &lt;label style&#x3D;&quot;font-weight: 500;&quot;&gt;Ámbito:&lt;/label&gt;
+        &lt;nz-select [(ngModel)]&#x3D;&quot;selectedScopeUuid&quot; (ngModelChange)&#x3D;&quot;onScopeChange($event)&quot; style&#x3D;&quot;min-width: 220px;&quot;&gt;
+          &lt;nz-option *ngFor&#x3D;&quot;let s of scopes&quot; [nzValue]&#x3D;&quot;s.scp_uuid&quot; [nzLabel]&#x3D;&quot;(s.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;) + s.scp_name&quot;&gt;&lt;/nz-option&gt;
+        &lt;/nz-select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- KPIs --&gt;
+    &lt;div nz-row [nzGutter]&#x3D;&quot;[16, 16]&quot; style&#x3D;&quot;margin-bottom: 24px;&quot;&gt;
+      &lt;div nz-col [nzXs]&#x3D;&quot;24&quot; [nzSm]&#x3D;&quot;8&quot;&gt;
+        &lt;nz-card&gt;
+          &lt;nz-statistic
+            [nzValue]&#x3D;&quot;formatAmount(summary?.total_sales || 0)&quot;
+            [nzTitle]&#x3D;&quot;&#x27;Total en Ventas Realizadas&#x27;&quot;
+            [nzValueStyle]&#x3D;&quot;{ color: &#x27;#1890ff&#x27; }&quot;
+            [nzPrefix]&#x3D;&quot;prefixSales&quot;
+          &gt;&lt;/nz-statistic&gt;
+          &lt;ng-template #prefixSales&gt;&lt;i nz-icon nzType&#x3D;&quot;shopping-cart&quot;&gt;&lt;/i&gt;&lt;/ng-template&gt;
+        &lt;/nz-card&gt;
+      &lt;/div&gt;
+
+      &lt;div nz-col [nzXs]&#x3D;&quot;24&quot; [nzSm]&#x3D;&quot;8&quot;&gt;
+        &lt;nz-card&gt;
+          &lt;nz-statistic
+            [nzValue]&#x3D;&quot;formatAmount(summary?.total_commission || 0)&quot;
+            [nzTitle]&#x3D;&quot;&#x27;Total Comisiones Ganadas&#x27;&quot;
+            [nzValueStyle]&#x3D;&quot;{ color: &#x27;#3f8600&#x27; }&quot;
+            [nzPrefix]&#x3D;&quot;prefixCommission&quot;
+          &gt;&lt;/nz-statistic&gt;
+          &lt;ng-template #prefixCommission&gt;&lt;i nz-icon nzType&#x3D;&quot;rise&quot;&gt;&lt;/i&gt;&lt;/ng-template&gt;
+        &lt;/nz-card&gt;
+      &lt;/div&gt;
+
+      &lt;div nz-col [nzXs]&#x3D;&quot;24&quot; [nzSm]&#x3D;&quot;8&quot;&gt;
+        &lt;nz-card&gt;
+          &lt;nz-statistic
+            [nzValue]&#x3D;&quot;summary?.sales_count || 0&quot;
+            [nzTitle]&#x3D;&quot;&#x27;Cantidad de Ventas&#x27;&quot;
+            [nzValueStyle]&#x3D;&quot;{ color: &#x27;#722ed1&#x27; }&quot;
+            [nzPrefix]&#x3D;&quot;prefixCount&quot;
+          &gt;&lt;/nz-statistic&gt;
+          &lt;ng-template #prefixCount&gt;&lt;i nz-icon nzType&#x3D;&quot;check-circle&quot;&gt;&lt;/i&gt;&lt;/ng-template&gt;
+        &lt;/nz-card&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Sales Table --&gt;
+    &lt;nz-card nzTitle&#x3D;&quot;Listado de Ventas y Comisiones&quot;&gt;
+      &lt;nz-table #salesTable [nzData]&#x3D;&quot;summary?.sales || []&quot; [nzPageSize]&#x3D;&quot;10&quot; nzShowPagination nzBordered&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Fecha&lt;/th&gt;
+            &lt;th&gt;Ámbito&lt;/th&gt;
+            &lt;th&gt;Concepto / Venta&lt;/th&gt;
+            &lt;th&gt;Monto Venta&lt;/th&gt;
+            &lt;th&gt;% Comisión&lt;/th&gt;
+            &lt;th&gt;Ganancia Vendedor&lt;/th&gt;
+            &lt;th&gt;Notas&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr *ngFor&#x3D;&quot;let s of salesTable.data&quot;&gt;
+            &lt;td&gt;{{ s.trx_datetime | date:&#x27;dd/MM/yyyy HH:mm&#x27; }}&lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag *ngIf&#x3D;&quot;s.scp&quot; [nzColor]&#x3D;&quot;s.scp.scp_color || &#x27;blue&#x27;&quot;&gt;
+                {{ s.scp.scp_name }}
+              &lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;&lt;strong&gt;{{ s.trx_concept }}&lt;/strong&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;strong&gt;{{ formatAmount(s.trx_amount) }}&lt;/strong&gt;&lt;/td&gt;
+            &lt;td&gt;
+              &lt;nz-tag nzColor&#x3D;&quot;orange&quot;&gt;{{ s.trx_commissionrate ? (s.trx_commissionrate + &#x27;%&#x27;) : &#x27;-&#x27; }}&lt;/nz-tag&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+              &lt;strong style&#x3D;&quot;color: #3f8600; font-size: 15px;&quot;&gt;
+                {{ formatAmount(s.trx_commissionamount || 0) }}
+              &lt;/strong&gt;
+            &lt;/td&gt;
+            &lt;td&gt;{{ s.trx_notes || &#x27;-&#x27; }}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/nz-table&gt;
+    &lt;/nz-card&gt;
+  &lt;/div&gt;
+&lt;/nz-spin&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./seller-commissions.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">:host {
+  display: block;
+  padding: 8px;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nz-spin [nzSpinning]="isLoading">  <div style="padding: 16px;">    <!-- Header -->    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">      <div>        <h2 style="margin: 0; font-weight: 600;">          <i nz-icon nzType="dollar" nzTheme="outline" style="margin-right: 8px;"></i>          Mis Ventas y Comisiones        </h2>        <p style="margin: 4px 0 0 0; color: #8c8c8c;">Seguimiento detallado de ventas realizadas y ganancias por comisión</p>      </div>      <div style="display: flex; gap: 12px; align-items: center;">        <label style="font-weight: 500;">Ámbito:</label>        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="min-width: 220px;">          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="(s.scp_isshared ? \'🏢 \' : \'👤 \') + s.scp_name"></nz-option>        </nz-select>      </div>    </div>    <!-- KPIs -->    <div nz-row [nzGutter]="[16, 16]" style="margin-bottom: 24px;">      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card>          <nz-statistic            [nzValue]="formatAmount(summary?.total_sales || 0)"            [nzTitle]="\'Total en Ventas Realizadas\'"            [nzValueStyle]="{ color: \'#1890ff\' }"            [nzPrefix]="prefixSales"          ></nz-statistic>          <ng-template #prefixSales><i nz-icon nzType="shopping-cart"></i></ng-template>        </nz-card>      </div>      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card>          <nz-statistic            [nzValue]="formatAmount(summary?.total_commission || 0)"            [nzTitle]="\'Total Comisiones Ganadas\'"            [nzValueStyle]="{ color: \'#3f8600\' }"            [nzPrefix]="prefixCommission"          ></nz-statistic>          <ng-template #prefixCommission><i nz-icon nzType="rise"></i></ng-template>        </nz-card>      </div>      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card>          <nz-statistic            [nzValue]="summary?.sales_count || 0"            [nzTitle]="\'Cantidad de Ventas\'"            [nzValueStyle]="{ color: \'#722ed1\' }"            [nzPrefix]="prefixCount"          ></nz-statistic>          <ng-template #prefixCount><i nz-icon nzType="check-circle"></i></ng-template>        </nz-card>      </div>    </div>    <!-- Sales Table -->    <nz-card nzTitle="Listado de Ventas y Comisiones">      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered>        <thead>          <tr>            <th>Fecha</th>            <th>Ámbito</th>            <th>Concepto / Venta</th>            <th>Monto Venta</th>            <th>% Comisión</th>            <th>Ganancia Vendedor</th>            <th>Notas</th>          </tr>        </thead>        <tbody>          <tr *ngFor="let s of salesTable.data">            <td>{{ s.trx_datetime | date:\'dd/MM/yyyy HH:mm\' }}</td>            <td>              <nz-tag *ngIf="s.scp" [nzColor]="s.scp.scp_color || \'blue\'">                {{ s.scp.scp_name }}              </nz-tag>            </td>            <td><strong>{{ s.trx_concept }}</strong></td>            <td><strong>{{ formatAmount(s.trx_amount) }}</strong></td>            <td>              <nz-tag nzColor="orange">{{ s.trx_commissionrate ? (s.trx_commissionrate + \'%\') : \'-\' }}</nz-tag>            </td>            <td>              <strong style="color: #3f8600; font-size: 15px;">                {{ formatAmount(s.trx_commissionamount || 0) }}              </strong>            </td>            <td>{{ s.trx_notes || \'-\' }}</td>          </tr>        </tbody>      </nz-table>    </nz-card>  </div></nz-spin></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'SellerCommissionsComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/SellerCommissionsComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/SellerCommissionsComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/SellerCommissionsComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'SellerCommissionsComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

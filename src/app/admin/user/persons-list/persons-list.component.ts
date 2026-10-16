@@ -18,6 +18,10 @@ import { PersonsService } from '../../../core/services/persons.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Componente de lista (`<app-persons-list>`) para visualizar, filtrar y gestionar contactos/personas
+ * en `/admin/user/persons`.
+ */
 @Component({
   selector: 'app-persons-list',
   standalone: true,
@@ -37,13 +41,20 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './persons-list.component.scss'
 })
 export class PersonsListComponent implements OnInit {
+  /** Indica si la tabla de contactos se está cargando actualmente. */
   isLoading = false;
+  /** Lista sin filtrar de personas para el ámbito seleccionado. */
   persons: PersonInterface[] = [];
+  /** Lista filtrada de personas que coinciden con el filtro de rol seleccionado. */
   filteredPersons: PersonInterface[] = [];
+  /** Ámbitos disponibles para el selector de ámbito. */
   scopes: ScopeInterface[] = [];
+  /** UUID del ámbito seleccionado actualmente. */
   selectedScopeUuid: string = '';
+  /** Filtro de rol seleccionado actualmente (`'TODOS'` por defecto). */
   selectedType: string = 'TODOS';
 
+  /** Opciones de filtro de rol disponibles. */
   personTypes = [
     { value: 'TODOS', label: 'Todos los tipos' },
     { value: 'VENDEDOR', label: 'Vendedor' },
@@ -54,6 +65,14 @@ export class PersonsListComponent implements OnInit {
     { value: 'OTRO', label: 'Otro' }
   ];
 
+  /**
+   * Inicializa el componente de lista de personas.
+   *
+   * @param _personsService Servicio para consultar y eliminar personas.
+   * @param _scopesService Servicio para consultar los ámbitos del usuario.
+   * @param _messageService Servicio para mostrar notificaciones modales.
+   * @param _router Instancia de `Router` de Angular.
+   */
   constructor(
     private _personsService: PersonsService,
     private _scopesService: ScopesService,
@@ -61,10 +80,16 @@ export class PersonsListComponent implements OnInit {
     private _router: Router
   ) {}
 
+  /**
+   * Carga los ámbitos y contactos al iniciar el componente.
+   */
   ngOnInit(): void {
     this.loadScopes();
   }
 
+  /**
+   * Obtiene los ámbitos del usuario, selecciona el primer ámbito por defecto y carga sus contactos.
+   */
   loadScopes(): void {
     const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
     this._scopesService.getScopes(usr_uuid).subscribe({
@@ -82,11 +107,19 @@ export class PersonsListComponent implements OnInit {
     });
   }
 
+  /**
+   * Recarga los contactos cuando el usuario cambia el filtro de ámbito activo.
+   *
+   * @param scp_uuid UUID del ámbito seleccionado.
+   */
   onScopeChange(scp_uuid: string): void {
     this.selectedScopeUuid = scp_uuid;
     this.loadPersons();
   }
 
+  /**
+   * Obtiene todos los registros de personas para `selectedScopeUuid` y aplica el filtro de rol activo.
+   */
   loadPersons(): void {
     if (!this.selectedScopeUuid) return;
     this.isLoading = true;
@@ -106,6 +139,9 @@ export class PersonsListComponent implements OnInit {
     });
   }
 
+  /**
+   * Filtra `persons` según el rol seleccionado (`selectedType`).
+   */
   applyFilter(): void {
     if (this.selectedType === 'TODOS') {
       this.filteredPersons = [...this.persons];
@@ -116,11 +152,23 @@ export class PersonsListComponent implements OnInit {
     }
   }
 
+  /**
+   * Divide una cadena `prs_type` separada por comas en un arreglo de etiquetas de rol individuales.
+   *
+   * @param type Cadena de roles separada por comas.
+   * @returns Arreglo de cadenas de roles.
+   */
   splitTypes(type: string): string[] {
     if (!type) return ['OTRO'];
     return type.split(',').map(t => t.trim()).filter(Boolean);
   }
 
+  /**
+   * Asigna un rol de contacto a un color de etiqueta de Ng-Zorro.
+   *
+   * @param type Código del rol (`'VENDEDOR' | 'SOCIO' | 'CLIENTE' | 'PROVEEDOR' | 'AMIGO'`).
+   * @returns Nombre del color de la etiqueta.
+   */
   getTypeTagColor(type: string): string {
     switch (type) {
       case 'VENDEDOR': return 'gold';
@@ -132,16 +180,29 @@ export class PersonsListComponent implements OnInit {
     }
   }
 
+  /**
+   * Navega al formulario de nueva persona (`/admin/user/person/new`), pasando el `scp_uuid` activo.
+   */
   newPerson(): void {
     this._router.navigate(['/admin/user/person/new'], {
       queryParams: { scp_uuid: this.selectedScopeUuid }
     });
   }
 
+  /**
+   * Navega al formulario de edición para la persona seleccionada (`/admin/user/person/edit/:prs_uuid`).
+   *
+   * @param person Registro de persona a editar.
+   */
   editPerson(person: PersonInterface): void {
     this._router.navigate(['/admin/user/person/edit', person.prs_uuid]);
   }
 
+  /**
+   * Solicita confirmación y elimina el registro de la persona seleccionada.
+   *
+   * @param person Registro de persona a eliminar.
+   */
   deletePerson(person: PersonInterface): void {
     this._messageService.confirm(
       '¿Eliminar Contacto?',

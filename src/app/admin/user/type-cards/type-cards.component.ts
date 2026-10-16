@@ -11,6 +11,10 @@ import { TypeCardInterface } from '../../../core/interfaces/type-card';
 import { TypeCardsService } from '../../../core/services/type-cards.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Component for listing and managing card type records.
+ * @description Displays a paginated table of card types with creation, editing, and deletion actions.
+ */
 @Component({
   selector: 'app-type-cards',
   standalone: true,
@@ -26,12 +30,18 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './type-cards.component.scss'
 })
 export class TypeCardsComponent implements OnInit {
+  /** Array of loaded card type records. */
   typeCards: TypeCardInterface[] = [];
+  /** Flag indicating whether table data is loading. */
   loading = false;
+  /** Current page index (1-based). */
   pageIndex = 1;
+  /** Number of rows per page. */
   pageSize = 10;
+  /** Total number of card type records. */
   total = 0;
 
+  /** Table column definitions. */
   listOfColumns = [
     { key: 'tycrd_uuid', title: 'ID', width: '100px' },
     { key: 'tycrd_name', title: 'Nombre', width: '150px' },
@@ -41,6 +51,13 @@ export class TypeCardsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
+  /**
+   * Initializes the TypeCardsComponent.
+   * @param _router Angular Router service.
+   * @param _typeCardsService Service for card type CRUD operations.
+   * @param message Ng-Zorro toast message service.
+   * @param _messageService Custom modal alert service.
+   */
   constructor(
     private _router: Router,
     private _typeCardsService: TypeCardsService,
@@ -48,10 +65,18 @@ export class TypeCardsComponent implements OnInit {
     private _messageService: MessageService
   ) {}
 
+  /**
+   * Lifecycle hook executed on component initialization.
+   * @returns void
+   */
   ngOnInit(): void {
     this.loadTypeCards();
   }
 
+  /**
+   * Loads the card types list from the backend service.
+   * @returns void
+   */
   loadTypeCards(): void {
     this.loading = true;
     this._typeCardsService.getTypeCards().subscribe(
@@ -76,14 +101,28 @@ export class TypeCardsComponent implements OnInit {
     )
   }
 
+  /**
+   * Navigates to the card type creation form.
+   * @returns void
+   */
   createTypeCard(): void {
     this._router.navigate(['/admin/user/type-card/new']);
   }
 
+  /**
+   * Navigates to the card type edit form.
+   * @param typeCard Card type record to edit.
+   * @returns void
+   */
   editTypeCard(typeCard: TypeCardInterface): void {
     this._router.navigate(['/admin/user/type-card/edit', typeCard.tycrd_uuid]);
   }
 
+  /**
+   * Prompts for confirmation and deletes a card type record.
+   * @param typeCard Card type record to delete.
+   * @returns void
+   */
   deleteTypeCard(typeCard: TypeCardInterface): void {
     this._messageService.confirm(
       '¿Estás seguro de eliminar este tipo de tarjeta?',
@@ -107,16 +146,31 @@ export class TypeCardsComponent implements OnInit {
     );
   }
 
+  /**
+   * Displays a toast notification with card type details.
+   * @param typeCard Card type record to inspect.
+   * @returns void
+   */
   viewDetails(typeCard: TypeCardInterface): void {
     this.message.info(`Nombre: ${typeCard.tycrd_name}\nDescripción: ${typeCard.tycrd_description || 'Sin descripción'}`);
   }
 
+  /**
+   * Handles table page size changes.
+   * @param size New page size.
+   * @returns void
+   */
   onPageSizeChange(size: number): void {
     this.pageSize = size;
     this.pageIndex = 1;
     this.loadTypeCards();
   }
 
+  /**
+   * Handles table page index changes.
+   * @param index New page index.
+   * @returns void
+   */
   onPageIndexChange(index: number): void {
     this.pageIndex = index;
     this.loadTypeCards();

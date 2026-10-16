@@ -1,0 +1,388 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Manual de Usuario: Tarjetas, Vouchers, Cuotas y Parámetros</h1>
+<p>Este manual documenta los módulos de administración de tarjetas bancarias, registro de comprobantes de compra (vouchers) con cálculo financiero de cuotas, seguimiento de vencimientos de cuotas, cierres de períodos de liquidación, pagos de resúmenes y mantenimiento de catálogos paramétricos.</p>
+<hr>
+<h2>1. Administración de Tarjetas (<code>/admin/user/cards</code> y <code>/admin/user/card/new</code>)</h2>
+<p>El módulo de <strong>Tarjetas</strong> gestiona las tarjetas de crédito y débito asociadas a los bancos, marcas y tipos configurados en el sistema.</p>
+<h3>1.1. Funcionalidades del Listado (<code>/admin/user/cards</code>)</h3>
+<ul>
+<li><strong>Enmascaramiento de Seguridad (<code>maskCardNumber</code>)</strong>: Los números de tarjeta se muestran enmascarados en formato <code>**** **** **** 1234</code>, exponiendo únicamente los últimos 4 dígitos.</li>
+<li><strong>Alertas de Vencimiento (<code>isExpired</code>)</strong>: El sistema compara la fecha de expiración (<code>crd_expirationdate</code>) contra la fecha actual y resalta visualmente aquellas tarjetas que se encuentran vencidas.</li>
+<li><strong>Visualización de Límite de Crédito</strong>: Muestra el cupo asignado (<code>crd_creditlimit</code>) para tarjetas de crédito.</li>
+</ul>
+<h3>1.2. Formulario de Alta y Edición (<code>/admin/user/card/new</code> y <code>/admin/user/card/edit/:crd_uuid</code>)</h3>
+<ul>
+<li><strong>Extracción Automática de Últimos 4 Dígitos</strong>: A medida que el usuario escribe el número completo de la tarjeta (<code>crd_maskednumber</code>, entre 13 y 19 dígitos numéricos), el formulario extrae y completa automáticamente el campo de solo lectura <strong>Últimos 4 dígitos (<code>crd_last4digits</code>)</strong>.</li>
+<li><strong>Regla de Negocio para Tarjetas de Débito (<code>tycrd_uuid === &#39;1&#39;</code>)</strong>: Cuando se selecciona el tipo de tarjeta <strong>Débito</strong> (<code>tycrd_uuid === &#39;1&#39;</code>), el formulario establece automáticamente el <strong>Límite de Crédito (<code>crd_creditlimit</code>)</strong> en <code>0</code> y deshabilita el control para evitar asignar cupos de endeudamiento a una tarjeta de débito. Si se selecciona <strong>Crédito</strong>, el campo se habilita nuevamente.</li>
+<li><strong>Asociaciones</strong>: Selección de <strong>Tipo de Tarjeta (<code>tycrd_uuid</code>)</strong>, <strong>Marca (<code>brcrd_uuid</code>)</strong>, <strong>Banco Emisor (<code>ban_uuid</code>)</strong>, fecha de vencimiento y estado activo/inactivo.</li>
+</ul>
+<hr>
+<h2>2. Administración de Vouchers (<code>/admin/user/vouchers</code> y <code>/admin/user/voucher/new</code>)</h2>
+<p>El módulo de <strong>Vouchers</strong> permite registrar y auditar cada cupón o comprobante de operación realizado con tarjeta.</p>
+<h3>2.1. Gestión y Acciones Rápidas (<code>/admin/user/vouchers</code>)</h3>
+<ul>
+<li>Permite visualizar el número de autorización, transacción, monto, comercio, CUIT, cantidad de cuotas, período e indicadores de estado (<em>Pendiente</em>, <em>Confirmado</em>, <em>Rechazado</em>).</li>
+<li><strong>Acciones Rápidas en Fila</strong>: Para los vouchers en estado <em>Pendiente</em> (<code>stovou_uuid === &#39;1&#39;</code>), el listado ofrece botones de acción directa para <strong>Confirmar Voucher (<code>confirmVoucher</code>)</strong> (cambia el estado a <code>&#39;2&#39;</code>) o <strong>Rechazar Voucher (<code>rejectVoucher</code>)</strong> (cambia el estado a <code>&#39;3&#39;</code>) sin necesidad de abrir el formulario de edición.</li>
+</ul>
+<h3>2.2. Formulario de Voucher y Calculadora Financiera (<code>/admin/user/voucher/new</code>)</h3>
+<p>El formulario de alta/edición de voucher incluye:</p>
+<ul>
+<li><strong>Datos del Comprobante</strong>: Número de autorización (<code>vou_authorizationnumber</code>), número de transacción (<code>vou_transactionnumber</code>), fecha y hora (<code>vou_datetime</code>), importe base (<code>vou_amount</code>), nombre del comercio (<code>vou_commerce</code>), CUIT (<code>vou_cuit</code>, validado con formato <code>XX-XXXXXXXX-X</code> de 11 dígitos), referencia de imagen (<code>vou_imagereference</code>) y notas (<code>vou_notes</code>).</li>
+<li><strong>Clasificación</strong>: Período de liquidación (<code>per_uuid</code>), Tipo de Operación (<code>tyop_uuid</code>), Método de Pago (<code>paym_uuid</code>) y Estado del Voucher (<code>stovou_uuid</code>).</li>
+<li><strong>Switch de Cuotas (<code>vou_installments</code>)</strong>: Al activar el interruptor de pago en cuotas:<ul>
+<li>Se habilitan los controles <strong>Cantidad de Cuotas (<code>vou_installmentcount</code>)</strong> (de 2 a 60 cuotas) y <strong>Tasa de Interés (<code>vou_interestrate</code>)</strong> (<code>0%</code> a <code>100%</code>).</li>
+<li><strong>Calculadora en Vivo de Cuotas e Intereses</strong>: El formulario muestra un panel de resumen financiero que calcula en tiempo real:<ul>
+<li><strong>Monto por Cuota (<code>calculateInstallmentAmount</code>)</strong>:
+$$\text{Monto Cuota} = \frac{\text{Importe Base} \times \left(1 + \frac{\text{Tasa Interés}}{100}\right)}{\text{Cantidad de Cuotas}}$$</li>
+<li><strong>Total con Intereses (<code>calculateTotalWithInterest</code>)</strong>: Importe final financiado sumando el recargo porcentual.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Generación Automática de Cuotas (<code>fees</code>)</strong>: Al guardar un voucher nuevo con el switch de cuotas activo (<code>vou_installments &amp;&amp; vou_installmentcount &gt; 1</code>), el componente genera automáticamente el arreglo de cuotas mensuales (<code>fees</code>), asignando a cada cuota su número correlativo (<code>vf_quotanumber</code>), su importe calculado (<code>vf_quotaamount</code>), su fecha de vencimiento escalonada mes a mes (<code>vf_expirationdate</code>) y el estado inicial <em>Pendiente</em> (<code>stovf_uuid: &#39;1&#39;</code>).</li>
+</ul>
+<hr>
+<h2>3. Cuotas de Vouchers (<code>/admin/user/vouchers-fees</code> y <code>/admin/user/voucher-fee/new</code>)</h2>
+<p>El módulo de <strong>Cuotas de Vouchers</strong> permite hacer un seguimiento pormenorizado del cronograma de vencimientos de cada compra financiada.</p>
+<ul>
+<li><strong>Indicador de Mora (<code>isOverdue</code>)</strong>: Identifica automáticamente las cuotas cuya fecha de vencimiento (<code>vf_expirationdate</code>) ya ha pasado y que aún permanecen en estado <em>Pendiente</em> (<code>stovf_uuid === &#39;1&#39;</code>).</li>
+<li><strong>Cálculo de Días Restantes (<code>getDaysLeft</code>)</strong>: Calcula la diferencia en días corridos entre la fecha actual y el vencimiento de la cuota para alertar sobre vencimientos próximos.</li>
+<li><strong>Acciones Rápidas de Pago y Reversión</strong>:<ul>
+<li><strong>Pagar Cuota (<code>payQuota</code>)</strong>: Marca instantáneamente una cuota pendiente o vencida como <strong>Pagada</strong> (<code>stovf_uuid = &#39;2&#39;</code>) y registra la fecha actual como fecha efectiva de pago (<code>vf_paymentdate</code>).</li>
+<li><strong>Revertir Pago (<code>revertPayment</code>)</strong>: Si una cuota fue marcada como pagada por error, permite restituirla al estado <strong>Pendiente</strong> (<code>stovf_uuid = &#39;1&#39;</code>) limpiando su fecha de pago.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>4. Períodos de Liquidación (<code>/admin/user/periods</code> y <code>/admin/user/period/new</code>)</h2>
+<p>Los <strong>Períodos</strong> representan los ciclos mensuales de facturación o resúmenes de cada tarjeta bancaria.</p>
+<ul>
+<li><strong>Validación Cronológica Estricta (<code>validatePeriodDates</code>)</strong>: En el formulario de creación y edición (<code>/admin/user/period/new</code>), el sistema valida en tiempo real la coherencia temporal de las tres fechas del ciclo:<ol>
+<li>La <strong>Fecha de Inicio (<code>per_startdate</code>)</strong> debe ser estrictamente anterior a la <strong>Fecha de Fin / Cierre (<code>per_enddate</code>)</strong> (<code>startDate &lt; endDate</code>).</li>
+<li>La <strong>Fecha de Fin / Cierre (<code>per_enddate</code>)</strong> debe ser estrictamente anterior a la <strong>Fecha de Vencimiento (<code>per_duedate</code>)</strong> (<code>endDate &lt; dueDate</code>).</li>
+</ol>
+</li>
+<li><strong>Cierre Rápido de Período (<code>closePeriod</code>)</strong>: En el listado de períodos (<code>/admin/user/periods</code>), aquellos ciclos que se encuentran en estado <em>Abierto</em> (<code>stoper_uuid === &#39;1&#39;</code>) disponen de un botón de acción directa para cerrar el resumen, cambiando su estado a <em>Cerrado</em> (<code>stoper_uuid = &#39;2&#39;</code>).</li>
+</ul>
+<hr>
+<h2>5. Períodos de Pago (<code>/admin/user/payment-periods</code> y <code>/admin/user/payment-period/new</code>)</h2>
+<p>El módulo de <strong>Períodos de Pago</strong> registra los desembolsos realizados para cancelar total o parcialmente los resúmenes de liquidación de las tarjetas.</p>
+<ul>
+<li>Registra la fecha de pago (<code>payp_paymentdate</code>), el importe abonado (<code>payp_amountpaid</code>), el método de pago utilizado (<code>paym_uuid</code>), la referencia o comprobante bancario (<code>payp_paymentreference</code>), notas y el estado del pago (<code>stopayp_uuid</code>).</li>
+<li><strong>Confirmación y Rechazo Rápido en Listado</strong>: Cuando un pago se encuentra en estado <em>Procesando</em> (<code>stopayp_uuid === &#39;1&#39;</code>), la tabla ofrece acciones directas para:<ul>
+<li><strong>Confirmar Pago (<code>confirmPayment</code>)</strong>: Actualiza el estado a <em>Confirmado</em> (<code>stopayp_uuid = &#39;2&#39;</code>).</li>
+<li><strong>Rechazar Pago (<code>rejectPayment</code>)</strong>: Actualiza el estado a <em>Rechazado</em> (<code>stopayp_uuid = &#39;3&#39;</code>).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>6. Catálogos Paramétricos (Submenú Parámetros)</h2>
+<p>Bajo el submenú <strong>Parámetros</strong> de la barra lateral se encuentran los <strong>9 módulos maestros</strong> que alimentan las listas desplegables y reglas de clasificación de toda la plataforma. Todos ellos cuentan con operaciones completas de listado, alta, edición y baja con confirmación:</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr><th style="text-align: left">#</th><th style="text-align: left">Módulo Paramétrico</th><th style="text-align: left">Ruta de Listado</th><th style="text-align: left">Ruta de Creación / Edición</th><th style="text-align: left">Propósito Principal</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: left">1</td><td style="text-align: left"><strong>Bancos</strong></td><td style="text-align: left"><code>/admin/user/banks</code></td><td style="text-align: left"><code>/admin/user/bank/new</code></td><td style="text-align: left">Entidades financieras emisoras de tarjetas (<code>ban_name</code>, <code>ban_code</code>, <code>ban_active</code>).</td></tr>
+<tr><td style="text-align: left">2</td><td style="text-align: left"><strong>Tipos de Tarjetas</strong></td><td style="text-align: left"><code>/admin/user/types-cards</code></td><td style="text-align: left"><code>/admin/user/type-card/new</code></td><td style="text-align: left">Clasificación operativa de tarjetas, como <em>Débito</em> o <em>Crédito</em> (<code>tycrd_name</code>).</td></tr>
+<tr><td style="text-align: left">3</td><td style="text-align: left"><strong>Marcas de Tarjetas</strong></td><td style="text-align: left"><code>/admin/user/brands-cards</code></td><td style="text-align: left"><code>/admin/user/brand-card/new</code></td><td style="text-align: left">Redes y franquicias emisoras como <em>Visa</em>, <em>Mastercard</em>, <em>American Express</em> (<code>brcrd_name</code>).</td></tr>
+<tr><td style="text-align: left">4</td><td style="text-align: left"><strong>Métodos de Pago</strong></td><td style="text-align: left"><code>/admin/user/payment-methods</code></td><td style="text-align: left"><code>/admin/user/payment-method/new</code></td><td style="text-align: left">Medios de cancelación habilitados como <em>Efectivo</em>, <em>Transferencia</em>, <em>Débito Automático</em> (<code>paym_name</code>).</td></tr>
+<tr><td style="text-align: left">5</td><td style="text-align: left"><strong>Tipos de Operaciones</strong></td><td style="text-align: left"><code>/admin/user/type-operations</code></td><td style="text-align: left"><code>/admin/user/type-operation/new</code></td><td style="text-align: left">Naturaleza de la transacción del voucher, como <em>Compra en Comercio</em>, <em>Suscripción</em>, <em>Devolución</em> (<code>tyop_name</code>).</td></tr>
+<tr><td style="text-align: left">6</td><td style="text-align: left"><strong>Estados de Períodos</strong></td><td style="text-align: left"><code>/admin/user/status-periods</code></td><td style="text-align: left"><code>/admin/user/status-period/new</code></td><td style="text-align: left">Estados del ciclo de facturación: <em>Abierto</em>, <em>Cerrado</em>, <em>Pagado</em>, <em>Vencido</em> (<code>stoper_name</code>).</td></tr>
+<tr><td style="text-align: left">7</td><td style="text-align: left"><strong>Estados de Vouchers</strong></td><td style="text-align: left"><code>/admin/user/status-vouchers</code></td><td style="text-align: left"><code>/admin/user/status-voucher/new</code></td><td style="text-align: left">Estados de auditoría del comprobante: <em>Pendiente</em>, <em>Confirmado</em>, <em>Rechazado</em>, <em>Conciliado</em> (<code>stovou_name</code>).</td></tr>
+<tr><td style="text-align: left">8</td><td style="text-align: left"><strong>Estados de Cuotas</strong></td><td style="text-align: left"><code>/admin/user/status-vouchers-fees</code></td><td style="text-align: left"><code>/admin/user/status-voucher-fee/new</code></td><td style="text-align: left">Estados de cada cuota individual: <em>Pendiente</em>, <em>Pagada</em>, <em>Vencida</em>, <em>Cancelada</em> (<code>stovf_name</code>).</td></tr>
+<tr><td style="text-align: left">9</td><td style="text-align: left"><strong>Estados de Períodos de Pago</strong></td><td style="text-align: left"><code>/admin/user/status-payment-periods</code></td><td style="text-align: left"><code>/admin/user/status-payment-period/new</code></td><td style="text-align: left">Estados de los pagos de resumen: <em>Procesando</em>, <em>Confirmado</em>, <em>Rechazado</em>, <em>Reembolsado</em> (<code>stopayp_name</code>).</td></tr>
+</tbody>
+</table>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/additional-documentation/tarjetas%2C-vouchers%2C-cuotas-y-par%C3%A1metros.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/additional-documentation/cards%2C-vouchers%2C-installments-and-parameters.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/additional-documentation/cart%C3%B5es%2C-vouchers%2C-parcelas-e-par%C3%A2metros.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'tarjetas,-vouchers,-cuotas-y-parámetros.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

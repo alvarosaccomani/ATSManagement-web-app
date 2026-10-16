@@ -14,6 +14,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Componente de registro de usuario (`<app-register>`) en `/auth/register`.
+ *
+ * @description Proporciona un formulario de registro reactivo con evaluación de la fortaleza de la contraseña en tiempo real
+ * (5 criterios y barra de progreso codificada por colores `#dc3545`, `#ffc107`, `#28a745`) y validación de coincidencia de confirmación de contraseña.
+ */
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -33,20 +39,38 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
+  /** Grupo de formulario reactivo de registro. */
   validateForm!: FormGroup;
+  /** Indica si hay una solicitud de registro en curso. */
   isSubmitting = false;
 
-  // Estados para feedback visual de contraseña
+  /** Controla si el campo de contraseña es visible en texto plano. */
   showPassword = false;
+  /** Indica si la contraseña contiene al menos una letra mayúscula. */
   hasUpperCase = false;
+  /** Indica si la contraseña contiene al menos una letra minúscula. */
   hasLowerCase = false;
+  /** Indica si la contraseña contiene al menos un dígito numérico. */
   hasNumber = false;
+  /** Indica si la contraseña contiene al menos un carácter especial. */
   hasSpecialChar = false;
+  /** Indica si la contraseña tiene al menos 8 caracteres de longitud. */
   isValidLength = false;
+  /** Ancho porcentual (0-100) de la barra de progreso de fortaleza de la contraseña. */
   progressWidth = 0;
+  /** Código de color hexadecimal de la barra de progreso de fortaleza de la contraseña. */
   barColor = '#dc3545';
+  /** Indica si el campo de contraseña tiene actualmente el foco. */
   isFocused = false;
 
+  /**
+   * Inicializa el componente de registro.
+   *
+   * @param fb Instancia de `FormBuilder` de Angular.
+   * @param message Servicio de mensajes emergentes (toast) de Ng-Zorro.
+   * @param _router Instancia de `Router` de Angular.
+   * @param _authService Servicio de autenticación.
+   */
   constructor(
     private fb: FormBuilder,
     private message: NzMessageService,
@@ -54,6 +78,9 @@ export class RegisterComponent implements OnInit {
     private _authService: AuthService
   ) { }
 
+  /**
+   * Construye el formulario reactivo de registro y se suscribe a los cambios de `usr_password` para retroalimentación de fortaleza en tiempo real.
+   */
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       usr_name: [null, [Validators.required, Validators.minLength(2)]],
@@ -70,18 +97,32 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  /**
+   * Alterna la visibilidad de la contraseña entre texto oculto y texto plano.
+   */
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
+  /**
+   * Marca el campo de contraseña como enfocado para mostrar la lista de verificación de fortaleza.
+   */
   public onFocus(): void {
     this.isFocused = true;
   }
 
+  /**
+   * Marca el campo de contraseña como desenfocado.
+   */
   public onBlur(): void {
     this.isFocused = false;
   }
 
+  /**
+   * Evalúa la contraseña frente a los 5 requisitos de seguridad y actualiza el ancho y el color de la barra de progreso.
+   *
+   * @param value Cadena de la contraseña actual.
+   */
   public validatePassword(value: string): void {
     const password = value || '';
     this.hasUpperCase = /[A-Z]/.test(password);
@@ -109,6 +150,12 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  /**
+   * Validador personalizado que requiere que la contraseña cumpla con los 5 criterios de complejidad.
+   *
+   * @param control Control de formulario que contiene el valor de la contraseña.
+   * @returns `{ passwordStrength: true }` si no es válida, o `null` si es válida.
+   */
   passwordStrengthValidator = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (!value) {
@@ -124,10 +171,19 @@ export class RegisterComponent implements OnInit {
     return !passwordValid ? { passwordStrength: true } : null;
   };
 
+  /**
+   * Activa la revalidación del control `confirmPassword` cuando cambia la contraseña principal.
+   */
   updateConfirmValidator(): void {
     Promise.resolve().then(() => this.validateForm.controls['confirmPassword'].updateValueAndValidity());
   }
 
+  /**
+   * Validador personalizado que asegura que `confirmPassword` coincida con `usr_password`.
+   *
+   * @param control El control de formulario `confirmPassword`.
+   * @returns Mapa de errores de validación si está vacío o no coincide, o `{}` si es válido.
+   */
   confirmationValidator = (control: AbstractControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
@@ -137,6 +193,9 @@ export class RegisterComponent implements OnInit {
     return {};
   };
 
+  /**
+   * Envía el formulario de registro mediante {@link AuthService.singup} y redirige a `/auth/account-created/:usr_email`.
+   */
   public submitForm(): void {
     if (this.validateForm.valid) {
       this.isSubmitting = true;
@@ -172,4 +231,3 @@ export class RegisterComponent implements OnInit {
     }
   }
 }
-

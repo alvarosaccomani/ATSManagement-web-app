@@ -1,0 +1,415 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Manual de Usuario: Dashboard, Caja, Ámbitos y Comisiones</h1>
+<p>Este manual detalla la gestión operativa financiera en <strong>ATSManagement Web App</strong>, abarcando el tablero de control principal, la separación contable por ámbitos (contextos), la agenda de personas/contactos, el registro de movimientos de caja y la liquidación de comisiones de vendedores.</p>
+<hr>
+<h2>1. Dashboard Financiero (<code>/admin/user/dashboard</code>)</h2>
+<p>El <strong>Dashboard Financiero y de Gestión</strong> ofrece una vista consolidada en tiempo real del estado de caja y la actividad reciente del usuario.</p>
+<h3>1.1. Filtro por Ámbito y Accesos Rápidos</h3>
+<p>En la cabecera del tablero se encuentran:</p>
+<ul>
+<li><strong>Selector de Ámbito (<code>selectedScopeUuid</code>)</strong>: Permite alternar entre <strong>&quot;Todos los Ámbitos (Global)&quot;</strong> (<code>ALL</code>) o filtrar las métricas exclusivamente para un ámbito específico (por ejemplo: <em>Personal</em>, <em>Hogar</em>, <em>Proyecto</em>).</li>
+<li><strong>Botón <code>+ Crear Ámbito</code></strong>: Navega directamente al formulario de creación de contextos (<code>/admin/user/scope/new</code>).</li>
+<li><strong>Botón <code>+ Nuevo Movimiento</code></strong>: Abre el formulario de registro de ingresos, egresos o transferencias (<code>/admin/user/transaction/new</code>).</li>
+</ul>
+<h3>1.2. Indicadores Clave (KPIs)</h3>
+<p>El panel superior presenta 4 tarjetas de resumen financiero calculadas dinámicamente según el filtro seleccionado:</p>
+<ol>
+<li><strong>Total Ingresos</strong>: Sumatoria de todos los movimientos de tipo <code>INGRESO</code> (destacado en verde <code>#28a745</code>).</li>
+<li><strong>Total Egresos</strong>: Sumatoria de todos los movimientos de tipo <code>EGRESO</code> (destacado en rojo <code>#dc3545</code>).</li>
+<li><strong>Balance Neto (Caja Actual)</strong>: Diferencia neta entre ingresos y egresos (<code>totalIncome - totalExpense</code>), resaltando visualmente si el saldo global es positivo (<code>#28a745</code>) o negativo (<code>#dc3545</code>).</li>
+<li><strong>Total Movimientos Registrados</strong>: Contador total de operaciones contabilizadas en la vista activa.</li>
+</ol>
+<h3>1.3. Tablas de Resumen Operativo</h3>
+<p>Debajo de los KPIs se disponen dos paneles complementarios:</p>
+<ul>
+<li><strong>Saldos por Ámbito (Contextos)</strong>: Tabla comparativa que desglosa para cada ámbito su etiqueta de color (<code>scp_color</code>), total de <strong>Ingresos</strong>, total de <strong>Egresos</strong> y su <strong>Saldo Neto</strong> individual.</li>
+<li><strong>Últimos Movimientos Registrados</strong>: Listado de las 10 transacciones más recientes ordenadas cronológicamente, mostrando fecha, concepto/persona asociada, monto y un <em>badge</em> de tipo codificado por colores:<ul>
+<li><code>INGRESO</code>: Etiqueta verde (<code>#d4edda</code> / texto <code>#155724</code>).</li>
+<li><code>EGRESO</code>: Etiqueta roja (<code>#f8d7da</code> / texto <code>#721c24</code>).</li>
+<li><code>TRANSFERENCIA</code>: Etiqueta azul (<code>#cce5ff</code> / texto <code>#004085</code>).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>2. Gestión de Ámbitos (<code>/admin/user/scopes</code>)</h2>
+<p>Los <strong>Ámbitos</strong> permiten independizar la contabilidad de distintos entornos financieros dentro de una misma cuenta de usuario (por ejemplo, finanzas personales, un emprendimiento comercial o gastos compartidos del hogar).</p>
+<h3>2.1. Listado y Acciones (<code>/admin/user/scopes</code>)</h3>
+<p>Muestra una grilla con todos los ámbitos creados, incluyendo muestra visual de color, nombre, descripción, indicador de si es compartido (<code>Sí</code> / <code>No</code>), estado (<code>Activo</code> / <code>Inactivo</code>) y fecha de alta. Permite editar cada registro o eliminarlo previa confirmación modal.</p>
+<h3>2.2. Creación y Edición (<code>/admin/user/scope/new</code> y <code>/admin/user/scope/edit/:scp_uuid</code>)</h3>
+<p>El formulario de ámbito cuenta con los siguientes controles:</p>
+<ul>
+<li><strong>Nombre del Ámbito (<code>scp_name</code>)</strong>: Obligatorio (por ejemplo: <em>Personal</em>, <em>Hogar</em>, <em>Proyecto A</em>).</li>
+<li><strong>Descripción (<code>scp_description</code>)</strong>: Explicación opcional del propósito del contexto.</li>
+<li><strong>Color Identificativo (<code>scp_color</code>)</strong>: Selector nativo de color (<code>input type=&quot;color&quot;</code>, por defecto <code>#1890ff</code>) que se utiliza en las etiquetas del Dashboard y listados.</li>
+<li><strong>¿Es Compartido? (<code>scp_isshared</code>)</strong>: Interruptor (<em>switch</em>) para indicar si múltiples usuarios o colaboradores participan en este ámbito.</li>
+<li><strong>Estado (<code>scp_active</code>)</strong>: Interruptor para habilitar o deshabilitar el ámbito sin perder su historial contable.</li>
+</ul>
+<hr>
+<h2>3. Gestión de Personas y Contactos (<code>/admin/user/persons</code>)</h2>
+<p>El módulo de <strong>Personas y Contactos</strong> centraliza el padrón de terceros vinculados a las operaciones de cada ámbito (vendedores, clientes, socios, proveedores, etc.).</p>
+<h3>3.1. Filtros del Padrón (<code>/admin/user/persons</code>)</h3>
+<p>La vista principal incluye dos filtros combinables en tiempo real:</p>
+<ul>
+<li><strong>Filtrar por Ámbito (<code>selectedScope</code>)</strong>: Filtra contactos pertenecientes a un ámbito específico o muestra <code>ALL</code>.</li>
+<li><strong>Filtrar por Rol (<code>selectedRole</code>)</strong>: Permite aislar rápidamente contactos según su clasificación (<code>VENDEDOR</code>, <code>SOCIO</code>, <code>CLIENTE</code>, <code>PROVEEDOR</code>, <code>AMIGO</code>, <code>OTRO</code>).</li>
+</ul>
+<h3>3.2. Formulario de Persona (<code>/admin/user/person/new</code> y <code>/admin/user/person/edit/:prs_uuid</code>)</h3>
+<ul>
+<li><strong>Ámbito (<code>scp_uuid</code>)</strong>: Contexto al que pertenece el contacto.</li>
+<li><strong>Nombre (<code>prs_name</code>)</strong> y <strong>Apellido (<code>prs_surname</code>)</strong>: Nombre obligatorio y apellido opcional (por si se registra una razón social o entidad).</li>
+<li><strong>CUIT / CUIL / DNI (<code>prs_taxid</code>)</strong>: Identificador tributario o documento de identidad.</li>
+<li><strong>Roles (<code>prs_roles</code>)</strong>: Selector múltiple (<code>nzMode=&quot;multiple&quot;</code>) que permite asignar uno o varios roles simultáneos a la misma persona:<ul>
+<li><code>VENDEDOR</code>, <code>SOCIO</code>, <code>CLIENTE</code>, <code>PROVEEDOR</code>, <code>AMIGO</code>, <code>OTRO</code>.</li>
+</ul>
+</li>
+<li><strong>% Comisión por Venta (<code>prs_commissionrate</code>)</strong>: Porcentaje numérico (<code>0</code> a <code>100</code>, con paso <code>0.5</code>). Si la persona actúa como vendedor, este valor se aplicará automáticamente al registrar ingresos asociados a ella.</li>
+<li><strong>Teléfono (<code>prs_phone</code>)</strong>, <strong>Email (<code>prs_email</code>)</strong>, <strong>Notas (<code>prs_notes</code>)</strong> y <strong>Estado (<code>prs_active</code>)</strong>.</li>
+</ul>
+<hr>
+<h2>4. Movimientos de Caja (<code>/admin/user/transactions</code>)</h2>
+<p>El módulo de <strong>Movimientos de Caja (Libro Mayor)</strong> registra todas las entradas, salidas y transferencias de dinero.</p>
+<h3>4.1. Búsqueda y Filtrado Combinado (<code>/admin/user/transactions</code>)</h3>
+<p>Permite auditar el historial combinando tres criterios simultáneos:</p>
+<ol>
+<li><strong>Ámbito</strong>: Todos o un contexto puntual.</li>
+<li><strong>Tipo de Movimiento</strong>: <code>INGRESO</code>, <code>EGRESO</code> o <code>TRANSFERENCIA</code>.</li>
+<li><strong>Buscador de Texto</strong>: Filtra instantáneamente coincidencias en el concepto (<code>trx_concept</code>), notas (<code>trx_notes</code>) o nombre/apellido de la persona asociada.</li>
+</ol>
+<h3>4.2. Registro y Edición de Movimientos (<code>/admin/user/transaction/new</code> y <code>/admin/user/transaction/edit/:trx_uuid</code>)</h3>
+<p>El formulario adapta sus validaciones y cálculos de manera reactiva según los datos ingresados:</p>
+<ul>
+<li><strong>Ámbito (<code>scp_uuid</code>)</strong>: Al seleccionar un ámbito, el sistema filtra automáticamente el listado de personas disponibles para mostrar únicamente los contactos de ese ámbito.</li>
+<li><strong>Tipo de Movimiento (<code>trx_type</code>)</strong>:<ul>
+<li><code>INGRESO</code> (Entrada de dinero)</li>
+<li><code>EGRESO</code> (Salida / Gasto / Pago)</li>
+<li><code>TRANSFERENCIA</code> (Entre cuentas propias)</li>
+</ul>
+</li>
+<li><strong>Validación Dinámica en Transferencias</strong>: Cuando el usuario selecciona <code>TRANSFERENCIA</code>, el formulario despliega la sección de cuentas bancarias/tarjetas y hace <strong>obligatorio</strong> el campo <strong>Cuenta / Tarjeta Destino (<code>target_crduuid</code>)</strong> mediante validadores dinámicos, permitiendo además indicar la <strong>Cuenta / Tarjeta Origen (<code>source_crduuid</code>)</strong>.</li>
+<li><strong>Cálculo Automático de Comisión</strong>: Cuando el movimiento es de tipo <code>INGRESO</code> y se selecciona una <strong>Persona Asociada (<code>prs_uuid</code>)</strong> que posee porcentaje de comisión configurado (<code>prs_commissionrate &gt; 0</code>), el sistema calcula automáticamente la comisión al ingresar el monto:
+$$\text{Comisión Calculada} = \frac{\text{Monto} \times \text{% Comisión}}{100}$$
+Además, muestra un aviso informativo indicando el porcentaje y el importe exacto de comisión que se generará, permitiendo ajustar manualmente el campo <code>trx_commissionamount</code> si fuera necesario.</li>
+<li><strong>Modos de Guardado Rápido</strong>:<ul>
+<li><strong>Guardar y Cargar Otro (Modo Rápido Excel)</strong>: Registra la transacción en el servidor y mantiene al usuario en la misma pantalla, conservando el <strong>Ámbito</strong>, <strong>Tipo de Movimiento</strong>, <strong>Método de Pago</strong> y <strong>Fecha</strong> seleccionados, limpiando únicamente el concepto, monto, persona y notas. Ideal para cargar planillas extensas de movimientos sin cambiar de pantalla.</li>
+<li><strong>Guardar y Finalizar</strong>: Registra la operación y regresa al listado general <code>/admin/user/transactions</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>5. Comisiones de Vendedores (<code>/admin/user/seller-commissions</code>)</h2>
+<p>El módulo de <strong>Liquidación y Control de Comisiones de Vendedores</strong> consolida todas las ventas (<code>INGRESO</code>) que tienen una comisión devengada (<code>trx_commissionamount &gt; 0</code>).</p>
+<h3>5.1. Filtros de Liquidación</h3>
+<ul>
+<li><strong>Filtrar por Ámbito</strong>: Permite segmentar las ventas por unidad de negocio o contexto.</li>
+<li><strong>Filtrar por Vendedor</strong>: Lista automáticamente todas las personas que poseen el rol <code>VENDEDOR</code> o una tasa de comisión mayor a <code>0%</code>.</li>
+</ul>
+<h3>5.2. KPIs de Rendimiento Comercial</h3>
+<p>Presenta 3 indicadores clave en tiempo real según el filtro activo:</p>
+<ol>
+<li><strong>Total en Ventas Realizadas (<code>totalSales</code>)</strong>: Suma total de los importes de venta brutos (<code>trx_amount</code>) generados por los vendedores filtrados.</li>
+<li><strong>Total Comisiones Ganadas (<code>totalCommissions</code>)</strong>: Suma total a liquidar/pagar en concepto de comisiones (<code>trx_commissionamount</code>).</li>
+<li><strong>Cantidad de Ventas (<code>salesCount</code>)</strong>: Número total de operaciones comisionables cerradas.</li>
+</ol>
+<h3>5.3. Tabla Detallada de Liquidación</h3>
+<p>Desglosa cada operación comisionable mostrando:</p>
+<ul>
+<li><strong>Fecha de Venta (<code>trx_date</code>)</strong></li>
+<li><strong>Ámbito (<code>scp_name</code>)</strong> con su etiqueta de color correspondiente</li>
+<li><strong>Vendedor</strong> (nombre completo)</li>
+<li><strong>Concepto / Detalle de Venta (<code>trx_concept</code>)</strong></li>
+<li><strong>Monto de Venta (<code>trx_amount</code>)</strong></li>
+<li><strong>% Aplicado (<code>prs_commissionrate</code>)</strong></li>
+<li><strong>Comisión Ganada (<code>trx_commissionamount</code>)</strong> destacada en una insignia verde para facilitar el control de pago.</li>
+</ul>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/additional-documentation/dashboard%2C-caja%2C-%C3%A1mbitos-y-comisiones.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/additional-documentation/dashboard%2C-cash-flow%2C-scopes-and-commissions.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/additional-documentation/dashboard%2C-caixa%2C-escopos-e-comiss%C3%B5es.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'dashboard,-caja,-ámbitos-y-comisiones.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

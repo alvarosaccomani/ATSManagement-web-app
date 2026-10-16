@@ -1,0 +1,2248 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Digite para pesquisar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  TransactionComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/admin/user/transaction/transaction.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descrição</h3>
+    </p>
+    <p class="comment">
+        <p>Cash-flow transaction form component (<code>&lt;app-transaction&gt;</code>)
+at <code>/admin/user/transaction/new</code> and <code>/admin/user/transaction/edit/:trx_uuid</code>.</p>
+<p>Manages creation and editing of <code>INGRESO</code>, <code>EGRESO</code>, and <code>TRANSFERENCIA</code> movements,
+including dynamic required validation for <code>target_crduuid</code> on transfers, automatic seller commission
+calculation on income movements, and a fast batch-entry mode (&quot;Guardar y Cargar Otro&quot;).</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Exemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-transaction</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>NzFormModule</code>
+</div>
+                        <div>    <code>NzInputModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzSpinModule</code>
+</div>
+                        <div>    <code>NzDividerModule</code>
+</div>
+                        <div>    <code>NzSelectModule</code>
+</div>
+                        <div>    <code>NzDatePickerModule</code>
+</div>
+                        <div>    <code>NzInputNumberModule</code>
+</div>
+                        <div>    <code>NzRadioModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./transaction.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./transaction.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./transaction.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>Nenhum resultado correspondente.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzFormModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSpinModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDividerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzSelectModule</code>
+                                </li>
+                                <li>
+                                        <code>NzDatePickerModule</code>
+                                </li>
+                                <li>
+                                        <code>NzInputNumberModule</code>
+                                </li>
+                                <li>
+                                        <code>NzRadioModule</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propriedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#cards" >cards</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                <a href="#conceptInput" >conceptInput</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#formatterDollar" >formatterDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isEditing" >isEditing</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#parserDollar" >parserDollar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#persons" >persons</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#scopes" >scopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#trx_uuid" >trx_uuid</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadCards" >loadCards</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadPersons" >loadPersons</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadScopes" >loadScopes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#loadTransaction" >loadTransaction</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onCancel" >onCancel</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Construtor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _transactionsService: <a href="../injectables/TransactionsService.html" target="_self">TransactionsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, _personsService: <a href="../injectables/PersonsService.html" target="_self">PersonsService</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="74" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:74</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes the transaction form component.</p>
+</div>
+                            <div>
+                                    <b>Parâmetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nome</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descrição</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular <code>FormBuilder</code> instance.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Activated route snapshot.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Angular <code>Router</code> instance.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_transactionsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TransactionsService.html" target="_self" >TransactionsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for transaction CRUD operations.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_scopesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ScopesService.html" target="_self" >ScopesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching scopes.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_personsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PersonsService.html" target="_self" >PersonsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching scope contacts.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_cardsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CardsService.html" target="_self" >CardsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for fetching user cards/accounts.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Service for displaying modal notifications.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadCards"></a>
+                    <span class="name">
+                        <span ><b>loadCards</b></span>
+                        <a href="#loadCards"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadCards()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="219"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:219</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads the user&#39;s cards/accounts for the source and target account selectors.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadPersons"></a>
+                    <span class="name">
+                        <span ><b>loadPersons</b></span>
+                        <a href="#loadPersons"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadPersons(scp_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="202"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads contacts/persons belonging to the specified scope.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>scp_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Scope UUID.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadScopes"></a>
+                    <span class="name">
+                        <span ><b>loadScopes</b></span>
+                        <a href="#loadScopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadScopes(defaultScopeUuid?: string | null)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="180"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:180</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads user scopes and initializes the default <code>scp_uuid</code> selection.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>defaultScopeUuid</td>
+                                            <td>
+                                                        <code>string | null</code>
+                                            </td>
+
+                                            <td>
+                                                    Sim
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Optional scope UUID from query parameters.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTransaction"></a>
+                    <span class="name">
+                        <span ><b>loadTransaction</b></span>
+                        <a href="#loadTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadTransaction(trx_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="242"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:242</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads an existing transaction by its UUID and patches the form.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>trx_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Unique identifier of the transaction to load.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="119"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sets up reactive subscriptions for dynamic transfer validation, scope-based contact loading,
+automatic seller commission calculation, and loads initial reference data.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCancel"></a>
+                    <span class="name">
+                        <span ><b>onCancel</b></span>
+                        <a href="#onCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCancel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="346"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:346</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cancels editing and navigates back to the transactions list (<code>/admin/user/transactions</code>).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit(andLoadAnother: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido em <a href="" data-line="269"
+                                    class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates and submits the transaction form.</p>
+<p>and account while resetting concept, amount, and notes for fast batch entry.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parâmetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nome</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Valor padrão</td>
+                                                <td>Descrição</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>andLoadAnother</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Não
+                                            </td>
+
+                                            <td>
+                                                    <code>false</code>
+                                            </td>
+
+                                            <td>
+                                                    <p>When <code>true</code>, keeps the user on the form preserving scope, type, date,
+and account while resetting concept, amount, and notes for fast batch entry.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Retorna : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propriedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cards"></a>
+                    <span class="name">
+                        <span ><b>cards</b></span>
+                        <a href="#cards"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="71" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available cards/accounts for source and target account selection.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="conceptInput"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>conceptInput</b></span>
+                        <a href="#conceptInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;conceptInput&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="74" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reference to the concept <code>&lt;input&gt;</code> element for auto-focusing in fast batch-entry mode.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="58" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reactive form group for transaction fields.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatterDollar"></a>
+                    <span class="name">
+                        <span ><b>formatterDollar</b></span>
+                        <a href="#formatterDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>formatterDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="351" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:351</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currency display formatter function for <code>nz-input-number</code>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEditing"></a>
+                    <span class="name">
+                        <span ><b>isEditing</b></span>
+                        <a href="#isEditing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="62" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicates whether the component is editing an existing transaction (<code>true</code>) or creating a new one (<code>false</code>).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="60" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indicates whether data is being loaded or submitted.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parserDollar"></a>
+                    <span class="name">
+                        <span ><b>parserDollar</b></span>
+                        <a href="#parserDollar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>parserDollar</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="353" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:353</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Currency input parser function for <code>nz-input-number</code>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="persons"></a>
+                    <span class="name">
+                        <span ><b>persons</b></span>
+                        <a href="#persons"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/PersonInterface.html" target="_self" >PersonInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="69" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available persons/contacts belonging to the currently selected scope.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scopes"></a>
+                    <span class="name">
+                        <span ><b>scopes</b></span>
+                        <a href="#scopes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/ScopeInterface.html" target="_self" >ScopeInterface[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="67" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Available accounting scopes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trx_uuid"></a>
+                    <span class="name">
+                        <span ><b>trx_uuid</b></span>
+                        <a href="#trx_uuid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor padrão : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido em <a href="" data-line="64" class="link-to-prism">src/app/admin/user/transaction/transaction.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>UUID of the transaction being edited, or <code>null</code> when creating a new record.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ElementRef, ViewChild } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+
+import { NzFormModule } from &#x27;ng-zorro-antd/form&#x27;;
+import { NzInputModule } from &#x27;ng-zorro-antd/input&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzSpinModule } from &#x27;ng-zorro-antd/spin&#x27;;
+import { NzDividerModule } from &#x27;ng-zorro-antd/divider&#x27;;
+import { NzSelectModule } from &#x27;ng-zorro-antd/select&#x27;;
+import { NzDatePickerModule } from &#x27;ng-zorro-antd/date-picker&#x27;;
+import { NzInputNumberModule } from &#x27;ng-zorro-antd/input-number&#x27;;
+import { NzRadioModule } from &#x27;ng-zorro-antd/radio&#x27;;
+
+import { ScopeInterface } from &#x27;../../../core/interfaces/scope.interface&#x27;;
+import { PersonInterface } from &#x27;../../../core/interfaces/person.interface&#x27;;
+import { CardInterface } from &#x27;../../../core/interfaces/card/card.interface&#x27;;
+import { TransactionsService } from &#x27;../../../core/services/transactions.service&#x27;;
+import { ScopesService } from &#x27;../../../core/services/scopes.service&#x27;;
+import { PersonsService } from &#x27;../../../core/services/persons.service&#x27;;
+import { CardsService } from &#x27;../../../core/services/cards.service&#x27;;
+import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+/**
+ * Cash-flow transaction form component (&#x60;&lt;app-transaction&gt;&#x60;)
+ * at &#x60;/admin/user/transaction/new&#x60; and &#x60;/admin/user/transaction/edit/:trx_uuid&#x60;.
+ *
+ * @description Manages creation and editing of &#x60;INGRESO&#x60;, &#x60;EGRESO&#x60;, and &#x60;TRANSFERENCIA&#x60; movements,
+ * including dynamic required validation for &#x60;target_crduuid&#x60; on transfers, automatic seller commission
+ * calculation on income movements, and a fast batch-entry mode (&quot;Guardar y Cargar Otro&quot;).
+ */
+@Component({
+  selector: &#x27;app-transaction&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzIconModule,
+    NzSpinModule,
+    NzDividerModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzInputNumberModule,
+    NzRadioModule
+  ],
+  templateUrl: &#x27;./transaction.component.html&#x27;,
+  styleUrl: &#x27;./transaction.component.scss&#x27;
+})
+export class TransactionComponent implements OnInit {
+  /** Reactive form group for transaction fields. */
+  form: FormGroup;
+  /** Indicates whether data is being loaded or submitted. */
+  isLoading &#x3D; false;
+  /** Indicates whether the component is editing an existing transaction (&#x60;true&#x60;) or creating a new one (&#x60;false&#x60;). */
+  isEditing &#x3D; false;
+  /** UUID of the transaction being edited, or &#x60;null&#x60; when creating a new record. */
+  trx_uuid: string | null &#x3D; null;
+
+  /** Available accounting scopes. */
+  scopes: ScopeInterface[] &#x3D; [];
+  /** Available persons/contacts belonging to the currently selected scope. */
+  persons: PersonInterface[] &#x3D; [];
+  /** Available cards/accounts for source and target account selection. */
+  cards: any[] &#x3D; [];
+
+  /** Reference to the concept &#x60;&lt;input&gt;&#x60; element for auto-focusing in fast batch-entry mode. */
+  @ViewChild(&#x27;conceptInput&#x27;) conceptInput!: ElementRef;
+
+  /**
+   * Initializes the transaction form component.
+   *
+   * @param fb Angular &#x60;FormBuilder&#x60; instance.
+   * @param route Activated route snapshot.
+   * @param router Angular &#x60;Router&#x60; instance.
+   * @param _transactionsService Service for transaction CRUD operations.
+   * @param _scopesService Service for fetching scopes.
+   * @param _personsService Service for fetching scope contacts.
+   * @param _cardsService Service for fetching user cards/accounts.
+   * @param _messageService Service for displaying modal notifications.
+   */
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _transactionsService: TransactionsService,
+    private _scopesService: ScopesService,
+    private _personsService: PersonsService,
+    private _cardsService: CardsService,
+    private _messageService: MessageService
+  ) {
+    this.form &#x3D; this.fb.group({
+      trx_uuid: [{ value: &#x27;&#x27;, disabled: true }],
+      scp_uuid: [&#x27;&#x27;, Validators.required],
+      trx_type: [&#x27;EGRESO&#x27;, Validators.required],
+      trx_datetime: [new Date(), Validators.required],
+      trx_concept: [&#x27;&#x27;, Validators.required],
+      trx_amount: [null, [Validators.required, Validators.min(0.01)]],
+      trx_currency: [&#x27;ARS&#x27;, Validators.required],
+      crd_uuid: [null],
+      target_crduuid: [null],
+      prs_uuid: [null],
+      trx_commissionrate: [null, [Validators.min(0), Validators.max(100)]],
+      trx_commissionamount: [null, [Validators.min(0)]],
+      trx_notes: [&#x27;&#x27;]
+    });
+  }
+
+  /**
+   * Sets up reactive subscriptions for dynamic transfer validation, scope-based contact loading,
+   * automatic seller commission calculation, and loads initial reference data.
+   */
+  ngOnInit(): void {
+    this.trx_uuid &#x3D; this.route.snapshot.paramMap.get(&#x27;trx_uuid&#x27;);
+    this.isEditing &#x3D; !!this.trx_uuid;
+
+    // Dynamic validator for transfer target
+    this.form.get(&#x27;trx_type&#x27;)?.valueChanges.subscribe(type &#x3D;&gt; {
+      const targetCtrl &#x3D; this.form.get(&#x27;target_crduuid&#x27;);
+      if (type &#x3D;&#x3D;&#x3D; &#x27;TRANSFERENCIA&#x27;) {
+        targetCtrl?.setValidators([Validators.required]);
+      } else {
+        targetCtrl?.clearValidators();
+        targetCtrl?.setValue(null);
+      }
+      targetCtrl?.updateValueAndValidity();
+    });
+
+    // Load persons when scope changes
+    this.form.get(&#x27;scp_uuid&#x27;)?.valueChanges.subscribe(scp_uuid &#x3D;&gt; {
+      if (scp_uuid &amp;&amp; scp_uuid !&#x3D;&#x3D; &#x27;ALL&#x27;) {
+        this.loadPersons(scp_uuid);
+      }
+    });
+
+    // When person changes, prefill commission rate if available and type is INGRESO
+    this.form.get(&#x27;prs_uuid&#x27;)?.valueChanges.subscribe(prs_uuid &#x3D;&gt; {
+      if (prs_uuid &amp;&amp; this.form.get(&#x27;trx_type&#x27;)?.value &#x3D;&#x3D;&#x3D; &#x27;INGRESO&#x27;) {
+        const selectedPerson &#x3D; this.persons.find(p &#x3D;&gt; p.prs_uuid &#x3D;&#x3D;&#x3D; prs_uuid);
+        if (selectedPerson &amp;&amp; selectedPerson.prs_commissionrate !&#x3D; null &amp;&amp; !this.form.get(&#x27;trx_commissionrate&#x27;)?.value) {
+          this.form.get(&#x27;trx_commissionrate&#x27;)?.setValue(selectedPerson.prs_commissionrate);
+        }
+      }
+    });
+
+    // Auto calculate commission amount when amount or rate changes
+    const calculateCommission &#x3D; () &#x3D;&gt; {
+      const amount &#x3D; this.form.get(&#x27;trx_amount&#x27;)?.value;
+      const rate &#x3D; this.form.get(&#x27;trx_commissionrate&#x27;)?.value;
+      if (amount &amp;&amp; rate !&#x3D; null) {
+        const commAmount &#x3D; Math.round(((amount * rate) / 100) * 100) / 100;
+        this.form.get(&#x27;trx_commissionamount&#x27;)?.setValue(commAmount, { emitEvent: false });
+      }
+    };
+
+    this.form.get(&#x27;trx_amount&#x27;)?.valueChanges.subscribe(() &#x3D;&gt; calculateCommission());
+    this.form.get(&#x27;trx_commissionrate&#x27;)?.valueChanges.subscribe(() &#x3D;&gt; calculateCommission());
+
+    const queryScope &#x3D; this.route.snapshot.queryParamMap.get(&#x27;scp_uuid&#x27;);
+
+    this.loadCards();
+    this.loadScopes(queryScope);
+
+    if (this.isEditing) {
+      this.loadTransaction(this.trx_uuid!);
+    }
+  }
+
+  /**
+   * Loads user scopes and initializes the default &#x60;scp_uuid&#x60; selection.
+   *
+   * @param defaultScopeUuid Optional scope UUID from query parameters.
+   */
+  loadScopes(defaultScopeUuid?: string | null): void {
+    const usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+    this._scopesService.getScopes(usr_uuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        if (response.success &amp;&amp; response.data.length &gt; 0) {
+          this.scopes &#x3D; response.data;
+          if (!this.form.get(&#x27;scp_uuid&#x27;)?.value) {
+            const hasValidDefault &#x3D; defaultScopeUuid &amp;&amp; defaultScopeUuid !&#x3D;&#x3D; &#x27;ALL&#x27; &amp;&amp; this.scopes.some(s &#x3D;&gt; s.scp_uuid &#x3D;&#x3D;&#x3D; defaultScopeUuid);
+            const initialScope &#x3D; hasValidDefault ? defaultScopeUuid! : this.scopes[0].scp_uuid;
+            this.form.get(&#x27;scp_uuid&#x27;)?.setValue(initialScope);
+            this.loadPersons(initialScope);
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * Loads contacts/persons belonging to the specified scope.
+   *
+   * @param scp_uuid Scope UUID.
+   */
+  loadPersons(scp_uuid: string): void {
+    if (!scp_uuid || scp_uuid &#x3D;&#x3D;&#x3D; &#x27;ALL&#x27;) {
+      this.persons &#x3D; [];
+      return;
+    }
+    this._personsService.getPersons(scp_uuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        if (response.success) {
+          this.persons &#x3D; response.data;
+        }
+      }
+    });
+  }
+
+  /**
+   * Loads the user&#x27;s cards/accounts for the source and target account selectors.
+   */
+  loadCards(): void {
+    const usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+    this._cardsService.getCards(usr_uuid).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
+          this.cards &#x3D; response.data.map((c: any) &#x3D;&gt; {
+            const scopeIcon &#x3D; c.scp?.scp_isshared ? &#x27;🏢 &#x27; : (c.scp ? &#x27;👤 &#x27; : &#x27;&#x27;);
+            const scopeTag &#x3D; c.scp?.scp_name ? &#x60; [${c.scp.scp_name}]&#x60; : &#x27;&#x27;;
+            return {
+              value: c.crd_uuid,
+              label: &#x60;${scopeIcon}${c.crd_alias || &#x27;Tarjeta&#x27;} (**** ${c.crd_last4digits})${scopeTag}&#x60;
+            };
+          });
+        }
+      }
+    });
+  }
+
+  /**
+   * Loads an existing transaction by its UUID and patches the form.
+   *
+   * @param trx_uuid Unique identifier of the transaction to load.
+   */
+  loadTransaction(trx_uuid: string): void {
+    this.isLoading &#x3D; true;
+    this._transactionsService.getTransactionById(trx_uuid).subscribe({
+      next: (response) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        if (response.success) {
+          const t &#x3D; {
+            ...response.data,
+            trx_datetime: new Date(response.data.trx_datetime)
+          };
+          this.form.patchValue(t);
+        }
+      },
+      error: (error) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
+        this._messageService.error(&#x27;Error&#x27;, &#x27;No se pudo cargar el movimiento&#x27;);
+      }
+    });
+  }
+
+  /**
+   * Validates and submits the transaction form.
+   *
+   * @param andLoadAnother When &#x60;true&#x60;, keeps the user on the form preserving scope, type, date,
+   * and account while resetting concept, amount, and notes for fast batch entry.
+   */
+  onSubmit(andLoadAnother: boolean &#x3D; false): void {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach(control &#x3D;&gt; {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+      this._messageService.error(&#x27;Formulario Inválido&#x27;, &#x27;Por favor complete todos los campos requeridos&#x27;);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+    const rawValue &#x3D; this.form.getRawValue();
+    const payload &#x3D; {
+      ...rawValue,
+      usr_uuidcreator: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;
+    };
+
+    if (!this.isEditing) {
+      this._transactionsService.saveTransaction(payload).subscribe({
+        next: (response) &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if (response.success) {
+            this._messageService.success(
+              &#x27;Movimiento Registrado&#x27;,
+              &#x27;El registro fue guardado correctamente.&#x27;,
+              () &#x3D;&gt; {
+                if (andLoadAnother) {
+                  // Keep scope, type, account, person for fast batch entry
+                  this.form.get(&#x27;trx_concept&#x27;)?.reset(&#x27;&#x27;);
+                  this.form.get(&#x27;trx_amount&#x27;)?.reset(null);
+                  this.form.get(&#x27;trx_notes&#x27;)?.reset(&#x27;&#x27;);
+                  setTimeout(() &#x3D;&gt; this.conceptInput?.nativeElement?.focus(), 100);
+                } else {
+                  this.router.navigate([&#x27;/admin/user/transactions&#x27;]);
+                }
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo guardar el movimiento&#x27;);
+          }
+        },
+        error: (error) &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          console.error(error);
+          this._messageService.error(&#x27;Error&#x27;, error?.error?.error || &#x27;Hubo un problema al guardar el movimiento&#x27;);
+        }
+      });
+    } else {
+      this._transactionsService.updateTransaction(this.trx_uuid!, payload).subscribe({
+        next: (response) &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          if (response.success) {
+            this._messageService.success(
+              &#x27;Movimiento Actualizado&#x27;,
+              &#x27;El registro fue actualizado correctamente.&#x27;,
+              () &#x3D;&gt; {
+                this.router.navigate([&#x27;/admin/user/transactions&#x27;]);
+              }
+            );
+          } else {
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar el movimiento&#x27;);
+          }
+        },
+        error: (error) &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          console.error(error);
+          this._messageService.error(&#x27;Error&#x27;, error?.error?.error || &#x27;Hubo un problema al actualizar el movimiento&#x27;);
+        }
+      });
+    }
+  }
+
+  /**
+   * Cancels editing and navigates back to the transactions list (&#x60;/admin/user/transactions&#x60;).
+   */
+  onCancel(): void {
+    this.router.navigate([&#x27;/admin/user/transactions&#x27;]);
+  }
+
+  /** Currency display formatter function for &#x60;nz-input-number&#x60;. */
+  formatterDollar &#x3D; formatterDollar;
+  /** Currency input parser function for &#x60;nz-input-number&#x60;. */
+  parserDollar &#x3D; parserDollar;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;transaction-form-container&quot;&gt;
+  &lt;div class&#x3D;&quot;form-header&quot;&gt;
+    &lt;h2&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;wallet&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      {{ isEditing ? &#x27;Editar Movimiento&#x27; : &#x27;Cargar Gasto / Movimiento&#x27; }}
+    &lt;/h2&gt;
+    &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;onCancel()&quot;&gt;
+      &lt;i nz-icon nzType&#x3D;&quot;close&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+  @if (isLoading) {
+    &lt;div class&#x3D;&quot;loading-container&quot;&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Guardando...&quot;&gt;&lt;/nz-spin&gt;
+    &lt;/div&gt;
+  } @else {
+    &lt;form nz-form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;onSubmit(false)&quot;&gt;
+      &lt;!-- Selector de Tipo de Movimiento --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-form-item class&#x3D;&quot;type-selector-item&quot;&gt;
+            &lt;nz-form-label [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;Tipo de Operación&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;nz-radio-group formControlName&#x3D;&quot;trx_type&quot; nzSize&#x3D;&quot;large&quot; nzButtonStyle&#x3D;&quot;solid&quot;&gt;
+                &lt;label nz-radio-button nzValue&#x3D;&quot;EGRESO&quot; class&#x3D;&quot;radio-egreso&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;arrow-up&quot;&gt;&lt;/i&gt; 🔴 EGRESO / GASTO
+                &lt;/label&gt;
+                &lt;label nz-radio-button nzValue&#x3D;&quot;INGRESO&quot; class&#x3D;&quot;radio-ingreso&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;arrow-down&quot;&gt;&lt;/i&gt; 🟢 INGRESO / VENTA
+                &lt;/label&gt;
+                &lt;label nz-radio-button nzValue&#x3D;&quot;TRANSFERENCIA&quot; class&#x3D;&quot;radio-transferencia&quot;&gt;
+                  &lt;i nz-icon nzType&#x3D;&quot;swap&quot;&gt;&lt;/i&gt; 🔵 TRANSFERENCIA
+                &lt;/label&gt;
+              &lt;/nz-radio-group&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Ámbito y Fecha --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;scp_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;Ámbito / Contexto&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; nzErrorTip&#x3D;&quot;Seleccione un ámbito&quot;&gt;
+              &lt;nz-select formControlName&#x3D;&quot;scp_uuid&quot; placeholder&#x3D;&quot;Seleccione ámbito&quot; nzSize&#x3D;&quot;large&quot;&gt;
+                @for (scope of scopes; track scope.scp_uuid) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;(scope.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;) + scope.scp_name&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;trx_datetime&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;Fecha y Hora&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;nz-date-picker formControlName&#x3D;&quot;trx_datetime&quot; nzShowTime nzFormat&#x3D;&quot;dd/MM/yyyy HH:mm&quot; style&#x3D;&quot;width: 100%&quot; nzSize&#x3D;&quot;large&quot;&gt;&lt;/nz-date-picker&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Concepto e Importe --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;14&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;trx_concept&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;Concepto / Comercio&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; nzErrorTip&#x3D;&quot;Ingrese el concepto o comercio&quot;&gt;
+              &lt;input #conceptInput nz-input formControlName&#x3D;&quot;trx_concept&quot; placeholder&#x3D;&quot;Ej. Supermercado, Venta Producto X, Alquiler&quot; nzSize&#x3D;&quot;large&quot; /&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;10&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;trx_amount&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;Monto ($)&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; nzErrorTip&#x3D;&quot;Ingrese el monto&quot;&gt;
+              &lt;nz-input-number 
+                formControlName&#x3D;&quot;trx_amount&quot; 
+                nzPlaceHolder&#x3D;&quot;0.00&quot; 
+                [nzMin]&#x3D;&quot;0&quot; 
+                [nzStep]&#x3D;&quot;100&quot; 
+                [nzFormatter]&#x3D;&quot;formatterDollar&quot; 
+                [nzParser]&#x3D;&quot;parserDollar&quot; 
+                style&#x3D;&quot;width: 100%&quot; 
+                nzSize&#x3D;&quot;large&quot;&gt;
+              &lt;/nz-input-number&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;!-- Fuente de Dinero y Destino (si es Transferencia) --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;form.get(&#x27;trx_type&#x27;)?.value &#x3D;&#x3D;&#x3D; &#x27;TRANSFERENCIA&#x27; ? 12 : 12&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;crd_uuid&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;Cuenta Origen / Fuente de Dinero&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;nz-select formControlName&#x3D;&quot;crd_uuid&quot; placeholder&#x3D;&quot;Efectivo / Mercado Pago / Tarjeta&quot; nzSize&#x3D;&quot;large&quot; nzAllowClear&gt;
+                @for (card of cards; track card.value) {
+                  &lt;nz-option [nzValue]&#x3D;&quot;card.value&quot; [nzLabel]&#x3D;&quot;card.label&quot;&gt;&lt;/nz-option&gt;
+                }
+              &lt;/nz-select&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+
+        @if (form.get(&#x27;trx_type&#x27;)?.value &#x3D;&#x3D;&#x3D; &#x27;TRANSFERENCIA&#x27;) {
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;target_crduuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;Cuenta Destino&lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; nzErrorTip&#x3D;&quot;Seleccione la cuenta destino&quot;&gt;
+                &lt;nz-select formControlName&#x3D;&quot;target_crduuid&quot; placeholder&#x3D;&quot;Seleccione cuenta destino&quot; nzSize&#x3D;&quot;large&quot;&gt;
+                  @for (card of cards; track card.value) {
+                    &lt;nz-option [nzValue]&#x3D;&quot;card.value&quot; [nzLabel]&#x3D;&quot;card.label&quot;&gt;&lt;/nz-option&gt;
+                  }
+                &lt;/nz-select&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        }
+
+        @if (form.get(&#x27;trx_type&#x27;)?.value !&#x3D;&#x3D; &#x27;TRANSFERENCIA&#x27;) {
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;prs_uuid&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;Persona / Vendedor / Socio / Cliente&lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-select formControlName&#x3D;&quot;prs_uuid&quot; placeholder&#x3D;&quot;Seleccione o busque persona&quot; nzSize&#x3D;&quot;large&quot; nzAllowClear nzShowSearch&gt;
+                  @for (person of persons; track person.prs_uuid) {
+                    &lt;nz-option [nzValue]&#x3D;&quot;person.prs_uuid&quot; [nzLabel]&#x3D;&quot;person.prs_name + &#x27; (&#x27; + person.prs_type + &#x27;)&#x27;&quot;&gt;&lt;/nz-option&gt;
+                  }
+                &lt;/nz-select&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        }
+      &lt;/nz-row&gt;
+
+      &lt;!-- Comisión del Vendedor (solo para INGRESOS / VENTAS) --&gt;
+      @if (form.get(&#x27;trx_type&#x27;)?.value &#x3D;&#x3D;&#x3D; &#x27;INGRESO&#x27; &amp;&amp; form.get(&#x27;prs_uuid&#x27;)?.value) {
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot; style&#x3D;&quot;background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 6px; margin-bottom: 24px;&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;trx_commissionrate&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;% Comisión Vendedor&lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-input-number formControlName&#x3D;&quot;trx_commissionrate&quot; [nzMin]&#x3D;&quot;0&quot; [nzMax]&#x3D;&quot;100&quot; [nzStep]&#x3D;&quot;0.5&quot; nzPrefix&#x3D;&quot;%&quot; placeholder&#x3D;&quot;Ej: 10%&quot; style&#x3D;&quot;width: 100%;&quot; nzSize&#x3D;&quot;large&quot;&gt;&lt;/nz-input-number&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;trx_commissionamount&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;Ganancia Comisión Vendedor ($)&lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-input-number 
+                  formControlName&#x3D;&quot;trx_commissionamount&quot; 
+                  nzPlaceHolder&#x3D;&quot;0.00&quot;
+                  [nzMin]&#x3D;&quot;0&quot; 
+                  [nzStep]&#x3D;&quot;10&quot; 
+                  [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                  [nzParser]&#x3D;&quot;parserDollar&quot;
+                  style&#x3D;&quot;width: 100%&quot; 
+                  nzSize&#x3D;&quot;large&quot;&gt;
+                &lt;/nz-input-number&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;!-- Notas --&gt;
+      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-form-item&gt;
+            &lt;nz-form-label nzFor&#x3D;&quot;trx_notes&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;Observaciones&lt;/nz-form-label&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+              &lt;textarea nz-input formControlName&#x3D;&quot;trx_notes&quot; placeholder&#x3D;&quot;Detalle adicional del movimiento (opcional)&quot; [nzAutosize]&#x3D;&quot;{ minRows: 2, maxRows: 4 }&quot;&gt;&lt;/textarea&gt;
+            &lt;/nz-form-control&gt;
+          &lt;/nz-form-item&gt;
+        &lt;/nz-col&gt;
+      &lt;/nz-row&gt;
+
+      &lt;nz-divider&gt;&lt;/nz-divider&gt;
+
+      &lt;!-- Botones de Acción --&gt;
+      &lt;div class&#x3D;&quot;form-actions&quot;&gt;
+        &lt;button nz-button nzType&#x3D;&quot;default&quot; (click)&#x3D;&quot;onCancel()&quot; nzSize&#x3D;&quot;large&quot;&gt;
+          &lt;i nz-icon nzType&#x3D;&quot;rollback&quot;&gt;&lt;/i&gt;
+          Cancelar
+        &lt;/button&gt;
+
+        @if (!isEditing) {
+          &lt;button nz-button nzType&#x3D;&quot;default&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;onSubmit(true)&quot; [nzLoading]&#x3D;&quot;isLoading&quot; nzSize&#x3D;&quot;large&quot; class&#x3D;&quot;btn-batch&quot;&gt;
+            &lt;i nz-icon nzType&#x3D;&quot;plus-circle&quot;&gt;&lt;/i&gt;
+            Guardar y Cargar Otro (Modo Rápido Excel)
+          &lt;/button&gt;
+        }
+
+        &lt;button nz-button nzType&#x3D;&quot;primary&quot; type&#x3D;&quot;submit&quot; [nzLoading]&#x3D;&quot;isLoading&quot; nzSize&#x3D;&quot;large&quot;&gt;
+          &lt;i nz-icon nzType&#x3D;&quot;save&quot;&gt;&lt;/i&gt;
+          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Guardar y Finalizar&#x27; }}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  }
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./transaction.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.transaction-form-container {
+  padding: 24px;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 48px;
+  }
+
+  .type-selector-item {
+    margin-bottom: 24px;
+
+    .radio-egreso {
+      color: #cf1322;
+    }
+    .radio-ingreso {
+      color: #3f8600;
+    }
+    .radio-transferencia {
+      color: #1890ff;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+
+    .btn-batch {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento HTML</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento HTML com diretiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="transaction-form-container">  <div class="form-header">    <h2>      <i nz-icon nzType="wallet" nzTheme="outline"></i>      {{ isEditing ? \'Editar Movimiento\' : \'Cargar Gasto / Movimiento\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()">      <i nz-icon nzType="close"></i>    </button>  </div>  <nz-divider></nz-divider>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Guardando..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit(false)">      <!-- Selector de Tipo de Movimiento -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24">          <nz-form-item class="type-selector-item">            <nz-form-label [nzSpan]="24" nzRequired>Tipo de Operación</nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-radio-group formControlName="trx_type" nzSize="large" nzButtonStyle="solid">                <label nz-radio-button nzValue="EGRESO" class="radio-egreso">                  <i nz-icon nzType="arrow-up"></i> 🔴 EGRESO / GASTO                </label>                <label nz-radio-button nzValue="INGRESO" class="radio-ingreso">                  <i nz-icon nzType="arrow-down"></i> 🟢 INGRESO / VENTA                </label>                <label nz-radio-button nzValue="TRANSFERENCIA" class="radio-transferencia">                  <i nz-icon nzType="swap"></i> 🔵 TRANSFERENCIA                </label>              </nz-radio-group>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Ámbito y Fecha -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="scp_uuid" [nzSpan]="24" nzRequired>Ámbito / Contexto</nz-form-label>            <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione un ámbito">              <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito" nzSize="large">                @for (scope of scopes; track scope.scp_uuid) {                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? \'🏢 \' : \'👤 \') + scope.scp_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="trx_datetime" [nzSpan]="24" nzRequired>Fecha y Hora</nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-date-picker formControlName="trx_datetime" nzShowTime nzFormat="dd/MM/yyyy HH:mm" style="width: 100%" nzSize="large"></nz-date-picker>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Concepto e Importe -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="14">          <nz-form-item>            <nz-form-label nzFor="trx_concept" [nzSpan]="24" nzRequired>Concepto / Comercio</nz-form-label>            <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese el concepto o comercio">              <input #conceptInput nz-input formControlName="trx_concept" placeholder="Ej. Supermercado, Venta Producto X, Alquiler" nzSize="large" />            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="10">          <nz-form-item>            <nz-form-label nzFor="trx_amount" [nzSpan]="24" nzRequired>Monto ($)</nz-form-label>            <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese el monto">              <nz-input-number                 formControlName="trx_amount"                 nzPlaceHolder="0.00"                 [nzMin]="0"                 [nzStep]="100"                 [nzFormatter]="formatterDollar"                 [nzParser]="parserDollar"                 style="width: 100%"                 nzSize="large">              </nz-input-number>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Fuente de Dinero y Destino (si es Transferencia) -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="form.get(\'trx_type\')?.value === \'TRANSFERENCIA\' ? 12 : 12">          <nz-form-item>            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">Cuenta Origen / Fuente de Dinero</nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-select formControlName="crd_uuid" placeholder="Efectivo / Mercado Pago / Tarjeta" nzSize="large" nzAllowClear>                @for (card of cards; track card.value) {                  <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        @if (form.get(\'trx_type\')?.value === \'TRANSFERENCIA\') {          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="target_crduuid" [nzSpan]="24" nzRequired>Cuenta Destino</nz-form-label>              <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione la cuenta destino">                <nz-select formControlName="target_crduuid" placeholder="Seleccione cuenta destino" nzSize="large">                  @for (card of cards; track card.value) {                    <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>                  }                </nz-select>              </nz-form-control>            </nz-form-item>          </nz-col>        }        @if (form.get(\'trx_type\')?.value !== \'TRANSFERENCIA\') {          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="prs_uuid" [nzSpan]="24">Persona / Vendedor / Socio / Cliente</nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-select formControlName="prs_uuid" placeholder="Seleccione o busque persona" nzSize="large" nzAllowClear nzShowSearch>                  @for (person of persons; track person.prs_uuid) {                    <nz-option [nzValue]="person.prs_uuid" [nzLabel]="person.prs_name + \' (\' + person.prs_type + \')\'"></nz-option>                  }                </nz-select>              </nz-form-control>            </nz-form-item>          </nz-col>        }      </nz-row>      <!-- Comisión del Vendedor (solo para INGRESOS / VENTAS) -->      @if (form.get(\'trx_type\')?.value === \'INGRESO\' && form.get(\'prs_uuid\')?.value) {        <nz-row [nzGutter]="24" style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 6px; margin-bottom: 24px;">          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="trx_commissionrate" [nzSpan]="24">% Comisión Vendedor</nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-input-number formControlName="trx_commissionrate" [nzMin]="0" [nzMax]="100" [nzStep]="0.5" nzPrefix="%" placeholder="Ej: 10%" style="width: 100%;" nzSize="large"></nz-input-number>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="trx_commissionamount" [nzSpan]="24">Ganancia Comisión Vendedor ($)</nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-input-number                   formControlName="trx_commissionamount"                   nzPlaceHolder="0.00"                  [nzMin]="0"                   [nzStep]="10"                   [nzFormatter]="formatterDollar"                  [nzParser]="parserDollar"                  style="width: 100%"                   nzSize="large">                </nz-input-number>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <!-- Notas -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24">          <nz-form-item>            <nz-form-label nzFor="trx_notes" [nzSpan]="24">Observaciones</nz-form-label>            <nz-form-control [nzSpan]="24">              <textarea nz-input formControlName="trx_notes" placeholder="Detalle adicional del movimiento (opcional)" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-divider></nz-divider>      <!-- Botones de Acción -->      <div class="form-actions">        <button nz-button nzType="default" (click)="onCancel()" nzSize="large">          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        @if (!isEditing) {          <button nz-button nzType="default" type="button" (click)="onSubmit(true)" [nzLoading]="isLoading" nzSize="large" class="btn-batch">            <i nz-icon nzType="plus-circle"></i>            Guardar y Cargar Otro (Modo Rápido Excel)          </button>        }        <button nz-button nzType="primary" type="submit" [nzLoading]="isLoading" nzSize="large">          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Guardar y Finalizar\' }}        </button>      </div>    </form>  }</div></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TransactionComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> resultados correspondentes "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">Nenhum resultado correspondente "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/TransactionComponent.html">🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/TransactionComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/TransactionComponent.html" selected>🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TransactionComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'pt');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>

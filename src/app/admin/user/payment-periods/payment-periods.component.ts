@@ -12,6 +12,10 @@ import { PaymentPeriodInterface } from '../../../core/interfaces/payment-period'
 import { PaymentPeriodsService } from '../../../core/services/payment-periods.service';
 import { MessageService } from '../../../core/services/message.service';
 
+/**
+ * Componente para listar y gestionar pagos de períodos de facturación.
+ * @description Muestra una tabla paginada de pagos con etiquetas de método, indicadores de estado y acciones CRUD.
+ */
 @Component({
   selector: 'app-payment-periods',
   standalone: true,
@@ -28,12 +32,18 @@ import { MessageService } from '../../../core/services/message.service';
   styleUrl: './payment-periods.component.scss'
 })
 export class PaymentPeriodsComponent implements OnInit {
+  /** Arreglo de registros de pagos de períodos cargados. */
   payments: PaymentPeriodInterface[] = [];
+  /** Indicador de si los datos de la tabla se están cargando. */
   loading = false;
+  /** Índice de la página actual (basado en 1). */
   pageIndex = 1;
+  /** Cantidad de filas por página. */
   pageSize = 10;
+  /** Cantidad total de registros de pagos. */
   total = 0;
 
+  /** Definiciones de las columnas de la tabla. */
   listOfColumns = [
     { key: 'payp_uuid', title: 'ID', width: '80px' },
     { key: 'payment_date', title: 'Fecha Pago', width: '130px' },
@@ -45,6 +55,13 @@ export class PaymentPeriodsComponent implements OnInit {
     { key: 'action', title: 'Acciones', width: '180px' }
   ];
 
+  /**
+   * Inicializa el componente PaymentPeriodsComponent.
+   * @param _router Servicio Router de Angular.
+   * @param _paymentPeriodsService Servicio para operaciones CRUD de pagos de períodos.
+   * @param message Servicio de mensajes emergentes de Ng-Zorro.
+   * @param _messageService Servicio personalizado de alertas modales.
+   */
   constructor(
     private _router: Router,
     private _paymentPeriodsService: PaymentPeriodsService,
@@ -52,10 +69,18 @@ export class PaymentPeriodsComponent implements OnInit {
     private _messageService: MessageService
   ) {}
 
+  /**
+   * Gancho del ciclo de vida ejecutado al inicializar el componente.
+   * @returns void
+   */
   ngOnInit(): void {
     this.loadPayments();
   }
 
+  /**
+   * Carga la lista de pagos de períodos desde el servicio de backend.
+   * @returns void
+   */
   loadPayments(): void {
     this.loading = true;
     this._paymentPeriodsService.getPaymentPeriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1', '1').subscribe(
@@ -80,7 +105,11 @@ export class PaymentPeriodsComponent implements OnInit {
     )
   }
 
-  // Formatear fecha y hora
+  /**
+   * Formatea una cadena de fecha y hora ISO como `DD/MM/YYYY HH:mm`.
+   * @param dateTimeString Cadena de fecha y hora ISO.
+   * @returns Cadena de fecha y hora formateada.
+   */
   formatDateTime(dateTimeString: string): string {
     const date = new Date(dateTimeString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -91,7 +120,11 @@ export class PaymentPeriodsComponent implements OnInit {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
-  // Formatear solo fecha
+  /**
+   * Formatea una cadena de fecha ISO como `DD/MM/YYYY`.
+   * @param dateString Cadena de fecha ISO.
+   * @returns Cadena de fecha formateada.
+   */
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -100,7 +133,11 @@ export class PaymentPeriodsComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  // Formatear monto
+  /**
+   * Formatea una cadena de monto como una cadena de moneda en Pesos Argentinos.
+   * @param amount Cadena de monto numérico.
+   * @returns Cadena de moneda formateada.
+   */
   formatAmount(amount: string): string {
     const amountNum = parseFloat(amount);
     return new Intl.NumberFormat('es-AR', {
@@ -111,7 +148,11 @@ export class PaymentPeriodsComponent implements OnInit {
     }).format(amountNum);
   }
 
-  // Obtener color del tag según el método de pago
+  /**
+   * Devuelve el color de etiqueta de Ng-Zorro para un nombre de método de pago.
+   * @param methodName Nombre del método de pago.
+   * @returns Cadena con el color de la etiqueta.
+   */
   getMethodColor(methodName: string): string {
     switch (methodName.toLowerCase()) {
       case 'banco': return 'blue';
@@ -123,7 +164,11 @@ export class PaymentPeriodsComponent implements OnInit {
     }
   }
 
-  // Obtener icono según el método de pago
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un nombre de método de pago.
+   * @param methodName Nombre del método de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
   getMethodIcon(methodName: string): string {
     switch (methodName.toLowerCase()) {
       case 'banco': return 'bank';
@@ -135,14 +180,22 @@ export class PaymentPeriodsComponent implements OnInit {
     }
   }
 
-  // Formatear nombre del método de pago
+  /**
+   * Formatea un nombre de método de pago sin procesar a formato de título.
+   * @param name Nombre del método de pago sin procesar.
+   * @returns Nombre del método de pago formateado.
+   */
   formatMethodName(name: string): string {
     return name
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase());
   }
 
-  // Obtener color del tag según el estado del pago
+  /**
+   * Devuelve el color de estado de insignia de Ng-Zorro para un nombre de estado de pago.
+   * @param statusName Nombre del estado de pago.
+   * @returns Cadena con el color de estado de la insignia.
+   */
   getStatusColor(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'confirmado': return 'success';
@@ -152,7 +205,11 @@ export class PaymentPeriodsComponent implements OnInit {
     }
   }
 
-  // Obtener icono según el estado del pago
+  /**
+   * Devuelve el nombre del ícono de Ng-Zorro para un nombre de estado de pago.
+   * @param statusName Nombre del estado de pago.
+   * @returns Cadena con el nombre del ícono.
+   */
   getStatusIcon(statusName: string): string {
     switch (statusName.toLowerCase()) {
       case 'confirmado': return 'check-circle';
@@ -162,20 +219,37 @@ export class PaymentPeriodsComponent implements OnInit {
     }
   }
 
-  // Formatear nombre del estado
+  /**
+   * Convierte a mayúscula la primera letra de un nombre de estado.
+   * @param name Nombre del estado sin procesar.
+   * @returns Nombre del estado con inicial mayúscula.
+   */
   formatStatusName(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  // Métodos de acción
+  /**
+   * Navega al formulario de creación de pago de período.
+   * @returns void
+   */
   createPayment(): void {
     this._router.navigate(['/admin/user/payment-period/new']);
   }
 
+  /**
+   * Navega al formulario de edición de pago de período.
+   * @param payment Registro de pago de período a editar.
+   * @returns void
+   */
   editPayment(payment: PaymentPeriodInterface): void {
     this._router.navigate(['/admin/user/payment-period/edit', payment.crd_uuid, payment.per_uuid, payment.payp_uuid]);
   }
 
+  /**
+   * Solicita confirmación y elimina un registro de pago de período.
+   * @param payment Registro de pago de período a eliminar.
+   * @returns void
+   */
   deletePayment(payment: PaymentPeriodInterface): void {
     this._messageService.confirm(
       '¿Estás seguro de eliminar este pago?',
@@ -202,27 +276,51 @@ export class PaymentPeriodsComponent implements OnInit {
     );
   }
 
+  /**
+   * Muestra una notificación emergente con los detalles del pago.
+   * @param payment Registro de pago de período a inspeccionar.
+   * @returns void
+   */
   viewDetails(payment: PaymentPeriodInterface): void {
     this.message.info(`Detalles del pago: ${payment.payp_uuid}`);
   }
 
+  /**
+   * Marca un pago como confirmado en la interfaz de usuario.
+   * @param payment Registro de pago de período a confirmar.
+   * @returns void
+   */
   confirmPayment(payment: PaymentPeriodInterface): void {
     payment.payps.payps_name = 'confirmado';
     this.message.success('Pago confirmado correctamente');
   }
 
+  /**
+   * Marca un pago como rechazado en la interfaz de usuario.
+   * @param payment Registro de pago de período a rechazar.
+   * @returns void
+   */
   rejectPayment(payment: PaymentPeriodInterface): void {
     payment.payps.payps_name = 'rechazado';
     this.message.error('Pago rechazado');
   }
 
-  // Paginación
+  /**
+   * Maneja los cambios en el tamaño de página de la tabla.
+   * @param size Nuevo tamaño de página.
+   * @returns void
+   */
   onPageSizeChange(size: number): void {
     this.pageSize = size;
     this.pageIndex = 1;
     this.loadPayments();
   }
 
+  /**
+   * Maneja los cambios en el índice de página de la tabla.
+   * @param index Nuevo índice de página.
+   * @returns void
+   */
   onPageIndexChange(index: number): void {
     this.pageIndex = index;
     this.loadPayments();

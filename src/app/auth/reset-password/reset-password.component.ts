@@ -15,6 +15,11 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Componente de restablecimiento de contraseña (`<app-reset-password>`) en `/auth/reset-password/:usr_ResetPasswordToken`.
+ *
+ * @description Permite a un usuario con un token de restablecimiento válido establecer y confirmar una nueva contraseña.
+ */
 @Component({
   selector: 'app-reset-password',
   standalone: true,
@@ -35,11 +40,24 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent implements OnInit {
+  /** Grupo de formulario reactivo para los campos de nueva contraseña y confirmación. */
   validateForm!: FormGroup;
+  /** Indica si la solicitud de restablecimiento de contraseña está en curso. */
   isSubmitting = false;
+  /** Indica si la contraseña se ha actualizado con éxito. */
   resetSuccessful = false;
+  /** Token de restablecimiento de contraseña extraído de los parámetros de ruta o de consulta. */
   token: string = '';
 
+  /**
+   * Inicializa el componente de restablecimiento de contraseña.
+   *
+   * @param fb Instancia de `FormBuilder` de Angular.
+   * @param message Servicio de mensajes emergentes (toast) de Ng-Zorro.
+   * @param _router Instancia de `Router` de Angular.
+   * @param _route Instantánea de la ruta activada.
+   * @param _authService Servicio de autenticación.
+   */
   constructor(
     private fb: FormBuilder,
     private message: NzMessageService,
@@ -48,6 +66,9 @@ export class ResetPasswordComponent implements OnInit {
     private _authService: AuthService
   ) { }
 
+  /**
+   * Extrae `usr_ResetPasswordToken` de la ruta e inicializa el formulario de restablecimiento de contraseña.
+   */
   ngOnInit(): void {
     // Capturar token desde query params o route params
     this.token = this._route.snapshot.queryParams['usr_ResetPasswordToken'] || 
@@ -64,10 +85,19 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
+  /**
+   * Actualiza la validez del control `confirmPassword` cuando cambia `usr_password`.
+   */
   updateConfirmValidator(): void {
     Promise.resolve().then(() => this.validateForm.controls['confirmPassword'].updateValueAndValidity());
   }
 
+  /**
+   * Validador que verifica que `confirmPassword` coincida con `usr_password`.
+   *
+   * @param control El control de formulario `confirmPassword`.
+   * @returns Mapa de errores de validación si no es válido, o `{}` si es válido.
+   */
   confirmationValidator = (control: AbstractControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
@@ -77,6 +107,9 @@ export class ResetPasswordComponent implements OnInit {
     return {};
   };
 
+  /**
+   * Envía la nueva contraseña y el token de restablecimiento a {@link AuthService.resetPassword}.
+   */
   public submitForm(): void {
     if (!this.token) {
       this.message.error('Token no válido o expirado. Vuelve a solicitar la recuperación.');

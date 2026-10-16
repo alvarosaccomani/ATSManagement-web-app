@@ -15,6 +15,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SessionService } from '../../core/services/session.service';
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Componente de inicio de sesión de usuario (`<app-login>`) en `/auth/login`.
+ *
+ * @description Admite tanto la autenticación local (`usr_user` y `usr_password`) como la delegación
+ * automática al portal Central SSO cuando `app_login_mode === 'central'`.
+ */
 @Component({
   selector: 'app-login',
   imports: [
@@ -33,11 +39,24 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
+  /** Grupo de formulario reactivo de inicio de sesión. */
   validateForm!: FormGroup;
+  /** Indica si hay una solicitud de inicio de sesión en curso. */
   isSubmitting = false;
+  /** Identidad del usuario autenticado devuelta por el backend. */
   public identity: any = null;
+  /** Token JWT firmado devuelto por el backend. */
   public token: any = null;
 
+  /**
+   * Inicializa el componente de inicio de sesión.
+   *
+   * @param fb Instancia de `FormBuilder` de Angular.
+   * @param message Servicio de mensajes emergentes (toast) de Ng-Zorro.
+   * @param _router Instancia de `Router` de Angular.
+   * @param _sessionService Servicio de persistencia de sesión.
+   * @param _authService Servicio de API de autenticación.
+   */
   constructor(
     private fb: FormBuilder, 
     private message: NzMessageService,
@@ -46,6 +65,9 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService
   ) {}
 
+  /**
+   * Verifica la configuración SSO del backend e inicializa los controles del formulario de inicio de sesión.
+   */
   ngOnInit(): void {
     this.checkAppConfig();
     this.validateForm = this.fb.group({
@@ -54,6 +76,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Consulta {@link AuthService.getAppConfig} y redirige a `central_login_url` si `app_login_mode === 'central'`.
+   */
   private checkAppConfig(): void {
     this._authService.getAppConfig().subscribe({
       next: (data: any) => {
@@ -65,6 +90,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Envía las credenciales de inicio de sesión local, almacena la identidad del usuario en {@link SessionService},
+   * registra el evento de autenticación y solicita el token JWT.
+   */
   submitForm(): void {
     if (this.validateForm.valid) {
       this.isSubmitting = true;
@@ -105,6 +134,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Solicita un token JWT firmado tras verificar la identidad, lo persiste en {@link SessionService}
+   * y navega a `/admin/user/documents`.
+   */
   private getToken(): void {
     this._authService.login(this.validateForm.value, 'true').subscribe({
       next: (response: any) => {

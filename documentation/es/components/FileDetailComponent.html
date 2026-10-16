@@ -1,0 +1,2003 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>atsmanagement-web-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    
+        <style id="compodoc-lang-switcher-styles">
+            .compodoc-lang-switcher {
+                position: absolute;
+                top: 70px;
+                right: calc(88px + var(--content-scrollbar-width, 0px));
+                z-index: 1050;
+                display: inline-flex;
+                align-items: center;
+            }
+            @media (min-width: 768px) {
+                .compodoc-lang-switcher {
+                    top: 15px;
+                }
+            }
+            .compodoc-lang-select {
+                height: 34px;
+                padding: 0 12px;
+                border-radius: 17px;
+                border: 1px solid rgba(92, 192, 174, 0.65);
+                background-color: #ffffff;
+                color: #2c3e50;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                outline: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+                transition: all 0.2s ease;
+            }
+            .compodoc-lang-select:hover,
+            .compodoc-lang-select:focus {
+                border-color: #5cc0ae;
+                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
+            }
+            body.dark .compodoc-lang-select {
+                background-color: #212529;
+                color: #f8f9fa;
+                border-color: rgba(241, 196, 15, 0.65);
+            }
+            body.dark .compodoc-lang-select:hover,
+            body.dark .compodoc-lang-select:focus {
+                border-color: #f1c40f;
+                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
+            }
+        </style>
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">atsmanagement-web-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  FileDetailComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/shared/components/file-detail/file-detail.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Descripción</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de detalle en panel lateral (<code>&lt;app-file-detail&gt;</code>) para inspeccionar imágenes de comprobantes, ejecutar OCR con Tesseract.js,
+analizar campos mediante expresiones regulares y analizar el contenido con IA (<code>qwen/qwen3-4b:free</code>).</p>
+
+    </p>
+
+
+
+    <p class="comment">
+        <h3>Ejemplo</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-file-detail</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+</div>
+                        <div>    <code>NzIconModule</code>
+</div>
+                        <div>    <code>NzCollapseModule</code>
+</div>
+                        <div>    <code>NzButtonModule</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./file-detail.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./file-detail.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./file-detail.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../components/DocumentsComponent.html" target="_self" >DocumentsComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                </li>
+                                <li>
+                                        <code>NzIconModule</code>
+                                </li>
+                                <li>
+                                        <code>NzCollapseModule</code>
+                                </li>
+                                <li>
+                                        <code>NzButtonModule</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#analisys" >analisys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#cx" >cx</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#draw" >draw</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Public</span>
+                                <a href="#drawerData" >drawerData</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageContent" >imageContent</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageLoaded" >imageLoaded</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageVisible" >imageVisible</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#initialization" >initialization</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#initSetup" >initSetup</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                <a href="#inputImage" >inputImage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#isLoadingAnalisys" >isLoadingAnalisys</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadedImage" >loadedImage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadingPercentage" >loadingPercentage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadingProgress" >loadingProgress</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                <a href="#outputImage" >outputImage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#voucherJson" >voucherJson</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#getJsonDocument" >getJsonDocument</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#onCollapseChange" >onCollapseChange</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                <a href="#readImage" >readImage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(drawerData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, ocrService: <a href="../injectables/OcrService.html" target="_self">OcrService</a>, _ai: <a href="../injectables/AiService.html" target="_self">AiService</a>, _vouchersParserService: <a href="../injectables/VouchersParserService.html" target="_self">VouchersParserService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Inicializa el componente de detalle de archivo del panel lateral (drawer).</p>
+</div>
+                            <div>
+                                    <b>Parámetros :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                    <td>Tipo</td>
+                                                <td>Opcional</td>
+                                                    <td>Descripción</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>drawerData</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Datos inyectados en el panel lateral de Ng-Zorro (detalles e imagen del comprobante).</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>ocrService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OcrService.html" target="_self" >OcrService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para eventos de OCR y preprocesamiento de imágenes.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_ai</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AiService.html" target="_self" >AiService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para solicitudes al modelo de chat de IA.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_vouchersParserService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/VouchersParserService.html" target="_self" >VouchersParserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Servicio para el análisis de texto de comprobantes basado en expresiones regulares.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getJsonDocument"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>getJsonDocument</b></span>
+                        <a href="#getJsonDocument"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getJsonDocument()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="213"
+                                    class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:213</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Envía el texto OCR reconocido a <a href="../injectables/AiService.html">AiService</a> (<code>qwen/qwen3-4b:free</code>) para su análisis semántico.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCollapseChange"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onCollapseChange</b></span>
+                        <a href="#onCollapseChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onCollapseChange(activeKeys: string[], name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="86"
+                                    class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maneja los cambios de estado de los paneles plegables dentro del panel lateral.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>activeKeys</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Arreglo de claves de los paneles actualmente expandidos.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Identificador de la sección plegable alternada (<code>&#39;detail&#39; | &#39;image&#39; | &#39;text&#39;</code>).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="readImage"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>readImage</b></span>
+                        <a href="#readImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>readImage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="205"
+                                    class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:205</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicia la lectura OCR en la imagen cargada y analiza el texto extraído con <a href="../injectables/VouchersParserService.html">VouchersParserService</a>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="analisys"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>analisys</b></span>
+                        <a href="#analisys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="61" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resultado del análisis de IA devuelto por <a href="../injectables/AiService.html">AiService</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cx"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cx</b></span>
+                        <a href="#cx"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>CanvasRenderingContext2D</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="55" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Contexto de renderizado 2D del elemento <code>&lt;canvas&gt;</code> de salida.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="draw"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>draw</b></span>
+                        <a href="#draw"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="129" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Dibuja rectángulos delimitadores en el <code>&lt;canvas&gt;</code> alrededor de los elementos de texto reconocidos.</p>
+</div>
+                </td>
+            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description">
+                                <b>Parámetros :</b>
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                    <td>dataIn</td>
+                                                    <td>
+                                                            <code><p>Datos de página de OCR que contienen el texto y los cuadros delimitadores.</p>
+</code>
+                                                    </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drawerData"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Public</span>
+                        <span ><b>drawerData</b></span>
+                        <a href="#drawerData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @Inject(NZ_DRAWER_DATA)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">Datos inyectados en el panel lateral de Ng-Zorro (detalles e imagen del comprobante).</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageContent"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageContent</b></span>
+                        <a href="#imageContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Texto sin formato extraído por el OCR de Tesseract.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageLoaded"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageLoaded</b></span>
+                        <a href="#imageLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si la imagen de origen ha terminado de cargarse en el DOM.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageVisible"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>imageVisible</b></span>
+                        <a href="#imageVisible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="49" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Controla la visibilidad del panel plegable de vista previa de la imagen.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initialization"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>initialization</b></span>
+                        <a href="#initialization"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="154" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:154</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Inicializa un worker de Tesseract.js en español (<code>spa</code>), reconoce el texto de la imagen del comprobante,
+dibuja los cuadros delimitadores y emite la página reconocida mediante <a href="../injectables/OcrService.html">OcrService</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initSetup"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>initSetup</b></span>
+                        <a href="#initSetup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="111" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:111</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Prepara las dimensiones y el contexto del <code>&lt;canvas&gt;</code> de salida para que coincidan con el tamaño natural de la imagen, y luego inicia el OCR.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="inputImage"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>inputImage</b></span>
+                        <a href="#inputImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;inputImage&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="45" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referencia al elemento <code>&lt;img&gt;</code> de origen que contiene la imagen del comprobante.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoadingAnalisys"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isLoadingAnalisys</b></span>
+                        <a href="#isLoadingAnalisys"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si hay una solicitud de análisis de IA en curso.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadedImage"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadedImage</b></span>
+                        <a href="#loadedImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="196" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:196</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Callback que se activa cuando el elemento <code>&lt;img&gt;</code> de origen termina de cargarse.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="51" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si el proceso OCR de Tesseract se está ejecutando actualmente.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingPercentage"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadingPercentage</b></span>
+                        <a href="#loadingPercentage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="53" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Progreso actual del reconocimiento OCR (de 0 a 1).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadingProgress"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loadingProgress</b></span>
+                        <a href="#loadingProgress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="103" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:103</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Actualiza <code>loadingPercentage</code> a partir del callback de registro (logger) del worker de Tesseract.</p>
+</div>
+                </td>
+            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description">
+                                <b>Parámetros :</b>
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                    <td>logger</td>
+                                                    <td>
+                                                            <code><p>Carga útil de progreso emitida por Tesseract.js.</p>
+</code>
+                                                    </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="outputImage"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>outputImage</b></span>
+                        <a href="#outputImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://angular.dev/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;outputImage&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="43" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referencia al elemento <code>&lt;canvas&gt;</code> donde se dibujan los cuadros delimitadores de las palabras.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="voucherJson"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>voucherJson</b></span>
+                        <a href="#voucherJson"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="59" class="link-to-prism">src/app/shared/components/file-detail/file-detail.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Campos estructurados extraídos por <a href="../injectables/VouchersParserService.html">VouchersParserService</a>.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, ViewChild, Inject } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { NZ_DRAWER_DATA } from &#x27;ng-zorro-antd/drawer&#x27;;
+import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
+import { NzCollapseModule } from &#x27;ng-zorro-antd/collapse&#x27;;
+import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
+import { Page, createWorker, recognize } from &#x27;tesseract.js&#x27;;
+import { OcrService } from &#x27;../../../core/services/ocr.service&#x27;;
+import { AiService } from &#x27;../../../core/services/ai.service&#x27;;
+import { VouchersParserService } from &#x27;../../../core/services/vouchers-parser.service&#x27;;
+
+/**
+ * Interfaz &#x60;Page&#x60; de Tesseract extendida que incluye cuadros delimitadores (bounding boxes) y niveles de confianza a nivel de palabra.
+ */
+export interface PageWithWords extends Page {
+  /** Arreglo de palabras reconocidas con las coordenadas de su cuadro delimitador y nivel de confianza. */
+  words?: Array&lt;{
+    bbox: [number, number, number, number]; // [x0, y0, x1, y1]
+    text: string;
+    confidence: number;
+    baseline?: any;
+  }&gt;;
+}
+
+/**
+ * Componente de detalle en panel lateral (&#x60;&lt;app-file-detail&gt;&#x60;) para inspeccionar imágenes de comprobantes, ejecutar OCR con Tesseract.js,
+ * analizar campos mediante expresiones regulares y analizar el contenido con IA (&#x60;qwen/qwen3-4b:free&#x60;).
+ */
+@Component({
+  selector: &#x27;app-file-detail&#x27;,
+  imports: [
+    CommonModule,
+    NzIconModule,
+    NzCollapseModule,
+    NzButtonModule
+  ],
+  templateUrl: &#x27;./file-detail.component.html&#x27;,
+  styleUrl: &#x27;./file-detail.component.scss&#x27;
+})
+export class FileDetailComponent {
+
+  /** Referencia al elemento &#x60;&lt;canvas&gt;&#x60; donde se dibujan los cuadros delimitadores de las palabras. */
+  @ViewChild(&#x27;outputImage&#x27;) outputImage!: ElementRef;
+  /** Referencia al elemento &#x60;&lt;img&gt;&#x60; de origen que contiene la imagen del comprobante. */
+  @ViewChild(&#x27;inputImage&#x27;) inputImage!: ElementRef;
+  /** Indica si la imagen de origen ha terminado de cargarse en el DOM. */
+  public imageLoaded: boolean &#x3D; false;
+  /** Controla la visibilidad del panel plegable de vista previa de la imagen. */
+  public imageVisible: boolean &#x3D; false;
+  /** Indica si el proceso OCR de Tesseract se está ejecutando actualmente. */
+  public loading: any;
+  /** Progreso actual del reconocimiento OCR (de 0 a 1). */
+  public loadingPercentage!: number;
+  /** Contexto de renderizado 2D del elemento &#x60;&lt;canvas&gt;&#x60; de salida. */
+  public cx!: CanvasRenderingContext2D;
+  /** Texto sin formato extraído por el OCR de Tesseract. */
+  public imageContent: string &#x3D; &#x27;&#x27;;
+  /** Campos estructurados extraídos por {@link VouchersParserService}. */
+  public voucherJson: any;
+  /** Resultado del análisis de IA devuelto por {@link AiService}. */
+  public analisys: string &#x3D; &#x27;&#x27;;
+  /** Indica si hay una solicitud de análisis de IA en curso. */
+  public isLoadingAnalisys: boolean &#x3D; false;
+
+  /**
+   * Inicializa el componente de detalle de archivo del panel lateral (drawer).
+   *
+   * @param drawerData Datos inyectados en el panel lateral de Ng-Zorro (detalles e imagen del comprobante).
+   * @param ocrService Servicio para eventos de OCR y preprocesamiento de imágenes.
+   * @param _ai Servicio para solicitudes al modelo de chat de IA.
+   * @param _vouchersParserService Servicio para el análisis de texto de comprobantes basado en expresiones regulares.
+   */
+  constructor(
+    @Inject(NZ_DRAWER_DATA) public drawerData: any,
+    private ocrService: OcrService,
+    private _ai: AiService,
+    private _vouchersParserService: VouchersParserService
+  ) { }
+
+  /**
+   * Maneja los cambios de estado de los paneles plegables dentro del panel lateral.
+   *
+   * @param activeKeys Arreglo de claves de los paneles actualmente expandidos.
+   * @param name Identificador de la sección plegable alternada (&#x60;&#x27;detail&#x27; | &#x27;image&#x27; | &#x27;text&#x27;&#x60;).
+   */
+  public onCollapseChange(activeKeys: string[], name: string): void {
+    switch(name) {
+      case &#x27;detail&#x27;:
+        break;
+      case &#x27;image&#x27;:
+        this.imageVisible &#x3D; !this.imageVisible;
+        break;
+      case &#x27;text&#x27;:
+        break;
+    };
+  }
+
+  /**
+   * Actualiza &#x60;loadingPercentage&#x60; a partir del callback de registro (logger) del worker de Tesseract.
+   *
+   * @param logger Carga útil de progreso emitida por Tesseract.js.
+   */
+  public loadingProgress &#x3D; (logger: any) &#x3D;&gt; {
+    console.log(logger);
+    this.loadingPercentage &#x3D; logger.progress
+  };
+
+  /**
+   * Prepara las dimensiones y el contexto del &#x60;&lt;canvas&gt;&#x60; de salida para que coincidan con el tamaño natural de la imagen, y luego inicia el OCR.
+   */
+  public initSetup &#x3D; () &#x3D;&gt; {
+    const canvasElement &#x3D; this.outputImage.nativeElement;
+    const imageElement &#x3D; this.inputImage.nativeElement;
+    const {naturalWidth, naturalHeight} &#x3D; imageElement;
+    this.cx &#x3D; canvasElement.getContext(&#x27;2d&#x27;);
+    this.cx.lineWidth &#x3D; 5;
+    this.cx.lineCap &#x3D; &#x27;square&#x27;;
+    this.cx.strokeStyle &#x3D; &#x27;green&#x27;;
+    canvasElement.width &#x3D; naturalWidth;
+    canvasElement.height &#x3D; naturalHeight;
+    this.initialization();
+  };
+
+  /**
+   * Dibuja rectángulos delimitadores en el &#x60;&lt;canvas&gt;&#x60; alrededor de los elementos de texto reconocidos.
+   *
+   * @param dataIn Datos de página de OCR que contienen el texto y los cuadros delimitadores.
+   */
+  public draw &#x3D; (dataIn: any) &#x3D;&gt; {
+    let words;
+    if(dataIn.text) {
+      words &#x3D; dataIn.text.split(&#x27;\n&#x27;);
+    }
+    words.forEach((w: any) &#x3D;&gt; {
+      const bounding &#x3D; w.bbox; // [1,1,2,2]
+      if(bounding) {
+        console.log(bounding);
+        this.cx.strokeStyle &#x3D; &#x27;red&#x27;;
+        this.cx.strokeRect(bounding.x0, bounding.y0, bounding.x1 - bounding.x0, bounding.y1 - bounding.y0);
+        this.cx.beginPath();
+        // this.cx.moveTo(w.baseline.x0, w.baseline.y0);
+        // this.cx.lineTo(w.baseline.x1, w.baseline.y1);
+        this.cx.stroke();
+      }
+    });
+  };
+
+  /**
+   * Inicializa un worker de Tesseract.js en español (&#x60;spa&#x60;), reconoce el texto de la imagen del comprobante,
+   * dibuja los cuadros delimitadores y emite la página reconocida mediante {@link OcrService}.
+   *
+   * @returns Una promesa que se resuelve con el objeto {@link PageWithWords} reconocido y el arreglo de palabras.
+   */
+  public initialization &#x3D; async (): Promise&lt;{ data: PageWithWords; words: any[] }&gt; &#x3D;&gt; {
+    this.loading &#x3D; true;
+    this.loadingPercentage &#x3D; 0;
+
+    const imageElement &#x3D; this.inputImage.nativeElement;
+
+    try {
+      const worker &#x3D; await createWorker(&#x27;spa&#x27;, 1, {
+        logger: (m) &#x3D;&gt; this.loadingProgress(m)
+      });
+
+      await worker.setParameters({
+        tessjs_create_word_boxes: &#x27;1&#x27;
+      });
+
+      const { data } &#x3D; await worker.recognize(imageElement);
+      const page &#x3D; data as PageWithWords; // 👈 tipado seguro
+
+      this.draw(page); // pasa page en lugar de data
+      console.log(&#x27;FINALIZO -----------------&gt;&#x27;, page);
+      this.imageContent &#x3D; page.text;
+      
+      this.ocrService.cbText.emit(page);
+
+      await worker.terminate();
+
+      return {
+        data: page,
+        words: page.words || []
+      };
+    } catch (error) {
+      console.error(&#x27;Error en OCR:&#x27;, error);
+      throw error;
+    } finally {
+      this.loading &#x3D; false;
+      this.loadingPercentage &#x3D; 0;
+    }
+  };
+
+  /**
+   * Callback que se activa cuando el elemento &#x60;&lt;img&gt;&#x60; de origen termina de cargarse.
+   */
+  public loadedImage &#x3D; () &#x3D;&gt; {
+    // this.initialization();
+    this.imageLoaded &#x3D; true;
+    console.log(&#x27;IMAGEN LISTA&#x27;);
+  };
+
+  /**
+   * Inicia la lectura OCR en la imagen cargada y analiza el texto extraído con {@link VouchersParserService}.
+   */
+  public readImage(): void {
+    this.initSetup();
+    this.voucherJson &#x3D; this._vouchersParserService.parseText(this.imageContent);
+  }
+
+  /**
+   * Envía el texto OCR reconocido a {@link AiService} (&#x60;qwen/qwen3-4b:free&#x60;) para su análisis semántico.
+   */
+  public getJsonDocument(): void {
+    this.isLoadingAnalisys &#x3D; true;
+    let chat &#x3D; {
+      model: &quot;qwen/qwen3-4b:free&quot;,
+      message: &#x60;decime de que pude ser el texto que te paso: ${this.imageContent}&#x60;
+    }
+    this._ai.chatModel(chat).subscribe(
+      response &#x3D;&gt; {
+        this.isLoadingAnalisys &#x3D; false;
+        console.info(response);
+        this.analisys &#x3D; response;
+      },
+      error &#x3D;&gt;{
+          this.isLoadingAnalisys &#x3D; false;
+          let errorMessage &#x3D; &lt;any&gt;error;
+          console.log(errorMessage);
+          if(errorMessage !&#x3D; null) {
+              //this.showMessage(&quot;Error&quot;, errorMessage.error.error);
+          }
+      }
+    )
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;file-detail-wrapper-body&quot;&gt;
+    &lt;nz-collapse&gt;
+        &lt;nz-collapse-panel
+            nzName&#x3D;&quot;detail&quot; 
+            nzHeader&#x3D;&quot;Detalles del archivo&quot; 
+            [nzActive]&#x3D;&quot;true&quot; 
+            [nzDisabled]&#x3D;&quot;false&quot;
+            (nzActiveChange)&#x3D;&quot;onCollapseChange($any($event), &#x27;detail&#x27;)&quot;&gt;
+            &lt;p style&#x3D;&quot;margin:0;&quot;&gt;
+            &lt;/p&gt;
+            &lt;h3&gt;
+                Detalles del archivo
+            &lt;/h3&gt;
+            &lt;p&gt;
+                &lt;strong&gt;Nombre:&lt;/strong&gt; {{ drawerData.pevou_name }}
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;strong&gt;ID:&lt;/strong&gt; {{ drawerData.pevou_uuid }}
+            &lt;/p&gt;
+        &lt;/nz-collapse-panel&gt;
+        &lt;nz-collapse-panel 
+            nzName&#x3D;&quot;image&quot; 
+            nzHeader&#x3D;&quot;Imagen&quot; 
+            [nzActive]&#x3D;&quot;false&quot; 
+            [nzDisabled]&#x3D;&quot;!imageLoaded&quot;
+            (nzActiveChange)&#x3D;&quot;onCollapseChange($any($event), &#x27;image&#x27;)&quot;&gt;
+            &lt;!-- Puedes agregar más info, preview, etc. --&gt;
+            &lt;div class&#x3D;&quot;wrapper-sections&quot;&gt;
+                &lt;div class&#x3D;&quot;in-wrapper&quot;&gt;
+                    @if(true) {
+                        &lt;ng-container&gt;
+                            @if(imageVisible) {
+                                &lt;canvas #outputImage class&#x3D;&quot;canvas-overlay&quot;&gt;&lt;/canvas&gt;
+                            }
+                            &lt;img 
+                                (load)&#x3D;&quot;loadedImage()&quot; 
+                                #inputImage 
+                                class&#x3D;&quot;input-image&quot; 
+                                [src]&#x3D;&quot;drawerData.pevou_image&quot; alt&#x3D;&quot;&quot;&gt;
+                        &lt;/ng-container&gt;
+                    }
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/nz-collapse-panel&gt;
+        &lt;nz-collapse-panel 
+            nzName&#x3D;&quot;text&quot; 
+            [nzHeader]&#x3D;&quot;(imageContent !&#x3D; &#x27;&#x27; ? &#x27;Contenido Ya Leido&#x27; : &#x27;Contenido Sin Leer&#x27;)&quot; 
+            [nzActive]&#x3D;&quot;(imageContent !&#x3D; &#x27;&#x27;)&quot; 
+            [nzDisabled]&#x3D;&quot;false&quot;
+            (nzActiveChange)&#x3D;&quot;onCollapseChange($any($event), &#x27;text&#x27;)&quot;&gt;
+            &lt;p&gt;
+                {{imageContent}}
+            &lt;/p&gt;
+            &lt;p&gt;                
+                {{voucherJson | json}}
+            &lt;/p&gt;
+        &lt;/nz-collapse-panel&gt;
+        &lt;nz-collapse-panel 
+            nzName&#x3D;&quot;analysis&quot; 
+            [nzHeader]&#x3D;&quot;(analisys !&#x3D; &#x27;&#x27; ? &#x27;Texto Ya Analizado&#x27; : &#x27;Texto Sin Analizar&#x27;)&quot; 
+            [nzActive]&#x3D;&quot;(analisys !&#x3D; &#x27;&#x27;)&quot; 
+            [nzDisabled]&#x3D;&quot;false&quot;
+            (nzActiveChange)&#x3D;&quot;onCollapseChange($any($event), &#x27;text&#x27;)&quot;&gt;
+            &lt;p&gt;
+                {{analisys | json}}
+            &lt;/p&gt;
+        &lt;/nz-collapse-panel&gt;
+    &lt;/nz-collapse&gt;
+&lt;/div&gt;
+&lt;div class&#x3D;&quot;drawer-footer&quot;&gt;
+    &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;readImage()&quot; class&#x3D;&quot;read-button&quot;&gt;
+        &lt;nz-icon nzType&#x3D;&quot;eye&quot; nzTheme&#x3D;&quot;outline&quot; /&gt;
+        Leer
+    &lt;/button&gt;
+    &lt;button nz-button nzType&#x3D;&quot;primary&quot; [nzLoading]&#x3D;&quot;isLoadingAnalisys&quot; nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;getJsonDocument()&quot;&gt;
+        &lt;nz-icon nzType&#x3D;&quot;file-search&quot; nzTheme&#x3D;&quot;outline&quot; /&gt;
+        Analizar
+    &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;ng-template #loadingTpl&gt;
+    @if(loadingPercentage &gt; 0) {
+        &lt;div class&#x3D;&quot;loading&quot;&gt;
+            &lt;div class&#x3D;&quot;in&quot;&gt;
+                Analizando el texto de la imagen {{loadingPercentage | number:&#x27;1.2-2&#x27;}}% .....
+            &lt;/div&gt;
+        &lt;/div&gt;
+    }
+&lt;/ng-template&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./file-detail.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.file-detail-wrapper-body {
+    flex: 1;
+    overflow-y: auto; /* ¡Este es el scroll! */
+    padding: 16px;
+    .wrapper-sections {
+        display: grid;
+        height: 435px;
+        .in-wrapper {
+            height: 435px;
+            .canvas-overlay {
+                position: absolute;
+                height: 100%;
+                width: 89%;
+                object-fit: contain;
+                background-color: #e5edff61;
+                box-shadow: 0 0 10px #efefef;
+            }
+            .input-image {
+                height: 435px;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+}
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.drawer-footer {
+    margin-top: auto;
+    padding: 16px;
+    text-align: right;
+    border-top: 1px solid #f0f0f0;
+    .read-button {
+        margin: 0 10px 0 0;
+    }
+}
+
+.loading {
+    position: fixed;
+    z-index: 3;
+    background-color: #ffffffb3;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    .in{
+        text-align: center;
+        padding: 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="file-detail-wrapper-body">    <nz-collapse>        <nz-collapse-panel            nzName="detail"             nzHeader="Detalles del archivo"             [nzActive]="true"             [nzDisabled]="false"            (nzActiveChange)="onCollapseChange($any($event), \'detail\')">            <p style="margin:0;">            </p>            <h3>                Detalles del archivo            </h3>            <p>                <strong>Nombre:</strong> {{ drawerData.pevou_name }}            </p>            <p>                <strong>ID:</strong> {{ drawerData.pevou_uuid }}            </p>        </nz-collapse-panel>        <nz-collapse-panel             nzName="image"             nzHeader="Imagen"             [nzActive]="false"             [nzDisabled]="!imageLoaded"            (nzActiveChange)="onCollapseChange($any($event), \'image\')">            <!-- Puedes agregar más info, preview, etc. -->            <div class="wrapper-sections">                <div class="in-wrapper">                    @if(true) {                        <ng-container>                            @if(imageVisible) {                                <canvas #outputImage class="canvas-overlay"></canvas>                            }                            <img                                 (load)="loadedImage()"                                 #inputImage                                 class="input-image"                                 [src]="drawerData.pevou_image" alt="">                        </ng-container>                    }                </div>            </div>        </nz-collapse-panel>        <nz-collapse-panel             nzName="text"             [nzHeader]="(imageContent != \'\' ? \'Contenido Ya Leido\' : \'Contenido Sin Leer\')"             [nzActive]="(imageContent != \'\')"             [nzDisabled]="false"            (nzActiveChange)="onCollapseChange($any($event), \'text\')">            <p>                {{imageContent}}            </p>            <p>                                {{voucherJson | json}}            </p>        </nz-collapse-panel>        <nz-collapse-panel             nzName="analysis"             [nzHeader]="(analisys != \'\' ? \'Texto Ya Analizado\' : \'Texto Sin Analizar\')"             [nzActive]="(analisys != \'\')"             [nzDisabled]="false"            (nzActiveChange)="onCollapseChange($any($event), \'text\')">            <p>                {{analisys | json}}            </p>        </nz-collapse-panel>    </nz-collapse></div><div class="drawer-footer">    <button nz-button nzType="primary" (click)="readImage()" class="read-button">        <nz-icon nzType="eye" nzTheme="outline" />        Leer    </button>    <button nz-button nzType="primary" [nzLoading]="isLoadingAnalisys" nz-button nzType="primary" (click)="getJsonDocument()">        <nz-icon nzType="file-search" nzTheme="outline" />        Analizar    </button></div><ng-template #loadingTpl>    @if(loadingPercentage > 0) {        <div class="loading">            <div class="in">                Analizando el texto de la imagen {{loadingPercentage | number:\'1.2-2\'}}% .....            </div>        </div>    }</ng-template></div>'
+    var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FileDetailComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          
+          <div class="compodoc-lang-switcher">
+               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
+                    <option value="es" data-url="../../es/components/FileDetailComponent.html" selected>🇪🇸 Español</option>
+                    <option value="en" data-url="../../en/components/FileDetailComponent.html">🇺🇸 English</option>
+                    <option value="pt" data-url="../../pt/components/FileDetailComponent.html">🇧🇷 Português</option>
+               </select>
+          </div>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FileDetailComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    
+          <script id="compodoc-lang-switcher-script">
+               (function () {
+                    try {
+                         localStorage.setItem('compodoc_lang', 'es');
+                    } catch (e) {}
+                    var select = document.getElementById('compodoc-lang-select');
+                    if (select) {
+                         select.addEventListener('change', function (evt) {
+                              var targetLang = evt.target.value;
+                              try {
+                                   localStorage.setItem('compodoc_lang', targetLang);
+                              } catch (e) {}
+                              var selectedOption = evt.target.options[evt.target.selectedIndex];
+                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
+                              if (targetUrl) {
+                                   window.location.href = targetUrl + (window.location.hash || '');
+                              }
+                         });
+                    }
+               })();
+          </script>
+    </body>
+</html>
