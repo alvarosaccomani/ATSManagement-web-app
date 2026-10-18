@@ -11,7 +11,7 @@
     <div class="action-buttons">
       <button nz-button nzType="primary" (click)="newTransaction()" nzSize="large">
         <i nz-icon nzType="plus"></i>
-        ＋ Cargar Gasto / Movimiento
+        Cargar Gasto / Movimiento
       </button>
     </div>
   </div>
@@ -22,7 +22,10 @@
         <label>Ámbito / Contexto:</label>
         <nz-select [ngModel]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="filter-select scope-select" nzSize="large">
           @for (scope of scopes; track scope.scp_uuid) {
-            <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? '🏢 ' : '👤 ') + scope.scp_name"></nz-option>
+            <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">
+              <i nz-icon [nzType]="scope.scp_uuid === 'ALL' ? 'appstore' : (scope.scp_isshared ? 'bank' : 'user')" style="margin-right: 6px;"></i>
+              {{ scope.scp_name }}
+            </nz-option>
           }
         </nz-select>
       </div>
@@ -30,12 +33,21 @@
       <div class="filter-item">
         <label>Tipo:</label>
         <nz-select [ngModel]="selectedType" (ngModelChange)="onTypeChange($event)" class="filter-select type-select" nzSize="large">
-          <nz-option nzValue="ALL" nzLabel="🌐 Todos"></nz-option>
-          <nz-option nzValue="INGRESO" nzLabel="🟢 Ingresos"></nz-option>
-          <nz-option nzValue="EGRESO" nzLabel="🔴 Egresos"></nz-option>
-          <nz-option nzValue="TRANSFERENCIA" nzLabel="🔵 Transferencias"></nz-option>
+          <nz-option nzValue="ALL" nzLabel="Todos" [nzCustomContent]="true">
+            <i nz-icon nzType="unordered-list" style="margin-right: 6px;"></i> Todos
+          </nz-option>
+          <nz-option nzValue="INGRESO" nzLabel="Ingresos" [nzCustomContent]="true">
+            <i nz-icon nzType="arrow-down" class="metric-income" style="margin-right: 6px;"></i> Ingresos
+          </nz-option>
+          <nz-option nzValue="EGRESO" nzLabel="Egresos" [nzCustomContent]="true">
+            <i nz-icon nzType="arrow-up" class="metric-expense" style="margin-right: 6px;"></i> Egresos
+          </nz-option>
+          <nz-option nzValue="TRANSFERENCIA" nzLabel="Transferencias" [nzCustomContent]="true">
+            <i nz-icon nzType="swap" class="metric-transfer" style="margin-right: 6px;"></i> Transferencias
+          </nz-option>
         </nz-select>
       </div>
+
 
       <div class="filter-item search-item">
         <label>Buscar:</label>
@@ -97,8 +109,11 @@
             </td>
             <td>
               @if (data.prs) {
-                <nz-tag nzColor="blue">👤 {{ data.prs.prs_name }} ({{ data.prs.prs_type }})</nz-tag>
+                <nz-tag nzColor="blue">
+                  <i nz-icon nzType="user" style="margin-right: 4px;"></i>{{ data.prs.prs_name }} ({{ data.prs.prs_type }})
+                </nz-tag>
               } @else {
+
                 <span class="text-muted">-</span>
               }
             </td>

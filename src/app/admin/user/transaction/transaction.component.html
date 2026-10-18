@@ -25,13 +25,13 @@
             <nz-form-control [nzSpan]="24">
               <nz-radio-group formControlName="trx_type" nzSize="large" nzButtonStyle="solid">
                 <label nz-radio-button nzValue="EGRESO" class="radio-egreso">
-                  <i nz-icon nzType="arrow-up"></i> 🔴 EGRESO / GASTO
+                  <i nz-icon nzType="arrow-up"></i> EGRESO / GASTO
                 </label>
                 <label nz-radio-button nzValue="INGRESO" class="radio-ingreso">
-                  <i nz-icon nzType="arrow-down"></i> 🟢 INGRESO / VENTA
+                  <i nz-icon nzType="arrow-down"></i> INGRESO / VENTA
                 </label>
                 <label nz-radio-button nzValue="TRANSFERENCIA" class="radio-transferencia">
-                  <i nz-icon nzType="swap"></i> 🔵 TRANSFERENCIA
+                  <i nz-icon nzType="swap"></i> TRANSFERENCIA
                 </label>
               </nz-radio-group>
             </nz-form-control>
@@ -47,12 +47,16 @@
             <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione un ámbito">
               <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito" nzSize="large">
                 @for (scope of scopes; track scope.scp_uuid) {
-                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? '🏢 ' : '👤 ') + scope.scp_name"></nz-option>
+                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">
+                    <i nz-icon [nzType]="scope.scp_isshared ? 'bank' : 'user'" style="margin-right: 6px;"></i>
+                    {{ scope.scp_name }}
+                  </nz-option>
                 }
               </nz-select>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
+
 
         <nz-col [nzSpan]="24" [nzMd]="12">
           <nz-form-item>

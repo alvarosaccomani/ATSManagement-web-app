@@ -12,8 +12,12 @@
 
       <div class="header-controls">
         <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-selector">
-          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="(s.scp_isshared ? '🏢 ' : '👤 ') + s.scp_name"></nz-option>
+          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name" [nzCustomContent]="true">
+            <i nz-icon [nzType]="s.scp_uuid === 'ALL' ? 'appstore' : (s.scp_isshared ? 'bank' : 'user')" style="margin-right: 6px;"></i>
+            {{ s.scp_name }}
+          </nz-option>
         </nz-select>
+
 
         <button nz-button nzType="primary" (click)="newTransaction()">
           <i nz-icon nzType="plus"></i> Nuevo Movimiento
@@ -137,9 +141,10 @@
                   </strong>
                 </td>
                 <td>
-                  <span *ngIf="t.prs">👤 {{ t.prs.prs_name }}</span>
+                  <span *ngIf="t.prs"><i nz-icon nzType="user" style="margin-right: 4px;"></i>{{ t.prs.prs_name }}</span>
                   <span *ngIf="!t.prs" class="text-muted">-</span>
                 </td>
+
               </tr>
             </tbody>
           </nz-table>

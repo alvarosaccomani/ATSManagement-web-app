@@ -38,8 +38,12 @@
             <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione el ámbito de la tarjeta">
               <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito (Personal / Emprendimiento)" nzSize="large">
                 @for (scope of scopes; track scope.scp_uuid) {
-                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? '🏢 ' : '👤 ') + scope.scp_name"></nz-option>
+                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">
+                    <i nz-icon [nzType]="scope.scp_isshared ? 'bank' : 'user'" style="margin-right: 6px;"></i>
+                    {{ scope.scp_name }}
+                  </nz-option>
                 }
+
               </nz-select>
               <small class="form-text">Indica si los gastos pertenecen al negocio o son de uso personal</small>
             </nz-form-control>

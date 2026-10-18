@@ -12,7 +12,10 @@
         nzSize="large"
       >
         @for (scope of scopes; track scope.scp_uuid) {
-          <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_uuid === 'ALL' ? '🌐 ' : (scope.scp_isshared ? '🏢 ' : '👤 ')) + scope.scp_name"></nz-option>
+          <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">
+            <i nz-icon [nzType]="scope.scp_uuid === 'ALL' ? 'appstore' : (scope.scp_isshared ? 'bank' : 'user')" style="margin-right: 6px;"></i>
+            {{ scope.scp_name }}
+          </nz-option>
         }
       </nz-select>
       <button nz-button nzType="primary" (click)="createCard()" nzSize="large">
@@ -66,9 +69,11 @@
             <td>{{ card.crd_uuid }}</td>
             <td>
               <nz-tag [nzColor]="card.scp?.scp_color || '#108ee9'">
-                {{ (card.scp?.scp_isshared ? '🏢 ' : '👤 ') + (card.scp?.scp_name || 'Personal') }}
+                <i nz-icon [nzType]="card.scp?.scp_isshared ? 'bank' : 'user'" style="margin-right: 4px;"></i>
+                {{ card.scp?.scp_name || 'Personal' }}
               </nz-tag>
             </td>
+
             <td>
               <div class="card-number">
                 <i nz-icon nzType="credit-card" nzTheme="outline"></i>

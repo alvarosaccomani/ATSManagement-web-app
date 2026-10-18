@@ -13,8 +13,12 @@
       <div class="header-controls">
         <label class="control-label">Ámbito:</label>
         <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-select">
-          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="(s.scp_isshared ? '🏢 ' : '👤 ') + s.scp_name"></nz-option>
+          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name" [nzCustomContent]="true">
+            <i nz-icon [nzType]="s.scp_uuid === 'ALL' ? 'appstore' : (s.scp_isshared ? 'bank' : 'user')" style="margin-right: 6px;"></i>
+            {{ s.scp_name }}
+          </nz-option>
         </nz-select>
+
       </div>
     </div>
 
