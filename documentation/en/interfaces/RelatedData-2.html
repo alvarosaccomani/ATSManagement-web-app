@@ -517,7 +517,10 @@ export class VoucherFeeComponent implements OnInit {
       next: (cardResponse: any) &#x3D;&gt; {
         if (cardResponse.success) {
           const cardsData &#x3D; cardResponse.data;
-          this.cards &#x3D; cardsData.map((c: any) &#x3D;&gt; ({ value: c.crd_uuid, label: &#x60;**** **** **** ${c.crd_last4digits}&#x60; }));
+          this.cards &#x3D; cardsData.map((c: any) &#x3D;&gt; ({ 
+            value: c.crd_uuid, 
+            label: c.crd_alias || (c.crd_last4digits ? &#x60;**** **** **** ${c.crd_last4digits}&#x60; : c.tycrd?.tycrd_name || &#x27;Cuenta&#x27;) 
+          }));
           
           let pendingQueries &#x3D; cardsData.length;
           if (pendingQueries &#x3D;&#x3D;&#x3D; 0) {

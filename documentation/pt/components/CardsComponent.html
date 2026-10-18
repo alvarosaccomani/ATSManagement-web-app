@@ -480,6 +480,23 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
 
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Acessores</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#currentUserId" >currentUserId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
 
     <section data-compodoc="block-constructor">
@@ -488,12 +505,12 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+<code>constructor(_router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, _sessionService: <a href="../injectables/SessionService.html" target="_self">SessionService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="70" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:70</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="72" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:72</a></div>
                             </td>
                         </tr>
 
@@ -559,6 +576,20 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                                         <td>
                                                                 <p>Servicio para consultar los ámbitos del usuario.</p>
 
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>_sessionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SessionService.html" target="_self" >SessionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            Não
+                                                    </td>
+                                                    
+                                                        <td>
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -631,15 +662,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="237"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:237</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="250"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:250</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Navega al formulario de nueva tarjeta (<code>/admin/user/card/new</code>).</p>
+                        <div class="io-description"><p>Navega a la ruta de creación de nueva cuenta o tarjeta.</p>
 </div>
 
                         <div class="io-description">
@@ -670,15 +701,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="255"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:255</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="266"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:266</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Solicita confirmación y elimina el registro de la tarjeta seleccionada.</p>
+                        <div class="io-description"><p>Solicita confirmación y elimina el registro seleccionado.</p>
 </div>
 
                             <div class="io-description">
@@ -706,7 +737,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
 
                                             <td>
-                                                    <p>Registro de tarjeta a eliminar.</p>
+                                                    <p>Registro a eliminar.</p>
 
                                             </td>
                                         </tr>
@@ -744,15 +775,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="246"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:246</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="258"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:258</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Navega al formulario de edición para la tarjeta seleccionada (<code>/admin/user/card/edit/:crd_uuid</code>).</p>
+                        <div class="io-description"><p>Navega a la ruta de edición del registro seleccionado.</p>
 </div>
 
                             <div class="io-description">
@@ -780,7 +811,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
 
                                             <td>
-                                                    <p>Registro de tarjeta a editar.</p>
+                                                    <p>Registro a editar.</p>
 
                                             </td>
                                         </tr>
@@ -811,22 +842,22 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>formatCardNumber(last4: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>formatCardNumber(last4?: string | null)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="159"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:159</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="167"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:167</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Formatea los últimos 4 dígitos de una tarjeta en una representación enmascarada (<code>**** **** **** 1234</code>).</p>
+                        <div class="io-description"><p>Formatea los últimos 4 dígitos en una representación enmascarada.</p>
 </div>
 
                             <div class="io-description">
@@ -845,11 +876,11 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                         <tr>
                                                 <td>last4</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        <code>string | null</code>
                                             </td>
 
                                             <td>
-                                                    Não
+                                                    Sim
                                             </td>
 
 
@@ -866,7 +897,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                         </div>
                             <div class="io-description">
-                                <p>Cadena con el número de tarjeta enmascarado.</p>
+                                <p>Cadena con el número enmascarado o cadena vacía si no aplica.</p>
 
                             </div>
                 </td>
@@ -886,22 +917,22 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>formatCreditLimit(limit: number | null)</code>
+<code>formatCreditLimit(limit?: number | null)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="194"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:194</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="204"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:204</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Formatea un límite de crédito numérico en moneda <code>ARS</code> o devuelve <code>&#39;N/A&#39;</code> si es <code>null</code>.</p>
+                        <div class="io-description"><p>Formatea un límite de crédito numérico en moneda ARS.</p>
 </div>
 
                             <div class="io-description">
@@ -924,12 +955,12 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                             </td>
 
                                             <td>
-                                                    Não
+                                                    Sim
                                             </td>
 
 
                                             <td>
-                                                    <p>Monto del límite de crédito o <code>null</code>.</p>
+                                                    <p>Monto del límite de crédito.</p>
 
                                             </td>
                                         </tr>
@@ -941,7 +972,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                         </div>
                             <div class="io-description">
-                                <p>Cadena de moneda formateada o <code>&#39;N/A&#39;</code>.</p>
+                                <p>Cadena formateada o N/A.</p>
 
                             </div>
                 </td>
@@ -961,22 +992,22 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>formatExpirationDate(dateString: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>formatExpirationDate(dateString?: string | null)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="169"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:169</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="177"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:177</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Formatea una cadena de fecha de vencimiento ISO en el formato <code>MM/YY</code>.</p>
+                        <div class="io-description"><p>Formatea una cadena de fecha de vencimiento ISO al formato MM/YY.</p>
 </div>
 
                             <div class="io-description">
@@ -995,11 +1026,11 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                         <tr>
                                                 <td>dateString</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        <code>string | null</code>
                                             </td>
 
                                             <td>
-                                                    Não
+                                                    Sim
                                             </td>
 
 
@@ -1016,7 +1047,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                         </div>
                             <div class="io-description">
-                                <p>Cadena de vencimiento formateada en <code>MM/YY</code>.</p>
+                                <p>Cadena de vencimiento formateada o guion si no aplica.</p>
 
                             </div>
                 </td>
@@ -1036,22 +1067,22 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getCardBrandColor(brandName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>getCardBrandColor(brandName?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="225"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:225</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="237"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:237</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Asigna el nombre de una marca de tarjeta a un color de etiqueta de Ng-Zorro.</p>
+                        <div class="io-description"><p>Asigna la marca de la tarjeta a un color de etiqueta de Ng-Zorro.</p>
 </div>
 
                             <div class="io-description">
@@ -1074,12 +1105,12 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                             </td>
 
                                             <td>
-                                                    Não
+                                                    Sim
                                             </td>
 
 
                                             <td>
-                                                    <p>Nombre de la marca de tarjeta.</p>
+                                                    <p>Nombre de la marca.</p>
 
                                             </td>
                                         </tr>
@@ -1091,7 +1122,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                         </div>
                             <div class="io-description">
-                                <p>Cadena con el color de la etiqueta.</p>
+                                <p>Color de la etiqueta.</p>
 
                             </div>
                 </td>
@@ -1111,22 +1142,22 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getCardTypeColor(typeName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>getCardTypeColor(typeName?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="210"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:210</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="219"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:219</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Asigna el nombre de un tipo de tarjeta a un color de etiqueta de Ng-Zorro.</p>
+                        <div class="io-description"><p>Asigna el tipo de cuenta o tarjeta a un color de etiqueta de Ng-Zorro.</p>
 </div>
 
                             <div class="io-description">
@@ -1149,12 +1180,12 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                             </td>
 
                                             <td>
-                                                    Não
+                                                    Sim
                                             </td>
 
 
                                             <td>
-                                                    <p>Nombre del tipo de tarjeta.</p>
+                                                    <p>Nombre del tipo.</p>
 
                                             </td>
                                         </tr>
@@ -1166,7 +1197,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                         </div>
                             <div class="io-description">
-                                <p>Cadena con el color de la etiqueta.</p>
+                                <p>Color de la etiqueta.</p>
 
                             </div>
                 </td>
@@ -1186,22 +1217,22 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>isExpired(dateString: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>isExpired(dateString?: string | null)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="182"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:182</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="191"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:191</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Comprueba si la fecha de vencimiento indicada ya ha pasado.</p>
+                        <div class="io-description"><p>Comprueba si la fecha de vencimiento ya ha pasado.</p>
 </div>
 
                             <div class="io-description">
@@ -1220,11 +1251,11 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                                         <tr>
                                                 <td>dateString</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        <code>string | null</code>
                                             </td>
 
                                             <td>
-                                                    Não
+                                                    Sim
                                             </td>
 
 
@@ -1241,7 +1272,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                         </div>
                             <div class="io-description">
-                                <p><code>true</code> si la tarjeta ha vencido, <code>false</code> en caso contrario.</p>
+                                <p>true si venció, false en caso contrario.</p>
 
                             </div>
                 </td>
@@ -1268,15 +1299,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="132"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:132</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="143"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:143</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Obtiene las tarjetas del usuario y del filtro de ámbito activo desde <a href="../injectables/CardsService.html">CardsService</a>.</p>
+                        <div class="io-description"><p>Obtiene las cuentas y tarjetas del usuario para el ámbito activo.</p>
 </div>
 
                         <div class="io-description">
@@ -1307,15 +1338,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="100"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:100</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="111"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:111</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Carga los ámbitos del usuario y antepone la opción de filtro <code>&#39;ALL&#39;</code>.</p>
+                        <div class="io-description"><p>Carga los ámbitos del usuario y antepone la opción de filtro &#39;ALL&#39;.</p>
 </div>
 
                         <div class="io-description">
@@ -1346,15 +1377,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="92"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:92</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="103"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:103</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Carga los ámbitos y las tarjetas al inicializar el componente.</p>
+                        <div class="io-description"><p>Inicializa el componente y carga los catálogos y registros iniciales.</p>
 </div>
 
                         <div class="io-description">
@@ -1385,8 +1416,8 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="317"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:317</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="331"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:331</a></div>
                         </td>
                     </tr>
 
@@ -1459,8 +1490,8 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="306"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:306</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="320"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:320</a></div>
                         </td>
                     </tr>
 
@@ -1533,15 +1564,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="124"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:124</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="135"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:135</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Recarga las tarjetas cuando cambia el filtro de ámbito seleccionado.</p>
+                        <div class="io-description"><p>Recarga los registros cuando cambia el filtro de ámbito seleccionado.</p>
 </div>
 
                             <div class="io-description">
@@ -1569,7 +1600,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
 
                                             <td>
-                                                    <p>UUID del ámbito seleccionado o <code>&#39;ALL&#39;</code>.</p>
+                                                    <p>UUID del ámbito seleccionado o &#39;ALL&#39;.</p>
 
                                             </td>
                                         </tr>
@@ -1607,8 +1638,8 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="295"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:295</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="309"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:309</a></div>
                         </td>
                     </tr>
 
@@ -1681,15 +1712,15 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido em <a href="" data-line="286"
-                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:286</a></div>
+                            <div class="io-line">Definido em <a href="" data-line="299"
+                                    class="link-to-prism">src/app/admin/user/cards/cards.component.ts:299</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Muestra una notificación emergente informativa con el número de tarjeta enmascarado.</p>
+                        <div class="io-description"><p>Muestra una notificación con el detalle identificador de la cuenta o tarjeta.</p>
 </div>
 
                             <div class="io-description">
@@ -1717,7 +1748,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
 
 
                                             <td>
-                                                    <p>Registro de tarjeta a inspeccionar.</p>
+                                                    <p>Registro a inspeccionar.</p>
 
                                             </td>
                                         </tr>
@@ -1766,7 +1797,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="44" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:44</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="46" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:46</a></div>
                         </td>
                     </tr>
 
@@ -1801,10 +1832,10 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                         <i>Valor padrão : </i><code>[
     { key: &#x27;crd_uuid&#x27;, title: &#x27;ID&#x27;, width: &#x27;80px&#x27; },
     { key: &#x27;scope&#x27;, title: &#x27;Ámbito&#x27;, width: &#x27;130px&#x27; },
-    { key: &#x27;card_number&#x27;, title: &#x27;Tarjeta&#x27;, width: &#x27;160px&#x27; },
-    { key: &#x27;card_type&#x27;, title: &#x27;Tipo&#x27;, width: &#x27;110px&#x27; },
-    { key: &#x27;card_brand&#x27;, title: &#x27;Marca&#x27;, width: &#x27;110px&#x27; },
-    { key: &#x27;bank&#x27;, title: &#x27;Banco&#x27;, width: &#x27;140px&#x27; },
+    { key: &#x27;card_number&#x27;, title: &#x27;Cuenta / Tarjeta&#x27;, width: &#x27;170px&#x27; },
+    { key: &#x27;card_type&#x27;, title: &#x27;Tipo&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;card_brand&#x27;, title: &#x27;Marca&#x27;, width: &#x27;100px&#x27; },
+    { key: &#x27;bank&#x27;, title: &#x27;Banco / Entidad&#x27;, width: &#x27;140px&#x27; },
     { key: &#x27;expiration&#x27;, title: &#x27;Vencimiento&#x27;, width: &#x27;110px&#x27; },
     { key: &#x27;credit_limit&#x27;, title: &#x27;Límite&#x27;, width: &#x27;120px&#x27; },
     { key: &#x27;status&#x27;, title: &#x27;Estado&#x27;, width: &#x27;100px&#x27; },
@@ -1814,7 +1845,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="59" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:59</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="61" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:61</a></div>
                         </td>
                     </tr>
 
@@ -1851,7 +1882,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="50" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:50</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="52" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -1888,7 +1919,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="52" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:52</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="54" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -1925,7 +1956,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="54" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:54</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="56" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:56</a></div>
                         </td>
                     </tr>
 
@@ -1962,7 +1993,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="46" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:46</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="48" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -1999,7 +2030,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="48" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:48</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="50" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -2036,7 +2067,7 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido em <a href="" data-line="56" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:56</a></div>
+                                <div class="io-line">Definido em <a href="" data-line="58" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -2051,6 +2082,46 @@ alertas de estado de vencimiento (<code>isExpired</code>), límites de crédito 
     </table>
 </section>
 
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Acessores
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUserId"></a>
+                        <span class="name"><b>currentUserId</b><a href="#currentUserId"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentUserId()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido em <a href="" data-line="96" class="link-to-prism">src/app/admin/user/cards/cards.component.ts:96</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Obtiene el identificador del usuario autenticado actual.</p>
+</div>
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Retorna : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
 </div>
 
 
@@ -2072,6 +2143,8 @@ import { CardsService } from &#x27;../../../core/services/cards.service&#x27;;
 import { ScopesService } from &#x27;../../../core/services/scopes.service&#x27;;
 import { ScopeInterface } from &#x27;../../../core/interfaces/scope.interface&#x27;;
 import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
+
+import { SessionService } from &#x27;../../../core/services/session.service&#x27;;
 
 /**
  * Componente de lista (&#x60;&lt;app-cards&gt;&#x60;) para visualizar y gestionar tarjetas de crédito y débito en &#x60;/admin/user/cards&#x60;.
@@ -2116,10 +2189,10 @@ export class CardsComponent implements OnInit {
   listOfColumns &#x3D; [
     { key: &#x27;crd_uuid&#x27;, title: &#x27;ID&#x27;, width: &#x27;80px&#x27; },
     { key: &#x27;scope&#x27;, title: &#x27;Ámbito&#x27;, width: &#x27;130px&#x27; },
-    { key: &#x27;card_number&#x27;, title: &#x27;Tarjeta&#x27;, width: &#x27;160px&#x27; },
-    { key: &#x27;card_type&#x27;, title: &#x27;Tipo&#x27;, width: &#x27;110px&#x27; },
-    { key: &#x27;card_brand&#x27;, title: &#x27;Marca&#x27;, width: &#x27;110px&#x27; },
-    { key: &#x27;bank&#x27;, title: &#x27;Banco&#x27;, width: &#x27;140px&#x27; },
+    { key: &#x27;card_number&#x27;, title: &#x27;Cuenta / Tarjeta&#x27;, width: &#x27;170px&#x27; },
+    { key: &#x27;card_type&#x27;, title: &#x27;Tipo&#x27;, width: &#x27;120px&#x27; },
+    { key: &#x27;card_brand&#x27;, title: &#x27;Marca&#x27;, width: &#x27;100px&#x27; },
+    { key: &#x27;bank&#x27;, title: &#x27;Banco / Entidad&#x27;, width: &#x27;140px&#x27; },
     { key: &#x27;expiration&#x27;, title: &#x27;Vencimiento&#x27;, width: &#x27;110px&#x27; },
     { key: &#x27;credit_limit&#x27;, title: &#x27;Límite&#x27;, width: &#x27;120px&#x27; },
     { key: &#x27;status&#x27;, title: &#x27;Estado&#x27;, width: &#x27;100px&#x27; },
@@ -2139,12 +2212,21 @@ export class CardsComponent implements OnInit {
     private _router: Router,
     private _cardsService: CardsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {}
 
   /**
-   * Carga los ámbitos y las tarjetas al inicializar el componente.
+   * Obtiene el identificador del usuario autenticado actual.
+   * @returns UUID del usuario autenticado.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || &#x27;&#x27;;
+  }
+
+  /**
+   * Inicializa el componente y carga los catálogos y registros iniciales.
    */
   ngOnInit(): void {
     this.loadScopes();
@@ -2152,10 +2234,11 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Carga los ámbitos del usuario y antepone la opción de filtro &#x60;&#x27;ALL&#x27;&#x60;.
+   * Carga los ámbitos del usuario y antepone la opción de filtro &#x27;ALL&#x27;.
    */
   loadScopes(): void {
-    const usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+    const usr_uuid &#x3D; this.currentUserId;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) &#x3D;&gt; {
         if (response.success &amp;&amp; response.data.length &gt; 0) {
@@ -2174,9 +2257,8 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Recarga las tarjetas cuando cambia el filtro de ámbito seleccionado.
-   *
-   * @param scopeUuid UUID del ámbito seleccionado o &#x60;&#x27;ALL&#x27;&#x60;.
+   * Recarga los registros cuando cambia el filtro de ámbito seleccionado.
+   * @param scopeUuid UUID del ámbito seleccionado o &#x27;ALL&#x27;.
    */
   onScopeChange(scopeUuid: string): void {
     this.selectedScopeUuid &#x3D; scopeUuid;
@@ -2184,72 +2266,71 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Obtiene las tarjetas del usuario y del filtro de ámbito activo desde {@link CardsService}.
+   * Obtiene las cuentas y tarjetas del usuario para el ámbito activo.
    */
   loadCards(): void {
+    const usr_uuid &#x3D; this.currentUserId;
+    if (!usr_uuid) return;
     this.loading &#x3D; true;
-    this._cardsService.getCards(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, undefined, undefined, undefined, undefined, this.selectedScopeUuid).subscribe(
-      (response: any) &#x3D;&gt; {
-        if(response.success) {
-          console.info(response.data);
+    this._cardsService.getCards(usr_uuid, undefined, undefined, undefined, undefined, this.selectedScopeUuid).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        this.loading &#x3D; false;
+        if (response.success) {
           this.cards &#x3D; response.data;
           this.total &#x3D; this.cards.length;
-          this.loading &#x3D; false;
-        } else {
-          this.loading &#x3D; false;
         }
       },
-      (error: any) &#x3D;&gt; {
+      error: (error: any) &#x3D;&gt; {
         this.loading &#x3D; false;
-        let errorMessage &#x3D; &lt;any&gt;error;
-        console.log(errorMessage);
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Formatea los últimos 4 dígitos de una tarjeta en una representación enmascarada (&#x60;**** **** **** 1234&#x60;).
-   *
+   * Formatea los últimos 4 dígitos en una representación enmascarada.
    * @param last4 Últimos 4 dígitos de la tarjeta.
-   * @returns Cadena con el número de tarjeta enmascarado.
+   * @returns Cadena con el número enmascarado o cadena vacía si no aplica.
    */
-  formatCardNumber(last4: string): string {
+  formatCardNumber(last4?: string | null): string {
+    if (!last4) return &#x27;&#x27;;
     return &#x60;**** **** **** ${last4}&#x60;;
   }
 
   /**
-   * Formatea una cadena de fecha de vencimiento ISO en el formato &#x60;MM/YY&#x60;.
-   *
+   * Formatea una cadena de fecha de vencimiento ISO al formato MM/YY.
    * @param dateString Cadena de fecha ISO.
-   * @returns Cadena de vencimiento formateada en &#x60;MM/YY&#x60;.
+   * @returns Cadena de vencimiento formateada o guion si no aplica.
    */
-  formatExpirationDate(dateString: string): string {
+  formatExpirationDate(dateString?: string | null): string {
+    if (!dateString) return &#x27;-&#x27;;
     const date &#x3D; new Date(dateString);
+    if (isNaN(date.getTime())) return &#x27;-&#x27;;
     const month &#x3D; String(date.getMonth() + 1).padStart(2, &#x27;0&#x27;);
     const year &#x3D; String(date.getFullYear()).slice(-2);
     return &#x60;${month}/${year}&#x60;;
   }
 
   /**
-   * Comprueba si la fecha de vencimiento indicada ya ha pasado.
-   *
+   * Comprueba si la fecha de vencimiento ya ha pasado.
    * @param dateString Cadena de fecha de vencimiento ISO.
-   * @returns &#x60;true&#x60; si la tarjeta ha vencido, &#x60;false&#x60; en caso contrario.
+   * @returns true si venció, false en caso contrario.
    */
-  isExpired(dateString: string): boolean {
+  isExpired(dateString?: string | null): boolean {
+    if (!dateString) return false;
     const expirationDate &#x3D; new Date(dateString);
+    if (isNaN(expirationDate.getTime())) return false;
     const today &#x3D; new Date();
     return expirationDate &lt; today;
   }
 
   /**
-   * Formatea un límite de crédito numérico en moneda &#x60;ARS&#x60; o devuelve &#x60;&#x27;N/A&#x27;&#x60; si es &#x60;null&#x60;.
-   *
-   * @param limit Monto del límite de crédito o &#x60;null&#x60;.
-   * @returns Cadena de moneda formateada o &#x60;&#x27;N/A&#x27;&#x60;.
+   * Formatea un límite de crédito numérico en moneda ARS.
+   * @param limit Monto del límite de crédito.
+   * @returns Cadena formateada o N/A.
    */
-  formatCreditLimit(limit: number | null): string {
-    if (limit &#x3D;&#x3D;&#x3D; null) return &#x27;N/A&#x27;;
+  formatCreditLimit(limit?: number | null): string {
+    if (limit &#x3D;&#x3D;&#x3D; null || limit &#x3D;&#x3D;&#x3D; undefined) return &#x27;N/A&#x27;;
     return new Intl.NumberFormat(&#x27;es-AR&#x27;, {
       style: &#x27;currency&#x27;,
       currency: &#x27;ARS&#x27;,
@@ -2259,27 +2340,30 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Asigna el nombre de un tipo de tarjeta a un color de etiqueta de Ng-Zorro.
-   *
-   * @param typeName Nombre del tipo de tarjeta.
-   * @returns Cadena con el color de la etiqueta.
+   * Asigna el tipo de cuenta o tarjeta a un color de etiqueta de Ng-Zorro.
+   * @param typeName Nombre del tipo.
+   * @returns Color de la etiqueta.
    */
-  getCardTypeColor(typeName: string): string {
-    switch (typeName.toLowerCase()) {
-      case &#x27;debito&#x27;: return &#x27;blue&#x27;;
-      case &#x27;credito&#x27;: return &#x27;green&#x27;;
-      case &#x27;prepaga&#x27;: return &#x27;orange&#x27;;
-      default: return &#x27;default&#x27;;
-    }
+  getCardTypeColor(typeName?: string): string {
+    if (!typeName) return &#x27;default&#x27;;
+    const lower &#x3D; typeName.toLowerCase();
+    if (lower.includes(&#x27;efectivo&#x27;)) return &#x27;gold&#x27;;
+    if (lower.includes(&#x27;caja de ahorro&#x27;)) return &#x27;cyan&#x27;;
+    if (lower.includes(&#x27;cuenta corriente&#x27;)) return &#x27;geekblue&#x27;;
+    if (lower.includes(&#x27;billetera&#x27;)) return &#x27;purple&#x27;;
+    if (lower.includes(&#x27;debito&#x27;) || lower.includes(&#x27;débito&#x27;)) return &#x27;blue&#x27;;
+    if (lower.includes(&#x27;credito&#x27;) || lower.includes(&#x27;crédito&#x27;)) return &#x27;green&#x27;;
+    if (lower.includes(&#x27;prepaga&#x27;)) return &#x27;orange&#x27;;
+    return &#x27;default&#x27;;
   }
 
   /**
-   * Asigna el nombre de una marca de tarjeta a un color de etiqueta de Ng-Zorro.
-   *
-   * @param brandName Nombre de la marca de tarjeta.
-   * @returns Cadena con el color de la etiqueta.
+   * Asigna la marca de la tarjeta a un color de etiqueta de Ng-Zorro.
+   * @param brandName Nombre de la marca.
+   * @returns Color de la etiqueta.
    */
-  getCardBrandColor(brandName: string): string {
+  getCardBrandColor(brandName?: string): string {
+    if (!brandName) return &#x27;default&#x27;;
     switch (brandName.toLowerCase()) {
       case &#x27;visa&#x27;: return &#x27;cyan&#x27;;
       case &#x27;mastercard&#x27;: return &#x27;purple&#x27;;
@@ -2289,46 +2373,47 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Navega al formulario de nueva tarjeta (&#x60;/admin/user/card/new&#x60;).
+   * Navega a la ruta de creación de nueva cuenta o tarjeta.
    */
   createCard(): void {
     this._router.navigate([&#x27;/admin/user/card/new&#x27;]);
   }
 
   /**
-   * Navega al formulario de edición para la tarjeta seleccionada (&#x60;/admin/user/card/edit/:crd_uuid&#x60;).
-   *
-   * @param card Registro de tarjeta a editar.
+   * Navega a la ruta de edición del registro seleccionado.
+   * @param card Registro a editar.
    */
   editCard(card: CardInterface): void {
     this._router.navigate([&#x27;/admin/user/card/edit&#x27;, card.crd_uuid]);
   }
 
   /**
-   * Solicita confirmación y elimina el registro de la tarjeta seleccionada.
-   *
-   * @param card Registro de tarjeta a eliminar.
+   * Solicita confirmación y elimina el registro seleccionado.
+   * @param card Registro a eliminar.
    */
   deleteCard(card: CardInterface): void {
+    const label &#x3D; card.crd_alias || (card.crd_last4digits ? &#x60;la tarjeta finalizada en ${card.crd_last4digits}&#x60; : &#x27;este registro&#x27;);
     this._messageService.confirm(
-      &#x27;¿Estás seguro de eliminar esta tarjeta?&#x27;,
-      &#x60;Vas a eliminar la tarjeta finalizada en ${card.crd_last4digits}. Esta acción no se puede deshacer.&#x60;,
+      &#x27;¿Estás seguro de eliminar?&#x27;,
+      &#x60;Vas a eliminar ${label}. Esta acción no se puede deshacer.&#x60;,
       () &#x3D;&gt; {
+        const usr_uuid &#x3D; this.currentUserId;
+        if (!usr_uuid) return;
         this.loading &#x3D; true;
-        this._cardsService.deleteCard(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, card.crd_uuid).subscribe({
+        this._cardsService.deleteCard(usr_uuid, card.crd_uuid).subscribe({
           next: (response: any) &#x3D;&gt; {
             this.loading &#x3D; false;
             if (response.success) {
-              this._messageService.success(&#x27;Tarjeta eliminada&#x27;, &#x27;La tarjeta se eliminó correctamente&#x27;);
+              this._messageService.success(&#x27;Eliminado&#x27;, &#x27;El registro se eliminó correctamente&#x27;);
               this.loadCards();
             } else {
-              this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo eliminar la tarjeta&#x27;);
+              this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo eliminar&#x27;);
             }
           },
           error: (error: any) &#x3D;&gt; {
             this.loading &#x3D; false;
             console.error(error);
-            this._messageService.error(&#x27;Error&#x27;, &#x27;Hubo un problema de conexión al eliminar la tarjeta&#x27;);
+            this._messageService.error(&#x27;Error&#x27;, &#x27;Hubo un problema de conexión al eliminar&#x27;);
           }
         });
       }
@@ -2336,12 +2421,12 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Muestra una notificación emergente informativa con el número de tarjeta enmascarado.
-   *
-   * @param card Registro de tarjeta a inspeccionar.
+   * Muestra una notificación con el detalle identificador de la cuenta o tarjeta.
+   * @param card Registro a inspeccionar.
    */
   viewDetails(card: CardInterface): void {
-    this.message.info(&#x60;Detalles de tarjeta: ${this.formatCardNumber(card.crd_last4digits)}&#x60;);
+    const detail &#x3D; card.crd_alias || this.formatCardNumber(card.crd_last4digits) || card.crd_cbualias || &#x27;Detalles de cuenta&#x27;;
+    this.message.info(&#x60;Detalles: ${detail}&#x60;);
   }
 
   /**
@@ -2382,8 +2467,8 @@ export class CardsComponent implements OnInit {
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;card-list-container&quot;&gt;
   &lt;div class&#x3D;&quot;header&quot; style&#x3D;&quot;display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px;&quot;&gt;
     &lt;h2&gt;
-      &lt;i nz-icon nzType&#x3D;&quot;credit-card&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
-      Tarjetas
+      &lt;i nz-icon nzType&#x3D;&quot;wallet&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      Cuentas y Tarjetas
     &lt;/h2&gt;
     &lt;div style&#x3D;&quot;display: flex; gap: 12px; align-items: center;&quot;&gt;
       &lt;nz-select 
@@ -2393,19 +2478,22 @@ export class CardsComponent implements OnInit {
         nzSize&#x3D;&quot;large&quot;
       &gt;
         @for (scope of scopes; track scope.scp_uuid) {
-          &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;(scope.scp_uuid &#x3D;&#x3D;&#x3D; &#x27;ALL&#x27; ? &#x27;🌐 &#x27; : (scope.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;)) + scope.scp_name&quot;&gt;&lt;/nz-option&gt;
+          &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;scope.scp_name&quot; [nzCustomContent]&#x3D;&quot;true&quot;&gt;
+            &lt;i nz-icon [nzType]&#x3D;&quot;scope.scp_uuid &#x3D;&#x3D;&#x3D; &#x27;ALL&#x27; ? &#x27;appstore&#x27; : (scope.scp_isshared ? &#x27;bank&#x27; : &#x27;user&#x27;)&quot; style&#x3D;&quot;margin-right: 6px;&quot;&gt;&lt;/i&gt;
+            {{ scope.scp_name }}
+          &lt;/nz-option&gt;
         }
       &lt;/nz-select&gt;
       &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;createCard()&quot; nzSize&#x3D;&quot;large&quot;&gt;
         &lt;i nz-icon nzType&#x3D;&quot;plus&quot;&gt;&lt;/i&gt;
-        Nueva Tarjeta
+        Nueva Cuenta / Tarjeta
       &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
   @if (loading) {
     &lt;div class&#x3D;&quot;loading-container&quot;&gt;
-      &lt;nz-spin nzTip&#x3D;&quot;Cargando tarjetas...&quot;&gt;&lt;/nz-spin&gt;
+      &lt;nz-spin nzTip&#x3D;&quot;Cargando cuentas y tarjetas...&quot;&gt;&lt;/nz-spin&gt;
     &lt;/div&gt;
   }
 
@@ -2413,7 +2501,7 @@ export class CardsComponent implements OnInit {
     &lt;div class&#x3D;&quot;empty-container&quot;&gt;
       &lt;nz-empty
         nzNotFoundImage&#x3D;&quot;simple&quot;
-        nzNotFoundContent&#x3D;&quot;No hay tarjetas registradas&quot;
+        nzNotFoundContent&#x3D;&quot;No hay cuentas ni tarjetas registradas&quot;
         nzNotFoundFooter&#x3D;&quot;&quot;
       &gt;&lt;/nz-empty&gt;
     &lt;/div&gt;
@@ -2447,31 +2535,39 @@ export class CardsComponent implements OnInit {
             &lt;td&gt;{{ card.crd_uuid }}&lt;/td&gt;
             &lt;td&gt;
               &lt;nz-tag [nzColor]&#x3D;&quot;card.scp?.scp_color || &#x27;#108ee9&#x27;&quot;&gt;
-                {{ (card.scp?.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;) + (card.scp?.scp_name || &#x27;Personal&#x27;) }}
+                &lt;i nz-icon [nzType]&#x3D;&quot;card.scp?.scp_isshared ? &#x27;bank&#x27; : &#x27;user&#x27;&quot; style&#x3D;&quot;margin-right: 4px;&quot;&gt;&lt;/i&gt;
+                {{ card.scp?.scp_name || &#x27;Personal&#x27; }}
               &lt;/nz-tag&gt;
             &lt;/td&gt;
+
             &lt;td&gt;
               &lt;div class&#x3D;&quot;card-number&quot;&gt;
-                &lt;i nz-icon nzType&#x3D;&quot;credit-card&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
-                &lt;span *ngIf&#x3D;&quot;card.crd_alias&quot; style&#x3D;&quot;margin-right: 6px; font-weight: 600;&quot;&gt;{{ card.crd_alias }}&lt;/span&gt;
-                {{ formatCardNumber(card.crd_last4digits) }}
+                &lt;i nz-icon [nzType]&#x3D;&quot;card.tycrd?.tycrd_name?.toLowerCase()?.includes(&#x27;efectivo&#x27;) ? &#x27;wallet&#x27; : (card.crd_last4digits ? &#x27;credit-card&#x27; : &#x27;bank&#x27;)&quot; nzTheme&#x3D;&quot;outline&quot; style&#x3D;&quot;margin-right: 6px;&quot;&gt;&lt;/i&gt;
+                &lt;span *ngIf&#x3D;&quot;card.crd_alias&quot; style&#x3D;&quot;font-weight: 600;&quot;&gt;{{ card.crd_alias }}&lt;/span&gt;
+                &lt;span *ngIf&#x3D;&quot;card.crd_last4digits&quot; style&#x3D;&quot;margin-left: 4px;&quot;&gt;{{ formatCardNumber(card.crd_last4digits) }}&lt;/span&gt;
+                &lt;div *ngIf&#x3D;&quot;card.crd_cbualias || card.crd_cbucvu&quot; style&#x3D;&quot;font-size: 11px; color: #8c8c8c;&quot;&gt;
+                  &lt;span *ngIf&#x3D;&quot;card.crd_cbualias&quot;&gt;Alias: {{ card.crd_cbualias }}&lt;/span&gt;
+                  &lt;span *ngIf&#x3D;&quot;card.crd_cbucvu &amp;&amp; !card.crd_cbualias&quot;&gt;CBU: {{ card.crd_cbucvu }}&lt;/span&gt;
+                &lt;/div&gt;
               &lt;/div&gt;
             &lt;/td&gt;
             &lt;td&gt;
-              &lt;nz-tag [nzColor]&#x3D;&quot;getCardTypeColor(card.tycrd.tycrd_name)&quot;&gt;
-                {{ card.tycrd.tycrd_name }}
+              &lt;nz-tag [nzColor]&#x3D;&quot;getCardTypeColor(card.tycrd?.tycrd_name)&quot;&gt;
+                {{ card.tycrd?.tycrd_name || &#x27;Desconocido&#x27; }}
               &lt;/nz-tag&gt;
             &lt;/td&gt;
             &lt;td&gt;
-              &lt;nz-tag [nzColor]&#x3D;&quot;getCardBrandColor(card.brcrd.brcrd_name)&quot;&gt;
-                {{ card.brcrd.brcrd_name }}
+              &lt;nz-tag *ngIf&#x3D;&quot;card.brcrd?.brcrd_name&quot; [nzColor]&#x3D;&quot;getCardBrandColor(card.brcrd?.brcrd_name)&quot;&gt;
+                {{ card.brcrd?.brcrd_name }}
               &lt;/nz-tag&gt;
+              &lt;span *ngIf&#x3D;&quot;!card.brcrd?.brcrd_name&quot;&gt;-&lt;/span&gt;
             &lt;/td&gt;
-            &lt;td&gt;{{ card.ban.ban_name }}&lt;/td&gt;
+            &lt;td&gt;{{ card.ban?.ban_name || &#x27;-&#x27; }}&lt;/td&gt;
             &lt;td&gt;
-              &lt;nz-tag [nzColor]&#x3D;&quot;isExpired(card.crd_expirationdate) ? &#x27;red&#x27; : &#x27;default&#x27;&quot;&gt;
+              &lt;nz-tag *ngIf&#x3D;&quot;card.crd_expirationdate&quot; [nzColor]&#x3D;&quot;isExpired(card.crd_expirationdate) ? &#x27;red&#x27; : &#x27;default&#x27;&quot;&gt;
                 {{ formatExpirationDate(card.crd_expirationdate) }}
               &lt;/nz-tag&gt;
+              &lt;span *ngIf&#x3D;&quot;!card.crd_expirationdate&quot;&gt;-&lt;/span&gt;
             &lt;/td&gt;
             &lt;td&gt;{{ formatCreditLimit(card.crd_creditlimit) }}&lt;/td&gt;
             &lt;td&gt;
@@ -2617,7 +2713,7 @@ export class CardsComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="card-list-container">  <div class="header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px;">    <h2>      <i nz-icon nzType="credit-card" nzTheme="outline"></i>      Tarjetas    </h2>    <div style="display: flex; gap: 12px; align-items: center;">      <nz-select         [(ngModel)]="selectedScopeUuid"         (ngModelChange)="onScopeChange($event)"        style="min-width: 220px;"         nzSize="large"      >        @for (scope of scopes; track scope.scp_uuid) {          <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_uuid === \'ALL\' ? \'🌐 \' : (scope.scp_isshared ? \'🏢 \' : \'👤 \')) + scope.scp_name"></nz-option>        }      </nz-select>      <button nz-button nzType="primary" (click)="createCard()" nzSize="large">        <i nz-icon nzType="plus"></i>        Nueva Tarjeta      </button>    </div>  </div>  @if (loading) {    <div class="loading-container">      <nz-spin nzTip="Cargando tarjetas..."></nz-spin>    </div>  }  @if (!loading && cards.length === 0) {    <div class="empty-container">      <nz-empty        nzNotFoundImage="simple"        nzNotFoundContent="No hay tarjetas registradas"        nzNotFoundFooter=""      ></nz-empty>    </div>  }  @if (!loading && cards.length > 0) {    <nz-table      [nzData]="cards"      [nzPageSize]="pageSize"      [nzPageIndex]="pageIndex"      [nzTotal]="total"      nzShowSizeChanger      [nzPageSizeOptions]="[10, 20, 30]"      (nzPageSizeChange)="onPageSizeChange($event)"      (nzPageIndexChange)="onPageIndexChange($event)"      nzBordered      nzTableLayout="fixed"    >      <thead>        <tr>          @for (column of listOfColumns; track column.key) {            <th [nzWidth]="column.width">              {{ column.title }}            </th>          }        </tr>      </thead>      <tbody>        @for (card of cards; track card.crd_uuid) {          <tr>            <td>{{ card.crd_uuid }}</td>            <td>              <nz-tag [nzColor]="card.scp?.scp_color || \'#108ee9\'">                {{ (card.scp?.scp_isshared ? \'🏢 \' : \'👤 \') + (card.scp?.scp_name || \'Personal\') }}              </nz-tag>            </td>            <td>              <div class="card-number">                <i nz-icon nzType="credit-card" nzTheme="outline"></i>                <span *ngIf="card.crd_alias" style="margin-right: 6px; font-weight: 600;">{{ card.crd_alias }}</span>                {{ formatCardNumber(card.crd_last4digits) }}              </div>            </td>            <td>              <nz-tag [nzColor]="getCardTypeColor(card.tycrd.tycrd_name)">                {{ card.tycrd.tycrd_name }}              </nz-tag>            </td>            <td>              <nz-tag [nzColor]="getCardBrandColor(card.brcrd.brcrd_name)">                {{ card.brcrd.brcrd_name }}              </nz-tag>            </td>            <td>{{ card.ban.ban_name }}</td>            <td>              <nz-tag [nzColor]="isExpired(card.crd_expirationdate) ? \'red\' : \'default\'">                {{ formatExpirationDate(card.crd_expirationdate) }}              </nz-tag>            </td>            <td>{{ formatCreditLimit(card.crd_creditlimit) }}</td>            <td>              @if (card.crd_active) {                <nz-tag nzColor="success">                  <i nz-icon nzType="check-circle" nzTheme="fill"></i>                  Activa                </nz-tag>              } @else {                <nz-tag nzColor="error">                  <i nz-icon nzType="close-circle" nzTheme="fill"></i>                  Inactiva                </nz-tag>              }            </td>            <td class="actions">              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(card)">                <i nz-icon nzType="eye" nzTheme="outline"></i>                Ver              </button>              <button nz-button nzSize="small" nzType="link" (click)="editCard(card)">                <i nz-icon nzType="edit" nzTheme="outline"></i>                Editar              </button>              <button nz-button nzSize="small" nzDanger (click)="deleteCard(card)">                <i nz-icon nzType="delete" nzTheme="outline"></i>                Eliminar              </button>            </td>          </tr>        }        @empty {          <tr>            <td [colSpan]="listOfColumns.length" class="text-center">              No hay datos disponibles            </td>          </tr>        }      </tbody>    </nz-table>  }</div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="card-list-container">  <div class="header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px;">    <h2>      <i nz-icon nzType="wallet" nzTheme="outline"></i>      Cuentas y Tarjetas    </h2>    <div style="display: flex; gap: 12px; align-items: center;">      <nz-select         [(ngModel)]="selectedScopeUuid"         (ngModelChange)="onScopeChange($event)"        style="min-width: 220px;"         nzSize="large"      >        @for (scope of scopes; track scope.scp_uuid) {          <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">            <i nz-icon [nzType]="scope.scp_uuid === \'ALL\' ? \'appstore\' : (scope.scp_isshared ? \'bank\' : \'user\')" style="margin-right: 6px;"></i>            {{ scope.scp_name }}          </nz-option>        }      </nz-select>      <button nz-button nzType="primary" (click)="createCard()" nzSize="large">        <i nz-icon nzType="plus"></i>        Nueva Cuenta / Tarjeta      </button>    </div>  </div>  @if (loading) {    <div class="loading-container">      <nz-spin nzTip="Cargando cuentas y tarjetas..."></nz-spin>    </div>  }  @if (!loading && cards.length === 0) {    <div class="empty-container">      <nz-empty        nzNotFoundImage="simple"        nzNotFoundContent="No hay cuentas ni tarjetas registradas"        nzNotFoundFooter=""      ></nz-empty>    </div>  }  @if (!loading && cards.length > 0) {    <nz-table      [nzData]="cards"      [nzPageSize]="pageSize"      [nzPageIndex]="pageIndex"      [nzTotal]="total"      nzShowSizeChanger      [nzPageSizeOptions]="[10, 20, 30]"      (nzPageSizeChange)="onPageSizeChange($event)"      (nzPageIndexChange)="onPageIndexChange($event)"      nzBordered      nzTableLayout="fixed"    >      <thead>        <tr>          @for (column of listOfColumns; track column.key) {            <th [nzWidth]="column.width">              {{ column.title }}            </th>          }        </tr>      </thead>      <tbody>        @for (card of cards; track card.crd_uuid) {          <tr>            <td>{{ card.crd_uuid }}</td>            <td>              <nz-tag [nzColor]="card.scp?.scp_color || \'#108ee9\'">                <i nz-icon [nzType]="card.scp?.scp_isshared ? \'bank\' : \'user\'" style="margin-right: 4px;"></i>                {{ card.scp?.scp_name || \'Personal\' }}              </nz-tag>            </td>            <td>              <div class="card-number">                <i nz-icon [nzType]="card.tycrd?.tycrd_name?.toLowerCase()?.includes(\'efectivo\') ? \'wallet\' : (card.crd_last4digits ? \'credit-card\' : \'bank\')" nzTheme="outline" style="margin-right: 6px;"></i>                <span *ngIf="card.crd_alias" style="font-weight: 600;">{{ card.crd_alias }}</span>                <span *ngIf="card.crd_last4digits" style="margin-left: 4px;">{{ formatCardNumber(card.crd_last4digits) }}</span>                <div *ngIf="card.crd_cbualias || card.crd_cbucvu" style="font-size: 11px; color: #8c8c8c;">                  <span *ngIf="card.crd_cbualias">Alias: {{ card.crd_cbualias }}</span>                  <span *ngIf="card.crd_cbucvu && !card.crd_cbualias">CBU: {{ card.crd_cbucvu }}</span>                </div>              </div>            </td>            <td>              <nz-tag [nzColor]="getCardTypeColor(card.tycrd?.tycrd_name)">                {{ card.tycrd?.tycrd_name || \'Desconocido\' }}              </nz-tag>            </td>            <td>              <nz-tag *ngIf="card.brcrd?.brcrd_name" [nzColor]="getCardBrandColor(card.brcrd?.brcrd_name)">                {{ card.brcrd?.brcrd_name }}              </nz-tag>              <span *ngIf="!card.brcrd?.brcrd_name">-</span>            </td>            <td>{{ card.ban?.ban_name || \'-\' }}</td>            <td>              <nz-tag *ngIf="card.crd_expirationdate" [nzColor]="isExpired(card.crd_expirationdate) ? \'red\' : \'default\'">                {{ formatExpirationDate(card.crd_expirationdate) }}              </nz-tag>              <span *ngIf="!card.crd_expirationdate">-</span>            </td>            <td>{{ formatCreditLimit(card.crd_creditlimit) }}</td>            <td>              @if (card.crd_active) {                <nz-tag nzColor="success">                  <i nz-icon nzType="check-circle" nzTheme="fill"></i>                  Activa                </nz-tag>              } @else {                <nz-tag nzColor="error">                  <i nz-icon nzType="close-circle" nzTheme="fill"></i>                  Inactiva                </nz-tag>              }            </td>            <td class="actions">              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(card)">                <i nz-icon nzType="eye" nzTheme="outline"></i>                Ver              </button>              <button nz-button nzSize="small" nzType="link" (click)="editCard(card)">                <i nz-icon nzType="edit" nzTheme="outline"></i>                Editar              </button>              <button nz-button nzSize="small" nzDanger (click)="deleteCard(card)">                <i nz-icon nzType="delete" nzTheme="outline"></i>                Eliminar              </button>            </td>          </tr>        }        @empty {          <tr>            <td [colSpan]="listOfColumns.length" class="text-center">              No hay datos disponibles            </td>          </tr>        }      </tbody>    </nz-table>  }</div></div>'
     var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'CardsComponent'};

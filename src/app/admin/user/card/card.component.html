@@ -1,8 +1,8 @@
 <div class="card-form-container">
   <div class="form-header">
     <h2>
-      <i nz-icon nzType="credit-card" nzTheme="outline"></i>
-      {{ isEditing ? 'Editar Tarjeta' : 'Nueva Tarjeta' }}
+      <i nz-icon [nzType]="isCash ? 'wallet' : (isBankAccount ? 'bank' : 'credit-card')" nzTheme="outline"></i>
+      {{ isEditing ? 'Editar Cuenta / Tarjeta' : 'Nueva Cuenta / Tarjeta' }}
     </h2>
     <button nz-button nzType="text" (click)="onCancel()">
       <i nz-icon nzType="close"></i>
@@ -28,14 +28,14 @@
         </nz-col>
       </nz-row>
 
-      <!-- Ámbito y Alias -->
+      <!-- Ámbito y Tipo de Cuenta / Tarjeta -->
       <nz-row [nzGutter]="24">
         <nz-col [nzSpan]="24" [nzMd]="12">
           <nz-form-item>
             <nz-form-label nzFor="scp_uuid" [nzSpan]="24" nzRequired>
               Ámbito / Contexto
             </nz-form-label>
-            <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione el ámbito de la tarjeta">
+            <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione el ámbito">
               <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito (Personal / Emprendimiento)" nzSize="large">
                 @for (scope of scopes; track scope.scp_uuid) {
                   <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">
@@ -43,188 +43,269 @@
                     {{ scope.scp_name }}
                   </nz-option>
                 }
-
               </nz-select>
-              <small class="form-text">Indica si los gastos pertenecen al negocio o son de uso personal</small>
+              <small class="form-text">Indica a qué ámbito pertenece esta cuenta o tarjeta</small>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
 
         <nz-col [nzSpan]="24" [nzMd]="12">
-          <nz-form-item>
-            <nz-form-label nzFor="crd_alias" [nzSpan]="24">
-              Alias / Nombre Identificador
-            </nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <input nz-input formControlName="crd_alias" placeholder="Ej: Débito Santander Negocio, Visa BBVA Personal" nzSize="large" />
-              <small class="form-text">Nombre fácil de recordar para identificarla en los gastos</small>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-      </nz-row>
-
-      <nz-row [nzGutter]="24">
-        <nz-col [nzSpan]="24" [nzMd]="12">
-          <nz-form-item>
-            <nz-form-label nzFor="crd_maskedcardnumber" [nzSpan]="24" nzRequired>
-              Numero de Tarjeta
-            </nz-form-label>
-            <nz-form-control 
-              [nzSpan]="24"
-              [nzValidateStatus]="form.get('crd_maskedcardnumber')?.dirty && form.get('crd_maskedcardnumber')?.invalid ? 'error' : ''"
-              nzErrorTip="{{ getErrorMessage('crd_maskedcardnumber') }}"
-            >
-              <input 
-                nz-input 
-                formControlName="crd_maskedcardnumber" 
-                placeholder="xxxx xxxx xxxx 1234"
-                maxlength="4"
-                nzSize="large"
-              />
-              <small class="form-text">Ingrese solo los últimos 4 dígitos de la tarjeta</small>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-
-        <nz-col [nzSpan]="24" [nzMd]="12">
-          <nz-form-item>
-            <nz-form-label nzFor="crd_last4digits" [nzSpan]="24" nzRequired>
-              Últimos 4 Dígitos
-            </nz-form-label>
-            <nz-form-control 
-              [nzSpan]="24"
-              [nzValidateStatus]="form.get('crd_last4digits')?.dirty && form.get('crd_last4digits')?.invalid ? 'error' : ''"
-              nzErrorTip="{{ getErrorMessage('crd_last4digits') }}"
-            >
-              <input 
-                nz-input 
-                formControlName="crd_last4digits" 
-                placeholder="1234"
-                maxlength="4"
-                nzSize="large"
-              />
-              <small class="form-text">Ingrese solo los últimos 4 dígitos de la tarjeta</small>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-      </nz-row>
-
-      <nz-row [nzGutter]="24">
-        <nz-col [nzSpan]="24" [nzMd]="8">
           <nz-form-item>
             <nz-form-label nzFor="tycrd_uuid" [nzSpan]="24" nzRequired>
-              Tipo de Tarjeta
+              Tipo de Cuenta / Tarjeta
             </nz-form-label>
             <nz-form-control 
               [nzSpan]="24"
               [nzValidateStatus]="form.get('tycrd_uuid')?.dirty && form.get('tycrd_uuid')?.invalid ? 'error' : ''"
-              nzErrorTip="Seleccione un tipo de tarjeta"
+              nzErrorTip="Seleccione un tipo"
             >
               <nz-select 
                 formControlName="tycrd_uuid" 
-                placeholder="Seleccione tipo"
+                placeholder="Seleccione tipo (Efectivo, Caja de Ahorro, Débito, etc.)"
                 nzSize="large"
               >
                 @for (type of cardTypes; track type.tycrd_uuid) {
                   <nz-option [nzValue]="type.tycrd_uuid" [nzLabel]="type.tycrd_name"></nz-option>
                 }
               </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-
-        <nz-col [nzSpan]="24" [nzMd]="8">
-          <nz-form-item>
-            <nz-form-label nzFor="brcrd_uuid" [nzSpan]="24" nzRequired>
-              Marca
-            </nz-form-label>
-            <nz-form-control 
-              [nzSpan]="24"
-              [nzValidateStatus]="form.get('brcrd_uuid')?.dirty && form.get('brcrd_uuid')?.invalid ? 'error' : ''"
-              nzErrorTip="Seleccione una marca"
-            >
-              <nz-select 
-                formControlName="brcrd_uuid" 
-                placeholder="Seleccione marca"
-                nzSize="large"
-              >
-                @for (brand of cardBrands; track brand.brcrd_uuid) {
-                  <nz-option [nzValue]="brand.brcrd_uuid" [nzLabel]="brand.brcrd_name"></nz-option>
-                }
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-
-        <nz-col [nzSpan]="24" [nzMd]="8">
-          <nz-form-item>
-            <nz-form-label nzFor="ban_uuid" [nzSpan]="24" nzRequired>
-              Banco
-            </nz-form-label>
-            <nz-form-control 
-              [nzSpan]="24"
-              [nzValidateStatus]="form.get('ban_uuid')?.dirty && form.get('ban_uuid')?.invalid ? 'error' : ''"
-              nzErrorTip="Seleccione un banco"
-            >
-              <nz-select 
-                formControlName="ban_uuid" 
-                placeholder="Seleccione banco"
-                nzSize="large"
-              >
-                @for (bank of banks; track bank.ban_uuid) {
-                  <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>
-                }
-              </nz-select>
+              <small class="form-text">Define el comportamiento y los campos requeridos</small>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
       </nz-row>
 
+      <!-- Alias / Nombre Identificador -->
       <nz-row [nzGutter]="24">
-        <nz-col [nzSpan]="24" [nzMd]="12">
+        <nz-col [nzSpan]="24">
           <nz-form-item>
-            <nz-form-label nzFor="crd_expirationdate" [nzSpan]="24" nzRequired>
-              Fecha de Vencimiento
+            <nz-form-label nzFor="crd_alias" [nzSpan]="24" [nzRequired]="isCash || isBankAccount">
+              Alias / Nombre Identificador
             </nz-form-label>
-            <nz-form-control 
-              [nzSpan]="24"
-              [nzValidateStatus]="form.get('crd_expirationdate')?.dirty && form.get('crd_expirationdate')?.invalid ? 'error' : ''"
-              nzErrorTip="Seleccione una fecha de vencimiento"
-            >
-              <nz-date-picker 
-                formControlName="crd_expirationdate" 
-                nzFormat="MM/yyyy"
-                nzPicker="month"
-                nzPlaceHolder="Seleccione mes/año"
-                nzSize="large"
-                style="width: 100%"
-              ></nz-date-picker>
-            </nz-form-control>
-          </nz-form-item>
-        </nz-col>
-
-        <nz-col [nzSpan]="24" [nzMd]="12">
-          <nz-form-item>
-            <nz-form-label nzFor="crd_creditlimit" [nzSpan]="24">
-              Límite de Crédito
-            </nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <nz-input-number 
-                formControlName="crd_creditlimit" 
-                nzPlaceHolder="0.00"
-                [nzMin]="0"
-                [nzStep]="1000"
-                [nzFormatter]="formatterDollar"
-                [nzParser]="parserDollar"
-                style="width: 100%"
-                nzSize="large"
-              ></nz-input-number>
-              <small class="form-text">Solo para tarjetas de crédito</small>
+            <nz-form-control [nzSpan]="24" [nzErrorTip]="getErrorMessage('crd_alias')">
+              <input 
+                nz-input 
+                formControlName="crd_alias" 
+                [placeholder]="isCash ? 'Ej: Billetera Personal, Caja Chica Taller' : (isBankAccount ? 'Ej: Caja de Ahorro Santander, MP Cobros' : 'Ej: Visa Negocio, Débito BBVA')" 
+                nzSize="large" 
+              />
+              <small class="form-text">Nombre fácil de recordar para identificarla en transacciones y reportes</small>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
       </nz-row>
 
+      <!-- SECCIÓN: CUENTAS BANCARIAS Y BILLETERAS VIRTUALES -->
+      @if (isBankAccount) {
+        <nz-divider nzText="Datos Bancarios / Financieros" nzOrientation="left"></nz-divider>
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24" [nzMd]="8">
+            <nz-form-item>
+              <nz-form-label nzFor="ban_uuid" [nzSpan]="24" nzRequired>
+                Banco / Entidad
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('ban_uuid')?.dirty && form.get('ban_uuid')?.invalid ? 'error' : ''"
+                nzErrorTip="Seleccione un banco o entidad"
+              >
+                <nz-select 
+                  formControlName="ban_uuid" 
+                  placeholder="Seleccione banco"
+                  nzSize="large"
+                >
+                  @for (bank of banks; track bank.ban_uuid) {
+                    <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="8">
+            <nz-form-item>
+              <nz-form-label nzFor="crd_cbucvu" [nzSpan]="24">
+                CBU / CVU (22 dígitos)
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('crd_cbucvu')?.dirty && form.get('crd_cbucvu')?.invalid ? 'error' : ''"
+                [nzErrorTip]="getErrorMessage('crd_cbucvu')"
+              >
+                <input 
+                  nz-input 
+                  formControlName="crd_cbucvu" 
+                  placeholder="0000000000000000000000"
+                  maxlength="22"
+                  nzSize="large"
+                />
+                <small class="form-text">Clave Bancaria Uniforme (opcional)</small>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="8">
+            <nz-form-item>
+              <nz-form-label nzFor="crd_cbualias" [nzSpan]="24">
+                Alias CBU / CVU
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input 
+                  nz-input 
+                  formControlName="crd_cbualias" 
+                  placeholder="Ej: mi.cuenta.banco"
+                  maxlength="100"
+                  nzSize="large"
+                />
+                <small class="form-text">Alias para recibir transferencias</small>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <!-- SECCIÓN: TARJETAS (Crédito, Débito, Prepaga) -->
+      @if (isCard) {
+        <nz-divider nzText="Datos de la Tarjeta" nzOrientation="left"></nz-divider>
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="brcrd_uuid" [nzSpan]="24" nzRequired>
+                Marca
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('brcrd_uuid')?.dirty && form.get('brcrd_uuid')?.invalid ? 'error' : ''"
+                nzErrorTip="Seleccione una marca"
+              >
+                <nz-select 
+                  formControlName="brcrd_uuid" 
+                  placeholder="Seleccione marca"
+                  nzSize="large"
+                >
+                  @for (brand of cardBrands; track brand.brcrd_uuid) {
+                    <nz-option [nzValue]="brand.brcrd_uuid" [nzLabel]="brand.brcrd_name"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="ban_uuid" [nzSpan]="24" nzRequired>
+                Banco Emisor
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('ban_uuid')?.dirty && form.get('ban_uuid')?.invalid ? 'error' : ''"
+                nzErrorTip="Seleccione un banco"
+              >
+                <nz-select 
+                  formControlName="ban_uuid" 
+                  placeholder="Seleccione banco"
+                  nzSize="large"
+                >
+                  @for (bank of banks; track bank.ban_uuid) {
+                    <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="crd_maskedcardnumber" [nzSpan]="24" nzRequired>
+                Número de Tarjeta
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('crd_maskedcardnumber')?.dirty && form.get('crd_maskedcardnumber')?.invalid ? 'error' : ''"
+                nzErrorTip="{{ getErrorMessage('crd_maskedcardnumber') }}"
+              >
+                <input 
+                  nz-input 
+                  formControlName="crd_maskedcardnumber" 
+                  placeholder="xxxx xxxx xxxx 1234"
+                  nzSize="large"
+                />
+                <small class="form-text">Número de tarjeta enmascarado o últimos dígitos</small>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="crd_last4digits" [nzSpan]="24" nzRequired>
+                Últimos 4 Dígitos
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('crd_last4digits')?.dirty && form.get('crd_last4digits')?.invalid ? 'error' : ''"
+                nzErrorTip="{{ getErrorMessage('crd_last4digits') }}"
+              >
+                <input 
+                  nz-input 
+                  formControlName="crd_last4digits" 
+                  placeholder="1234"
+                  maxlength="4"
+                  nzSize="large"
+                />
+                <small class="form-text">Ingrese exactamente los 4 dígitos finales</small>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+
+        <nz-row [nzGutter]="24">
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="crd_expirationdate" [nzSpan]="24" nzRequired>
+                Fecha de Vencimiento
+              </nz-form-label>
+              <nz-form-control 
+                [nzSpan]="24"
+                [nzValidateStatus]="form.get('crd_expirationdate')?.dirty && form.get('crd_expirationdate')?.invalid ? 'error' : ''"
+                nzErrorTip="Seleccione una fecha de vencimiento"
+              >
+                <nz-date-picker 
+                  formControlName="crd_expirationdate" 
+                  nzFormat="MM/yyyy"
+                  nzPicker="month"
+                  nzPlaceHolder="Seleccione mes/año"
+                  nzSize="large"
+                  style="width: 100%"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="12" *ngIf="isCreditCard">
+            <nz-form-item>
+              <nz-form-label nzFor="crd_creditlimit" [nzSpan]="24">
+                Límite de Crédito
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-input-number 
+                  formControlName="crd_creditlimit" 
+                  nzPlaceHolder="0.00"
+                  [nzMin]="0"
+                  [nzStep]="1000"
+                  [nzFormatter]="formatterDollar"
+                  [nzParser]="parserDollar"
+                  style="width: 100%"
+                  nzSize="large"
+                ></nz-input-number>
+                <small class="form-text">Límite asignado por la entidad emisora</small>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <!-- Estado -->
       <nz-row [nzGutter]="24">
         <nz-col [nzSpan]="24">
           <nz-form-item>
@@ -237,7 +318,7 @@
                 nzCheckedChildren="Activa" 
                 nzUnCheckedChildren="Inactiva"
               ></nz-switch>
-              <small class="form-text">Activar o desactivar la tarjeta</small>
+              <small class="form-text">Habilita o deshabilita el uso de esta cuenta o tarjeta</small>
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -263,7 +344,7 @@
           nzSize="large"
         >
           <i nz-icon nzType="save"></i>
-          {{ isEditing ? 'Guardar Cambios' : 'Crear Tarjeta' }}
+          {{ isEditing ? 'Guardar Cambios' : 'Crear Registro' }}
         </button>
       </div>
     </form>

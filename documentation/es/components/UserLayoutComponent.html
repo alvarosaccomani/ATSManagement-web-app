@@ -202,7 +202,7 @@
     <p class="comment">
         <p>Main authenticated workspace layout component (<code>&lt;app-user-layout&gt;</code>).</p>
 <p>Renders the collapsible sidebar navigation (<code>&lt;app-nav-bar&gt;</code>), top header bar
-with user profile info and logout button, and the main <code>&lt;router-outlet&gt;</code> content area.</p>
+with user profile info and logout button, mobile overlay drawer, and the main <code>&lt;router-outlet&gt;</code> content area.</p>
 
     </p>
 
@@ -264,6 +264,8 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                         <div>    <code>NzAvatarModule</code>
 </div>
                         <div>    <code>NzToolTipModule</code>
+</div>
+                        <div>    <code>NzDrawerModule</code>
 </div>
                         <div>        <code><a href="../components/NavBarComponent.html" target="_self" >NavBarComponent</a></code>
 </div>
@@ -335,6 +337,9 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                                         <code>NzToolTipModule</code>
                                 </li>
                                 <li>
+                                        <code>NzDrawerModule</code>
+                                </li>
+                                <li>
                                             <code><a href="../components/NavBarComponent.html" target="_self" >NavBarComponent</a></code>
                                 </li>
                                 <li>
@@ -358,7 +363,20 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                         <ul class="index-list">
                             <li>
                                 <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#destroyRef" >destroyRef</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                 <a href="#isCollapsed" >isCollapsed</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isMobile" >isMobile</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#isMobileDrawerVisible" >isMobileDrawerVisible</a>
                             </li>
                             <li>
                                 <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
@@ -384,11 +402,29 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                         <ul class="index-list">
                             <li>
                                 <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkIsMobile" >checkIsMobile</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#closeMobileDrawer" >closeMobileDrawer</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#logout" >logout</a>
                             </li>
                             <li>
                                 <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier"></span>
+                                <a href="#onResize" >onResize</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#toggleSidebar" >toggleSidebar</a>
                             </li>
                         </ul>
                     </td>
@@ -399,6 +435,22 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
 
 
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Escuchadores de Host</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">HL</span><a href="#window:resize" >window:resize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 </section>
 
@@ -413,7 +465,7 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="43" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:43</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="54" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:54</a></div>
                             </td>
                         </tr>
 
@@ -477,12 +529,129 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
 
 
 
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:resize"></a>
+                    <span class="name">
+                        <span ><b>window:resize</b></span>
+                        <a href="#window:resize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:resize()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="96"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:96</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Listens to viewport size changes to adapt between mobile drawer and desktop sidebar.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
     <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Métodos
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkIsMobile"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>checkIsMobile</b></span>
+                        <a href="#checkIsMobile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkIsMobile()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="103"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks whether the current window width is in the mobile breakpoint.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeMobileDrawer"></a>
+                    <span class="name">
+                        <span ><b>closeMobileDrawer</b></span>
+                        <a href="#closeMobileDrawer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeMobileDrawer()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="126"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Closes the mobile navigation drawer.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -503,8 +672,8 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="70"
-                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:70</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="133"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:133</a></div>
                         </td>
                     </tr>
 
@@ -542,15 +711,102 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="59"
-                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:59</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="70"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:70</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Loads the authenticated user&#39;s display name and email from <a href="../injectables/SessionService.html">SessionService</a>.</p>
+                        <div class="io-description"><p>Initializes session user data, responsive viewport detection, and navigation listener.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onResize"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>onResize</b></span>
+                        <a href="#onResize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onResize()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decoradores : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:resize&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="96"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:96</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Listens to viewport size changes to adapt between mobile drawer and desktop sidebar.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleSidebar"></a>
+                    <span class="name">
+                        <span ><b>toggleSidebar</b></span>
+                        <a href="#toggleSidebar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleSidebar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="115"
+                                    class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggles the mobile drawer when on mobile, or desktop sidebar collapse state otherwise.</p>
 </div>
 
                         <div class="io-description">
@@ -568,6 +824,38 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
     <h3 id="inputs">
         Propiedades
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destroyRef"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>destroyRef</b></span>
+                        <a href="#destroyRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(DestroyRef)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="42" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -592,13 +880,87 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="39" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:39</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="45" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:45</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Indicates whether the sidebar navigation is collapsed.</p>
+                    <div class="io-description"><p>Indicates whether the desktop sidebar navigation is collapsed.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isMobile"></a>
+                    <span class="name">
+                        <span ><b>isMobile</b></span>
+                        <a href="#isMobile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="49" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Whether the current viewport matches mobile resolution (&lt; 768px).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isMobileDrawerVisible"></a>
+                    <span class="name">
+                        <span ><b>isMobileDrawerVisible</b></span>
+                        <a href="#isMobileDrawerVisible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Controls visibility of the mobile sliding navigation drawer.</p>
 </div>
                 </td>
             </tr>
@@ -629,7 +991,7 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="43" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:43</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="54" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -666,7 +1028,7 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="41" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:41</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="52" class="link-to-prism">src/app/admin/user/user-layout/user-layout.component.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -685,9 +1047,11 @@ with user profile info and logout button, and the main <code>&lt;router-outlet&g
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, HostListener, DestroyRef, inject } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { Router, RouterModule } from &#x27;@angular/router&#x27;;
+import { Router, RouterModule, NavigationEnd } from &#x27;@angular/router&#x27;;
+import { takeUntilDestroyed } from &#x27;@angular/core/rxjs-interop&#x27;;
+import { filter } from &#x27;rxjs/operators&#x27;;
 
 import { NzLayoutModule } from &#x27;ng-zorro-antd/layout&#x27;;
 import { NzButtonModule } from &#x27;ng-zorro-antd/button&#x27;;
@@ -695,6 +1059,7 @@ import { NzIconModule } from &#x27;ng-zorro-antd/icon&#x27;;
 import { NzDropDownModule } from &#x27;ng-zorro-antd/dropdown&#x27;;
 import { NzAvatarModule } from &#x27;ng-zorro-antd/avatar&#x27;;
 import { NzToolTipModule } from &#x27;ng-zorro-antd/tooltip&#x27;;
+import { NzDrawerModule } from &#x27;ng-zorro-antd/drawer&#x27;;
 
 import { NavBarComponent } from &#x27;../../../shared/components/nav-bar/nav-bar.component&#x27;;
 import { SessionService } from &#x27;../../../core/services/session.service&#x27;;
@@ -703,7 +1068,7 @@ import { SessionService } from &#x27;../../../core/services/session.service&#x27
  * Main authenticated workspace layout component (&#x60;&lt;app-user-layout&gt;&#x60;).
  *
  * @description Renders the collapsible sidebar navigation (&#x60;&lt;app-nav-bar&gt;&#x60;), top header bar
- * with user profile info and logout button, and the main &#x60;&lt;router-outlet&gt;&#x60; content area.
+ * with user profile info and logout button, mobile overlay drawer, and the main &#x60;&lt;router-outlet&gt;&#x60; content area.
  */
 @Component({
   selector: &#x27;app-user-layout&#x27;,
@@ -716,14 +1081,22 @@ import { SessionService } from &#x27;../../../core/services/session.service&#x27
     NzDropDownModule,
     NzAvatarModule,
     NzToolTipModule,
+    NzDrawerModule,
     NavBarComponent
   ],
   templateUrl: &#x27;./user-layout.component.html&#x27;,
   styleUrl: &#x27;./user-layout.component.scss&#x27;
 })
 export class UserLayoutComponent implements OnInit {
-  /** Indicates whether the sidebar navigation is collapsed. */
+  private destroyRef &#x3D; inject(DestroyRef);
+
+  /** Indicates whether the desktop sidebar navigation is collapsed. */
   isCollapsed &#x3D; false;
+  /** Controls visibility of the mobile sliding navigation drawer. */
+  isMobileDrawerVisible &#x3D; false;
+  /** Whether the current viewport matches mobile resolution (&lt; 768px). */
+  isMobile &#x3D; false;
+
   /** Display name of the currently authenticated user. */
   userName &#x3D; &#x27;Usuario&#x27;;
   /** Email address of the currently authenticated user. */
@@ -741,14 +1114,66 @@ export class UserLayoutComponent implements OnInit {
   ) {}
 
   /**
-   * Loads the authenticated user&#x27;s display name and email from {@link SessionService}.
+   * Initializes session user data, responsive viewport detection, and navigation listener.
    */
   ngOnInit(): void {
+    this.checkIsMobile();
+
     const identity &#x3D; this.sessionService.getIdentity();
     if (identity) {
       this.userName &#x3D; identity.usr_name || identity.usr_user || &#x27;Usuario&#x27;;
       this.userEmail &#x3D; identity.usr_email || &#x27;&#x27;;
     }
+
+    // Auto-close mobile drawer whenever a navigation event finishes
+    this.router.events
+      .pipe(
+        filter(event &#x3D;&gt; event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(() &#x3D;&gt; {
+        if (this.isMobileDrawerVisible) {
+          this.isMobileDrawerVisible &#x3D; false;
+        }
+      });
+  }
+
+  /**
+   * Listens to viewport size changes to adapt between mobile drawer and desktop sidebar.
+   */
+  @HostListener(&#x27;window:resize&#x27;)
+  onResize(): void {
+    this.checkIsMobile();
+  }
+
+  /**
+   * Checks whether the current window width is in the mobile breakpoint.
+   */
+  private checkIsMobile(): void {
+    if (typeof window !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      this.isMobile &#x3D; window.innerWidth &lt; 768;
+      if (!this.isMobile &amp;&amp; this.isMobileDrawerVisible) {
+        this.isMobileDrawerVisible &#x3D; false;
+      }
+    }
+  }
+
+  /**
+   * Toggles the mobile drawer when on mobile, or desktop sidebar collapse state otherwise.
+   */
+  toggleSidebar(): void {
+    if (this.isMobile) {
+      this.isMobileDrawerVisible &#x3D; !this.isMobileDrawerVisible;
+    } else {
+      this.isCollapsed &#x3D; !this.isCollapsed;
+    }
+  }
+
+  /**
+   * Closes the mobile navigation drawer.
+   */
+  closeMobileDrawer(): void {
+    this.isMobileDrawerVisible &#x3D; false;
   }
 
   /**
@@ -759,20 +1184,20 @@ export class UserLayoutComponent implements OnInit {
     this.router.navigate([&#x27;/auth/login&#x27;]);
   }
 }
+
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;nz-layout class&#x3D;&quot;app-layout&quot;&gt;
-  &lt;!-- Sidebar --&gt;
+  &lt;!-- Desktop Sidebar --&gt;
   &lt;nz-sider
-    class&#x3D;&quot;app-sider&quot;
+    class&#x3D;&quot;app-sider desktop-sider&quot;
     nzCollapsible
     [(nzCollapsed)]&#x3D;&quot;isCollapsed&quot;
     [nzTrigger]&#x3D;&quot;null&quot;
     [nzWidth]&#x3D;&quot;256&quot;
     [nzCollapsedWidth]&#x3D;&quot;80&quot;
-    nzBreakpoint&#x3D;&quot;md&quot;
     nzTheme&#x3D;&quot;dark&quot;
   &gt;
     &lt;div class&#x3D;&quot;sidebar-logo&quot;&gt;
@@ -790,6 +1215,31 @@ export class UserLayoutComponent implements OnInit {
     &lt;/div&gt;
   &lt;/nz-sider&gt;
 
+  &lt;!-- Mobile Overlay Drawer (&lt; 768px) --&gt;
+  &lt;nz-drawer
+    [nzVisible]&#x3D;&quot;isMobileDrawerVisible&quot;
+    nzPlacement&#x3D;&quot;left&quot;
+    [nzClosable]&#x3D;&quot;false&quot;
+    [nzBodyStyle]&#x3D;&quot;{ padding: &#x27;0&#x27;, background: &#x27;#001529&#x27; }&quot;
+    [nzWidth]&#x3D;&quot;260&quot;
+    (nzOnClose)&#x3D;&quot;closeMobileDrawer()&quot;
+  &gt;
+    &lt;ng-container *nzDrawerContent&gt;
+      &lt;div class&#x3D;&quot;sidebar-logo&quot;&gt;
+        &lt;div class&#x3D;&quot;logo-icon-wrapper&quot;&gt;
+          &lt;nz-icon nzType&#x3D;&quot;wallet&quot; nzTheme&#x3D;&quot;outline&quot; /&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;logo-text-wrapper&quot;&gt;
+          &lt;span class&#x3D;&quot;logo-title&quot;&gt;ATS Management&lt;/span&gt;
+          &lt;span class&#x3D;&quot;logo-subtitle&quot;&gt;Finanzas &amp; Control&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;sidebar-menu-wrapper&quot;&gt;
+        &lt;app-nav-bar [isCollapsed]&#x3D;&quot;false&quot;&gt;&lt;/app-nav-bar&gt;
+      &lt;/div&gt;
+    &lt;/ng-container&gt;
+  &lt;/nz-drawer&gt;
+
   &lt;!-- Main Layout --&gt;
   &lt;nz-layout class&#x3D;&quot;main-layout&quot;&gt;
     &lt;!-- Header --&gt;
@@ -799,11 +1249,11 @@ export class UserLayoutComponent implements OnInit {
           nz-button
           nzType&#x3D;&quot;text&quot;
           class&#x3D;&quot;collapse-trigger-btn&quot;
-          (click)&#x3D;&quot;isCollapsed &#x3D; !isCollapsed&quot;
-          [nzTooltipTitle]&#x3D;&quot;isCollapsed ? &#x27;Expandir menú lateral&#x27; : &#x27;Colapsar menú lateral&#x27;&quot;
+          (click)&#x3D;&quot;toggleSidebar()&quot;
+          [nzTooltipTitle]&#x3D;&quot;isMobile ? &#x27;Menú&#x27; : (isCollapsed ? &#x27;Expandir menú lateral&#x27; : &#x27;Colapsar menú lateral&#x27;)&quot;
           nz-tooltip
         &gt;
-          &lt;nz-icon [nzType]&#x3D;&quot;isCollapsed ? &#x27;menu-unfold&#x27; : &#x27;menu-fold&#x27;&quot; /&gt;
+          &lt;nz-icon [nzType]&#x3D;&quot;isMobile ? &#x27;menu&#x27; : (isCollapsed ? &#x27;menu-unfold&#x27; : &#x27;menu-fold&#x27;)&quot; /&gt;
         &lt;/button&gt;
       &lt;/div&gt;
 
@@ -842,14 +1292,78 @@ export class UserLayoutComponent implements OnInit {
       &lt;/div&gt;
     &lt;/nz-content&gt;
   &lt;/nz-layout&gt;
-&lt;/nz-layout&gt;</code></pre>
+&lt;/nz-layout&gt;
+</code></pre>
     </div>
 
     <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./user-layout.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">.app-layout {
+                <pre class="line-numbers"><code class="language-scss">.sidebar-logo {
+  height: 64px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #002140;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s;
+
+  .logo-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    nz-icon {
+      font-size: 20px;
+      color: #ffffff;
+    }
+  }
+
+  .logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .logo-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .logo-subtitle {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+  }
+}
+
+.sidebar-menu-wrapper {
+  padding-bottom: 24px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &amp;::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &amp;::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+}
+
+.app-layout {
   min-height: 100vh;
 
   .app-sider {
@@ -863,64 +1377,8 @@ export class UserLayoutComponent implements OnInit {
     z-index: 100;
     background: #001529;
 
-    &amp;::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    &amp;::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-    }
-
-    .sidebar-logo {
-      height: 64px;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #002140;
-      overflow: hidden;
-      white-space: nowrap;
-      transition: all 0.3s;
-
-      .logo-icon-wrapper {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-
-        nz-icon {
-          font-size: 20px;
-          color: #ffffff;
-        }
-      }
-
-      .logo-text-wrapper {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-
-        .logo-title {
-          font-size: 15px;
-          font-weight: 700;
-          color: #ffffff;
-          letter-spacing: 0.5px;
-        }
-
-        .logo-subtitle {
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.5);
-          font-weight: 400;
-        }
-      }
-    }
-
-    .sidebar-menu-wrapper {
-      padding-bottom: 24px;
+    @media (max-width: 767.98px) {
+      display: none !important;
     }
   }
 
@@ -940,6 +1398,10 @@ export class UserLayoutComponent implements OnInit {
       position: sticky;
       top: 0;
       z-index: 99;
+
+      @media (max-width: 767.98px) {
+        padding: 0 12px;
+      }
 
       .header-left {
         display: flex;
@@ -999,6 +1461,16 @@ export class UserLayoutComponent implements OnInit {
             font-size: 10px;
             color: #8c8c8c;
           }
+
+          @media (max-width: 575.98px) {
+            padding: 2px;
+            border: none;
+
+            .header-username,
+            .dropdown-chevron {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -1049,6 +1521,7 @@ export class UserLayoutComponent implements OnInit {
     }
   }
 }
+
 </code></pre>
     </div>
 
@@ -1077,7 +1550,7 @@ export class UserLayoutComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><nz-layout class="app-layout">  <!-- Sidebar -->  <nz-sider    class="app-sider"    nzCollapsible    [(nzCollapsed)]="isCollapsed"    [nzTrigger]="null"    [nzWidth]="256"    [nzCollapsedWidth]="80"    nzBreakpoint="md"    nzTheme="dark"  >    <div class="sidebar-logo">      <div class="logo-icon-wrapper">        <nz-icon nzType="wallet" nzTheme="outline" />      </div>      <div class="logo-text-wrapper" *ngIf="!isCollapsed">        <span class="logo-title">ATS Management</span>        <span class="logo-subtitle">Finanzas & Control</span>      </div>    </div>    <div class="sidebar-menu-wrapper">      <app-nav-bar [isCollapsed]="isCollapsed"></app-nav-bar>    </div>  </nz-sider>  <!-- Main Layout -->  <nz-layout class="main-layout">    <!-- Header -->    <nz-header class="app-header">      <div class="header-left">        <button          nz-button          nzType="text"          class="collapse-trigger-btn"          (click)="isCollapsed = !isCollapsed"          [nzTooltipTitle]="isCollapsed ? \'Expandir menú lateral\' : \'Colapsar menú lateral\'"          nz-tooltip        >          <nz-icon [nzType]="isCollapsed ? \'menu-unfold\' : \'menu-fold\'" />        </button>      </div>      <div class="header-right">        <div          nz-dropdown          [nzDropdownMenu]="userDropdown"          nzPlacement="bottomRight"          class="user-profile-badge"        >          <nz-avatar nzIcon="user" class="header-avatar" nzSize="small"></nz-avatar>          <span class="header-username">{{ userName }}</span>          <nz-icon nzType="down" class="dropdown-chevron" />        </div>        <nz-dropdown-menu #userDropdown="nzDropdownMenu">          <ul nz-menu class="user-dropdown-menu">            <li nz-menu-item disabled class="user-info-item">              <div class="user-info-name">{{ userName }}</div>              <div class="user-info-email" *ngIf="userEmail">{{ userEmail }}</div>            </li>            <li nz-menu-divider></li>            <li nz-menu-item (click)="logout()" class="logout-item">              <nz-icon nzType="logout" nzTheme="outline" />              <span>Cerrar Sesión</span>            </li>          </ul>        </nz-dropdown-menu>      </div>    </nz-header>    <!-- Page Content Container -->    <nz-content class="app-content">      <div class="page-container">        <router-outlet></router-outlet>      </div>    </nz-content>  </nz-layout></nz-layout></div>'
+        var COMPONENT_TEMPLATE = '<div><nz-layout class="app-layout">  <!-- Desktop Sidebar -->  <nz-sider    class="app-sider desktop-sider"    nzCollapsible    [(nzCollapsed)]="isCollapsed"    [nzTrigger]="null"    [nzWidth]="256"    [nzCollapsedWidth]="80"    nzTheme="dark"  >    <div class="sidebar-logo">      <div class="logo-icon-wrapper">        <nz-icon nzType="wallet" nzTheme="outline" />      </div>      <div class="logo-text-wrapper" *ngIf="!isCollapsed">        <span class="logo-title">ATS Management</span>        <span class="logo-subtitle">Finanzas & Control</span>      </div>    </div>    <div class="sidebar-menu-wrapper">      <app-nav-bar [isCollapsed]="isCollapsed"></app-nav-bar>    </div>  </nz-sider>  <!-- Mobile Overlay Drawer (< 768px) -->  <nz-drawer    [nzVisible]="isMobileDrawerVisible"    nzPlacement="left"    [nzClosable]="false"    [nzBodyStyle]="{ padding: \'0\', background: \'#001529\' }"    [nzWidth]="260"    (nzOnClose)="closeMobileDrawer()"  >    <ng-container *nzDrawerContent>      <div class="sidebar-logo">        <div class="logo-icon-wrapper">          <nz-icon nzType="wallet" nzTheme="outline" />        </div>        <div class="logo-text-wrapper">          <span class="logo-title">ATS Management</span>          <span class="logo-subtitle">Finanzas & Control</span>        </div>      </div>      <div class="sidebar-menu-wrapper">        <app-nav-bar [isCollapsed]="false"></app-nav-bar>      </div>    </ng-container>  </nz-drawer>  <!-- Main Layout -->  <nz-layout class="main-layout">    <!-- Header -->    <nz-header class="app-header">      <div class="header-left">        <button          nz-button          nzType="text"          class="collapse-trigger-btn"          (click)="toggleSidebar()"          [nzTooltipTitle]="isMobile ? \'Menú\' : (isCollapsed ? \'Expandir menú lateral\' : \'Colapsar menú lateral\')"          nz-tooltip        >          <nz-icon [nzType]="isMobile ? \'menu\' : (isCollapsed ? \'menu-unfold\' : \'menu-fold\')" />        </button>      </div>      <div class="header-right">        <div          nz-dropdown          [nzDropdownMenu]="userDropdown"          nzPlacement="bottomRight"          class="user-profile-badge"        >          <nz-avatar nzIcon="user" class="header-avatar" nzSize="small"></nz-avatar>          <span class="header-username">{{ userName }}</span>          <nz-icon nzType="down" class="dropdown-chevron" />        </div>        <nz-dropdown-menu #userDropdown="nzDropdownMenu">          <ul nz-menu class="user-dropdown-menu">            <li nz-menu-item disabled class="user-info-item">              <div class="user-info-name">{{ userName }}</div>              <div class="user-info-email" *ngIf="userEmail">{{ userEmail }}</div>            </li>            <li nz-menu-divider></li>            <li nz-menu-item (click)="logout()" class="logout-item">              <nz-icon nzType="logout" nzTheme="outline" />              <span>Cerrar Sesión</span>            </li>          </ul>        </nz-dropdown-menu>      </div>    </nz-header>    <!-- Page Content Container -->    <nz-content class="app-content">      <div class="page-container">        <router-outlet></router-outlet>      </div>    </nz-content>  </nz-layout></nz-layout></div>'
     var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'UserLayoutComponent'};

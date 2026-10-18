@@ -25,6 +25,8 @@ import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
+import { SessionService } from '../../../core/services/session.service';
+
 /**
  * Componente de formulario (`<app-card>`) para crear y editar tarjetas de crédito/débito
  * en `/admin/user/card/new` y `/admin/user/card/edit/:crd_uuid`.
@@ -64,7 +66,7 @@ export class CardComponent implements OnInit {
   /** UUID de la tarjeta que se está editando, o `null` al crear una nueva tarjeta. */
   cardId: string | null = null;
 
-  /** Tipos de tarjeta disponibles (p. ej., Débito, Crédito). */
+  /** Tipos de tarjeta disponibles (p. ej., Débito, Crédito, Efectivo, Caja de Ahorro). */
   cardTypes: TypeCardInterface[] = [];
   /** Marcas de tarjeta disponibles (p. ej., Visa, Mastercard). */
   cardBrands: BrandCardInterface[] = [];
@@ -96,6 +98,7 @@ export class CardComponent implements OnInit {
     private _banksService: BanksService,
     private _cardsService: CardsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {
@@ -103,21 +106,74 @@ export class CardComponent implements OnInit {
       usr_uuid: [{ value: '', disabled: true }],
       crd_uuid: [{ value: '', disabled: true }],
       scp_uuid: [null, Validators.required],
-      crd_alias: [''],
-      crd_maskedcardnumber: ['', [Validators.required]],
-      crd_last4digits: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       tycrd_uuid: ['', Validators.required],
-      brcrd_uuid: ['', Validators.required],
-      ban_uuid: ['', Validators.required],
-      crd_expirationdate: [null, Validators.required],
+      crd_alias: [''],
+      crd_maskedcardnumber: [''],
+      crd_last4digits: [''],
+      brcrd_uuid: [null],
+      ban_uuid: [null],
+      crd_expirationdate: [null],
       crd_creditlimit: [null],
+      crd_cbucvu: [''],
+      crd_cbualias: [''],
       crd_active: [true]
     });
   }
 
   /**
-   * Carga los catálogos paramétricos (ámbitos, tipos de tarjeta, marcas, bancos), obtiene los detalles de la tarjeta si se está editando,
-   * y se suscribe a los cambios de `tycrd_uuid` para limpiar `crd_creditlimit` en tarjetas de Débito.
+   * Obtiene el identificador del usuario autenticado actual.
+   * @returns UUID del usuario autenticado.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
+
+  /**
+   * Obtiene el nombre en minúsculas del tipo de cuenta o tarjeta seleccionado.
+   */
+  get selectedTypeName(): string {
+    const type = this.cardTypes.find(t => t.tycrd_uuid === this.form.get('tycrd_uuid')?.value);
+    return type ? type.tycrd_name.toLowerCase().trim() : '';
+  }
+
+  /**
+   * Indica si el tipo seleccionado corresponde a efectivo.
+   */
+  get isCash(): boolean {
+    return this.selectedTypeName.includes('efectivo');
+  }
+
+  /**
+   * Indica si el tipo seleccionado corresponde a una cuenta bancaria o billetera virtual.
+   */
+  get isBankAccount(): boolean {
+    const name = this.selectedTypeName;
+    return (
+      name.includes('caja de ahorro') ||
+      name.includes('cuenta corriente') ||
+      name.includes('billetera virtual') ||
+      name.includes('billetera') ||
+      name.includes('cuenta')
+    );
+  }
+
+  /**
+   * Indica si el tipo seleccionado corresponde a una tarjeta (débito, crédito o prepaga).
+   */
+  get isCard(): boolean {
+    if (!this.form.get('tycrd_uuid')?.value) return true;
+    return !this.isCash && !this.isBankAccount;
+  }
+
+  /**
+   * Indica si la tarjeta seleccionada es de crédito.
+   */
+  get isCreditCard(): boolean {
+    return this.selectedTypeName.includes('crédito') || this.selectedTypeName.includes('credito');
+  }
+
+  /**
+   * Ciclo de vida de inicialización de Angular. Configura el modo de edición y carga catálogos.
    */
   ngOnInit(): void {
     this.cardId = this.route.snapshot.paramMap.get('crd_uuid');
@@ -131,24 +187,99 @@ export class CardComponent implements OnInit {
       this.loadCard();
     } else {
       this.form.patchValue({
-        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
-      })
+        usr_uuid: this.currentUserId
+      });
       this.form.get('crd_uuid')?.disable();
     }
 
-    // Escuchar cambios en el tipo de tarjeta para limpiar límite de crédito si es débito
+    // Escuchar cambios en el tipo de tarjeta/cuenta para adaptar validaciones
     this.form.get('tycrd_uuid')?.valueChanges.subscribe(value => {
-      if (value === '1') { // Débito
-        this.form.get('crd_creditlimit')?.setValue(null);
-      }
+      this.updateValidators(value);
     });
   }
 
   /**
-   * Carga los ámbitos del usuario y selecciona el primer ámbito si no hay ninguno establecido.
+   * Actualiza dinámicamente las validaciones del formulario según el tipo de registro seleccionado.
+   * @param tycrd_uuid Identificador del tipo de cuenta o tarjeta.
+   */
+  updateValidators(tycrd_uuid: string): void {
+    const type = this.cardTypes.find(t => t.tycrd_uuid === tycrd_uuid);
+    const name = type ? type.tycrd_name.toLowerCase().trim() : '';
+
+    const isCash = name.includes('efectivo');
+    const isBankAccount = name.includes('caja de ahorro') || name.includes('cuenta corriente') || name.includes('billetera virtual') || name.includes('billetera') || name.includes('cuenta');
+    const isCard = !isCash && !isBankAccount;
+
+    const maskedControl = this.form.get('crd_maskedcardnumber');
+    const last4Control = this.form.get('crd_last4digits');
+    const brandControl = this.form.get('brcrd_uuid');
+    const bankControl = this.form.get('ban_uuid');
+    const expControl = this.form.get('crd_expirationdate');
+    const aliasControl = this.form.get('crd_alias');
+    const cbucvuControl = this.form.get('crd_cbucvu');
+
+    if (isCash) {
+      maskedControl?.clearValidators();
+      last4Control?.clearValidators();
+      brandControl?.clearValidators();
+      bankControl?.clearValidators();
+      expControl?.clearValidators();
+      aliasControl?.setValidators([Validators.required]);
+      cbucvuControl?.clearValidators();
+
+      maskedControl?.setValue(null);
+      last4Control?.setValue(null);
+      brandControl?.setValue(null);
+      bankControl?.setValue(null);
+      expControl?.setValue(null);
+      this.form.get('crd_creditlimit')?.setValue(null);
+      this.form.get('crd_cbucvu')?.setValue(null);
+      this.form.get('crd_cbualias')?.setValue(null);
+    } else if (isBankAccount) {
+      maskedControl?.clearValidators();
+      last4Control?.clearValidators();
+      brandControl?.clearValidators();
+      bankControl?.setValidators([Validators.required]);
+      expControl?.clearValidators();
+      aliasControl?.setValidators([Validators.required]);
+      cbucvuControl?.setValidators([Validators.pattern(/^\d{22}$/)]);
+
+      maskedControl?.setValue(null);
+      last4Control?.setValue(null);
+      brandControl?.setValue(null);
+      expControl?.setValue(null);
+      this.form.get('crd_creditlimit')?.setValue(null);
+    } else {
+      maskedControl?.setValidators([Validators.required]);
+      last4Control?.setValidators([Validators.required, Validators.pattern(/^\d{4}$/)]);
+      brandControl?.setValidators([Validators.required]);
+      bankControl?.setValidators([Validators.required]);
+      expControl?.setValidators([Validators.required]);
+      aliasControl?.clearValidators();
+      cbucvuControl?.clearValidators();
+
+      this.form.get('crd_cbucvu')?.setValue(null);
+      this.form.get('crd_cbualias')?.setValue(null);
+      if (!name.includes('crédito') && !name.includes('credito')) {
+        this.form.get('crd_creditlimit')?.setValue(null);
+      }
+    }
+
+    maskedControl?.updateValueAndValidity();
+    last4Control?.updateValueAndValidity();
+    brandControl?.updateValueAndValidity();
+    bankControl?.updateValueAndValidity();
+    expControl?.updateValueAndValidity();
+    aliasControl?.updateValueAndValidity();
+    cbucvuControl?.updateValueAndValidity();
+  }
+
+  /**
+   * Carga los ámbitos contables disponibles para el usuario autenticado.
    */
   loadScopes(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
@@ -162,63 +293,53 @@ export class CardComponent implements OnInit {
   }
 
   /**
-   * Obtiene un registro de tarjeta existente por su UUID y completa el formulario.
+   * Obtiene un registro existente por su UUID y completa el formulario reactivo.
    */
   loadCard(): void {
     this.isLoading = true;
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
 
-    this._cardsService.getCardById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.cardId!).subscribe(
-      (response: any) => {
-        if(response.success) {
-          console.info(response.data);
+    this._cardsService.getCardById(usr_uuid, this.cardId!).subscribe({
+      next: (response: any) => {
+        if (response.success) {
           const card = response.data;
-
           this.form.get('crd_uuid')?.enable();
           this.form.patchValue(card);
           this.form.get('crd_uuid')?.disable();
-          
+          this.updateValidators(card.tycrd_uuid);
           this.isLoading = false;
         } else {
-          //this.status = 'error'
+          this.isLoading = false;
         }
       },
-      (error: any) => {
-        let errorMessage = <any>error;
-        console.log(errorMessage);
-
-        if(errorMessage != null) {
-          //this.status = 'error'
-        }
+      error: (error: any) => {
+        this.isLoading = false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Carga los tipos de tarjeta disponibles desde {@link TypeCardsService}.
+   * Carga los tipos de cuenta y tarjeta disponibles desde {@link TypeCardsService}.
    */
   loadTypeCards(): void {
     this.isLoading = true;
-
-    this._typeCardsService.getTypeCards().subscribe(
-      (response: any) => {
-        if(response.success) {
-          console.info(response.data);
+    this._typeCardsService.getTypeCards().subscribe({
+      next: (response: any) => {
+        if (response.success) {
           this.cardTypes = response.data;
-          
           this.isLoading = false;
-        } else {
-          //this.status = 'error'
+          if (this.form.get('tycrd_uuid')?.value) {
+            this.updateValidators(this.form.get('tycrd_uuid')?.value);
+          }
         }
       },
-      (error: any) => {
-        let errorMessage = <any>error;
-        console.log(errorMessage);
-
-        if(errorMessage != null) {
-          //this.status = 'error'
-        }
+      error: (error: any) => {
+        this.isLoading = false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
@@ -226,59 +347,43 @@ export class CardComponent implements OnInit {
    */
   loadBrandCards(): void {
     this.isLoading = true;
-
-    this._brandCardsService.getBrandCards().subscribe(
-      (response: any) => {
-        if(response.success) {
-          console.info(response.data);
+    this._brandCardsService.getBrandCards().subscribe({
+      next: (response: any) => {
+        if (response.success) {
           this.cardBrands = response.data;
-          
           this.isLoading = false;
-        } else {
-          //this.status = 'error'
         }
       },
-      (error: any) => {
-        let errorMessage = <any>error;
-        console.log(errorMessage);
-
-        if(errorMessage != null) {
-          //this.status = 'error'
-        }
+      error: (error: any) => {
+        this.isLoading = false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Carga los bancos disponibles para el usuario desde {@link BanksService}.
+   * Carga los bancos y entidades financieras disponibles desde {@link BanksService}.
    */
   loadBanks(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading = true;
-
-    this._banksService.getBanks('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
-      (response: any) => {
-        if(response.success) {
-          console.info(response.data);
+    this._banksService.getBanks(usr_uuid).subscribe({
+      next: (response: any) => {
+        if (response.success) {
           this.banks = response.data;
-          
           this.isLoading = false;
-        } else {
-          //this.status = 'error'
         }
       },
-      (error: any) => {
-        let errorMessage = <any>error;
-        console.log(errorMessage);
-
-        if(errorMessage != null) {
-          //this.status = 'error'
-        }
+      error: (error: any) => {
+        this.isLoading = false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Valida y envía el formulario de tarjeta para crear o actualizar el registro de la tarjeta.
+   * Valida y envía el formulario para crear o actualizar el registro.
    */
   onSubmit(): void {
     if (this.form.invalid) {
@@ -294,82 +399,110 @@ export class CardComponent implements OnInit {
 
     this.isLoading = true;
     const rawValue = this.form.getRawValue();
+    rawValue.usr_uuid = this.currentUserId;
 
-    if(!this.isEditing) {
+    if (this.isCash) {
+      rawValue.crd_maskedcardnumber = null;
+      rawValue.crd_last4digits = null;
+      rawValue.brcrd_uuid = null;
+      rawValue.ban_uuid = null;
+      rawValue.crd_expirationdate = null;
+      rawValue.crd_creditlimit = null;
+      rawValue.crd_cbucvu = null;
+      rawValue.crd_cbualias = null;
+    } else if (this.isBankAccount) {
+      rawValue.crd_maskedcardnumber = null;
+      rawValue.crd_last4digits = null;
+      rawValue.brcrd_uuid = null;
+      rawValue.crd_expirationdate = null;
+      rawValue.crd_creditlimit = null;
+      if (!rawValue.crd_cbucvu) rawValue.crd_cbucvu = null;
+      if (!rawValue.crd_cbualias) rawValue.crd_cbualias = null;
+    } else {
+      rawValue.crd_cbucvu = null;
+      rawValue.crd_cbualias = null;
+      if (!this.isCreditCard) {
+        rawValue.crd_creditlimit = null;
+      }
+    }
+
+    if (!this.isEditing) {
       delete rawValue.crd_uuid;
       this._cardsService.saveCard(rawValue).subscribe({
         next: response => {
           this.isLoading = false;
-          if(response.success) {
+          if (response.success) {
             this._messageService.success(
-              'Tarjeta Creada', 
-              'La tarjeta se agregó correctamente.',
+              'Guardado Correctamente', 
+              'La tarjeta o cuenta se agregó correctamente.',
               () => {
                 this.router.navigate(['/admin/user/cards']);
               }
             );
           } else {
-            this._messageService.error('Error', response.message || 'No se pudo guardar la tarjeta');
+            this._messageService.error('Error', response.message || 'No se pudo guardar');
           }
         },
         error: error => {
           this.isLoading = false;
           let errorMessage = <any>error;
           console.error(errorMessage);
-          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al guardar la tarjeta');
+          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al guardar');
         }
       });
     } else {
-      this._cardsService.updateCard(this.form.getRawValue()).subscribe({
+      this._cardsService.updateCard(rawValue).subscribe({
         next: response => {
           this.isLoading = false;
-          if(response.success) {
+          if (response.success) {
             this._messageService.success(
-              'Tarjeta Actualizada', 
-              'La tarjeta se actualizó correctamente.',
+              'Actualizado Correctamente', 
+              'La tarjeta o cuenta se actualizó correctamente.',
               () => {
                 this.router.navigate(['/admin/user/cards']);
               }
             );
           } else {
-            this._messageService.error('Error', response.message || 'No se pudo actualizar la tarjeta');
+            this._messageService.error('Error', response.message || 'No se pudo actualizar');
           }
         },
         error: error => {
           this.isLoading = false;
           let errorMessage = <any>error;
           console.error(errorMessage);
-          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al actualizar la tarjeta');
+          this._messageService.error('Error', errorMessage.error?.error || 'Hubo un problema al actualizar');
         }
       });
     }
   }
 
   /**
-   * Cancela la edición y regresa a la lista de tarjetas (`/admin/user/cards`).
+   * Cancela la operación y regresa al listado de tarjetas y cuentas.
    */
   onCancel(): void {
     this.router.navigate(['/admin/user/cards']);
   }
 
   /**
-   * Devuelve un mensaje de error de validación comprensible para el usuario para un control de formulario determinado.
-   *
-   * @param controlName Nombre del control del formulario.
-   * @returns Mensaje de error de validación o `null`.
+   * Retorna el mensaje de error correspondiente a la validación fallida de un control.
+   * @param controlName Nombre del control en el formulario reactivo.
+   * @returns Mensaje de error para el usuario o undefined.
    */
-  getErrorMessage(controlName: string): string | null {
+  getErrorMessage(controlName: string): string | undefined {
     const control = this.form.get(controlName);
     if (control?.hasError('required')) {
       return 'Este campo es obligatorio';
     }
     if (control?.hasError('pattern')) {
+      if (controlName === 'crd_cbucvu') {
+        return 'El CBU/CVU debe tener exactamente 22 dígitos numéricos';
+      }
       return 'Ingrese exactamente 4 dígitos numéricos';
     }
     if (control?.hasError('min')) {
       return 'El valor mínimo es 0';
     }
-    return null;
+    return undefined;
   }
 
   /** Función formateadora de visualización de moneda. */
@@ -383,7 +516,6 @@ export class CardComponent implements OnInit {
 
   /**
    * Manejador opcional para los cambios en el interruptor de cuotas.
-   *
    * @param value Nuevo estado del interruptor de cuotas.
    */
   onInstallmentsChange(value: boolean): void {

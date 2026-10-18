@@ -480,6 +480,10 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
                                 <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#onSubmit" >onSubmit</a>
                             </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#updateValidators" >updateValidators</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -490,6 +494,43 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
 
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Accesorios</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#currentUserId" >currentUserId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#selectedTypeName" >selectedTypeName</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#isCash" >isCash</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#isBankAccount" >isBankAccount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#isCard" >isCard</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#isCreditCard" >isCreditCard</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
 
     <section data-compodoc="block-constructor">
@@ -498,12 +539,12 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _typeCardsService: <a href="../injectables/TypeCardsService.html" target="_self">TypeCardsService</a>, _brandCardsService: <a href="../injectables/BrandCardsService.html" target="_self">BrandCardsService</a>, _banksService: <a href="../injectables/BanksService.html" target="_self">BanksService</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
+<code>constructor(fb: <a href="https://angular.dev/api/forms/FormBuilder" target="_blank">FormBuilder</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, _typeCardsService: <a href="../injectables/TypeCardsService.html" target="_self">TypeCardsService</a>, _brandCardsService: <a href="../injectables/BrandCardsService.html" target="_self">BrandCardsService</a>, _banksService: <a href="../injectables/BanksService.html" target="_self">BanksService</a>, _cardsService: <a href="../injectables/CardsService.html" target="_self">CardsService</a>, _scopesService: <a href="../injectables/ScopesService.html" target="_self">ScopesService</a>, _sessionService: <a href="../injectables/SessionService.html" target="_self">SessionService</a>, message: <a href="../injectables/MessageService.html" target="_self">NzMessageService</a>, _messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/admin/user/card/card.component.ts:74</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="76" class="link-to-prism">src/app/admin/user/card/card.component.ts:76</a></div>
                             </td>
                         </tr>
 
@@ -652,6 +693,20 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
                                                         </td>
                                                 </tr>
                                                 <tr>
+                                                        <td>_sessionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SessionService.html" target="_self" >SessionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
                                                         <td>message</td>
                                                   
                                                         <td>
@@ -721,15 +776,15 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="361"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:361</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="491"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:491</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Devuelve un mensaje de error de validación comprensible para el usuario para un control de formulario determinado.</p>
+                        <div class="io-description"><p>Retorna el mensaje de error correspondiente a la validación fallida de un control.</p>
 </div>
 
                             <div class="io-description">
@@ -757,7 +812,7 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
 
                                             <td>
-                                                    <p>Nombre del control del formulario.</p>
+                                                    <p>Nombre del control en el formulario reactivo.</p>
 
                                             </td>
                                         </tr>
@@ -765,11 +820,11 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Devuelve : </b>    <code>string | null</code>
+                            <b>Devuelve : </b>    <code>string | undefined</code>
 
                         </div>
                             <div class="io-description">
-                                <p>Mensaje de error de validación o <code>null</code>.</p>
+                                <p>Mensaje de error para el usuario o undefined.</p>
 
                             </div>
                 </td>
@@ -796,15 +851,15 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="255"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:255</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="367"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:367</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Carga los bancos disponibles para el usuario desde <a href="../injectables/BanksService.html">BanksService</a>.</p>
+                        <div class="io-description"><p>Carga los bancos y entidades financieras disponibles desde <a href="../injectables/BanksService.html">BanksService</a>.</p>
 </div>
 
                         <div class="io-description">
@@ -835,8 +890,8 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="227"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:227</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="348"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:348</a></div>
                         </td>
                     </tr>
 
@@ -874,15 +929,15 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="167"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:167</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="298"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:298</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Obtiene un registro de tarjeta existente por su UUID y completa el formulario.</p>
+                        <div class="io-description"><p>Obtiene un registro existente por su UUID y completa el formulario reactivo.</p>
 </div>
 
                         <div class="io-description">
@@ -913,15 +968,15 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="150"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:150</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="280"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:280</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Carga los ámbitos del usuario y selecciona el primer ámbito si no hay ninguno establecido.</p>
+                        <div class="io-description"><p>Carga los ámbitos contables disponibles para el usuario autenticado.</p>
 </div>
 
                         <div class="io-description">
@@ -952,15 +1007,15 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="199"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:199</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="326"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:326</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Carga los tipos de tarjeta disponibles desde <a href="../injectables/TypeCardsService.html">TypeCardsService</a>.</p>
+                        <div class="io-description"><p>Carga los tipos de cuenta y tarjeta disponibles desde <a href="../injectables/TypeCardsService.html">TypeCardsService</a>.</p>
 </div>
 
                         <div class="io-description">
@@ -991,16 +1046,15 @@ de <code>crd_creditlimit</code> cuando el tipo de tarjeta es Débito (<code>tycr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="122"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:122</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="178"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:178</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Carga los catálogos paramétricos (ámbitos, tipos de tarjeta, marcas, bancos), obtiene los detalles de la tarjeta si se está editando,
-y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_creditlimit</code> en tarjetas de Débito.</p>
+                        <div class="io-description"><p>Ciclo de vida de inicialización de Angular. Configura el modo de edición y carga catálogos.</p>
 </div>
 
                         <div class="io-description">
@@ -1031,15 +1085,15 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="351"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:351</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="482"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:482</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Cancela la edición y regresa a la lista de tarjetas (<code>/admin/user/cards</code>).</p>
+                        <div class="io-description"><p>Cancela la operación y regresa al listado de tarjetas y cuentas.</p>
 </div>
 
                         <div class="io-description">
@@ -1070,8 +1124,8 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="389"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:389</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="521"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:521</a></div>
                         </td>
                     </tr>
 
@@ -1144,21 +1198,95 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Definido en <a href="" data-line="283"
-                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:283</a></div>
+                            <div class="io-line">Definido en <a href="" data-line="388"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:388</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Valida y envía el formulario de tarjeta para crear o actualizar el registro de la tarjeta.</p>
+                        <div class="io-description"><p>Valida y envía el formulario para crear o actualizar el registro.</p>
 </div>
 
                         <div class="io-description">
                             <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateValidators"></a>
+                    <span class="name">
+                        <span ><b>updateValidators</b></span>
+                        <a href="#updateValidators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateValidators(tycrd_uuid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="205"
+                                    class="link-to-prism">src/app/admin/user/card/card.component.ts:205</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza dinámicamente las validaciones del formulario según el tipo de registro seleccionado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                                <td>Descripción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tycrd_uuid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Identificador del tipo de cuenta o tarjeta.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -1194,7 +1322,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="72" class="link-to-prism">src/app/admin/user/card/card.component.ts:72</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/admin/user/card/card.component.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -1231,7 +1359,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="70" class="link-to-prism">src/app/admin/user/card/card.component.ts:70</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="72" class="link-to-prism">src/app/admin/user/card/card.component.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -1268,7 +1396,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="65" class="link-to-prism">src/app/admin/user/card/card.component.ts:65</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="67" class="link-to-prism">src/app/admin/user/card/card.component.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -1305,13 +1433,13 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="68" class="link-to-prism">src/app/admin/user/card/card.component.ts:68</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="70" class="link-to-prism">src/app/admin/user/card/card.component.ts:70</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Tipos de tarjeta disponibles (p. ej., Débito, Crédito).</p>
+                    <div class="io-description"><p>Tipos de tarjeta disponibles (p. ej., Débito, Crédito, Efectivo, Caja de Ahorro).</p>
 </div>
                 </td>
             </tr>
@@ -1342,7 +1470,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="380" class="link-to-prism">src/app/admin/user/card/card.component.ts:380</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="513" class="link-to-prism">src/app/admin/user/card/card.component.ts:513</a></div>
                         </td>
                     </tr>
 
@@ -1379,7 +1507,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="382" class="link-to-prism">src/app/admin/user/card/card.component.ts:382</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="515" class="link-to-prism">src/app/admin/user/card/card.component.ts:515</a></div>
                         </td>
                     </tr>
 
@@ -1411,7 +1539,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="59" class="link-to-prism">src/app/admin/user/card/card.component.ts:59</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="61" class="link-to-prism">src/app/admin/user/card/card.component.ts:61</a></div>
                         </td>
                     </tr>
 
@@ -1448,7 +1576,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="376" class="link-to-prism">src/app/admin/user/card/card.component.ts:376</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="509" class="link-to-prism">src/app/admin/user/card/card.component.ts:509</a></div>
                         </td>
                     </tr>
 
@@ -1485,7 +1613,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/admin/user/card/card.component.ts:63</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="65" class="link-to-prism">src/app/admin/user/card/card.component.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -1522,7 +1650,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="61" class="link-to-prism">src/app/admin/user/card/card.component.ts:61</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/admin/user/card/card.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -1559,7 +1687,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="378" class="link-to-prism">src/app/admin/user/card/card.component.ts:378</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="511" class="link-to-prism">src/app/admin/user/card/card.component.ts:511</a></div>
                         </td>
                     </tr>
 
@@ -1596,7 +1724,7 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/admin/user/card/card.component.ts:74</a></div>
+                                <div class="io-line">Definido en <a href="" data-line="76" class="link-to-prism">src/app/admin/user/card/card.component.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -1611,6 +1739,211 @@ y se suscribe a los cambios de <code>tycrd_uuid</code> para limpiar <code>crd_cr
     </table>
 </section>
 
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accesorios
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUserId"></a>
+                        <span class="name"><b>currentUserId</b><a href="#currentUserId"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentUserId()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="127" class="link-to-prism">src/app/admin/user/card/card.component.ts:127</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Obtiene el identificador del usuario autenticado actual.</p>
+</div>
+
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedTypeName"></a>
+                        <span class="name"><b>selectedTypeName</b><a href="#selectedTypeName"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>selectedTypeName()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="134" class="link-to-prism">src/app/admin/user/card/card.component.ts:134</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Obtiene el nombre en minúsculas del tipo de cuenta o tarjeta seleccionado.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCash"></a>
+                        <span class="name"><b>isCash</b><a href="#isCash"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isCash()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="142" class="link-to-prism">src/app/admin/user/card/card.component.ts:142</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Indica si el tipo seleccionado corresponde a efectivo.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isBankAccount"></a>
+                        <span class="name"><b>isBankAccount</b><a href="#isBankAccount"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isBankAccount()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="149" class="link-to-prism">src/app/admin/user/card/card.component.ts:149</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Indica si el tipo seleccionado corresponde a una cuenta bancaria o billetera virtual.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCard"></a>
+                        <span class="name"><b>isCard</b><a href="#isCard"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isCard()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="163" class="link-to-prism">src/app/admin/user/card/card.component.ts:163</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Indica si el tipo seleccionado corresponde a una tarjeta (débito, crédito o prepaga).</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCreditCard"></a>
+                        <span class="name"><b>isCreditCard</b><a href="#isCreditCard"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>isCreditCard()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="171" class="link-to-prism">src/app/admin/user/card/card.component.ts:171</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Indica si la tarjeta seleccionada es de crédito.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
 </div>
 
 
@@ -1641,6 +1974,8 @@ import { ScopesService } from &#x27;../../../core/services/scopes.service&#x27;;
 import { ScopeInterface } from &#x27;../../../core/interfaces/scope.interface&#x27;;
 import { MessageService } from &#x27;../../../core/services/message.service&#x27;;
 import { formatterDollar, parserDollar } from &#x27;../../../core/utils/currency-format&#x27;;
+
+import { SessionService } from &#x27;../../../core/services/session.service&#x27;;
 
 /**
  * Componente de formulario (&#x60;&lt;app-card&gt;&#x60;) para crear y editar tarjetas de crédito/débito
@@ -1681,7 +2016,7 @@ export class CardComponent implements OnInit {
   /** UUID de la tarjeta que se está editando, o &#x60;null&#x60; al crear una nueva tarjeta. */
   cardId: string | null &#x3D; null;
 
-  /** Tipos de tarjeta disponibles (p. ej., Débito, Crédito). */
+  /** Tipos de tarjeta disponibles (p. ej., Débito, Crédito, Efectivo, Caja de Ahorro). */
   cardTypes: TypeCardInterface[] &#x3D; [];
   /** Marcas de tarjeta disponibles (p. ej., Visa, Mastercard). */
   cardBrands: BrandCardInterface[] &#x3D; [];
@@ -1713,6 +2048,7 @@ export class CardComponent implements OnInit {
     private _banksService: BanksService,
     private _cardsService: CardsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {
@@ -1720,21 +2056,74 @@ export class CardComponent implements OnInit {
       usr_uuid: [{ value: &#x27;&#x27;, disabled: true }],
       crd_uuid: [{ value: &#x27;&#x27;, disabled: true }],
       scp_uuid: [null, Validators.required],
-      crd_alias: [&#x27;&#x27;],
-      crd_maskedcardnumber: [&#x27;&#x27;, [Validators.required]],
-      crd_last4digits: [&#x27;&#x27;, [Validators.required, Validators.pattern(/^\d{4}$/)]],
       tycrd_uuid: [&#x27;&#x27;, Validators.required],
-      brcrd_uuid: [&#x27;&#x27;, Validators.required],
-      ban_uuid: [&#x27;&#x27;, Validators.required],
-      crd_expirationdate: [null, Validators.required],
+      crd_alias: [&#x27;&#x27;],
+      crd_maskedcardnumber: [&#x27;&#x27;],
+      crd_last4digits: [&#x27;&#x27;],
+      brcrd_uuid: [null],
+      ban_uuid: [null],
+      crd_expirationdate: [null],
       crd_creditlimit: [null],
+      crd_cbucvu: [&#x27;&#x27;],
+      crd_cbualias: [&#x27;&#x27;],
       crd_active: [true]
     });
   }
 
   /**
-   * Carga los catálogos paramétricos (ámbitos, tipos de tarjeta, marcas, bancos), obtiene los detalles de la tarjeta si se está editando,
-   * y se suscribe a los cambios de &#x60;tycrd_uuid&#x60; para limpiar &#x60;crd_creditlimit&#x60; en tarjetas de Débito.
+   * Obtiene el identificador del usuario autenticado actual.
+   * @returns UUID del usuario autenticado.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || &#x27;&#x27;;
+  }
+
+  /**
+   * Obtiene el nombre en minúsculas del tipo de cuenta o tarjeta seleccionado.
+   */
+  get selectedTypeName(): string {
+    const type &#x3D; this.cardTypes.find(t &#x3D;&gt; t.tycrd_uuid &#x3D;&#x3D;&#x3D; this.form.get(&#x27;tycrd_uuid&#x27;)?.value);
+    return type ? type.tycrd_name.toLowerCase().trim() : &#x27;&#x27;;
+  }
+
+  /**
+   * Indica si el tipo seleccionado corresponde a efectivo.
+   */
+  get isCash(): boolean {
+    return this.selectedTypeName.includes(&#x27;efectivo&#x27;);
+  }
+
+  /**
+   * Indica si el tipo seleccionado corresponde a una cuenta bancaria o billetera virtual.
+   */
+  get isBankAccount(): boolean {
+    const name &#x3D; this.selectedTypeName;
+    return (
+      name.includes(&#x27;caja de ahorro&#x27;) ||
+      name.includes(&#x27;cuenta corriente&#x27;) ||
+      name.includes(&#x27;billetera virtual&#x27;) ||
+      name.includes(&#x27;billetera&#x27;) ||
+      name.includes(&#x27;cuenta&#x27;)
+    );
+  }
+
+  /**
+   * Indica si el tipo seleccionado corresponde a una tarjeta (débito, crédito o prepaga).
+   */
+  get isCard(): boolean {
+    if (!this.form.get(&#x27;tycrd_uuid&#x27;)?.value) return true;
+    return !this.isCash &amp;&amp; !this.isBankAccount;
+  }
+
+  /**
+   * Indica si la tarjeta seleccionada es de crédito.
+   */
+  get isCreditCard(): boolean {
+    return this.selectedTypeName.includes(&#x27;crédito&#x27;) || this.selectedTypeName.includes(&#x27;credito&#x27;);
+  }
+
+  /**
+   * Ciclo de vida de inicialización de Angular. Configura el modo de edición y carga catálogos.
    */
   ngOnInit(): void {
     this.cardId &#x3D; this.route.snapshot.paramMap.get(&#x27;crd_uuid&#x27;);
@@ -1748,24 +2137,99 @@ export class CardComponent implements OnInit {
       this.loadCard();
     } else {
       this.form.patchValue({
-        usr_uuid: &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;
-      })
+        usr_uuid: this.currentUserId
+      });
       this.form.get(&#x27;crd_uuid&#x27;)?.disable();
     }
 
-    // Escuchar cambios en el tipo de tarjeta para limpiar límite de crédito si es débito
+    // Escuchar cambios en el tipo de tarjeta/cuenta para adaptar validaciones
     this.form.get(&#x27;tycrd_uuid&#x27;)?.valueChanges.subscribe(value &#x3D;&gt; {
-      if (value &#x3D;&#x3D;&#x3D; &#x27;1&#x27;) { // Débito
-        this.form.get(&#x27;crd_creditlimit&#x27;)?.setValue(null);
-      }
+      this.updateValidators(value);
     });
   }
 
   /**
-   * Carga los ámbitos del usuario y selecciona el primer ámbito si no hay ninguno establecido.
+   * Actualiza dinámicamente las validaciones del formulario según el tipo de registro seleccionado.
+   * @param tycrd_uuid Identificador del tipo de cuenta o tarjeta.
+   */
+  updateValidators(tycrd_uuid: string): void {
+    const type &#x3D; this.cardTypes.find(t &#x3D;&gt; t.tycrd_uuid &#x3D;&#x3D;&#x3D; tycrd_uuid);
+    const name &#x3D; type ? type.tycrd_name.toLowerCase().trim() : &#x27;&#x27;;
+
+    const isCash &#x3D; name.includes(&#x27;efectivo&#x27;);
+    const isBankAccount &#x3D; name.includes(&#x27;caja de ahorro&#x27;) || name.includes(&#x27;cuenta corriente&#x27;) || name.includes(&#x27;billetera virtual&#x27;) || name.includes(&#x27;billetera&#x27;) || name.includes(&#x27;cuenta&#x27;);
+    const isCard &#x3D; !isCash &amp;&amp; !isBankAccount;
+
+    const maskedControl &#x3D; this.form.get(&#x27;crd_maskedcardnumber&#x27;);
+    const last4Control &#x3D; this.form.get(&#x27;crd_last4digits&#x27;);
+    const brandControl &#x3D; this.form.get(&#x27;brcrd_uuid&#x27;);
+    const bankControl &#x3D; this.form.get(&#x27;ban_uuid&#x27;);
+    const expControl &#x3D; this.form.get(&#x27;crd_expirationdate&#x27;);
+    const aliasControl &#x3D; this.form.get(&#x27;crd_alias&#x27;);
+    const cbucvuControl &#x3D; this.form.get(&#x27;crd_cbucvu&#x27;);
+
+    if (isCash) {
+      maskedControl?.clearValidators();
+      last4Control?.clearValidators();
+      brandControl?.clearValidators();
+      bankControl?.clearValidators();
+      expControl?.clearValidators();
+      aliasControl?.setValidators([Validators.required]);
+      cbucvuControl?.clearValidators();
+
+      maskedControl?.setValue(null);
+      last4Control?.setValue(null);
+      brandControl?.setValue(null);
+      bankControl?.setValue(null);
+      expControl?.setValue(null);
+      this.form.get(&#x27;crd_creditlimit&#x27;)?.setValue(null);
+      this.form.get(&#x27;crd_cbucvu&#x27;)?.setValue(null);
+      this.form.get(&#x27;crd_cbualias&#x27;)?.setValue(null);
+    } else if (isBankAccount) {
+      maskedControl?.clearValidators();
+      last4Control?.clearValidators();
+      brandControl?.clearValidators();
+      bankControl?.setValidators([Validators.required]);
+      expControl?.clearValidators();
+      aliasControl?.setValidators([Validators.required]);
+      cbucvuControl?.setValidators([Validators.pattern(/^\d{22}$/)]);
+
+      maskedControl?.setValue(null);
+      last4Control?.setValue(null);
+      brandControl?.setValue(null);
+      expControl?.setValue(null);
+      this.form.get(&#x27;crd_creditlimit&#x27;)?.setValue(null);
+    } else {
+      maskedControl?.setValidators([Validators.required]);
+      last4Control?.setValidators([Validators.required, Validators.pattern(/^\d{4}$/)]);
+      brandControl?.setValidators([Validators.required]);
+      bankControl?.setValidators([Validators.required]);
+      expControl?.setValidators([Validators.required]);
+      aliasControl?.clearValidators();
+      cbucvuControl?.clearValidators();
+
+      this.form.get(&#x27;crd_cbucvu&#x27;)?.setValue(null);
+      this.form.get(&#x27;crd_cbualias&#x27;)?.setValue(null);
+      if (!name.includes(&#x27;crédito&#x27;) &amp;&amp; !name.includes(&#x27;credito&#x27;)) {
+        this.form.get(&#x27;crd_creditlimit&#x27;)?.setValue(null);
+      }
+    }
+
+    maskedControl?.updateValueAndValidity();
+    last4Control?.updateValueAndValidity();
+    brandControl?.updateValueAndValidity();
+    bankControl?.updateValueAndValidity();
+    expControl?.updateValueAndValidity();
+    aliasControl?.updateValueAndValidity();
+    cbucvuControl?.updateValueAndValidity();
+  }
+
+  /**
+   * Carga los ámbitos contables disponibles para el usuario autenticado.
    */
   loadScopes(): void {
-    const usr_uuid &#x3D; &#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;;
+    const usr_uuid &#x3D; this.currentUserId;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) &#x3D;&gt; {
         if (response.success &amp;&amp; response.data.length &gt; 0) {
@@ -1779,63 +2243,53 @@ export class CardComponent implements OnInit {
   }
 
   /**
-   * Obtiene un registro de tarjeta existente por su UUID y completa el formulario.
+   * Obtiene un registro existente por su UUID y completa el formulario reactivo.
    */
   loadCard(): void {
     this.isLoading &#x3D; true;
+    const usr_uuid &#x3D; this.currentUserId;
+    if (!usr_uuid) return;
 
-    this._cardsService.getCardById(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;, this.cardId!).subscribe(
-      (response: any) &#x3D;&gt; {
-        if(response.success) {
-          console.info(response.data);
+    this._cardsService.getCardById(usr_uuid, this.cardId!).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
           const card &#x3D; response.data;
-
           this.form.get(&#x27;crd_uuid&#x27;)?.enable();
           this.form.patchValue(card);
           this.form.get(&#x27;crd_uuid&#x27;)?.disable();
-          
+          this.updateValidators(card.tycrd_uuid);
           this.isLoading &#x3D; false;
         } else {
-          //this.status &#x3D; &#x27;error&#x27;
+          this.isLoading &#x3D; false;
         }
       },
-      (error: any) &#x3D;&gt; {
-        let errorMessage &#x3D; &lt;any&gt;error;
-        console.log(errorMessage);
-
-        if(errorMessage !&#x3D; null) {
-          //this.status &#x3D; &#x27;error&#x27;
-        }
+      error: (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Carga los tipos de tarjeta disponibles desde {@link TypeCardsService}.
+   * Carga los tipos de cuenta y tarjeta disponibles desde {@link TypeCardsService}.
    */
   loadTypeCards(): void {
     this.isLoading &#x3D; true;
-
-    this._typeCardsService.getTypeCards().subscribe(
-      (response: any) &#x3D;&gt; {
-        if(response.success) {
-          console.info(response.data);
+    this._typeCardsService.getTypeCards().subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
           this.cardTypes &#x3D; response.data;
-          
           this.isLoading &#x3D; false;
-        } else {
-          //this.status &#x3D; &#x27;error&#x27;
+          if (this.form.get(&#x27;tycrd_uuid&#x27;)?.value) {
+            this.updateValidators(this.form.get(&#x27;tycrd_uuid&#x27;)?.value);
+          }
         }
       },
-      (error: any) &#x3D;&gt; {
-        let errorMessage &#x3D; &lt;any&gt;error;
-        console.log(errorMessage);
-
-        if(errorMessage !&#x3D; null) {
-          //this.status &#x3D; &#x27;error&#x27;
-        }
+      error: (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
@@ -1843,59 +2297,43 @@ export class CardComponent implements OnInit {
    */
   loadBrandCards(): void {
     this.isLoading &#x3D; true;
-
-    this._brandCardsService.getBrandCards().subscribe(
-      (response: any) &#x3D;&gt; {
-        if(response.success) {
-          console.info(response.data);
+    this._brandCardsService.getBrandCards().subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
           this.cardBrands &#x3D; response.data;
-          
           this.isLoading &#x3D; false;
-        } else {
-          //this.status &#x3D; &#x27;error&#x27;
         }
       },
-      (error: any) &#x3D;&gt; {
-        let errorMessage &#x3D; &lt;any&gt;error;
-        console.log(errorMessage);
-
-        if(errorMessage !&#x3D; null) {
-          //this.status &#x3D; &#x27;error&#x27;
-        }
+      error: (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Carga los bancos disponibles para el usuario desde {@link BanksService}.
+   * Carga los bancos y entidades financieras disponibles desde {@link BanksService}.
    */
   loadBanks(): void {
+    const usr_uuid &#x3D; this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading &#x3D; true;
-
-    this._banksService.getBanks(&#x27;7a067c90-bf5b-45d1-8f07-91b578e2d54d&#x27;).subscribe(
-      (response: any) &#x3D;&gt; {
-        if(response.success) {
-          console.info(response.data);
+    this._banksService.getBanks(usr_uuid).subscribe({
+      next: (response: any) &#x3D;&gt; {
+        if (response.success) {
           this.banks &#x3D; response.data;
-          
           this.isLoading &#x3D; false;
-        } else {
-          //this.status &#x3D; &#x27;error&#x27;
         }
       },
-      (error: any) &#x3D;&gt; {
-        let errorMessage &#x3D; &lt;any&gt;error;
-        console.log(errorMessage);
-
-        if(errorMessage !&#x3D; null) {
-          //this.status &#x3D; &#x27;error&#x27;
-        }
+      error: (error: any) &#x3D;&gt; {
+        this.isLoading &#x3D; false;
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Valida y envía el formulario de tarjeta para crear o actualizar el registro de la tarjeta.
+   * Valida y envía el formulario para crear o actualizar el registro.
    */
   onSubmit(): void {
     if (this.form.invalid) {
@@ -1911,82 +2349,110 @@ export class CardComponent implements OnInit {
 
     this.isLoading &#x3D; true;
     const rawValue &#x3D; this.form.getRawValue();
+    rawValue.usr_uuid &#x3D; this.currentUserId;
 
-    if(!this.isEditing) {
+    if (this.isCash) {
+      rawValue.crd_maskedcardnumber &#x3D; null;
+      rawValue.crd_last4digits &#x3D; null;
+      rawValue.brcrd_uuid &#x3D; null;
+      rawValue.ban_uuid &#x3D; null;
+      rawValue.crd_expirationdate &#x3D; null;
+      rawValue.crd_creditlimit &#x3D; null;
+      rawValue.crd_cbucvu &#x3D; null;
+      rawValue.crd_cbualias &#x3D; null;
+    } else if (this.isBankAccount) {
+      rawValue.crd_maskedcardnumber &#x3D; null;
+      rawValue.crd_last4digits &#x3D; null;
+      rawValue.brcrd_uuid &#x3D; null;
+      rawValue.crd_expirationdate &#x3D; null;
+      rawValue.crd_creditlimit &#x3D; null;
+      if (!rawValue.crd_cbucvu) rawValue.crd_cbucvu &#x3D; null;
+      if (!rawValue.crd_cbualias) rawValue.crd_cbualias &#x3D; null;
+    } else {
+      rawValue.crd_cbucvu &#x3D; null;
+      rawValue.crd_cbualias &#x3D; null;
+      if (!this.isCreditCard) {
+        rawValue.crd_creditlimit &#x3D; null;
+      }
+    }
+
+    if (!this.isEditing) {
       delete rawValue.crd_uuid;
       this._cardsService.saveCard(rawValue).subscribe({
         next: response &#x3D;&gt; {
           this.isLoading &#x3D; false;
-          if(response.success) {
+          if (response.success) {
             this._messageService.success(
-              &#x27;Tarjeta Creada&#x27;, 
-              &#x27;La tarjeta se agregó correctamente.&#x27;,
+              &#x27;Guardado Correctamente&#x27;, 
+              &#x27;La tarjeta o cuenta se agregó correctamente.&#x27;,
               () &#x3D;&gt; {
                 this.router.navigate([&#x27;/admin/user/cards&#x27;]);
               }
             );
           } else {
-            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo guardar la tarjeta&#x27;);
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo guardar&#x27;);
           }
         },
         error: error &#x3D;&gt; {
           this.isLoading &#x3D; false;
           let errorMessage &#x3D; &lt;any&gt;error;
           console.error(errorMessage);
-          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al guardar la tarjeta&#x27;);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al guardar&#x27;);
         }
       });
     } else {
-      this._cardsService.updateCard(this.form.getRawValue()).subscribe({
+      this._cardsService.updateCard(rawValue).subscribe({
         next: response &#x3D;&gt; {
           this.isLoading &#x3D; false;
-          if(response.success) {
+          if (response.success) {
             this._messageService.success(
-              &#x27;Tarjeta Actualizada&#x27;, 
-              &#x27;La tarjeta se actualizó correctamente.&#x27;,
+              &#x27;Actualizado Correctamente&#x27;, 
+              &#x27;La tarjeta o cuenta se actualizó correctamente.&#x27;,
               () &#x3D;&gt; {
                 this.router.navigate([&#x27;/admin/user/cards&#x27;]);
               }
             );
           } else {
-            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar la tarjeta&#x27;);
+            this._messageService.error(&#x27;Error&#x27;, response.message || &#x27;No se pudo actualizar&#x27;);
           }
         },
         error: error &#x3D;&gt; {
           this.isLoading &#x3D; false;
           let errorMessage &#x3D; &lt;any&gt;error;
           console.error(errorMessage);
-          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al actualizar la tarjeta&#x27;);
+          this._messageService.error(&#x27;Error&#x27;, errorMessage.error?.error || &#x27;Hubo un problema al actualizar&#x27;);
         }
       });
     }
   }
 
   /**
-   * Cancela la edición y regresa a la lista de tarjetas (&#x60;/admin/user/cards&#x60;).
+   * Cancela la operación y regresa al listado de tarjetas y cuentas.
    */
   onCancel(): void {
     this.router.navigate([&#x27;/admin/user/cards&#x27;]);
   }
 
   /**
-   * Devuelve un mensaje de error de validación comprensible para el usuario para un control de formulario determinado.
-   *
-   * @param controlName Nombre del control del formulario.
-   * @returns Mensaje de error de validación o &#x60;null&#x60;.
+   * Retorna el mensaje de error correspondiente a la validación fallida de un control.
+   * @param controlName Nombre del control en el formulario reactivo.
+   * @returns Mensaje de error para el usuario o undefined.
    */
-  getErrorMessage(controlName: string): string | null {
+  getErrorMessage(controlName: string): string | undefined {
     const control &#x3D; this.form.get(controlName);
     if (control?.hasError(&#x27;required&#x27;)) {
       return &#x27;Este campo es obligatorio&#x27;;
     }
     if (control?.hasError(&#x27;pattern&#x27;)) {
+      if (controlName &#x3D;&#x3D;&#x3D; &#x27;crd_cbucvu&#x27;) {
+        return &#x27;El CBU/CVU debe tener exactamente 22 dígitos numéricos&#x27;;
+      }
       return &#x27;Ingrese exactamente 4 dígitos numéricos&#x27;;
     }
     if (control?.hasError(&#x27;min&#x27;)) {
       return &#x27;El valor mínimo es 0&#x27;;
     }
-    return null;
+    return undefined;
   }
 
   /** Función formateadora de visualización de moneda. */
@@ -2000,7 +2466,6 @@ export class CardComponent implements OnInit {
 
   /**
    * Manejador opcional para los cambios en el interruptor de cuotas.
-   *
    * @param value Nuevo estado del interruptor de cuotas.
    */
   onInstallmentsChange(value: boolean): void {
@@ -2013,8 +2478,8 @@ export class CardComponent implements OnInit {
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;card-form-container&quot;&gt;
   &lt;div class&#x3D;&quot;form-header&quot;&gt;
     &lt;h2&gt;
-      &lt;i nz-icon nzType&#x3D;&quot;credit-card&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
-      {{ isEditing ? &#x27;Editar Tarjeta&#x27; : &#x27;Nueva Tarjeta&#x27; }}
+      &lt;i nz-icon [nzType]&#x3D;&quot;isCash ? &#x27;wallet&#x27; : (isBankAccount ? &#x27;bank&#x27; : &#x27;credit-card&#x27;)&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+      {{ isEditing ? &#x27;Editar Cuenta / Tarjeta&#x27; : &#x27;Nueva Cuenta / Tarjeta&#x27; }}
     &lt;/h2&gt;
     &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;onCancel()&quot;&gt;
       &lt;i nz-icon nzType&#x3D;&quot;close&quot;&gt;&lt;/i&gt;
@@ -2040,199 +2505,284 @@ export class CardComponent implements OnInit {
         &lt;/nz-col&gt;
       &lt;/nz-row&gt;
 
-      &lt;!-- Ámbito y Alias --&gt;
+      &lt;!-- Ámbito y Tipo de Cuenta / Tarjeta --&gt;
       &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
         &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
           &lt;nz-form-item&gt;
             &lt;nz-form-label nzFor&#x3D;&quot;scp_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
               Ámbito / Contexto
             &lt;/nz-form-label&gt;
-            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; nzErrorTip&#x3D;&quot;Seleccione el ámbito de la tarjeta&quot;&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; nzErrorTip&#x3D;&quot;Seleccione el ámbito&quot;&gt;
               &lt;nz-select formControlName&#x3D;&quot;scp_uuid&quot; placeholder&#x3D;&quot;Seleccione ámbito (Personal / Emprendimiento)&quot; nzSize&#x3D;&quot;large&quot;&gt;
                 @for (scope of scopes; track scope.scp_uuid) {
-                  &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;(scope.scp_isshared ? &#x27;🏢 &#x27; : &#x27;👤 &#x27;) + scope.scp_name&quot;&gt;&lt;/nz-option&gt;
+                  &lt;nz-option [nzValue]&#x3D;&quot;scope.scp_uuid&quot; [nzLabel]&#x3D;&quot;scope.scp_name&quot; [nzCustomContent]&#x3D;&quot;true&quot;&gt;
+                    &lt;i nz-icon [nzType]&#x3D;&quot;scope.scp_isshared ? &#x27;bank&#x27; : &#x27;user&#x27;&quot; style&#x3D;&quot;margin-right: 6px;&quot;&gt;&lt;/i&gt;
+                    {{ scope.scp_name }}
+                  &lt;/nz-option&gt;
                 }
               &lt;/nz-select&gt;
-              &lt;small class&#x3D;&quot;form-text&quot;&gt;Indica si los gastos pertenecen al negocio o son de uso personal&lt;/small&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Indica a qué ámbito pertenece esta cuenta o tarjeta&lt;/small&gt;
             &lt;/nz-form-control&gt;
           &lt;/nz-form-item&gt;
         &lt;/nz-col&gt;
 
         &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
-          &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;crd_alias&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
-              Alias / Nombre Identificador
-            &lt;/nz-form-label&gt;
-            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
-              &lt;input nz-input formControlName&#x3D;&quot;crd_alias&quot; placeholder&#x3D;&quot;Ej: Débito Santander Negocio, Visa BBVA Personal&quot; nzSize&#x3D;&quot;large&quot; /&gt;
-              &lt;small class&#x3D;&quot;form-text&quot;&gt;Nombre fácil de recordar para identificarla en los gastos&lt;/small&gt;
-            &lt;/nz-form-control&gt;
-          &lt;/nz-form-item&gt;
-        &lt;/nz-col&gt;
-      &lt;/nz-row&gt;
-
-      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
-          &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;crd_maskedcardnumber&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
-              Numero de Tarjeta
-            &lt;/nz-form-label&gt;
-            &lt;nz-form-control 
-              [nzSpan]&#x3D;&quot;24&quot;
-              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_maskedcardnumber&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_maskedcardnumber&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
-              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;crd_maskedcardnumber&#x27;) }}&quot;
-            &gt;
-              &lt;input 
-                nz-input 
-                formControlName&#x3D;&quot;crd_maskedcardnumber&quot; 
-                placeholder&#x3D;&quot;xxxx xxxx xxxx 1234&quot;
-                maxlength&#x3D;&quot;4&quot;
-                nzSize&#x3D;&quot;large&quot;
-              /&gt;
-              &lt;small class&#x3D;&quot;form-text&quot;&gt;Ingrese solo los últimos 4 dígitos de la tarjeta&lt;/small&gt;
-            &lt;/nz-form-control&gt;
-          &lt;/nz-form-item&gt;
-        &lt;/nz-col&gt;
-
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
-          &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;crd_last4digits&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
-              Últimos 4 Dígitos
-            &lt;/nz-form-label&gt;
-            &lt;nz-form-control 
-              [nzSpan]&#x3D;&quot;24&quot;
-              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_last4digits&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_last4digits&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
-              nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;crd_last4digits&#x27;) }}&quot;
-            &gt;
-              &lt;input 
-                nz-input 
-                formControlName&#x3D;&quot;crd_last4digits&quot; 
-                placeholder&#x3D;&quot;1234&quot;
-                maxlength&#x3D;&quot;4&quot;
-                nzSize&#x3D;&quot;large&quot;
-              /&gt;
-              &lt;small class&#x3D;&quot;form-text&quot;&gt;Ingrese solo los últimos 4 dígitos de la tarjeta&lt;/small&gt;
-            &lt;/nz-form-control&gt;
-          &lt;/nz-form-item&gt;
-        &lt;/nz-col&gt;
-      &lt;/nz-row&gt;
-
-      &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
           &lt;nz-form-item&gt;
             &lt;nz-form-label nzFor&#x3D;&quot;tycrd_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
-              Tipo de Tarjeta
+              Tipo de Cuenta / Tarjeta
             &lt;/nz-form-label&gt;
             &lt;nz-form-control 
               [nzSpan]&#x3D;&quot;24&quot;
               [nzValidateStatus]&#x3D;&quot;form.get(&#x27;tycrd_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;tycrd_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
-              nzErrorTip&#x3D;&quot;Seleccione un tipo de tarjeta&quot;
+              nzErrorTip&#x3D;&quot;Seleccione un tipo&quot;
             &gt;
               &lt;nz-select 
                 formControlName&#x3D;&quot;tycrd_uuid&quot; 
-                placeholder&#x3D;&quot;Seleccione tipo&quot;
+                placeholder&#x3D;&quot;Seleccione tipo (Efectivo, Caja de Ahorro, Débito, etc.)&quot;
                 nzSize&#x3D;&quot;large&quot;
               &gt;
                 @for (type of cardTypes; track type.tycrd_uuid) {
                   &lt;nz-option [nzValue]&#x3D;&quot;type.tycrd_uuid&quot; [nzLabel]&#x3D;&quot;type.tycrd_name&quot;&gt;&lt;/nz-option&gt;
                 }
               &lt;/nz-select&gt;
-            &lt;/nz-form-control&gt;
-          &lt;/nz-form-item&gt;
-        &lt;/nz-col&gt;
-
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
-          &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;brcrd_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
-              Marca
-            &lt;/nz-form-label&gt;
-            &lt;nz-form-control 
-              [nzSpan]&#x3D;&quot;24&quot;
-              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;brcrd_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;brcrd_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
-              nzErrorTip&#x3D;&quot;Seleccione una marca&quot;
-            &gt;
-              &lt;nz-select 
-                formControlName&#x3D;&quot;brcrd_uuid&quot; 
-                placeholder&#x3D;&quot;Seleccione marca&quot;
-                nzSize&#x3D;&quot;large&quot;
-              &gt;
-                @for (brand of cardBrands; track brand.brcrd_uuid) {
-                  &lt;nz-option [nzValue]&#x3D;&quot;brand.brcrd_uuid&quot; [nzLabel]&#x3D;&quot;brand.brcrd_name&quot;&gt;&lt;/nz-option&gt;
-                }
-              &lt;/nz-select&gt;
-            &lt;/nz-form-control&gt;
-          &lt;/nz-form-item&gt;
-        &lt;/nz-col&gt;
-
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
-          &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;ban_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
-              Banco
-            &lt;/nz-form-label&gt;
-            &lt;nz-form-control 
-              [nzSpan]&#x3D;&quot;24&quot;
-              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;ban_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;ban_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
-              nzErrorTip&#x3D;&quot;Seleccione un banco&quot;
-            &gt;
-              &lt;nz-select 
-                formControlName&#x3D;&quot;ban_uuid&quot; 
-                placeholder&#x3D;&quot;Seleccione banco&quot;
-                nzSize&#x3D;&quot;large&quot;
-              &gt;
-                @for (bank of banks; track bank.ban_uuid) {
-                  &lt;nz-option [nzValue]&#x3D;&quot;bank.ban_uuid&quot; [nzLabel]&#x3D;&quot;bank.ban_name&quot;&gt;&lt;/nz-option&gt;
-                }
-              &lt;/nz-select&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Define el comportamiento y los campos requeridos&lt;/small&gt;
             &lt;/nz-form-control&gt;
           &lt;/nz-form-item&gt;
         &lt;/nz-col&gt;
       &lt;/nz-row&gt;
 
+      &lt;!-- Alias / Nombre Identificador --&gt;
       &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
           &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;crd_expirationdate&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
-              Fecha de Vencimiento
+            &lt;nz-form-label nzFor&#x3D;&quot;crd_alias&quot; [nzSpan]&#x3D;&quot;24&quot; [nzRequired]&#x3D;&quot;isCash || isBankAccount&quot;&gt;
+              Alias / Nombre Identificador
             &lt;/nz-form-label&gt;
-            &lt;nz-form-control 
-              [nzSpan]&#x3D;&quot;24&quot;
-              [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_expirationdate&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_expirationdate&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
-              nzErrorTip&#x3D;&quot;Seleccione una fecha de vencimiento&quot;
-            &gt;
-              &lt;nz-date-picker 
-                formControlName&#x3D;&quot;crd_expirationdate&quot; 
-                nzFormat&#x3D;&quot;MM/yyyy&quot;
-                nzPicker&#x3D;&quot;month&quot;
-                nzPlaceHolder&#x3D;&quot;Seleccione mes/año&quot;
-                nzSize&#x3D;&quot;large&quot;
-                style&#x3D;&quot;width: 100%&quot;
-              &gt;&lt;/nz-date-picker&gt;
-            &lt;/nz-form-control&gt;
-          &lt;/nz-form-item&gt;
-        &lt;/nz-col&gt;
-
-        &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
-          &lt;nz-form-item&gt;
-            &lt;nz-form-label nzFor&#x3D;&quot;crd_creditlimit&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
-              Límite de Crédito
-            &lt;/nz-form-label&gt;
-            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
-              &lt;nz-input-number 
-                formControlName&#x3D;&quot;crd_creditlimit&quot; 
-                nzPlaceHolder&#x3D;&quot;0.00&quot;
-                [nzMin]&#x3D;&quot;0&quot;
-                [nzStep]&#x3D;&quot;1000&quot;
-                [nzFormatter]&#x3D;&quot;formatterDollar&quot;
-                [nzParser]&#x3D;&quot;parserDollar&quot;
-                style&#x3D;&quot;width: 100%&quot;
-                nzSize&#x3D;&quot;large&quot;
-              &gt;&lt;/nz-input-number&gt;
-              &lt;small class&#x3D;&quot;form-text&quot;&gt;Solo para tarjetas de crédito&lt;/small&gt;
+            &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot; [nzErrorTip]&#x3D;&quot;getErrorMessage(&#x27;crd_alias&#x27;)&quot;&gt;
+              &lt;input 
+                nz-input 
+                formControlName&#x3D;&quot;crd_alias&quot; 
+                [placeholder]&#x3D;&quot;isCash ? &#x27;Ej: Billetera Personal, Caja Chica Taller&#x27; : (isBankAccount ? &#x27;Ej: Caja de Ahorro Santander, MP Cobros&#x27; : &#x27;Ej: Visa Negocio, Débito BBVA&#x27;)&quot; 
+                nzSize&#x3D;&quot;large&quot; 
+              /&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Nombre fácil de recordar para identificarla en transacciones y reportes&lt;/small&gt;
             &lt;/nz-form-control&gt;
           &lt;/nz-form-item&gt;
         &lt;/nz-col&gt;
       &lt;/nz-row&gt;
 
+      &lt;!-- SECCIÓN: CUENTAS BANCARIAS Y BILLETERAS VIRTUALES --&gt;
+      @if (isBankAccount) {
+        &lt;nz-divider nzText&#x3D;&quot;Datos Bancarios / Financieros&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;ban_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Banco / Entidad
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;ban_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;ban_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;Seleccione un banco o entidad&quot;
+              &gt;
+                &lt;nz-select 
+                  formControlName&#x3D;&quot;ban_uuid&quot; 
+                  placeholder&#x3D;&quot;Seleccione banco&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                &gt;
+                  @for (bank of banks; track bank.ban_uuid) {
+                    &lt;nz-option [nzValue]&#x3D;&quot;bank.ban_uuid&quot; [nzLabel]&#x3D;&quot;bank.ban_name&quot;&gt;&lt;/nz-option&gt;
+                  }
+                &lt;/nz-select&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;crd_cbucvu&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+                CBU / CVU (22 dígitos)
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_cbucvu&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_cbucvu&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                [nzErrorTip]&#x3D;&quot;getErrorMessage(&#x27;crd_cbucvu&#x27;)&quot;
+              &gt;
+                &lt;input 
+                  nz-input 
+                  formControlName&#x3D;&quot;crd_cbucvu&quot; 
+                  placeholder&#x3D;&quot;0000000000000000000000&quot;
+                  maxlength&#x3D;&quot;22&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                /&gt;
+                &lt;small class&#x3D;&quot;form-text&quot;&gt;Clave Bancaria Uniforme (opcional)&lt;/small&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;8&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;crd_cbualias&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+                Alias CBU / CVU
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;input 
+                  nz-input 
+                  formControlName&#x3D;&quot;crd_cbualias&quot; 
+                  placeholder&#x3D;&quot;Ej: mi.cuenta.banco&quot;
+                  maxlength&#x3D;&quot;100&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                /&gt;
+                &lt;small class&#x3D;&quot;form-text&quot;&gt;Alias para recibir transferencias&lt;/small&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;!-- SECCIÓN: TARJETAS (Crédito, Débito, Prepaga) --&gt;
+      @if (isCard) {
+        &lt;nz-divider nzText&#x3D;&quot;Datos de la Tarjeta&quot; nzOrientation&#x3D;&quot;left&quot;&gt;&lt;/nz-divider&gt;
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;brcrd_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Marca
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;brcrd_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;brcrd_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;Seleccione una marca&quot;
+              &gt;
+                &lt;nz-select 
+                  formControlName&#x3D;&quot;brcrd_uuid&quot; 
+                  placeholder&#x3D;&quot;Seleccione marca&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                &gt;
+                  @for (brand of cardBrands; track brand.brcrd_uuid) {
+                    &lt;nz-option [nzValue]&#x3D;&quot;brand.brcrd_uuid&quot; [nzLabel]&#x3D;&quot;brand.brcrd_name&quot;&gt;&lt;/nz-option&gt;
+                  }
+                &lt;/nz-select&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;ban_uuid&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Banco Emisor
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;ban_uuid&#x27;)?.dirty &amp;&amp; form.get(&#x27;ban_uuid&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;Seleccione un banco&quot;
+              &gt;
+                &lt;nz-select 
+                  formControlName&#x3D;&quot;ban_uuid&quot; 
+                  placeholder&#x3D;&quot;Seleccione banco&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                &gt;
+                  @for (bank of banks; track bank.ban_uuid) {
+                    &lt;nz-option [nzValue]&#x3D;&quot;bank.ban_uuid&quot; [nzLabel]&#x3D;&quot;bank.ban_name&quot;&gt;&lt;/nz-option&gt;
+                  }
+                &lt;/nz-select&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;crd_maskedcardnumber&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Número de Tarjeta
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_maskedcardnumber&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_maskedcardnumber&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;crd_maskedcardnumber&#x27;) }}&quot;
+              &gt;
+                &lt;input 
+                  nz-input 
+                  formControlName&#x3D;&quot;crd_maskedcardnumber&quot; 
+                  placeholder&#x3D;&quot;xxxx xxxx xxxx 1234&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                /&gt;
+                &lt;small class&#x3D;&quot;form-text&quot;&gt;Número de tarjeta enmascarado o últimos dígitos&lt;/small&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;crd_last4digits&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Últimos 4 Dígitos
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_last4digits&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_last4digits&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;{{ getErrorMessage(&#x27;crd_last4digits&#x27;) }}&quot;
+              &gt;
+                &lt;input 
+                  nz-input 
+                  formControlName&#x3D;&quot;crd_last4digits&quot; 
+                  placeholder&#x3D;&quot;1234&quot;
+                  maxlength&#x3D;&quot;4&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                /&gt;
+                &lt;small class&#x3D;&quot;form-text&quot;&gt;Ingrese exactamente los 4 dígitos finales&lt;/small&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+
+        &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;crd_expirationdate&quot; [nzSpan]&#x3D;&quot;24&quot; nzRequired&gt;
+                Fecha de Vencimiento
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control 
+                [nzSpan]&#x3D;&quot;24&quot;
+                [nzValidateStatus]&#x3D;&quot;form.get(&#x27;crd_expirationdate&#x27;)?.dirty &amp;&amp; form.get(&#x27;crd_expirationdate&#x27;)?.invalid ? &#x27;error&#x27; : &#x27;&#x27;&quot;
+                nzErrorTip&#x3D;&quot;Seleccione una fecha de vencimiento&quot;
+              &gt;
+                &lt;nz-date-picker 
+                  formControlName&#x3D;&quot;crd_expirationdate&quot; 
+                  nzFormat&#x3D;&quot;MM/yyyy&quot;
+                  nzPicker&#x3D;&quot;month&quot;
+                  nzPlaceHolder&#x3D;&quot;Seleccione mes/año&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                  style&#x3D;&quot;width: 100%&quot;
+                &gt;&lt;/nz-date-picker&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+
+          &lt;nz-col [nzSpan]&#x3D;&quot;24&quot; [nzMd]&#x3D;&quot;12&quot; *ngIf&#x3D;&quot;isCreditCard&quot;&gt;
+            &lt;nz-form-item&gt;
+              &lt;nz-form-label nzFor&#x3D;&quot;crd_creditlimit&quot; [nzSpan]&#x3D;&quot;24&quot;&gt;
+                Límite de Crédito
+              &lt;/nz-form-label&gt;
+              &lt;nz-form-control [nzSpan]&#x3D;&quot;24&quot;&gt;
+                &lt;nz-input-number 
+                  formControlName&#x3D;&quot;crd_creditlimit&quot; 
+                  nzPlaceHolder&#x3D;&quot;0.00&quot;
+                  [nzMin]&#x3D;&quot;0&quot;
+                  [nzStep]&#x3D;&quot;1000&quot;
+                  [nzFormatter]&#x3D;&quot;formatterDollar&quot;
+                  [nzParser]&#x3D;&quot;parserDollar&quot;
+                  style&#x3D;&quot;width: 100%&quot;
+                  nzSize&#x3D;&quot;large&quot;
+                &gt;&lt;/nz-input-number&gt;
+                &lt;small class&#x3D;&quot;form-text&quot;&gt;Límite asignado por la entidad emisora&lt;/small&gt;
+              &lt;/nz-form-control&gt;
+            &lt;/nz-form-item&gt;
+          &lt;/nz-col&gt;
+        &lt;/nz-row&gt;
+      }
+
+      &lt;!-- Estado --&gt;
       &lt;nz-row [nzGutter]&#x3D;&quot;24&quot;&gt;
         &lt;nz-col [nzSpan]&#x3D;&quot;24&quot;&gt;
           &lt;nz-form-item&gt;
@@ -2245,7 +2795,7 @@ export class CardComponent implements OnInit {
                 nzCheckedChildren&#x3D;&quot;Activa&quot; 
                 nzUnCheckedChildren&#x3D;&quot;Inactiva&quot;
               &gt;&lt;/nz-switch&gt;
-              &lt;small class&#x3D;&quot;form-text&quot;&gt;Activar o desactivar la tarjeta&lt;/small&gt;
+              &lt;small class&#x3D;&quot;form-text&quot;&gt;Habilita o deshabilita el uso de esta cuenta o tarjeta&lt;/small&gt;
             &lt;/nz-form-control&gt;
           &lt;/nz-form-item&gt;
         &lt;/nz-col&gt;
@@ -2271,7 +2821,7 @@ export class CardComponent implements OnInit {
           nzSize&#x3D;&quot;large&quot;
         &gt;
           &lt;i nz-icon nzType&#x3D;&quot;save&quot;&gt;&lt;/i&gt;
-          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Crear Tarjeta&#x27; }}
+          {{ isEditing ? &#x27;Guardar Cambios&#x27; : &#x27;Crear Registro&#x27; }}
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/form&gt;
@@ -2413,7 +2963,7 @@ export class CardComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="card-form-container">  <div class="form-header">    <h2>      <i nz-icon nzType="credit-card" nzTheme="outline"></i>      {{ isEditing ? \'Editar Tarjeta\' : \'Nueva Tarjeta\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()">      <i nz-icon nzType="close"></i>    </button>  </div>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando datos..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">      <nz-row [nzGutter]="24" *ngIf="isEditing">        <nz-col [nzSpan]="24" [nzMd]="24">          <nz-form-item>            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">              ID            </nz-form-label>            <nz-form-control [nzSpan]="24">              <input nz-input formControlName="crd_uuid" placeholder="ID autogenerado" readonly />            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Ámbito y Alias -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="scp_uuid" [nzSpan]="24" nzRequired>              Ámbito / Contexto            </nz-form-label>            <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione el ámbito de la tarjeta">              <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito (Personal / Emprendimiento)" nzSize="large">                @for (scope of scopes; track scope.scp_uuid) {                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? \'🏢 \' : \'👤 \') + scope.scp_name"></nz-option>                }              </nz-select>              <small class="form-text">Indica si los gastos pertenecen al negocio o son de uso personal</small>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="crd_alias" [nzSpan]="24">              Alias / Nombre Identificador            </nz-form-label>            <nz-form-control [nzSpan]="24">              <input nz-input formControlName="crd_alias" placeholder="Ej: Débito Santander Negocio, Visa BBVA Personal" nzSize="large" />              <small class="form-text">Nombre fácil de recordar para identificarla en los gastos</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="crd_maskedcardnumber" [nzSpan]="24" nzRequired>              Numero de Tarjeta            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'crd_maskedcardnumber\')?.dirty && form.get(\'crd_maskedcardnumber\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'crd_maskedcardnumber\') }}"            >              <input                 nz-input                 formControlName="crd_maskedcardnumber"                 placeholder="xxxx xxxx xxxx 1234"                maxlength="4"                nzSize="large"              />              <small class="form-text">Ingrese solo los últimos 4 dígitos de la tarjeta</small>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="crd_last4digits" [nzSpan]="24" nzRequired>              Últimos 4 Dígitos            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'crd_last4digits\')?.dirty && form.get(\'crd_last4digits\')?.invalid ? \'error\' : \'\'"              nzErrorTip="{{ getErrorMessage(\'crd_last4digits\') }}"            >              <input                 nz-input                 formControlName="crd_last4digits"                 placeholder="1234"                maxlength="4"                nzSize="large"              />              <small class="form-text">Ingrese solo los últimos 4 dígitos de la tarjeta</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="tycrd_uuid" [nzSpan]="24" nzRequired>              Tipo de Tarjeta            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'tycrd_uuid\')?.dirty && form.get(\'tycrd_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un tipo de tarjeta"            >              <nz-select                 formControlName="tycrd_uuid"                 placeholder="Seleccione tipo"                nzSize="large"              >                @for (type of cardTypes; track type.tycrd_uuid) {                  <nz-option [nzValue]="type.tycrd_uuid" [nzLabel]="type.tycrd_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="brcrd_uuid" [nzSpan]="24" nzRequired>              Marca            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'brcrd_uuid\')?.dirty && form.get(\'brcrd_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione una marca"            >              <nz-select                 formControlName="brcrd_uuid"                 placeholder="Seleccione marca"                nzSize="large"              >                @for (brand of cardBrands; track brand.brcrd_uuid) {                  <nz-option [nzValue]="brand.brcrd_uuid" [nzLabel]="brand.brcrd_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="8">          <nz-form-item>            <nz-form-label nzFor="ban_uuid" [nzSpan]="24" nzRequired>              Banco            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'ban_uuid\')?.dirty && form.get(\'ban_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un banco"            >              <nz-select                 formControlName="ban_uuid"                 placeholder="Seleccione banco"                nzSize="large"              >                @for (bank of banks; track bank.ban_uuid) {                  <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>                }              </nz-select>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="crd_expirationdate" [nzSpan]="24" nzRequired>              Fecha de Vencimiento            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'crd_expirationdate\')?.dirty && form.get(\'crd_expirationdate\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione una fecha de vencimiento"            >              <nz-date-picker                 formControlName="crd_expirationdate"                 nzFormat="MM/yyyy"                nzPicker="month"                nzPlaceHolder="Seleccione mes/año"                nzSize="large"                style="width: 100%"              ></nz-date-picker>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="crd_creditlimit" [nzSpan]="24">              Límite de Crédito            </nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-input-number                 formControlName="crd_creditlimit"                 nzPlaceHolder="0.00"                [nzMin]="0"                [nzStep]="1000"                [nzFormatter]="formatterDollar"                [nzParser]="parserDollar"                style="width: 100%"                nzSize="large"              ></nz-input-number>              <small class="form-text">Solo para tarjetas de crédito</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24">          <nz-form-item>            <nz-form-label nzFor="crd_active" [nzSpan]="24">              Estado            </nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-switch                 formControlName="crd_active"                 nzCheckedChildren="Activa"                 nzUnCheckedChildren="Inactiva"              ></nz-switch>              <small class="form-text">Activar o desactivar la tarjeta</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-divider></nz-divider>      <div class="form-actions">        <button           nz-button           nzType="default"           (click)="onCancel()"          nzSize="large"        >          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        <button           nz-button           nzType="primary"           type="submit"          [nzLoading]="isLoading"          nzSize="large"        >          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Crear Tarjeta\' }}        </button>      </div>    </form>  }</div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="card-form-container">  <div class="form-header">    <h2>      <i nz-icon [nzType]="isCash ? \'wallet\' : (isBankAccount ? \'bank\' : \'credit-card\')" nzTheme="outline"></i>      {{ isEditing ? \'Editar Cuenta / Tarjeta\' : \'Nueva Cuenta / Tarjeta\' }}    </h2>    <button nz-button nzType="text" (click)="onCancel()">      <i nz-icon nzType="close"></i>    </button>  </div>  @if (isLoading) {    <div class="loading-container">      <nz-spin nzTip="Cargando datos..."></nz-spin>    </div>  } @else {    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">      <nz-row [nzGutter]="24" *ngIf="isEditing">        <nz-col [nzSpan]="24" [nzMd]="24">          <nz-form-item>            <nz-form-label nzFor="crd_uuid" [nzSpan]="24">              ID            </nz-form-label>            <nz-form-control [nzSpan]="24">              <input nz-input formControlName="crd_uuid" placeholder="ID autogenerado" readonly />            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Ámbito y Tipo de Cuenta / Tarjeta -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="scp_uuid" [nzSpan]="24" nzRequired>              Ámbito / Contexto            </nz-form-label>            <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione el ámbito">              <nz-select formControlName="scp_uuid" placeholder="Seleccione ámbito (Personal / Emprendimiento)" nzSize="large">                @for (scope of scopes; track scope.scp_uuid) {                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name" [nzCustomContent]="true">                    <i nz-icon [nzType]="scope.scp_isshared ? \'bank\' : \'user\'" style="margin-right: 6px;"></i>                    {{ scope.scp_name }}                  </nz-option>                }              </nz-select>              <small class="form-text">Indica a qué ámbito pertenece esta cuenta o tarjeta</small>            </nz-form-control>          </nz-form-item>        </nz-col>        <nz-col [nzSpan]="24" [nzMd]="12">          <nz-form-item>            <nz-form-label nzFor="tycrd_uuid" [nzSpan]="24" nzRequired>              Tipo de Cuenta / Tarjeta            </nz-form-label>            <nz-form-control               [nzSpan]="24"              [nzValidateStatus]="form.get(\'tycrd_uuid\')?.dirty && form.get(\'tycrd_uuid\')?.invalid ? \'error\' : \'\'"              nzErrorTip="Seleccione un tipo"            >              <nz-select                 formControlName="tycrd_uuid"                 placeholder="Seleccione tipo (Efectivo, Caja de Ahorro, Débito, etc.)"                nzSize="large"              >                @for (type of cardTypes; track type.tycrd_uuid) {                  <nz-option [nzValue]="type.tycrd_uuid" [nzLabel]="type.tycrd_name"></nz-option>                }              </nz-select>              <small class="form-text">Define el comportamiento y los campos requeridos</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- Alias / Nombre Identificador -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24">          <nz-form-item>            <nz-form-label nzFor="crd_alias" [nzSpan]="24" [nzRequired]="isCash || isBankAccount">              Alias / Nombre Identificador            </nz-form-label>            <nz-form-control [nzSpan]="24" [nzErrorTip]="getErrorMessage(\'crd_alias\')">              <input                 nz-input                 formControlName="crd_alias"                 [placeholder]="isCash ? \'Ej: Billetera Personal, Caja Chica Taller\' : (isBankAccount ? \'Ej: Caja de Ahorro Santander, MP Cobros\' : \'Ej: Visa Negocio, Débito BBVA\')"                 nzSize="large"               />              <small class="form-text">Nombre fácil de recordar para identificarla en transacciones y reportes</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <!-- SECCIÓN: CUENTAS BANCARIAS Y BILLETERAS VIRTUALES -->      @if (isBankAccount) {        <nz-divider nzText="Datos Bancarios / Financieros" nzOrientation="left"></nz-divider>        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24" [nzMd]="8">            <nz-form-item>              <nz-form-label nzFor="ban_uuid" [nzSpan]="24" nzRequired>                Banco / Entidad              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'ban_uuid\')?.dirty && form.get(\'ban_uuid\')?.invalid ? \'error\' : \'\'"                nzErrorTip="Seleccione un banco o entidad"              >                <nz-select                   formControlName="ban_uuid"                   placeholder="Seleccione banco"                  nzSize="large"                >                  @for (bank of banks; track bank.ban_uuid) {                    <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>                  }                </nz-select>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="8">            <nz-form-item>              <nz-form-label nzFor="crd_cbucvu" [nzSpan]="24">                CBU / CVU (22 dígitos)              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'crd_cbucvu\')?.dirty && form.get(\'crd_cbucvu\')?.invalid ? \'error\' : \'\'"                [nzErrorTip]="getErrorMessage(\'crd_cbucvu\')"              >                <input                   nz-input                   formControlName="crd_cbucvu"                   placeholder="0000000000000000000000"                  maxlength="22"                  nzSize="large"                />                <small class="form-text">Clave Bancaria Uniforme (opcional)</small>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="8">            <nz-form-item>              <nz-form-label nzFor="crd_cbualias" [nzSpan]="24">                Alias CBU / CVU              </nz-form-label>              <nz-form-control [nzSpan]="24">                <input                   nz-input                   formControlName="crd_cbualias"                   placeholder="Ej: mi.cuenta.banco"                  maxlength="100"                  nzSize="large"                />                <small class="form-text">Alias para recibir transferencias</small>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <!-- SECCIÓN: TARJETAS (Crédito, Débito, Prepaga) -->      @if (isCard) {        <nz-divider nzText="Datos de la Tarjeta" nzOrientation="left"></nz-divider>        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="brcrd_uuid" [nzSpan]="24" nzRequired>                Marca              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'brcrd_uuid\')?.dirty && form.get(\'brcrd_uuid\')?.invalid ? \'error\' : \'\'"                nzErrorTip="Seleccione una marca"              >                <nz-select                   formControlName="brcrd_uuid"                   placeholder="Seleccione marca"                  nzSize="large"                >                  @for (brand of cardBrands; track brand.brcrd_uuid) {                    <nz-option [nzValue]="brand.brcrd_uuid" [nzLabel]="brand.brcrd_name"></nz-option>                  }                </nz-select>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="ban_uuid" [nzSpan]="24" nzRequired>                Banco Emisor              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'ban_uuid\')?.dirty && form.get(\'ban_uuid\')?.invalid ? \'error\' : \'\'"                nzErrorTip="Seleccione un banco"              >                <nz-select                   formControlName="ban_uuid"                   placeholder="Seleccione banco"                  nzSize="large"                >                  @for (bank of banks; track bank.ban_uuid) {                    <nz-option [nzValue]="bank.ban_uuid" [nzLabel]="bank.ban_name"></nz-option>                  }                </nz-select>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="crd_maskedcardnumber" [nzSpan]="24" nzRequired>                Número de Tarjeta              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'crd_maskedcardnumber\')?.dirty && form.get(\'crd_maskedcardnumber\')?.invalid ? \'error\' : \'\'"                nzErrorTip="{{ getErrorMessage(\'crd_maskedcardnumber\') }}"              >                <input                   nz-input                   formControlName="crd_maskedcardnumber"                   placeholder="xxxx xxxx xxxx 1234"                  nzSize="large"                />                <small class="form-text">Número de tarjeta enmascarado o últimos dígitos</small>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="crd_last4digits" [nzSpan]="24" nzRequired>                Últimos 4 Dígitos              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'crd_last4digits\')?.dirty && form.get(\'crd_last4digits\')?.invalid ? \'error\' : \'\'"                nzErrorTip="{{ getErrorMessage(\'crd_last4digits\') }}"              >                <input                   nz-input                   formControlName="crd_last4digits"                   placeholder="1234"                  maxlength="4"                  nzSize="large"                />                <small class="form-text">Ingrese exactamente los 4 dígitos finales</small>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>        <nz-row [nzGutter]="24">          <nz-col [nzSpan]="24" [nzMd]="12">            <nz-form-item>              <nz-form-label nzFor="crd_expirationdate" [nzSpan]="24" nzRequired>                Fecha de Vencimiento              </nz-form-label>              <nz-form-control                 [nzSpan]="24"                [nzValidateStatus]="form.get(\'crd_expirationdate\')?.dirty && form.get(\'crd_expirationdate\')?.invalid ? \'error\' : \'\'"                nzErrorTip="Seleccione una fecha de vencimiento"              >                <nz-date-picker                   formControlName="crd_expirationdate"                   nzFormat="MM/yyyy"                  nzPicker="month"                  nzPlaceHolder="Seleccione mes/año"                  nzSize="large"                  style="width: 100%"                ></nz-date-picker>              </nz-form-control>            </nz-form-item>          </nz-col>          <nz-col [nzSpan]="24" [nzMd]="12" *ngIf="isCreditCard">            <nz-form-item>              <nz-form-label nzFor="crd_creditlimit" [nzSpan]="24">                Límite de Crédito              </nz-form-label>              <nz-form-control [nzSpan]="24">                <nz-input-number                   formControlName="crd_creditlimit"                   nzPlaceHolder="0.00"                  [nzMin]="0"                  [nzStep]="1000"                  [nzFormatter]="formatterDollar"                  [nzParser]="parserDollar"                  style="width: 100%"                  nzSize="large"                ></nz-input-number>                <small class="form-text">Límite asignado por la entidad emisora</small>              </nz-form-control>            </nz-form-item>          </nz-col>        </nz-row>      }      <!-- Estado -->      <nz-row [nzGutter]="24">        <nz-col [nzSpan]="24">          <nz-form-item>            <nz-form-label nzFor="crd_active" [nzSpan]="24">              Estado            </nz-form-label>            <nz-form-control [nzSpan]="24">              <nz-switch                 formControlName="crd_active"                 nzCheckedChildren="Activa"                 nzUnCheckedChildren="Inactiva"              ></nz-switch>              <small class="form-text">Habilita o deshabilita el uso de esta cuenta o tarjeta</small>            </nz-form-control>          </nz-form-item>        </nz-col>      </nz-row>      <nz-divider></nz-divider>      <div class="form-actions">        <button           nz-button           nzType="default"           (click)="onCancel()"          nzSize="large"        >          <i nz-icon nzType="rollback"></i>          Cancelar        </button>        <button           nz-button           nzType="primary"           type="submit"          [nzLoading]="isLoading"          nzSize="large"        >          <i nz-icon nzType="save"></i>          {{ isEditing ? \'Guardar Cambios\' : \'Crear Registro\' }}        </button>      </div>    </form>  }</div></div>'
     var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'CardComponent'};

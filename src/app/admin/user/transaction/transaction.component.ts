@@ -227,9 +227,10 @@ export class TransactionComponent implements OnInit {
         if (response.success) {
           this.cards = response.data.map((c: any) => {
             const scopeTag = c.scp?.scp_name ? ` (${c.scp.scp_name})` : '';
+            const identifier = c.crd_last4digits ? ` (**** ${c.crd_last4digits})` : (c.crd_cbualias ? ` (${c.crd_cbualias})` : '');
             return {
               value: c.crd_uuid,
-              label: `${c.crd_alias || 'Cuenta / Tarjeta'} (**** ${c.crd_last4digits})${scopeTag}`
+              label: `${c.crd_alias || c.tycrd?.tycrd_name || 'Cuenta / Tarjeta'}${identifier}${scopeTag}`
             };
           });
 

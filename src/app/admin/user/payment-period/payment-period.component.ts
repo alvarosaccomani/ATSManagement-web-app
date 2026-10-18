@@ -193,7 +193,10 @@ export class PaymentPeriodComponent implements OnInit {
       next: (cardResponse: any) => {
         if (cardResponse.success) {
           const cardsData = cardResponse.data;
-          this.cards = cardsData.map((c: any) => ({ value: c.crd_uuid, label: `**** **** **** ${c.crd_last4digits}` }));
+          this.cards = cardsData.map((c: any) => ({ 
+            value: c.crd_uuid, 
+            label: c.crd_alias || (c.crd_last4digits ? `**** **** **** ${c.crd_last4digits}` : c.tycrd?.tycrd_name || 'Cuenta') 
+          }));
           
           let pendingQueries = cardsData.length;
           if (pendingQueries === 0) {

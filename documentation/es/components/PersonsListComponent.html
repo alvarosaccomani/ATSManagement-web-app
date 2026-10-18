@@ -1647,69 +1647,81 @@ export class PersonsListComponent implements OnInit {
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;nz-spin [nzSpinning]&#x3D;&quot;isLoading&quot;&gt;
-  &lt;div style&#x3D;&quot;display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;&quot;&gt;
-    &lt;h2&gt;Contactos y Personas&lt;/h2&gt;
-    &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;newPerson()&quot;&gt;
-      &lt;nz-icon nzType&#x3D;&quot;plus&quot; /&gt; Nuevo Contacto
-    &lt;/button&gt;
-  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;page-container-inner&quot;&gt;
+    &lt;div class&#x3D;&quot;page-header&quot;&gt;
+      &lt;div&gt;
+        &lt;h2 class&#x3D;&quot;page-title&quot;&gt;
+          &lt;i nz-icon nzType&#x3D;&quot;team&quot; nzTheme&#x3D;&quot;outline&quot;&gt;&lt;/i&gt;
+          Contactos y Personas
+        &lt;/h2&gt;
+        &lt;p class&#x3D;&quot;page-subtitle&quot;&gt;Directorio de clientes, proveedores, vendedores y socios&lt;/p&gt;
+      &lt;/div&gt;
 
-  &lt;div style&#x3D;&quot;display: flex; gap: 16px; margin-bottom: 16px; background-color: #fafafa; padding: 12px; border-radius: 6px;&quot;&gt;
-    &lt;div style&#x3D;&quot;flex: 1;&quot;&gt;
-      &lt;label style&#x3D;&quot;display: block; font-weight: 500; margin-bottom: 4px;&quot;&gt;Ámbito Contexto:&lt;/label&gt;
-      &lt;nz-select [(ngModel)]&#x3D;&quot;selectedScopeUuid&quot; (ngModelChange)&#x3D;&quot;onScopeChange($event)&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-        &lt;nz-option *ngFor&#x3D;&quot;let s of scopes&quot; [nzValue]&#x3D;&quot;s.scp_uuid&quot; [nzLabel]&#x3D;&quot;s.scp_name&quot;&gt;&lt;/nz-option&gt;
-      &lt;/nz-select&gt;
+      &lt;div class&#x3D;&quot;header-controls&quot;&gt;
+        &lt;button nz-button nzType&#x3D;&quot;primary&quot; (click)&#x3D;&quot;newPerson()&quot;&gt;
+          &lt;i nz-icon nzType&#x3D;&quot;plus&quot;&gt;&lt;/i&gt; Nuevo Contacto
+        &lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
 
-    &lt;div style&#x3D;&quot;flex: 1;&quot;&gt;
-      &lt;label style&#x3D;&quot;display: block; font-weight: 500; margin-bottom: 4px;&quot;&gt;Filtrar por Tipo:&lt;/label&gt;
-      &lt;nz-select [(ngModel)]&#x3D;&quot;selectedType&quot; (ngModelChange)&#x3D;&quot;applyFilter()&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-        &lt;nz-option *ngFor&#x3D;&quot;let t of personTypes&quot; [nzValue]&#x3D;&quot;t.value&quot; [nzLabel]&#x3D;&quot;t.label&quot;&gt;&lt;/nz-option&gt;
-      &lt;/nz-select&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+    &lt;div class&#x3D;&quot;filter-bar-card&quot;&gt;
+      &lt;div class&#x3D;&quot;filter-field&quot;&gt;
+        &lt;label class&#x3D;&quot;field-label&quot;&gt;Ámbito / Contexto:&lt;/label&gt;
+        &lt;nz-select [(ngModel)]&#x3D;&quot;selectedScopeUuid&quot; (ngModelChange)&#x3D;&quot;onScopeChange($event)&quot; class&#x3D;&quot;filter-select&quot;&gt;
+          &lt;nz-option *ngFor&#x3D;&quot;let s of scopes&quot; [nzValue]&#x3D;&quot;s.scp_uuid&quot; [nzLabel]&#x3D;&quot;s.scp_name&quot;&gt;&lt;/nz-option&gt;
+        &lt;/nz-select&gt;
+      &lt;/div&gt;
 
-  &lt;nz-table #basicTable [nzData]&#x3D;&quot;filteredPersons&quot; [nzBordered]&#x3D;&quot;true&quot;&gt;
-    &lt;thead&gt;
-      &lt;tr&gt;
-        &lt;th&gt;Nombre / Razón Social&lt;/th&gt;
-        &lt;th&gt;Tipo&lt;/th&gt;
-        &lt;th&gt;Teléfono&lt;/th&gt;
-        &lt;th&gt;Email&lt;/th&gt;
-        &lt;th&gt;CUIT / Identificación&lt;/th&gt;
-        &lt;th&gt;Estado&lt;/th&gt;
-        &lt;th&gt;Acciones&lt;/th&gt;
-      &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr *ngFor&#x3D;&quot;let data of basicTable.data&quot;&gt;
-        &lt;td&gt;&lt;strong&gt;{{ data.prs_name }}&lt;/strong&gt;&lt;/td&gt;
-        &lt;td&gt;
-          &lt;nz-tag *ngFor&#x3D;&quot;let t of splitTypes(data.prs_type)&quot; [nzColor]&#x3D;&quot;getTypeTagColor(t)&quot; style&#x3D;&quot;margin-bottom: 2px;&quot;&gt;
-            {{ t }}
-          &lt;/nz-tag&gt;
-        &lt;/td&gt;
-        &lt;td&gt;{{ data.prs_phone || &#x27;-&#x27; }}&lt;/td&gt;
-        &lt;td&gt;{{ data.prs_email || &#x27;-&#x27; }}&lt;/td&gt;
-        &lt;td&gt;{{ data.prs_taxid || &#x27;-&#x27; }}&lt;/td&gt;
-        &lt;td&gt;
-          &lt;nz-tag [nzColor]&#x3D;&quot;data.prs_active ? &#x27;green&#x27; : &#x27;red&#x27;&quot;&gt;
-            {{ data.prs_active ? &#x27;Activo&#x27; : &#x27;Inactivo&#x27; }}
-          &lt;/nz-tag&gt;
-        &lt;/td&gt;
-        &lt;td&gt;
-          &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;editPerson(data)&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Editar&quot;&gt;
-            &lt;nz-icon nzType&#x3D;&quot;edit&quot; /&gt;
-          &lt;/button&gt;
-          &lt;button nz-button nzType&#x3D;&quot;text&quot; nzDanger (click)&#x3D;&quot;deletePerson(data)&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Eliminar&quot;&gt;
-            &lt;nz-icon nzType&#x3D;&quot;delete&quot; /&gt;
-          &lt;/button&gt;
-        &lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/nz-table&gt;
+      &lt;div class&#x3D;&quot;filter-field&quot;&gt;
+        &lt;label class&#x3D;&quot;field-label&quot;&gt;Filtrar por Tipo:&lt;/label&gt;
+        &lt;nz-select [(ngModel)]&#x3D;&quot;selectedType&quot; (ngModelChange)&#x3D;&quot;applyFilter()&quot; class&#x3D;&quot;filter-select&quot;&gt;
+          &lt;nz-option *ngFor&#x3D;&quot;let t of personTypes&quot; [nzValue]&#x3D;&quot;t.value&quot; [nzLabel]&#x3D;&quot;t.label&quot;&gt;&lt;/nz-option&gt;
+        &lt;/nz-select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;nz-table #basicTable [nzData]&#x3D;&quot;filteredPersons&quot; [nzBordered]&#x3D;&quot;true&quot; [nzScroll]&#x3D;&quot;{ x: &#x27;850px&#x27; }&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Nombre / Razón Social&lt;/th&gt;
+          &lt;th&gt;Tipo&lt;/th&gt;
+          &lt;th&gt;Teléfono&lt;/th&gt;
+          &lt;th&gt;Email&lt;/th&gt;
+          &lt;th&gt;CUIT / Identificación&lt;/th&gt;
+          &lt;th&gt;Estado&lt;/th&gt;
+          &lt;th nzWidth&#x3D;&quot;110px&quot;&gt;Acciones&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr *ngFor&#x3D;&quot;let data of basicTable.data&quot;&gt;
+          &lt;td&gt;&lt;strong&gt;{{ data.prs_name }}&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;
+            &lt;nz-tag *ngFor&#x3D;&quot;let t of splitTypes(data.prs_type)&quot; [nzColor]&#x3D;&quot;getTypeTagColor(t)&quot; class&#x3D;&quot;person-tag&quot;&gt;
+              {{ t }}
+            &lt;/nz-tag&gt;
+          &lt;/td&gt;
+          &lt;td&gt;{{ data.prs_phone || &#x27;-&#x27; }}&lt;/td&gt;
+          &lt;td&gt;{{ data.prs_email || &#x27;-&#x27; }}&lt;/td&gt;
+          &lt;td&gt;{{ data.prs_taxid || &#x27;-&#x27; }}&lt;/td&gt;
+          &lt;td&gt;
+            &lt;nz-tag [nzColor]&#x3D;&quot;data.prs_active ? &#x27;success&#x27; : &#x27;error&#x27;&quot;&gt;
+              {{ data.prs_active ? &#x27;Activo&#x27; : &#x27;Inactivo&#x27; }}
+            &lt;/nz-tag&gt;
+          &lt;/td&gt;
+          &lt;td&gt;
+            &lt;button nz-button nzType&#x3D;&quot;text&quot; (click)&#x3D;&quot;editPerson(data)&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Editar&quot;&gt;
+              &lt;i nz-icon nzType&#x3D;&quot;edit&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+            &lt;button nz-button nzType&#x3D;&quot;text&quot; nzDanger (click)&#x3D;&quot;deletePerson(data)&quot; nz-tooltip nzTooltipTitle&#x3D;&quot;Eliminar&quot;&gt;
+              &lt;i nz-icon nzType&#x3D;&quot;delete&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/nz-table&gt;
+  &lt;/div&gt;
 &lt;/nz-spin&gt;
+
 </code></pre>
     </div>
 
@@ -1719,7 +1731,44 @@ export class PersonsListComponent implements OnInit {
                 </p>
                 <pre class="line-numbers"><code class="language-scss">:host {
   display: block;
-  padding: 16px;
+}
+
+.page-header {
+  .header-controls {
+    button {
+      @media (max-width: 767.98px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.filter-bar-card {
+  .filter-field {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    @media (max-width: 767.98px) {
+      min-width: 100%;
+    }
+
+    .field-label {
+      font-weight: 500;
+      color: var(--color-text-main);
+      font-size: 13.5px;
+    }
+
+    .filter-select {
+      width: 100%;
+    }
+  }
+}
+
+.person-tag {
+  margin-bottom: 2px;
 }
 </code></pre>
     </div>
@@ -1749,7 +1798,7 @@ export class PersonsListComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><nz-spin [nzSpinning]="isLoading">  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">    <h2>Contactos y Personas</h2>    <button nz-button nzType="primary" (click)="newPerson()">      <nz-icon nzType="plus" /> Nuevo Contacto    </button>  </div>  <div style="display: flex; gap: 16px; margin-bottom: 16px; background-color: #fafafa; padding: 12px; border-radius: 6px;">    <div style="flex: 1;">      <label style="display: block; font-weight: 500; margin-bottom: 4px;">Ámbito Contexto:</label>      <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="width: 100%;">        <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name"></nz-option>      </nz-select>    </div>    <div style="flex: 1;">      <label style="display: block; font-weight: 500; margin-bottom: 4px;">Filtrar por Tipo:</label>      <nz-select [(ngModel)]="selectedType" (ngModelChange)="applyFilter()" style="width: 100%;">        <nz-option *ngFor="let t of personTypes" [nzValue]="t.value" [nzLabel]="t.label"></nz-option>      </nz-select>    </div>  </div>  <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true">    <thead>      <tr>        <th>Nombre / Razón Social</th>        <th>Tipo</th>        <th>Teléfono</th>        <th>Email</th>        <th>CUIT / Identificación</th>        <th>Estado</th>        <th>Acciones</th>      </tr>    </thead>    <tbody>      <tr *ngFor="let data of basicTable.data">        <td><strong>{{ data.prs_name }}</strong></td>        <td>          <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" style="margin-bottom: 2px;">            {{ t }}          </nz-tag>        </td>        <td>{{ data.prs_phone || \'-\' }}</td>        <td>{{ data.prs_email || \'-\' }}</td>        <td>{{ data.prs_taxid || \'-\' }}</td>        <td>          <nz-tag [nzColor]="data.prs_active ? \'green\' : \'red\'">            {{ data.prs_active ? \'Activo\' : \'Inactivo\' }}          </nz-tag>        </td>        <td>          <button nz-button nzType="text" (click)="editPerson(data)" nz-tooltip nzTooltipTitle="Editar">            <nz-icon nzType="edit" />          </button>          <button nz-button nzType="text" nzDanger (click)="deletePerson(data)" nz-tooltip nzTooltipTitle="Eliminar">            <nz-icon nzType="delete" />          </button>        </td>      </tr>    </tbody>  </nz-table></nz-spin></div>'
+        var COMPONENT_TEMPLATE = '<div><nz-spin [nzSpinning]="isLoading">  <div class="page-container-inner">    <div class="page-header">      <div>        <h2 class="page-title">          <i nz-icon nzType="team" nzTheme="outline"></i>          Contactos y Personas        </h2>        <p class="page-subtitle">Directorio de clientes, proveedores, vendedores y socios</p>      </div>      <div class="header-controls">        <button nz-button nzType="primary" (click)="newPerson()">          <i nz-icon nzType="plus"></i> Nuevo Contacto        </button>      </div>    </div>    <div class="filter-bar-card">      <div class="filter-field">        <label class="field-label">Ámbito / Contexto:</label>        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="filter-select">          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name"></nz-option>        </nz-select>      </div>      <div class="filter-field">        <label class="field-label">Filtrar por Tipo:</label>        <nz-select [(ngModel)]="selectedType" (ngModelChange)="applyFilter()" class="filter-select">          <nz-option *ngFor="let t of personTypes" [nzValue]="t.value" [nzLabel]="t.label"></nz-option>        </nz-select>      </div>    </div>    <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true" [nzScroll]="{ x: \'850px\' }">      <thead>        <tr>          <th>Nombre / Razón Social</th>          <th>Tipo</th>          <th>Teléfono</th>          <th>Email</th>          <th>CUIT / Identificación</th>          <th>Estado</th>          <th nzWidth="110px">Acciones</th>        </tr>      </thead>      <tbody>        <tr *ngFor="let data of basicTable.data">          <td><strong>{{ data.prs_name }}</strong></td>          <td>            <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" class="person-tag">              {{ t }}            </nz-tag>          </td>          <td>{{ data.prs_phone || \'-\' }}</td>          <td>{{ data.prs_email || \'-\' }}</td>          <td>{{ data.prs_taxid || \'-\' }}</td>          <td>            <nz-tag [nzColor]="data.prs_active ? \'success\' : \'error\'">              {{ data.prs_active ? \'Activo\' : \'Inactivo\' }}            </nz-tag>          </td>          <td>            <button nz-button nzType="text" (click)="editPerson(data)" nz-tooltip nzTooltipTitle="Editar">              <i nz-icon nzType="edit"></i>            </button>            <button nz-button nzType="text" nzDanger (click)="deletePerson(data)" nz-tooltip nzTooltipTitle="Eliminar">              <i nz-icon nzType="delete"></i>            </button>          </td>        </tr>      </tbody>    </nz-table>  </div></nz-spin></div>'
     var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'PersonsListComponent'};

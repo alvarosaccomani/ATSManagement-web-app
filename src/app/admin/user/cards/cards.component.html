@@ -1,8 +1,8 @@
 <div class="card-list-container">
   <div class="header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px;">
     <h2>
-      <i nz-icon nzType="credit-card" nzTheme="outline"></i>
-      Tarjetas
+      <i nz-icon nzType="wallet" nzTheme="outline"></i>
+      Cuentas y Tarjetas
     </h2>
     <div style="display: flex; gap: 12px; align-items: center;">
       <nz-select 
@@ -20,14 +20,14 @@
       </nz-select>
       <button nz-button nzType="primary" (click)="createCard()" nzSize="large">
         <i nz-icon nzType="plus"></i>
-        Nueva Tarjeta
+        Nueva Cuenta / Tarjeta
       </button>
     </div>
   </div>
 
   @if (loading) {
     <div class="loading-container">
-      <nz-spin nzTip="Cargando tarjetas..."></nz-spin>
+      <nz-spin nzTip="Cargando cuentas y tarjetas..."></nz-spin>
     </div>
   }
 
@@ -35,7 +35,7 @@
     <div class="empty-container">
       <nz-empty
         nzNotFoundImage="simple"
-        nzNotFoundContent="No hay tarjetas registradas"
+        nzNotFoundContent="No hay cuentas ni tarjetas registradas"
         nzNotFoundFooter=""
       ></nz-empty>
     </div>
@@ -76,26 +76,32 @@
 
             <td>
               <div class="card-number">
-                <i nz-icon nzType="credit-card" nzTheme="outline"></i>
-                <span *ngIf="card.crd_alias" style="margin-right: 6px; font-weight: 600;">{{ card.crd_alias }}</span>
-                {{ formatCardNumber(card.crd_last4digits) }}
+                <i nz-icon [nzType]="card.tycrd?.tycrd_name?.toLowerCase()?.includes('efectivo') ? 'wallet' : (card.crd_last4digits ? 'credit-card' : 'bank')" nzTheme="outline" style="margin-right: 6px;"></i>
+                <span *ngIf="card.crd_alias" style="font-weight: 600;">{{ card.crd_alias }}</span>
+                <span *ngIf="card.crd_last4digits" style="margin-left: 4px;">{{ formatCardNumber(card.crd_last4digits) }}</span>
+                <div *ngIf="card.crd_cbualias || card.crd_cbucvu" style="font-size: 11px; color: #8c8c8c;">
+                  <span *ngIf="card.crd_cbualias">Alias: {{ card.crd_cbualias }}</span>
+                  <span *ngIf="card.crd_cbucvu && !card.crd_cbualias">CBU: {{ card.crd_cbucvu }}</span>
+                </div>
               </div>
             </td>
             <td>
-              <nz-tag [nzColor]="getCardTypeColor(card.tycrd.tycrd_name)">
-                {{ card.tycrd.tycrd_name }}
+              <nz-tag [nzColor]="getCardTypeColor(card.tycrd?.tycrd_name)">
+                {{ card.tycrd?.tycrd_name || 'Desconocido' }}
               </nz-tag>
             </td>
             <td>
-              <nz-tag [nzColor]="getCardBrandColor(card.brcrd.brcrd_name)">
-                {{ card.brcrd.brcrd_name }}
+              <nz-tag *ngIf="card.brcrd?.brcrd_name" [nzColor]="getCardBrandColor(card.brcrd?.brcrd_name)">
+                {{ card.brcrd?.brcrd_name }}
               </nz-tag>
+              <span *ngIf="!card.brcrd?.brcrd_name">-</span>
             </td>
-            <td>{{ card.ban.ban_name }}</td>
+            <td>{{ card.ban?.ban_name || '-' }}</td>
             <td>
-              <nz-tag [nzColor]="isExpired(card.crd_expirationdate) ? 'red' : 'default'">
+              <nz-tag *ngIf="card.crd_expirationdate" [nzColor]="isExpired(card.crd_expirationdate) ? 'red' : 'default'">
                 {{ formatExpirationDate(card.crd_expirationdate) }}
               </nz-tag>
+              <span *ngIf="!card.crd_expirationdate">-</span>
             </td>
             <td>{{ formatCreditLimit(card.crd_creditlimit) }}</td>
             <td>

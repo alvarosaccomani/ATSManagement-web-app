@@ -72,7 +72,7 @@
                 nzShowSearch
               >
                 @for (card of cards; track card.crd_uuid) {
-                  <nz-option [nzValue]="card.crd_uuid" [nzLabel]="card.crd_maskedcardnumber"></nz-option>
+                  <nz-option [nzValue]="card.crd_uuid" [nzLabel]="card.crd_alias || card.crd_maskedcardnumber || 'Tarjeta'"></nz-option>
                 }
               </nz-select>
             </nz-form-control>

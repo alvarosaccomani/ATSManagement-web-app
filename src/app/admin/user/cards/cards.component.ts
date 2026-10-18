@@ -16,6 +16,8 @@ import { ScopesService } from '../../../core/services/scopes.service';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { MessageService } from '../../../core/services/message.service';
 
+import { SessionService } from '../../../core/services/session.service';
+
 /**
  * Componente de lista (`<app-cards>`) para visualizar y gestionar tarjetas de crédito y débito en `/admin/user/cards`.
  *
@@ -59,10 +61,10 @@ export class CardsComponent implements OnInit {
   listOfColumns = [
     { key: 'crd_uuid', title: 'ID', width: '80px' },
     { key: 'scope', title: 'Ámbito', width: '130px' },
-    { key: 'card_number', title: 'Tarjeta', width: '160px' },
-    { key: 'card_type', title: 'Tipo', width: '110px' },
-    { key: 'card_brand', title: 'Marca', width: '110px' },
-    { key: 'bank', title: 'Banco', width: '140px' },
+    { key: 'card_number', title: 'Cuenta / Tarjeta', width: '170px' },
+    { key: 'card_type', title: 'Tipo', width: '120px' },
+    { key: 'card_brand', title: 'Marca', width: '100px' },
+    { key: 'bank', title: 'Banco / Entidad', width: '140px' },
     { key: 'expiration', title: 'Vencimiento', width: '110px' },
     { key: 'credit_limit', title: 'Límite', width: '120px' },
     { key: 'status', title: 'Estado', width: '100px' },
@@ -82,12 +84,21 @@ export class CardsComponent implements OnInit {
     private _router: Router,
     private _cardsService: CardsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {}
 
   /**
-   * Carga los ámbitos y las tarjetas al inicializar el componente.
+   * Obtiene el identificador del usuario autenticado actual.
+   * @returns UUID del usuario autenticado.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
+
+  /**
+   * Inicializa el componente y carga los catálogos y registros iniciales.
    */
   ngOnInit(): void {
     this.loadScopes();
@@ -95,10 +106,11 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Carga los ámbitos del usuario y antepone la opción de filtro `'ALL'`.
+   * Carga los ámbitos del usuario y antepone la opción de filtro 'ALL'.
    */
   loadScopes(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
@@ -117,9 +129,8 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Recarga las tarjetas cuando cambia el filtro de ámbito seleccionado.
-   *
-   * @param scopeUuid UUID del ámbito seleccionado o `'ALL'`.
+   * Recarga los registros cuando cambia el filtro de ámbito seleccionado.
+   * @param scopeUuid UUID del ámbito seleccionado o 'ALL'.
    */
   onScopeChange(scopeUuid: string): void {
     this.selectedScopeUuid = scopeUuid;
@@ -127,72 +138,71 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Obtiene las tarjetas del usuario y del filtro de ámbito activo desde {@link CardsService}.
+   * Obtiene las cuentas y tarjetas del usuario para el ámbito activo.
    */
   loadCards(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.loading = true;
-    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d', undefined, undefined, undefined, undefined, this.selectedScopeUuid).subscribe(
-      (response: any) => {
-        if(response.success) {
-          console.info(response.data);
+    this._cardsService.getCards(usr_uuid, undefined, undefined, undefined, undefined, this.selectedScopeUuid).subscribe({
+      next: (response: any) => {
+        this.loading = false;
+        if (response.success) {
           this.cards = response.data;
           this.total = this.cards.length;
-          this.loading = false;
-        } else {
-          this.loading = false;
         }
       },
-      (error: any) => {
+      error: (error: any) => {
         this.loading = false;
-        let errorMessage = <any>error;
-        console.log(errorMessage);
+        console.error(error);
       }
-    )
+    });
   }
 
   /**
-   * Formatea los últimos 4 dígitos de una tarjeta en una representación enmascarada (`**** **** **** 1234`).
-   *
+   * Formatea los últimos 4 dígitos en una representación enmascarada.
    * @param last4 Últimos 4 dígitos de la tarjeta.
-   * @returns Cadena con el número de tarjeta enmascarado.
+   * @returns Cadena con el número enmascarado o cadena vacía si no aplica.
    */
-  formatCardNumber(last4: string): string {
+  formatCardNumber(last4?: string | null): string {
+    if (!last4) return '';
     return `**** **** **** ${last4}`;
   }
 
   /**
-   * Formatea una cadena de fecha de vencimiento ISO en el formato `MM/YY`.
-   *
+   * Formatea una cadena de fecha de vencimiento ISO al formato MM/YY.
    * @param dateString Cadena de fecha ISO.
-   * @returns Cadena de vencimiento formateada en `MM/YY`.
+   * @returns Cadena de vencimiento formateada o guion si no aplica.
    */
-  formatExpirationDate(dateString: string): string {
+  formatExpirationDate(dateString?: string | null): string {
+    if (!dateString) return '-';
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '-';
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = String(date.getFullYear()).slice(-2);
     return `${month}/${year}`;
   }
 
   /**
-   * Comprueba si la fecha de vencimiento indicada ya ha pasado.
-   *
+   * Comprueba si la fecha de vencimiento ya ha pasado.
    * @param dateString Cadena de fecha de vencimiento ISO.
-   * @returns `true` si la tarjeta ha vencido, `false` en caso contrario.
+   * @returns true si venció, false en caso contrario.
    */
-  isExpired(dateString: string): boolean {
+  isExpired(dateString?: string | null): boolean {
+    if (!dateString) return false;
     const expirationDate = new Date(dateString);
+    if (isNaN(expirationDate.getTime())) return false;
     const today = new Date();
     return expirationDate < today;
   }
 
   /**
-   * Formatea un límite de crédito numérico en moneda `ARS` o devuelve `'N/A'` si es `null`.
-   *
-   * @param limit Monto del límite de crédito o `null`.
-   * @returns Cadena de moneda formateada o `'N/A'`.
+   * Formatea un límite de crédito numérico en moneda ARS.
+   * @param limit Monto del límite de crédito.
+   * @returns Cadena formateada o N/A.
    */
-  formatCreditLimit(limit: number | null): string {
-    if (limit === null) return 'N/A';
+  formatCreditLimit(limit?: number | null): string {
+    if (limit === null || limit === undefined) return 'N/A';
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
       currency: 'ARS',
@@ -202,27 +212,30 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Asigna el nombre de un tipo de tarjeta a un color de etiqueta de Ng-Zorro.
-   *
-   * @param typeName Nombre del tipo de tarjeta.
-   * @returns Cadena con el color de la etiqueta.
+   * Asigna el tipo de cuenta o tarjeta a un color de etiqueta de Ng-Zorro.
+   * @param typeName Nombre del tipo.
+   * @returns Color de la etiqueta.
    */
-  getCardTypeColor(typeName: string): string {
-    switch (typeName.toLowerCase()) {
-      case 'debito': return 'blue';
-      case 'credito': return 'green';
-      case 'prepaga': return 'orange';
-      default: return 'default';
-    }
+  getCardTypeColor(typeName?: string): string {
+    if (!typeName) return 'default';
+    const lower = typeName.toLowerCase();
+    if (lower.includes('efectivo')) return 'gold';
+    if (lower.includes('caja de ahorro')) return 'cyan';
+    if (lower.includes('cuenta corriente')) return 'geekblue';
+    if (lower.includes('billetera')) return 'purple';
+    if (lower.includes('debito') || lower.includes('débito')) return 'blue';
+    if (lower.includes('credito') || lower.includes('crédito')) return 'green';
+    if (lower.includes('prepaga')) return 'orange';
+    return 'default';
   }
 
   /**
-   * Asigna el nombre de una marca de tarjeta a un color de etiqueta de Ng-Zorro.
-   *
-   * @param brandName Nombre de la marca de tarjeta.
-   * @returns Cadena con el color de la etiqueta.
+   * Asigna la marca de la tarjeta a un color de etiqueta de Ng-Zorro.
+   * @param brandName Nombre de la marca.
+   * @returns Color de la etiqueta.
    */
-  getCardBrandColor(brandName: string): string {
+  getCardBrandColor(brandName?: string): string {
+    if (!brandName) return 'default';
     switch (brandName.toLowerCase()) {
       case 'visa': return 'cyan';
       case 'mastercard': return 'purple';
@@ -232,46 +245,47 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Navega al formulario de nueva tarjeta (`/admin/user/card/new`).
+   * Navega a la ruta de creación de nueva cuenta o tarjeta.
    */
   createCard(): void {
     this._router.navigate(['/admin/user/card/new']);
   }
 
   /**
-   * Navega al formulario de edición para la tarjeta seleccionada (`/admin/user/card/edit/:crd_uuid`).
-   *
-   * @param card Registro de tarjeta a editar.
+   * Navega a la ruta de edición del registro seleccionado.
+   * @param card Registro a editar.
    */
   editCard(card: CardInterface): void {
     this._router.navigate(['/admin/user/card/edit', card.crd_uuid]);
   }
 
   /**
-   * Solicita confirmación y elimina el registro de la tarjeta seleccionada.
-   *
-   * @param card Registro de tarjeta a eliminar.
+   * Solicita confirmación y elimina el registro seleccionado.
+   * @param card Registro a eliminar.
    */
   deleteCard(card: CardInterface): void {
+    const label = card.crd_alias || (card.crd_last4digits ? `la tarjeta finalizada en ${card.crd_last4digits}` : 'este registro');
     this._messageService.confirm(
-      '¿Estás seguro de eliminar esta tarjeta?',
-      `Vas a eliminar la tarjeta finalizada en ${card.crd_last4digits}. Esta acción no se puede deshacer.`,
+      '¿Estás seguro de eliminar?',
+      `Vas a eliminar ${label}. Esta acción no se puede deshacer.`,
       () => {
+        const usr_uuid = this.currentUserId;
+        if (!usr_uuid) return;
         this.loading = true;
-        this._cardsService.deleteCard('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid).subscribe({
+        this._cardsService.deleteCard(usr_uuid, card.crd_uuid).subscribe({
           next: (response: any) => {
             this.loading = false;
             if (response.success) {
-              this._messageService.success('Tarjeta eliminada', 'La tarjeta se eliminó correctamente');
+              this._messageService.success('Eliminado', 'El registro se eliminó correctamente');
               this.loadCards();
             } else {
-              this._messageService.error('Error', response.message || 'No se pudo eliminar la tarjeta');
+              this._messageService.error('Error', response.message || 'No se pudo eliminar');
             }
           },
           error: (error: any) => {
             this.loading = false;
             console.error(error);
-            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar la tarjeta');
+            this._messageService.error('Error', 'Hubo un problema de conexión al eliminar');
           }
         });
       }
@@ -279,12 +293,12 @@ export class CardsComponent implements OnInit {
   }
 
   /**
-   * Muestra una notificación emergente informativa con el número de tarjeta enmascarado.
-   *
-   * @param card Registro de tarjeta a inspeccionar.
+   * Muestra una notificación con el detalle identificador de la cuenta o tarjeta.
+   * @param card Registro a inspeccionar.
    */
   viewDetails(card: CardInterface): void {
-    this.message.info(`Detalles de tarjeta: ${this.formatCardNumber(card.crd_last4digits)}`);
+    const detail = card.crd_alias || this.formatCardNumber(card.crd_last4digits) || card.crd_cbualias || 'Detalles de cuenta';
+    this.message.info(`Detalles: ${detail}`);
   }
 
   /**
