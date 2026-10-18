@@ -18,6 +18,7 @@ import { TransactionInterface } from '../../../core/interfaces/transaction.inter
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { TransactionsService } from '../../../core/services/transactions.service';
 import { ScopesService } from '../../../core/services/scopes.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -56,7 +57,7 @@ export class TransactionsListComponent implements OnInit {
   /** Available scopes for the scope filter dropdown. */
   scopes: ScopeInterface[] = [];
   /** Currently selected scope UUID (`'ALL'` after initialization). */
-  selectedScopeUuid: string = '11111111-1111-1111-1111-111111111111'; // Default Personal Scope
+  selectedScopeUuid: string = 'ALL';
   /** Currently selected movement type filter (`'ALL' | 'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`). */
   selectedType: string = 'ALL';
   /** Current text search query string. */
@@ -67,12 +68,14 @@ export class TransactionsListComponent implements OnInit {
    *
    * @param _transactionsService Service for querying and deleting transactions.
    * @param _scopesService Service for querying user scopes.
+   * @param _sessionService Service for managing user session and identity.
    * @param _messageService Service for displaying modal notifications.
    * @param _router Angular `Router` instance.
    */
   constructor(
     private _transactionsService: TransactionsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService,
     private _router: Router
   ) {}
@@ -88,7 +91,8 @@ export class TransactionsListComponent implements OnInit {
    * Fetches user scopes, prepends `'ALL'`, and triggers initial transaction loading.
    */
   loadScopes(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
