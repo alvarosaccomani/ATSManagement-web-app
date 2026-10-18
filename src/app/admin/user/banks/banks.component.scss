@@ -2,8 +2,14 @@
   padding: 24px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  height: calc(100vh - 50px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-height: calc(100vh - 120px);
+
+  @media (max-width: 767.98px) {
+    padding: 12px;
+    min-height: auto;
+  }
+
 
   .header {
     display: flex;

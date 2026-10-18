@@ -20,7 +20,7 @@
     <div class="filter-row">
       <div class="filter-item">
         <label>Ámbito / Contexto:</label>
-        <nz-select [ngModel]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="width: 220px;" nzSize="large">
+        <nz-select [ngModel]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="filter-select scope-select" nzSize="large">
           @for (scope of scopes; track scope.scp_uuid) {
             <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="(scope.scp_isshared ? '🏢 ' : '👤 ') + scope.scp_name"></nz-option>
           }
@@ -29,7 +29,7 @@
 
       <div class="filter-item">
         <label>Tipo:</label>
-        <nz-select [ngModel]="selectedType" (ngModelChange)="onTypeChange($event)" style="width: 180px;" nzSize="large">
+        <nz-select [ngModel]="selectedType" (ngModelChange)="onTypeChange($event)" class="filter-select type-select" nzSize="large">
           <nz-option nzValue="ALL" nzLabel="🌐 Todos"></nz-option>
           <nz-option nzValue="INGRESO" nzLabel="🟢 Ingresos"></nz-option>
           <nz-option nzValue="EGRESO" nzLabel="🔴 Egresos"></nz-option>
@@ -54,7 +54,8 @@
       <nz-spin nzTip="Cargando movimientos..."></nz-spin>
     </div>
   } @else {
-    <nz-table #basicTable [nzData]="filteredTransactions" [nzPageSize]="10" nzShowPagination>
+    <nz-table #basicTable [nzData]="filteredTransactions" [nzPageSize]="10" nzShowPagination [nzScroll]="{ x: '950px' }">
+
       <thead>
         <tr>
           <th>Fecha</th>

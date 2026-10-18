@@ -35,7 +35,9 @@
       (nzPageIndexChange)="onPageIndexChange($event)"
       nzBordered
       nzTableLayout="fixed"
+      [nzScroll]="{ x: '850px' }"
     >
+
       <thead>
         <tr>
           @for (column of listOfColumns; track column.key) {

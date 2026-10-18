@@ -81,7 +81,7 @@
             <button nz-button nzType="link" (click)="newScope()">+ Crear Ámbito</button>
           </ng-template>
 
-          <nz-table #scopeTable [nzData]="summary?.scopes_summary || []" [nzShowPagination]="false" nzSize="small">
+          <nz-table #scopeTable [nzData]="summary?.scopes_summary || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '450px' }">
             <thead>
               <tr>
                 <th>Ámbito</th>
@@ -112,7 +112,8 @@
       <!-- Recent Activity Table -->
       <div nz-col [nzXs]="24" [nzLg]="14">
         <nz-card nzTitle="Últimos Movimientos Registrados">
-          <nz-table #recentTable [nzData]="summary?.recent_transactions || []" [nzShowPagination]="false" nzSize="small">
+          <nz-table #recentTable [nzData]="summary?.recent_transactions || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '600px' }">
+
             <thead>
               <tr>
                 <th>Fecha</th>

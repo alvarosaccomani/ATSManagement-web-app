@@ -6,15 +6,15 @@
     </button>
   </div>
 
-  <div style="display: flex; gap: 16px; margin-bottom: 16px; background-color: #fafafa; padding: 12px; border-radius: 6px;">
-    <div style="flex: 1;">
+  <div style="display: flex; gap: 16px; margin-bottom: 16px; background-color: #fafafa; padding: 12px; border-radius: 6px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 220px;">
       <label style="display: block; font-weight: 500; margin-bottom: 4px;">Ámbito Contexto:</label>
       <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="width: 100%;">
         <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name"></nz-option>
       </nz-select>
     </div>
 
-    <div style="flex: 1;">
+    <div style="flex: 1; min-width: 220px;">
       <label style="display: block; font-weight: 500; margin-bottom: 4px;">Filtrar por Tipo:</label>
       <nz-select [(ngModel)]="selectedType" (ngModelChange)="applyFilter()" style="width: 100%;">
         <nz-option *ngFor="let t of personTypes" [nzValue]="t.value" [nzLabel]="t.label"></nz-option>
@@ -22,8 +22,9 @@
     </div>
   </div>
 
-  <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true">
+  <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true" [nzScroll]="{ x: '850px' }">
     <thead>
+
       <tr>
         <th>Nombre / Razón Social</th>
         <th>Tipo</th>

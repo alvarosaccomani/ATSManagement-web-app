@@ -59,8 +59,9 @@
 
     <!-- Sales Table -->
     <nz-card nzTitle="Listado de Ventas y Comisiones">
-      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered>
+      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: '800px' }">
         <thead>
+
           <tr>
             <th>Fecha</th>
             <th>Ámbito</th>
