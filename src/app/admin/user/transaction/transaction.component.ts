@@ -21,6 +21,7 @@ import { TransactionsService } from '../../../core/services/transactions.service
 import { ScopesService } from '../../../core/services/scopes.service';
 import { PersonsService } from '../../../core/services/persons.service';
 import { CardsService } from '../../../core/services/cards.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
@@ -93,6 +94,7 @@ export class TransactionComponent implements OnInit {
     private _scopesService: ScopesService,
     private _personsService: PersonsService,
     private _cardsService: CardsService,
+    private _sessionService: SessionService,
     private _messageService: MessageService
   ) {
     this.form = this.fb.group({
@@ -178,7 +180,8 @@ export class TransactionComponent implements OnInit {
    * @param defaultScopeUuid Optional scope UUID from query parameters.
    */
   loadScopes(defaultScopeUuid?: string | null): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
@@ -217,7 +220,8 @@ export class TransactionComponent implements OnInit {
    * Loads the user's cards/accounts for the source and target account selectors.
    */
   loadCards(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
+    if (!usr_uuid) return;
     this._cardsService.getCards(usr_uuid).subscribe({
       next: (response: any) => {
         if (response.success) {
@@ -279,10 +283,11 @@ export class TransactionComponent implements OnInit {
     }
 
     this.isLoading = true;
+    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
     const rawValue = this.form.getRawValue();
     const payload = {
       ...rawValue,
-      usr_uuidcreator: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+      usr_uuidcreator: usr_uuid
     };
 
     if (!this.isEditing) {
