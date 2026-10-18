@@ -1,4 +1,48 @@
 :host {
   display: block;
-  padding: 8px;
+}
+
+.page-header {
+  .header-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .control-label {
+      font-weight: 500;
+      color: var(--color-text-main);
+    }
+
+    .scope-select {
+      min-width: 220px;
+
+      @media (max-width: 767.98px) {
+        width: 100%;
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}
+
+.kpi-row {
+  margin-bottom: 24px;
+
+  .kpi-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    }
+  }
+}
+
+.commission-value {
+  font-size: 15px;
 }

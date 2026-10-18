@@ -1,31 +1,31 @@
 <nz-spin [nzSpinning]="isLoading">
-  <div style="padding: 16px;">
+  <div class="page-container-inner">
     <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div class="page-header">
       <div>
-        <h2 style="margin: 0; font-weight: 600;">
-          <i nz-icon nzType="dollar" nzTheme="outline" style="margin-right: 8px;"></i>
+        <h2 class="page-title">
+          <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>
           Mis Ventas y Comisiones
         </h2>
-        <p style="margin: 4px 0 0 0; color: #8c8c8c;">Seguimiento detallado de ventas realizadas y ganancias por comisión</p>
+        <p class="page-subtitle">Seguimiento detallado de ventas realizadas y ganancias por comisión</p>
       </div>
 
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <label style="font-weight: 500;">Ámbito:</label>
-        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="min-width: 220px;">
+      <div class="header-controls">
+        <label class="control-label">Ámbito:</label>
+        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-select">
           <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="(s.scp_isshared ? '🏢 ' : '👤 ') + s.scp_name"></nz-option>
         </nz-select>
       </div>
     </div>
 
     <!-- KPIs -->
-    <div nz-row [nzGutter]="[16, 16]" style="margin-bottom: 24px;">
+    <div nz-row [nzGutter]="[16, 16]" class="kpi-row">
       <div nz-col [nzXs]="24" [nzSm]="8">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="formatAmount(summary?.total_sales || 0)"
             [nzTitle]="'Total en Ventas Realizadas'"
-            [nzValueStyle]="{ color: '#1890ff' }"
+            [nzValueStyle]="{ color: 'var(--color-primary)', fontWeight: '600' }"
             [nzPrefix]="prefixSales"
           ></nz-statistic>
           <ng-template #prefixSales><i nz-icon nzType="shopping-cart"></i></ng-template>
@@ -33,35 +33,34 @@
       </div>
 
       <div nz-col [nzXs]="24" [nzSm]="8">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="formatAmount(summary?.total_commission || 0)"
             [nzTitle]="'Total Comisiones Ganadas'"
-            [nzValueStyle]="{ color: '#3f8600' }"
+            [nzValueStyle]="{ color: 'var(--color-success)', fontWeight: '600' }"
             [nzPrefix]="prefixCommission"
           ></nz-statistic>
-          <ng-template #prefixCommission><i nz-icon nzType="rise"></i></ng-template>
+          <ng-template #prefixCommission><i nz-icon nzType="rise" class="metric-income"></i></ng-template>
         </nz-card>
       </div>
 
       <div nz-col [nzXs]="24" [nzSm]="8">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="summary?.sales_count || 0"
             [nzTitle]="'Cantidad de Ventas'"
-            [nzValueStyle]="{ color: '#722ed1' }"
+            [nzValueStyle]="{ color: '#7c3aed', fontWeight: '600' }"
             [nzPrefix]="prefixCount"
           ></nz-statistic>
-          <ng-template #prefixCount><i nz-icon nzType="check-circle"></i></ng-template>
+          <ng-template #prefixCount><i nz-icon nzType="check-circle" class="metric-count"></i></ng-template>
         </nz-card>
       </div>
     </div>
 
     <!-- Sales Table -->
     <nz-card nzTitle="Listado de Ventas y Comisiones">
-      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: '800px' }">
+      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: '850px' }">
         <thead>
-
           <tr>
             <th>Fecha</th>
             <th>Ámbito</th>
@@ -86,7 +85,7 @@
               <nz-tag nzColor="orange">{{ s.trx_commissionrate ? (s.trx_commissionrate + '%') : '-' }}</nz-tag>
             </td>
             <td>
-              <strong style="color: #3f8600; font-size: 15px;">
+              <strong class="metric-income commission-value">
                 {{ formatAmount(s.trx_commissionamount || 0) }}
               </strong>
             </td>
@@ -97,3 +96,4 @@
     </nz-card>
   </div>
 </nz-spin>
+

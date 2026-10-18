@@ -1,4 +1,41 @@
 :host {
   display: block;
-  padding: 16px;
+}
+
+.page-header {
+  .header-controls {
+    button {
+      @media (max-width: 767.98px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.filter-bar-card {
+  .filter-field {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    @media (max-width: 767.98px) {
+      min-width: 100%;
+    }
+
+    .field-label {
+      font-weight: 500;
+      color: var(--color-text-main);
+      font-size: 13.5px;
+    }
+
+    .filter-select {
+      width: 100%;
+    }
+  }
+}
+
+.person-tag {
+  margin-bottom: 2px;
 }

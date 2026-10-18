@@ -1,65 +1,76 @@
 <nz-spin [nzSpinning]="isLoading">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-    <h2>Contactos y Personas</h2>
-    <button nz-button nzType="primary" (click)="newPerson()">
-      <nz-icon nzType="plus" /> Nuevo Contacto
-    </button>
-  </div>
+  <div class="page-container-inner">
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">
+          <i nz-icon nzType="team" nzTheme="outline"></i>
+          Contactos y Personas
+        </h2>
+        <p class="page-subtitle">Directorio de clientes, proveedores, vendedores y socios</p>
+      </div>
 
-  <div style="display: flex; gap: 16px; margin-bottom: 16px; background-color: #fafafa; padding: 12px; border-radius: 6px; flex-wrap: wrap;">
-    <div style="flex: 1; min-width: 220px;">
-      <label style="display: block; font-weight: 500; margin-bottom: 4px;">Ámbito Contexto:</label>
-      <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="width: 100%;">
-        <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name"></nz-option>
-      </nz-select>
+      <div class="header-controls">
+        <button nz-button nzType="primary" (click)="newPerson()">
+          <i nz-icon nzType="plus"></i> Nuevo Contacto
+        </button>
+      </div>
     </div>
 
-    <div style="flex: 1; min-width: 220px;">
-      <label style="display: block; font-weight: 500; margin-bottom: 4px;">Filtrar por Tipo:</label>
-      <nz-select [(ngModel)]="selectedType" (ngModelChange)="applyFilter()" style="width: 100%;">
-        <nz-option *ngFor="let t of personTypes" [nzValue]="t.value" [nzLabel]="t.label"></nz-option>
-      </nz-select>
+    <div class="filter-bar-card">
+      <div class="filter-field">
+        <label class="field-label">Ámbito / Contexto:</label>
+        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="filter-select">
+          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name"></nz-option>
+        </nz-select>
+      </div>
+
+      <div class="filter-field">
+        <label class="field-label">Filtrar por Tipo:</label>
+        <nz-select [(ngModel)]="selectedType" (ngModelChange)="applyFilter()" class="filter-select">
+          <nz-option *ngFor="let t of personTypes" [nzValue]="t.value" [nzLabel]="t.label"></nz-option>
+        </nz-select>
+      </div>
     </div>
+
+    <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true" [nzScroll]="{ x: '850px' }">
+      <thead>
+        <tr>
+          <th>Nombre / Razón Social</th>
+          <th>Tipo</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>CUIT / Identificación</th>
+          <th>Estado</th>
+          <th nzWidth="110px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td><strong>{{ data.prs_name }}</strong></td>
+          <td>
+            <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" class="person-tag">
+              {{ t }}
+            </nz-tag>
+          </td>
+          <td>{{ data.prs_phone || '-' }}</td>
+          <td>{{ data.prs_email || '-' }}</td>
+          <td>{{ data.prs_taxid || '-' }}</td>
+          <td>
+            <nz-tag [nzColor]="data.prs_active ? 'success' : 'error'">
+              {{ data.prs_active ? 'Activo' : 'Inactivo' }}
+            </nz-tag>
+          </td>
+          <td>
+            <button nz-button nzType="text" (click)="editPerson(data)" nz-tooltip nzTooltipTitle="Editar">
+              <i nz-icon nzType="edit"></i>
+            </button>
+            <button nz-button nzType="text" nzDanger (click)="deletePerson(data)" nz-tooltip nzTooltipTitle="Eliminar">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
   </div>
-
-  <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true" [nzScroll]="{ x: '850px' }">
-    <thead>
-
-      <tr>
-        <th>Nombre / Razón Social</th>
-        <th>Tipo</th>
-        <th>Teléfono</th>
-        <th>Email</th>
-        <th>CUIT / Identificación</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td><strong>{{ data.prs_name }}</strong></td>
-        <td>
-          <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" style="margin-bottom: 2px;">
-            {{ t }}
-          </nz-tag>
-        </td>
-        <td>{{ data.prs_phone || '-' }}</td>
-        <td>{{ data.prs_email || '-' }}</td>
-        <td>{{ data.prs_taxid || '-' }}</td>
-        <td>
-          <nz-tag [nzColor]="data.prs_active ? 'green' : 'red'">
-            {{ data.prs_active ? 'Activo' : 'Inactivo' }}
-          </nz-tag>
-        </td>
-        <td>
-          <button nz-button nzType="text" (click)="editPerson(data)" nz-tooltip nzTooltipTitle="Editar">
-            <nz-icon nzType="edit" />
-          </button>
-          <button nz-button nzType="text" nzDanger (click)="deletePerson(data)" nz-tooltip nzTooltipTitle="Eliminar">
-            <nz-icon nzType="delete" />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
 </nz-spin>
+

@@ -1,17 +1,17 @@
 <nz-spin [nzSpinning]="isLoading">
-  <div style="padding: 16px;">
+  <div class="page-container-inner">
     <!-- Header Section -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div class="page-header">
       <div>
-        <h2 style="margin: 0; font-weight: 600;">
-          <i nz-icon nzType="dashboard" nzTheme="outline" style="margin-right: 8px;"></i>
+        <h2 class="page-title">
+          <i nz-icon nzType="dashboard" nzTheme="outline"></i>
           Tablero Principal
         </h2>
-        <p style="margin: 4px 0 0 0; color: #8c8c8c;">Resumen financiero unificado y métricas clave</p>
+        <p class="page-subtitle">Resumen financiero unificado y métricas clave</p>
       </div>
 
-      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" style="min-width: 220px;">
+      <div class="header-controls">
+        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-selector">
           <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="(s.scp_isshared ? '🏢 ' : '👤 ') + s.scp_name"></nz-option>
         </nz-select>
 
@@ -22,37 +22,37 @@
     </div>
 
     <!-- KPIs Row -->
-    <div nz-row [nzGutter]="[16, 16]" style="margin-bottom: 24px;">
+    <div nz-row [nzGutter]="[16, 16]" class="kpi-row">
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="formatAmount(summary?.total_income || 0)"
             [nzTitle]="'Total Ingresos'"
-            [nzValueStyle]="{ color: '#3f8600' }"
+            [nzValueStyle]="{ color: 'var(--color-success)', fontWeight: '600' }"
             [nzPrefix]="prefixIncome"
           ></nz-statistic>
-          <ng-template #prefixIncome><i nz-icon nzType="arrow-down" style="color: #3f8600;"></i></ng-template>
+          <ng-template #prefixIncome><i nz-icon nzType="arrow-down" class="metric-income"></i></ng-template>
         </nz-card>
       </div>
 
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="formatAmount(summary?.total_expense || 0)"
             [nzTitle]="'Total Egresos'"
-            [nzValueStyle]="{ color: '#cf1322' }"
+            [nzValueStyle]="{ color: 'var(--color-danger)', fontWeight: '600' }"
             [nzPrefix]="prefixExpense"
           ></nz-statistic>
-          <ng-template #prefixExpense><i nz-icon nzType="arrow-up" style="color: #cf1322;"></i></ng-template>
+          <ng-template #prefixExpense><i nz-icon nzType="arrow-up" class="metric-expense"></i></ng-template>
         </nz-card>
       </div>
 
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="formatAmount(summary?.net_balance || 0)"
             [nzTitle]="'Balance Neto'"
-            [nzValueStyle]="{ color: (summary?.net_balance || 0) >= 0 ? '#1890ff' : '#cf1322' }"
+            [nzValueStyle]="{ color: (summary?.net_balance || 0) >= 0 ? 'var(--color-primary)' : 'var(--color-danger)', fontWeight: '600' }"
             [nzPrefix]="prefixBalance"
           ></nz-statistic>
           <ng-template #prefixBalance><i nz-icon nzType="wallet"></i></ng-template>
@@ -60,14 +60,14 @@
       </div>
 
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
-        <nz-card>
+        <nz-card class="kpi-card">
           <nz-statistic
             [nzValue]="summary?.transaction_count || 0"
             [nzTitle]="'Total Movimientos Registrados'"
-            [nzValueStyle]="{ color: '#722ed1' }"
+            [nzValueStyle]="{ color: '#7c3aed', fontWeight: '600' }"
             [nzPrefix]="prefixCount"
           ></nz-statistic>
-          <ng-template #prefixCount><i nz-icon nzType="unordered-list"></i></ng-template>
+          <ng-template #prefixCount><i nz-icon nzType="unordered-list" class="metric-count"></i></ng-template>
         </nz-card>
       </div>
     </div>
@@ -93,13 +93,13 @@
             <tbody>
               <tr *ngFor="let item of scopeTable.data">
                 <td>
-                  <span *ngIf="item.scp_color" [style.background-color]="item.scp_color" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px;"></span>
+                  <span *ngIf="item.scp_color" [style.background-color]="item.scp_color" class="color-dot"></span>
                   <strong>{{ item.scp_name }}</strong>
                 </td>
-                <td style="color: #3f8600;">{{ formatAmount(item.total_income) }}</td>
-                <td style="color: #cf1322;">{{ formatAmount(item.total_expense) }}</td>
+                <td class="metric-income">{{ formatAmount(item.total_income) }}</td>
+                <td class="metric-expense">{{ formatAmount(item.total_expense) }}</td>
                 <td>
-                  <strong [style.color]="item.balance >= 0 ? '#1890ff' : '#cf1322'">
+                  <strong [class.metric-income]="item.balance >= 0" [class.metric-expense]="item.balance < 0">
                     {{ formatAmount(item.balance) }}
                   </strong>
                 </td>
@@ -113,7 +113,6 @@
       <div nz-col [nzXs]="24" [nzLg]="14">
         <nz-card nzTitle="Últimos Movimientos Registrados">
           <nz-table #recentTable [nzData]="summary?.recent_transactions || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '600px' }">
-
             <thead>
               <tr>
                 <th>Fecha</th>
@@ -133,13 +132,13 @@
                 </td>
                 <td><strong>{{ t.trx_concept }}</strong></td>
                 <td>
-                  <strong [style.color]="t.trx_type === 'INGRESO' ? '#3f8600' : (t.trx_type === 'EGRESO' ? '#cf1322' : '#1890ff')">
+                  <strong [class.metric-income]="t.trx_type === 'INGRESO'" [class.metric-expense]="t.trx_type === 'EGRESO'" [class.metric-transfer]="t.trx_type === 'TRANSFERENCIA'">
                     {{ formatAmount(t.trx_amount) }}
                   </strong>
                 </td>
                 <td>
                   <span *ngIf="t.prs">👤 {{ t.prs.prs_name }}</span>
-                  <span *ngIf="!t.prs" style="color: #bfbfbf;">-</span>
+                  <span *ngIf="!t.prs" class="text-muted">-</span>
                 </td>
               </tr>
             </tbody>
@@ -149,3 +148,4 @@
     </div>
   </div>
 </nz-spin>
+
