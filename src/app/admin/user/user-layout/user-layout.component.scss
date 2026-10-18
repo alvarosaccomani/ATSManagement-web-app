@@ -1,3 +1,66 @@
+.sidebar-logo {
+  height: 64px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #002140;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s;
+
+  .logo-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    nz-icon {
+      font-size: 20px;
+      color: #ffffff;
+    }
+  }
+
+  .logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .logo-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .logo-subtitle {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+  }
+}
+
+.sidebar-menu-wrapper {
+  padding-bottom: 24px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+}
+
 .app-layout {
   min-height: 100vh;
 
@@ -12,64 +75,8 @@
     z-index: 100;
     background: #001529;
 
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-    }
-
-    .sidebar-logo {
-      height: 64px;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #002140;
-      overflow: hidden;
-      white-space: nowrap;
-      transition: all 0.3s;
-
-      .logo-icon-wrapper {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-
-        nz-icon {
-          font-size: 20px;
-          color: #ffffff;
-        }
-      }
-
-      .logo-text-wrapper {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-
-        .logo-title {
-          font-size: 15px;
-          font-weight: 700;
-          color: #ffffff;
-          letter-spacing: 0.5px;
-        }
-
-        .logo-subtitle {
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.5);
-          font-weight: 400;
-        }
-      }
-    }
-
-    .sidebar-menu-wrapper {
-      padding-bottom: 24px;
+    @media (max-width: 767.98px) {
+      display: none !important;
     }
   }
 
@@ -89,6 +96,10 @@
       position: sticky;
       top: 0;
       z-index: 99;
+
+      @media (max-width: 767.98px) {
+        padding: 0 12px;
+      }
 
       .header-left {
         display: flex;
@@ -148,6 +159,16 @@
             font-size: 10px;
             color: #8c8c8c;
           }
+
+          @media (max-width: 575.98px) {
+            padding: 2px;
+            border: none;
+
+            .header-username,
+            .dropdown-chevron {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -198,3 +219,4 @@
     }
   }
 }
+
