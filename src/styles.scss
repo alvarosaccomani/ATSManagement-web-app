@@ -1,1 +1,76 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Design System & Typography */
+:root {
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --color-primary: #1677ff;
+  --color-primary-hover: #4096ff;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-info: #0284c7;
+  --color-warning: #d97706;
+  --color-bg-base: #f0f2f5;
+  --color-surface: #ffffff;
+  --color-text-main: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+}
+
+html, body {
+  font-family: var(--font-family-sans);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Typography Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans);
+  color: #111827;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Financial & Status Metrics Utilities */
+.metric-income {
+  color: var(--color-success) !important;
+  font-weight: 600;
+}
+
+.metric-expense {
+  color: var(--color-danger) !important;
+  font-weight: 600;
+}
+
+.metric-balance {
+  color: var(--color-primary) !important;
+  font-weight: 600;
+}
+
+.metric-transfer {
+  color: var(--color-info) !important;
+  font-weight: 600;
+}
+
+.text-muted {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Polished Table Defaults */
+.ant-table {
+  font-size: 13.5px;
+
+  thead > tr > th {
+    font-weight: 600 !important;
+    color: #4b5563 !important;
+    background-color: #f9fafb !important;
+  }
+}
+
+/* Cards & Surfaces */
+.ant-card {
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
