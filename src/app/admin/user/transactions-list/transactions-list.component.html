@@ -216,8 +216,14 @@
               <div style="margin-top: 4px; font-size: 13px; color: #595959;">
                 Filas detectadas: <strong>{{ parseResult.totalRows }}</strong> |
                 Válidas: <strong style="color: #52c41a;">{{ parseResult.validRowsCount }}</strong>
-                @if (parseResult.invalidRowsCount > 0) {
-                  | Con observaciones: <strong style="color: #faad14;">{{ parseResult.invalidRowsCount }}</strong>
+                @if (observationsCount > 0) {
+                  | <span
+                      (click)="importPreviewFilter = 'WARNINGS'"
+                      style="cursor: pointer; color: #d46b08; font-weight: 600; text-decoration: underline;"
+                      nz-tooltip
+                      nzTooltipTitle="Hacé clic para filtrar solo estas filas">
+                      <i nz-icon nzType="warning" style="margin-right: 2px;"></i> Con observaciones: {{ observationsCount }}
+                    </span>
                 }
               </div>
             </div>
@@ -253,8 +259,41 @@
             </nz-alert>
           }
 
+          <!-- Barra de Filtros de Previsualización -->
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; color: #4b5563; font-weight: 600;">
+              Mostrando {{ displayedParsedRows.length }} de {{ parseResult.rows.length }} filas:
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button
+                nz-button
+                nzSize="small"
+                [nzType]="importPreviewFilter === 'ALL' ? 'primary' : 'default'"
+                (click)="importPreviewFilter = 'ALL'">
+                Todas ({{ parseResult.rows.length }})
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                [nzType]="importPreviewFilter === 'WARNINGS' ? 'primary' : 'default'"
+                [nzDanger]="importPreviewFilter === 'WARNINGS' && observationsCount > 0"
+                (click)="importPreviewFilter = 'WARNINGS'">
+                <i nz-icon nzType="warning"></i>
+                Solo con observaciones ({{ observationsCount }})
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                [nzType]="importPreviewFilter === 'VALID' ? 'primary' : 'default'"
+                (click)="importPreviewFilter = 'VALID'">
+                <i nz-icon nzType="check-circle"></i>
+                Solo válidas ({{ validWithoutObservationsCount }})
+              </button>
+            </div>
+          </div>
+
           <!-- Tabla de Previsualización -->
-          <nz-table #previewTable [nzData]="parseResult.rows" [nzPageSize]="6" nzSize="small" [nzScroll]="{ y: '260px' }" nzBordered>
+          <nz-table #previewTable [nzData]="displayedParsedRows" [nzPageSize]="6" nzSize="small" [nzScroll]="{ y: '260px' }" nzBordered>
             <thead>
               <tr>
                 <th nzWidth="55px">Fila</th>
@@ -263,12 +302,12 @@
                 <th>Concepto</th>
                 <th nzWidth="120px">Importe</th>
                 <th>Socio / Vendedor</th>
-                <th nzWidth="85px">Estado</th>
+                <th nzWidth="95px">Estado</th>
               </tr>
             </thead>
             <tbody>
               @for (row of previewTable.data; track row.rowIndex) {
-                <tr [style.background]="row.isValid ? 'inherit' : '#fffbe6'">
+                <tr [style.background]="!row.isValid ? '#fff1f0' : (row.errors.length > 0 ? '#fffbe6' : 'inherit')">
                   <td style="text-align: center; color: #8c8c8c;">{{ row.rowIndex }}</td>
                   <td>
                     <nz-tag
@@ -282,7 +321,14 @@
                     </nz-tag>
                   </td>
                   <td>{{ row.dateFormatted }}</td>
-                  <td><strong>{{ row.concept }}</strong></td>
+                  <td>
+                    <div><strong>{{ row.concept }}</strong></div>
+                    @if (row.errors && row.errors.length > 0) {
+                      <div style="font-size: 11px; color: #d46b08; margin-top: 3px;">
+                        <i nz-icon nzType="info-circle" style="margin-right: 4px;"></i>{{ row.errors.join(' • ') }}
+                      </div>
+                    }
+                  </td>
                   <td>
                     <span [class.expense-amount]="row.trx_type === 'EGRESO'" [class.income-amount]="row.trx_type === 'INGRESO'">
                       {{ formatAmount(row.amount) }}
@@ -298,10 +344,18 @@
                     }
                   </td>
                   <td>
-                    @if (row.isValid) {
-                      <nz-tag nzColor="success">Válido</nz-tag>
+                    @if (!row.isValid) {
+                      <nz-tag nzColor="error" nz-tooltip [nzTooltipTitle]="row.errors.join(' ')">
+                        <i nz-icon nzType="close-circle"></i> Error
+                      </nz-tag>
+                    } @else if (row.errors && row.errors.length > 0) {
+                      <nz-tag nzColor="warning" nz-tooltip [nzTooltipTitle]="row.errors.join(' ')">
+                        <i nz-icon nzType="warning"></i> Atención
+                      </nz-tag>
                     } @else {
-                      <nz-tag nzColor="warning" nz-tooltip [nzTooltipTitle]="row.errors.join(' ')">Atención</nz-tag>
+                      <nz-tag nzColor="success">
+                        <i nz-icon nzType="check"></i> Válido
+                      </nz-tag>
                     }
                   </td>
                 </tr>

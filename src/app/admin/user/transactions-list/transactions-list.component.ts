@@ -84,6 +84,8 @@ export class TransactionsListComponent implements OnInit {
   importMovementType: 'AUTO' | 'EGRESO' | 'INGRESO' = 'EGRESO';
   /** Result of analyzing the uploaded Excel workbook, or `null` if no file is loaded. */
   parseResult: ExcelParseResult | null = null;
+  /** Active filter for the Excel preview table (`'ALL' | 'WARNINGS' | 'VALID'`). */
+  importPreviewFilter: 'ALL' | 'WARNINGS' | 'VALID' = 'ALL';
   /** Contacts belonging to the selected scope for buyer/supplier mapping. */
   scopePersons: PersonInterface[] = [];
   /** Available cards/accounts for optional funding account mapping. */
@@ -129,6 +131,36 @@ export class TransactionsListComponent implements OnInit {
    */
   get currentUserId(): string {
     return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+  }
+
+  /**
+   * Obtiene la cantidad de filas que poseen advertencias o errores en la planilla analizada.
+   */
+  get observationsCount(): number {
+    if (!this.parseResult) return 0;
+    return this.parseResult.rows.filter(r => !r.isValid || (r.errors && r.errors.length > 0)).length;
+  }
+
+  /**
+   * Obtiene la cantidad de filas perfectamente válidas sin observaciones.
+   */
+  get validWithoutObservationsCount(): number {
+    if (!this.parseResult) return 0;
+    return this.parseResult.rows.filter(r => r.isValid && (!r.errors || r.errors.length === 0)).length;
+  }
+
+  /**
+   * Retorna las filas del archivo Excel filtradas según el criterio seleccionado en el modal.
+   */
+  get displayedParsedRows(): ParsedExpenseRow[] {
+    if (!this.parseResult) return [];
+    if (this.importPreviewFilter === 'WARNINGS') {
+      return this.parseResult.rows.filter(r => !r.isValid || (r.errors && r.errors.length > 0));
+    }
+    if (this.importPreviewFilter === 'VALID') {
+      return this.parseResult.rows.filter(r => r.isValid && (!r.errors || r.errors.length === 0));
+    }
+    return this.parseResult.rows;
   }
 
   /**
@@ -395,6 +427,7 @@ export class TransactionsListComponent implements OnInit {
 
     this.importScopeUuid = defaultScope;
     this.parseResult = null;
+    this.importPreviewFilter = 'ALL';
     this.isImportModalVisible = true;
     if (this.importScopeUuid) {
       this.loadScopePersons(this.importScopeUuid);
@@ -408,6 +441,7 @@ export class TransactionsListComponent implements OnInit {
   closeImportModal(): void {
     this.isImportModalVisible = false;
     this.parseResult = null;
+    this.importPreviewFilter = 'ALL';
     if (this.excelFileInput?.nativeElement) {
       this.excelFileInput.nativeElement.value = '';
     }
@@ -479,6 +513,7 @@ export class TransactionsListComponent implements OnInit {
       .then((result) => {
         this.isParsingExcel = false;
         this.parseResult = result;
+        this.importPreviewFilter = 'ALL';
       })
       .catch((error) => {
         this.isParsingExcel = false;
