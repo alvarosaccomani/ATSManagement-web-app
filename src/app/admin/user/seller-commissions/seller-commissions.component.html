@@ -77,7 +77,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let s of salesTable.data">
-            <td>{{ s.trx_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ s.trx_datetime | date:'dd/MM/yyyy' }}</td>
             <td>
               <nz-tag *ngIf="s.scp" [nzColor]="s.scp.scp_color || 'blue'">
                 {{ s.scp.scp_name }}

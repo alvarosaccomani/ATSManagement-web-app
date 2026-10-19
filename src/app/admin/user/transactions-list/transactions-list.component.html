@@ -83,7 +83,7 @@
       <tbody>
         @for (data of basicTable.data; track data.trx_uuid) {
           <tr>
-            <td>{{ data.trx_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ data.trx_datetime | date:'dd/MM/yyyy' }}</td>
             <td>
               @if (data.scp) {
                 <nz-tag [nzColor]="data.scp.scp_color || 'cyan'">

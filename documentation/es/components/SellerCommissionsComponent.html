@@ -10,51 +10,6 @@
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
-    
-        <style id="compodoc-lang-switcher-styles">
-            .compodoc-lang-switcher {
-                position: absolute;
-                top: 70px;
-                right: calc(88px + var(--content-scrollbar-width, 0px));
-                z-index: 1050;
-                display: inline-flex;
-                align-items: center;
-            }
-            @media (min-width: 768px) {
-                .compodoc-lang-switcher {
-                    top: 15px;
-                }
-            }
-            .compodoc-lang-select {
-                height: 34px;
-                padding: 0 12px;
-                border-radius: 17px;
-                border: 1px solid rgba(92, 192, 174, 0.65);
-                background-color: #ffffff;
-                color: #2c3e50;
-                font-size: 13px;
-                font-weight: 600;
-                cursor: pointer;
-                outline: none;
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-                transition: all 0.2s ease;
-            }
-            .compodoc-lang-select:hover,
-            .compodoc-lang-select:focus {
-                border-color: #5cc0ae;
-                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
-            }
-            body.dark .compodoc-lang-select {
-                background-color: #212529;
-                color: #f8f9fa;
-                border-color: rgba(241, 196, 15, 0.65);
-            }
-            body.dark .compodoc-lang-select:hover,
-            body.dark .compodoc-lang-select:focus {
-                border-color: #f1c40f;
-                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
-            }
-        </style>
     </head>
     <body>
           <script>
@@ -1217,7 +1172,7 @@ export class SellerCommissionsComponent implements OnInit {
         &lt;/thead&gt;
         &lt;tbody&gt;
           &lt;tr *ngFor&#x3D;&quot;let s of salesTable.data&quot;&gt;
-            &lt;td&gt;{{ s.trx_datetime | date:&#x27;dd/MM/yyyy HH:mm&#x27; }}&lt;/td&gt;
+            &lt;td&gt;{{ s.trx_datetime | date:&#x27;dd/MM/yyyy&#x27; }}&lt;/td&gt;
             &lt;td&gt;
               &lt;nz-tag *ngIf&#x3D;&quot;s.scp&quot; [nzColor]&#x3D;&quot;s.scp.scp_color || &#x27;blue&#x27;&quot;&gt;
                 {{ s.scp.scp_name }}
@@ -1324,7 +1279,7 @@ export class SellerCommissionsComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><nz-spin [nzSpinning]="isLoading">  <div class="page-container-inner">    <!-- Header -->    <div class="page-header">      <div>        <h2 class="page-title">          <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>          Mis Ventas y Comisiones        </h2>        <p class="page-subtitle">Seguimiento detallado de ventas realizadas y ganancias por comisión</p>      </div>      <div class="header-controls">        <label class="control-label">Ámbito:</label>        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-select">          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name" [nzCustomContent]="true">            <i nz-icon [nzType]="s.scp_uuid === \'ALL\' ? \'appstore\' : (s.scp_isshared ? \'bank\' : \'user\')" style="margin-right: 6px;"></i>            {{ s.scp_name }}          </nz-option>        </nz-select>      </div>    </div>    <!-- KPIs -->    <div nz-row [nzGutter]="[16, 16]" class="kpi-row">      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card class="kpi-card">          <nz-statistic            [nzValue]="formatAmount(summary?.total_sales || 0)"            [nzTitle]="\'Total en Ventas Realizadas\'"            [nzValueStyle]="{ color: \'var(--color-primary)\', fontWeight: \'600\' }"            [nzPrefix]="prefixSales"          ></nz-statistic>          <ng-template #prefixSales><i nz-icon nzType="shopping-cart"></i></ng-template>        </nz-card>      </div>      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card class="kpi-card">          <nz-statistic            [nzValue]="formatAmount(summary?.total_commission || 0)"            [nzTitle]="\'Total Comisiones Ganadas\'"            [nzValueStyle]="{ color: \'var(--color-success)\', fontWeight: \'600\' }"            [nzPrefix]="prefixCommission"          ></nz-statistic>          <ng-template #prefixCommission><i nz-icon nzType="rise" class="metric-income"></i></ng-template>        </nz-card>      </div>      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card class="kpi-card">          <nz-statistic            [nzValue]="summary?.sales_count || 0"            [nzTitle]="\'Cantidad de Ventas\'"            [nzValueStyle]="{ color: \'#7c3aed\', fontWeight: \'600\' }"            [nzPrefix]="prefixCount"          ></nz-statistic>          <ng-template #prefixCount><i nz-icon nzType="check-circle" class="metric-count"></i></ng-template>        </nz-card>      </div>    </div>    <!-- Sales Table -->    <nz-card nzTitle="Listado de Ventas y Comisiones">      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: \'850px\' }">        <thead>          <tr>            <th>Fecha</th>            <th>Ámbito</th>            <th>Concepto / Venta</th>            <th>Monto Venta</th>            <th>% Comisión</th>            <th>Ganancia Vendedor</th>            <th>Notas</th>          </tr>        </thead>        <tbody>          <tr *ngFor="let s of salesTable.data">            <td>{{ s.trx_datetime | date:\'dd/MM/yyyy HH:mm\' }}</td>            <td>              <nz-tag *ngIf="s.scp" [nzColor]="s.scp.scp_color || \'blue\'">                {{ s.scp.scp_name }}              </nz-tag>            </td>            <td><strong>{{ s.trx_concept }}</strong></td>            <td><strong>{{ formatAmount(s.trx_amount) }}</strong></td>            <td>              <nz-tag nzColor="orange">{{ s.trx_commissionrate ? (s.trx_commissionrate + \'%\') : \'-\' }}</nz-tag>            </td>            <td>              <strong class="metric-income commission-value">                {{ formatAmount(s.trx_commissionamount || 0) }}              </strong>            </td>            <td>{{ s.trx_notes || \'-\' }}</td>          </tr>        </tbody>      </nz-table>    </nz-card>  </div></nz-spin></div>'
+        var COMPONENT_TEMPLATE = '<div><nz-spin [nzSpinning]="isLoading">  <div class="page-container-inner">    <!-- Header -->    <div class="page-header">      <div>        <h2 class="page-title">          <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>          Mis Ventas y Comisiones        </h2>        <p class="page-subtitle">Seguimiento detallado de ventas realizadas y ganancias por comisión</p>      </div>      <div class="header-controls">        <label class="control-label">Ámbito:</label>        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-select">          <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name" [nzCustomContent]="true">            <i nz-icon [nzType]="s.scp_uuid === \'ALL\' ? \'appstore\' : (s.scp_isshared ? \'bank\' : \'user\')" style="margin-right: 6px;"></i>            {{ s.scp_name }}          </nz-option>        </nz-select>      </div>    </div>    <!-- KPIs -->    <div nz-row [nzGutter]="[16, 16]" class="kpi-row">      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card class="kpi-card">          <nz-statistic            [nzValue]="formatAmount(summary?.total_sales || 0)"            [nzTitle]="\'Total en Ventas Realizadas\'"            [nzValueStyle]="{ color: \'var(--color-primary)\', fontWeight: \'600\' }"            [nzPrefix]="prefixSales"          ></nz-statistic>          <ng-template #prefixSales><i nz-icon nzType="shopping-cart"></i></ng-template>        </nz-card>      </div>      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card class="kpi-card">          <nz-statistic            [nzValue]="formatAmount(summary?.total_commission || 0)"            [nzTitle]="\'Total Comisiones Ganadas\'"            [nzValueStyle]="{ color: \'var(--color-success)\', fontWeight: \'600\' }"            [nzPrefix]="prefixCommission"          ></nz-statistic>          <ng-template #prefixCommission><i nz-icon nzType="rise" class="metric-income"></i></ng-template>        </nz-card>      </div>      <div nz-col [nzXs]="24" [nzSm]="8">        <nz-card class="kpi-card">          <nz-statistic            [nzValue]="summary?.sales_count || 0"            [nzTitle]="\'Cantidad de Ventas\'"            [nzValueStyle]="{ color: \'#7c3aed\', fontWeight: \'600\' }"            [nzPrefix]="prefixCount"          ></nz-statistic>          <ng-template #prefixCount><i nz-icon nzType="check-circle" class="metric-count"></i></ng-template>        </nz-card>      </div>    </div>    <!-- Sales Table -->    <nz-card nzTitle="Listado de Ventas y Comisiones">      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: \'850px\' }">        <thead>          <tr>            <th>Fecha</th>            <th>Ámbito</th>            <th>Concepto / Venta</th>            <th>Monto Venta</th>            <th>% Comisión</th>            <th>Ganancia Vendedor</th>            <th>Notas</th>          </tr>        </thead>        <tbody>          <tr *ngFor="let s of salesTable.data">            <td>{{ s.trx_datetime | date:\'dd/MM/yyyy\' }}</td>            <td>              <nz-tag *ngIf="s.scp" [nzColor]="s.scp.scp_color || \'blue\'">                {{ s.scp.scp_name }}              </nz-tag>            </td>            <td><strong>{{ s.trx_concept }}</strong></td>            <td><strong>{{ formatAmount(s.trx_amount) }}</strong></td>            <td>              <nz-tag nzColor="orange">{{ s.trx_commissionrate ? (s.trx_commissionrate + \'%\') : \'-\' }}</nz-tag>            </td>            <td>              <strong class="metric-income commission-value">                {{ formatAmount(s.trx_commissionamount || 0) }}              </strong>            </td>            <td>{{ s.trx_notes || \'-\' }}</td>          </tr>        </tbody>      </nz-table>    </nz-card>  </div></nz-spin></div>'
     var COMPONENTS = [{'name': 'AccountConfirmedComponent', 'selector': 'app-account-confirmed'},{'name': 'AccountCreatedComponent', 'selector': 'app-account-created'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuthLayoutComponent', 'selector': 'app-auth-layout'},{'name': 'BankComponent', 'selector': 'app-bank'},{'name': 'BanksComponent', 'selector': 'app-banks'},{'name': 'BrandCardComponent', 'selector': 'app-brand-card'},{'name': 'BrandCardsComponent', 'selector': 'app-brand-cards'},{'name': 'CameraComponent', 'selector': 'app-camera'},{'name': 'CardComponent', 'selector': 'app-card'},{'name': 'CardsComponent', 'selector': 'app-cards'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DocumentsComponent', 'selector': 'app-documents'},{'name': 'FileDetailComponent', 'selector': 'app-file-detail'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'IframeViewerComponent', 'selector': 'app-iframe-viewer'},{'name': 'ImageEditorComponent', 'selector': 'app-image-editor'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavBarComponent', 'selector': 'app-nav-bar'},{'name': 'PaymentMethodComponent', 'selector': 'app-payment-method'},{'name': 'PaymentMethodsComponent', 'selector': 'app-payment-methods'},{'name': 'PaymentPeriodComponent', 'selector': 'app-payment-period'},{'name': 'PaymentPeriodsComponent', 'selector': 'app-payment-periods'},{'name': 'PaymentPeriodsStatusComponent', 'selector': 'app-payment-periods-status'},{'name': 'PaymentPeriodStatusComponent', 'selector': 'app-payment-period-status'},{'name': 'PdfViewerComponent', 'selector': 'app-pdf-viewer'},{'name': 'PeriodComponent', 'selector': 'app-period'},{'name': 'PeriodsComponent', 'selector': 'app-periods'},{'name': 'PersonComponent', 'selector': 'app-person'},{'name': 'PersonsListComponent', 'selector': 'app-persons-list'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'ScopeComponent', 'selector': 'app-scope'},{'name': 'ScopesListComponent', 'selector': 'app-scopes-list'},{'name': 'SellerCommissionsComponent', 'selector': 'app-seller-commissions'},{'name': 'SsoCallbackComponent', 'selector': 'app-sso-callback'},{'name': 'StatusPeriodComponent', 'selector': 'app-status-period'},{'name': 'StatusPeriodsComponent', 'selector': 'app-status-periods'},{'name': 'TransactionComponent', 'selector': 'app-transaction'},{'name': 'TransactionsListComponent', 'selector': 'app-transactions-list'},{'name': 'TreeViewComponent', 'selector': 'app-tree-view'},{'name': 'TypeCardComponent', 'selector': 'app-type-card'},{'name': 'TypeCardsComponent', 'selector': 'app-type-cards'},{'name': 'TypeOperationComponent', 'selector': 'app-type-operation'},{'name': 'TypeOperationsComponent', 'selector': 'app-type-operations'},{'name': 'UserLayoutComponent', 'selector': 'app-user-layout'},{'name': 'VoucherComponent', 'selector': 'app-voucher'},{'name': 'VoucherFeeComponent', 'selector': 'app-voucher-fee'},{'name': 'VoucherFeeStatusComponent', 'selector': 'app-voucher-fee-status'},{'name': 'VouchersComponent', 'selector': 'app-vouchers'},{'name': 'VouchersFeesComponent', 'selector': 'app-vouchers-fees'},{'name': 'VouchersFeeStatusComponent', 'selector': 'app-vouchers-fee-status'},{'name': 'VouchersStatesComponent', 'selector': 'app-vouchers-states'},{'name': 'VoucherStateComponent', 'selector': 'app-voucher-state'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SellerCommissionsComponent'};
@@ -1361,14 +1316,6 @@ export class SellerCommissionsComponent implements OnInit {
            </div>
        </div>
 
-          
-          <div class="compodoc-lang-switcher">
-               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
-                    <option value="es" data-url="../../es/components/SellerCommissionsComponent.html" selected>🇪🇸 Español</option>
-                    <option value="en" data-url="../../en/components/SellerCommissionsComponent.html">🇺🇸 English</option>
-                    <option value="pt" data-url="../../pt/components/SellerCommissionsComponent.html">🇧🇷 Português</option>
-               </select>
-          </div>
           <label class="dark-mode-switch">
                <input type="checkbox">
                <span class="slider">
@@ -1441,27 +1388,5 @@ export class SellerCommissionsComponent implements OnInit {
        <script src="../js/lazy-load-graphs.js"></script>
 
 
-    
-          <script id="compodoc-lang-switcher-script">
-               (function () {
-                    try {
-                         localStorage.setItem('compodoc_lang', 'es');
-                    } catch (e) {}
-                    var select = document.getElementById('compodoc-lang-select');
-                    if (select) {
-                         select.addEventListener('change', function (evt) {
-                              var targetLang = evt.target.value;
-                              try {
-                                   localStorage.setItem('compodoc_lang', targetLang);
-                              } catch (e) {}
-                              var selectedOption = evt.target.options[evt.target.selectedIndex];
-                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
-                              if (targetUrl) {
-                                   window.location.href = targetUrl + (window.location.hash || '');
-                              }
-                         });
-                    }
-               })();
-          </script>
     </body>
 </html>

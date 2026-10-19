@@ -128,7 +128,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let t of recentTable.data">
-                <td>{{ t.trx_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ t.trx_datetime | date:'dd/MM/yyyy' }}</td>
                 <td>
                   <nz-tag [nzColor]="getTypeColor(t.trx_type)">
                     {{ t.trx_type }}

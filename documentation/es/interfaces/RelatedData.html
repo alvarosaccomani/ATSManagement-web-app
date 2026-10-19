@@ -10,51 +10,6 @@
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
-    
-        <style id="compodoc-lang-switcher-styles">
-            .compodoc-lang-switcher {
-                position: absolute;
-                top: 70px;
-                right: calc(88px + var(--content-scrollbar-width, 0px));
-                z-index: 1050;
-                display: inline-flex;
-                align-items: center;
-            }
-            @media (min-width: 768px) {
-                .compodoc-lang-switcher {
-                    top: 15px;
-                }
-            }
-            .compodoc-lang-select {
-                height: 34px;
-                padding: 0 12px;
-                border-radius: 17px;
-                border: 1px solid rgba(92, 192, 174, 0.65);
-                background-color: #ffffff;
-                color: #2c3e50;
-                font-size: 13px;
-                font-weight: 600;
-                cursor: pointer;
-                outline: none;
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-                transition: all 0.2s ease;
-            }
-            .compodoc-lang-select:hover,
-            .compodoc-lang-select:focus {
-                border-color: #5cc0ae;
-                box-shadow: 0 0 0 2px rgba(92, 192, 174, 0.25);
-            }
-            body.dark .compodoc-lang-select {
-                background-color: #212529;
-                color: #f8f9fa;
-                border-color: rgba(241, 196, 15, 0.65);
-            }
-            body.dark .compodoc-lang-select:hover,
-            body.dark .compodoc-lang-select:focus {
-                border-color: #f1c40f;
-                box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.25);
-            }
-        </style>
     </head>
     <body>
           <script>
@@ -869,14 +824,6 @@ export class PaymentPeriodComponent implements OnInit {
            </div>
        </div>
 
-          
-          <div class="compodoc-lang-switcher">
-               <select id="compodoc-lang-select" class="compodoc-lang-select" aria-label="Seleccionar idioma / Select language / Selecionar idioma">
-                    <option value="es" data-url="../../es/interfaces/RelatedData.html" selected>🇪🇸 Español</option>
-                    <option value="en" data-url="../../en/interfaces/RelatedData.html">🇺🇸 English</option>
-                    <option value="pt" data-url="../../pt/interfaces/RelatedData.html">🇧🇷 Português</option>
-               </select>
-          </div>
           <label class="dark-mode-switch">
                <input type="checkbox">
                <span class="slider">
@@ -949,27 +896,5 @@ export class PaymentPeriodComponent implements OnInit {
        <script src="../js/lazy-load-graphs.js"></script>
 
 
-    
-          <script id="compodoc-lang-switcher-script">
-               (function () {
-                    try {
-                         localStorage.setItem('compodoc_lang', 'es');
-                    } catch (e) {}
-                    var select = document.getElementById('compodoc-lang-select');
-                    if (select) {
-                         select.addEventListener('change', function (evt) {
-                              var targetLang = evt.target.value;
-                              try {
-                                   localStorage.setItem('compodoc_lang', targetLang);
-                              } catch (e) {}
-                              var selectedOption = evt.target.options[evt.target.selectedIndex];
-                              var targetUrl = selectedOption ? selectedOption.getAttribute('data-url') : null;
-                              if (targetUrl) {
-                                   window.location.href = targetUrl + (window.location.hash || '');
-                              }
-                         });
-                    }
-               })();
-          </script>
     </body>
 </html>
