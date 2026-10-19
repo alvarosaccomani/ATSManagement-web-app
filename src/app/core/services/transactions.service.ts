@@ -61,6 +61,18 @@ export class TransactionsService {
   }
 
   /**
+   * Persists a batch of transactions in a single atomic database operation.
+   *
+   * @param transactions Array of transaction payloads to create in bulk.
+   * @returns An observable emitting the bulk creation response with created records and count.
+   */
+  public saveBulkTransactions(transactions: any[]): Observable<any> {
+    const params = JSON.stringify({ transactions });
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}transactions/bulk`, params, { headers });
+  }
+
+  /**
    * Updates an existing cash-flow transaction record.
    *
    * @param trx_uuid Unique identifier of the transaction to update.
