@@ -126,7 +126,13 @@ export class TransactionsListComponent implements OnInit {
       next: (response) => {
         this.isLoading = false;
         if (response.success) {
-          this.transactions = response.data;
+          this.transactions = (response.data || []).sort((a, b) => {
+            const diff = new Date(b.trx_datetime).getTime() - new Date(a.trx_datetime).getTime();
+            if (diff !== 0) return diff;
+            const createdA = a.trx_createdat ? new Date(a.trx_createdat).getTime() : 0;
+            const createdB = b.trx_createdat ? new Date(b.trx_createdat).getTime() : 0;
+            return createdB - createdA;
+          });
           this.applyFilter();
         }
       },
@@ -137,6 +143,21 @@ export class TransactionsListComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Comparison function for Ng-Zorro table column sorting by date.
+   *
+   * @param a First transaction record.
+   * @param b Second transaction record.
+   * @returns Comparison difference number.
+   */
+  sortDateFn = (a: TransactionInterface, b: TransactionInterface): number => {
+    const diff = new Date(a.trx_datetime).getTime() - new Date(b.trx_datetime).getTime();
+    if (diff !== 0) return diff;
+    const createdA = a.trx_createdat ? new Date(a.trx_createdat).getTime() : 0;
+    const createdB = b.trx_createdat ? new Date(b.trx_createdat).getTime() : 0;
+    return createdA - createdB;
+  };
 
   /**
    * Reloads transactions when the selected scope filter changes.
