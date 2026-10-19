@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,11 +13,17 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 import { TransactionInterface } from '../../../core/interfaces/transaction.interface';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
+import { PersonInterface } from '../../../core/interfaces/person.interface';
 import { TransactionsService } from '../../../core/services/transactions.service';
 import { ScopesService } from '../../../core/services/scopes.service';
+import { PersonsService } from '../../../core/services/persons.service';
+import { CardsService } from '../../../core/services/cards.service';
+import { ExcelTransactionsService, ExcelParseResult, ParsedExpenseRow } from '../../../core/services/excel-transactions.service';
 import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
@@ -25,7 +31,8 @@ import { MessageService } from '../../../core/services/message.service';
  * Cash-flow ledger list component (`<app-transactions-list>`) at `/admin/user/transactions`.
  *
  * @description Displays all recorded cash movements with combined filtering by scope,
- * movement type (`INGRESO`, `EGRESO`, `TRANSFERENCIA`), and real-time text search.
+ * movement type (`INGRESO`, `EGRESO`, `TRANSFERENCIA`), real-time text search,
+ * and bulk expense template download and import via Excel.
  */
 @Component({
   selector: 'app-transactions-list',
@@ -42,7 +49,9 @@ import { MessageService } from '../../../core/services/message.service';
     NzSpinModule,
     NzCardModule,
     NzSegmentedModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzModalModule,
+    NzAlertModule
   ],
   templateUrl: './transactions-list.component.html',
   styleUrl: './transactions-list.component.scss'
@@ -63,11 +72,34 @@ export class TransactionsListComponent implements OnInit {
   /** Current text search query string. */
   searchValue: string = '';
 
+  /** Controls visibility of the Excel import modal dialog. */
+  isImportModalVisible = false;
+  /** Indicates whether an uploaded Excel workbook is currently being parsed. */
+  isParsingExcel = false;
+  /** Indicates whether the parsed batch of transactions is being persisted to the backend. */
+  isImporting = false;
+  /** Target scope UUID selected for the bulk expense import. */
+  importScopeUuid: string = '';
+  /** Default movement type rule for spreadsheet parsing (`'AUTO' | 'EGRESO' | 'INGRESO'`). */
+  importMovementType: 'AUTO' | 'EGRESO' | 'INGRESO' = 'EGRESO';
+  /** Result of analyzing the uploaded Excel workbook, or `null` if no file is loaded. */
+  parseResult: ExcelParseResult | null = null;
+  /** Contacts belonging to the selected scope for buyer/supplier mapping. */
+  scopePersons: PersonInterface[] = [];
+  /** Available cards/accounts for optional funding account mapping. */
+  userCards: any[] = [];
+
+  /** Reference to the hidden file input element for triggering file selection. */
+  @ViewChild('excelFileInput') excelFileInput?: ElementRef<HTMLInputElement>;
+
   /**
    * Initializes the transactions list component.
    *
-   * @param _transactionsService Service for querying and deleting transactions.
+   * @param _transactionsService Service for querying and saving transactions.
    * @param _scopesService Service for querying user scopes.
+   * @param _personsService Service for querying contacts in scopes.
+   * @param _cardsService Service for querying user accounts and cards.
+   * @param _excelService Service for generating and parsing Excel workbooks.
    * @param _sessionService Service for managing user session and identity.
    * @param _messageService Service for displaying modal notifications.
    * @param _router Angular `Router` instance.
@@ -75,6 +107,9 @@ export class TransactionsListComponent implements OnInit {
   constructor(
     private _transactionsService: TransactionsService,
     private _scopesService: ScopesService,
+    private _personsService: PersonsService,
+    private _cardsService: CardsService,
+    private _excelService: ExcelTransactionsService,
     private _sessionService: SessionService,
     private _messageService: MessageService,
     private _router: Router
@@ -88,14 +123,22 @@ export class TransactionsListComponent implements OnInit {
   }
 
   /**
+   * Obtiene el identificador del usuario autenticado actual o el usuario por defecto del sistema.
+   *
+   * @returns Identificador UUID del usuario.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+  }
+
+  /**
    * Fetches user scopes, prepends `'ALL'`, and triggers initial transaction loading.
    */
   loadScopes(): void {
-    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
-    if (!usr_uuid) return;
+    const usr_uuid = this.currentUserId;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
-        if (response.success && response.data.length > 0) {
+        if (response.success && response.data && response.data.length > 0) {
           const allOption: ScopeInterface = {
             scp_uuid: 'ALL',
             scp_name: 'Todos los ámbitos',
@@ -106,11 +149,12 @@ export class TransactionsListComponent implements OnInit {
           };
           this.scopes = [allOption, ...response.data];
           this.selectedScopeUuid = 'ALL';
-          this.loadTransactions();
         }
+        this.loadTransactions();
       },
       error: (error) => {
-        console.error(error);
+        console.error('Error al cargar ámbitos:', error);
+        this.loadTransactions();
       }
     });
   }
@@ -280,5 +324,232 @@ export class TransactionsListComponent implements OnInit {
    */
   formatAmount(amount: number): string {
     return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(amount);
+  }
+
+  /**
+   * Loads contacts belonging to the specified scope for buyer/supplier resolution.
+   *
+   * @param scp_uuid Scope UUID.
+   */
+  loadScopePersons(scp_uuid: string): void {
+    if (!scp_uuid || scp_uuid === 'ALL') {
+      this.scopePersons = [];
+      return;
+    }
+    this._personsService.getPersons(scp_uuid).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.scopePersons = res.data;
+        }
+      }
+    });
+  }
+
+  /**
+   * Loads payment cards and accounts belonging to the active user.
+   */
+  loadUserCards(): void {
+    const usr_uuid = this.currentUserId;
+    this._cardsService.getCards(usr_uuid).subscribe({
+      next: (res: any) => {
+        if (res.success && res.data) {
+          this.userCards = res.data.map((c: any) => ({
+            value: c.crd_uuid,
+            label: c.crd_alias || c.tycrd?.tycrd_name || 'Cuenta'
+          }));
+        }
+      }
+    });
+  }
+
+  /**
+   * Generates and downloads the pre-configured expense Excel template (`.xlsx`).
+   */
+  downloadTemplate(): void {
+    const activeScope = this.scopes.find(s => s.scp_uuid === (this.selectedScopeUuid !== 'ALL' ? this.selectedScopeUuid : '')) 
+      || this.scopes.find(s => s.scp_uuid !== 'ALL') 
+      || null;
+
+    if (activeScope && (!this.scopePersons.length || this.scopePersons[0]?.scp_uuid !== activeScope.scp_uuid)) {
+      this._personsService.getPersons(activeScope.scp_uuid).subscribe({
+        next: (res) => {
+          const persons = res.success ? res.data : [];
+          this._excelService.downloadExpenseTemplate(activeScope, persons, this.userCards);
+        },
+        error: () => {
+          this._excelService.downloadExpenseTemplate(activeScope, [], this.userCards);
+        }
+      });
+    } else {
+      this._excelService.downloadExpenseTemplate(activeScope, this.scopePersons, this.userCards);
+    }
+  }
+
+  /**
+   * Opens the bulk Excel import modal dialog and prepares references.
+   */
+  openImportModal(): void {
+    const defaultScope = (this.selectedScopeUuid && this.selectedScopeUuid !== 'ALL')
+      ? this.selectedScopeUuid
+      : (this.scopes.find(s => s.scp_uuid !== 'ALL')?.scp_uuid || '');
+
+    this.importScopeUuid = defaultScope;
+    this.parseResult = null;
+    this.isImportModalVisible = true;
+    if (this.importScopeUuid) {
+      this.loadScopePersons(this.importScopeUuid);
+    }
+    this.loadUserCards();
+  }
+
+  /**
+   * Closes the bulk Excel import modal dialog and clears file input.
+   */
+  closeImportModal(): void {
+    this.isImportModalVisible = false;
+    this.parseResult = null;
+    if (this.excelFileInput?.nativeElement) {
+      this.excelFileInput.nativeElement.value = '';
+    }
+  }
+
+  /**
+   * Handles target scope change within the import modal.
+   *
+   * @param scp_uuid Newly selected scope UUID.
+   */
+  onImportScopeChange(scp_uuid: string): void {
+    this.importScopeUuid = scp_uuid;
+    this.loadScopePersons(scp_uuid);
+    if (this.excelFileInput?.nativeElement?.files?.[0]) {
+      this.processFile(this.excelFileInput.nativeElement.files[0]);
+    }
+  }
+
+  /**
+   * Updates default movement type strategy and re-parses currently selected file if present.
+   *
+   * @param type Strategy for classifying transactions (`'AUTO' | 'EGRESO' | 'INGRESO'`).
+   */
+  onImportMovementTypeChange(type: 'AUTO' | 'EGRESO' | 'INGRESO'): void {
+    this.importMovementType = type;
+    if (this.excelFileInput?.nativeElement?.files?.[0]) {
+      this.processFile(this.excelFileInput.nativeElement.files[0]);
+    }
+  }
+
+  /**
+   * Toggles a single row's transaction type between `'EGRESO'` and `'INGRESO'` in the preview table,
+   * updating overall income and expense aggregates.
+   *
+   * @param row Parsed expense row to toggle.
+   */
+  toggleRowType(row: ParsedExpenseRow): void {
+    row.trx_type = row.trx_type === 'EGRESO' ? 'INGRESO' : 'EGRESO';
+    if (this.parseResult) {
+      this.parseResult.totalExpenseAmount = this.parseResult.rows
+        .filter(r => r.isValid && r.trx_type === 'EGRESO')
+        .reduce((acc, r) => acc + r.amount, 0);
+      this.parseResult.totalIncomeAmount = this.parseResult.rows
+        .filter(r => r.isValid && r.trx_type === 'INGRESO')
+        .reduce((acc, r) => acc + r.amount, 0);
+    }
+  }
+
+  /**
+   * Handles file selection event from the native file input element.
+   *
+   * @param event DOM file change event.
+   */
+  onFileSelected(event: any): void {
+    const file = event?.target?.files?.[0];
+    if (file) {
+      this.processFile(file);
+    }
+  }
+
+  /**
+   * Parses an Excel file using {@link ExcelTransactionsService}.
+   *
+   * @param file Uploaded Excel File object.
+   */
+  private processFile(file: File): void {
+    this.isParsingExcel = true;
+    this._excelService.parseExpenseExcel(file, this.importScopeUuid, this.scopePersons, this.userCards, this.importMovementType)
+      .then((result) => {
+        this.isParsingExcel = false;
+        this.parseResult = result;
+      })
+      .catch((error) => {
+        this.isParsingExcel = false;
+        this.parseResult = null;
+        console.error(error);
+        this._messageService.error('Error al leer Excel', error.message || 'No se pudo interpretar la planilla.');
+      });
+  }
+
+  /**
+   * Submits all valid parsed rows to the backend in a single atomic bulk operation.
+   */
+  confirmBulkImport(): void {
+    if (!this.parseResult || this.parseResult.validRowsCount === 0) {
+      this._messageService.error('Sin datos válidos', 'No hay registros válidos para importar.');
+      return;
+    }
+
+    if (!this.importScopeUuid) {
+      this._messageService.error('Ámbito requerido', 'Seleccione el ámbito de destino para registrar los movimientos.');
+      return;
+    }
+
+    this.isImporting = true;
+    const usr_uuid = this.currentUserId;
+
+    const payload = this.parseResult.rows
+      .filter(r => r.isValid)
+      .map(r => {
+        const actorLabel = r.trx_type === 'INGRESO' ? 'Vendedor' : 'Pagó';
+        const notes = r.rawBuyer && !r.prs_uuidactor
+          ? (r.notes ? `${actorLabel}: ${r.rawBuyer}. ${r.notes}` : `${actorLabel}: ${r.rawBuyer}`)
+          : r.notes;
+
+        return {
+          scp_uuid: this.importScopeUuid,
+          usr_uuidcreator: usr_uuid,
+          trx_type: r.trx_type,
+          trx_datetime: r.date,
+          trx_concept: r.concept,
+          trx_amount: r.amount,
+          trx_currency: 'ARS',
+          crd_uuid: r.crd_uuid,
+          prs_uuid: r.prs_uuid,
+          prs_uuidactor: r.prs_uuidactor,
+          trx_notes: notes
+        };
+      });
+
+    this._transactionsService.saveBulkTransactions(payload).subscribe({
+      next: (response) => {
+        this.isImporting = false;
+        if (response.success) {
+          const importedCount = response.count || payload.length;
+          this._messageService.success(
+            '¡Importación Exitosa!',
+            `Se han importado ${importedCount} movimientos correctamente por un total de ${this.formatAmount(this.parseResult!.totalAmount)}.`,
+            () => {
+              this.closeImportModal();
+              this.loadTransactions();
+            }
+          );
+        } else {
+          this._messageService.error('Error al importar', response.message || 'No se pudieron registrar las transacciones.');
+        }
+      },
+      error: (error) => {
+        this.isImporting = false;
+        console.error(error);
+        this._messageService.error('Error al importar', error?.error?.error || 'Ocurrió un error al guardar los movimientos en el servidor.');
+      }
+    });
   }
 }

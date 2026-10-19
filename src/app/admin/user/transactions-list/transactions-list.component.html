@@ -9,6 +9,16 @@
     </div>
 
     <div class="action-buttons">
+      <button nz-button nzType="default" (click)="downloadTemplate()" nzSize="large" nz-tooltip nzTooltipTitle="Descargar archivo Excel modelo para completar">
+        <i nz-icon nzType="download"></i>
+        Descargar Modelo
+      </button>
+
+      <button nz-button nzType="default" (click)="openImportModal()" nzSize="large" nz-tooltip nzTooltipTitle="Importar planilla Excel de gastos">
+        <i nz-icon nzType="file-excel"></i>
+        Importar Excel
+      </button>
+
       <button nz-button nzType="primary" (click)="newTransaction()" nzSize="large">
         <i nz-icon nzType="plus"></i>
         Cargar Gasto / Movimiento
@@ -136,4 +146,192 @@
       </tbody>
     </nz-table>
   }
+
+  <!-- Modal de Importación Masiva de Gastos y Ventas -->
+  <nz-modal
+    [(nzVisible)]="isImportModalVisible"
+    nzTitle="Importar Planilla de Movimientos (Excel)"
+    (nzOnCancel)="closeImportModal()"
+    [nzWidth]="960"
+    [nzFooter]="modalFooter">
+    <ng-container *nzModalContent>
+      <div class="import-modal-content">
+        <!-- Selectores de Ámbito y Tipo por defecto -->
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+          <div style="flex: 1; min-width: 240px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 6px;">
+              Ámbito de destino:
+            </label>
+            <nz-select [(ngModel)]="importScopeUuid" (ngModelChange)="onImportScopeChange($event)" style="width: 100%;" nzSize="large">
+              @for (scope of scopes; track scope.scp_uuid) {
+                @if (scope.scp_uuid !== 'ALL') {
+                  <nz-option [nzValue]="scope.scp_uuid" [nzLabel]="scope.scp_name"></nz-option>
+                }
+              }
+            </nz-select>
+          </div>
+
+          <div style="flex: 1; min-width: 240px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 6px;">
+              Tipo de movimiento por defecto:
+            </label>
+            <nz-select [(ngModel)]="importMovementType" (ngModelChange)="onImportMovementTypeChange($event)" style="width: 100%;" nzSize="large">
+              <nz-option nzValue="EGRESO" nzLabel="Solo Gastos (Egresos)"></nz-option>
+              <nz-option nzValue="AUTO" nzLabel="Detectar según Tipo / Descripción"></nz-option>
+              <nz-option nzValue="INGRESO" nzLabel="Solo Ventas (Ingresos)"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+
+        <!-- Selector / Dropzone de Archivo -->
+        <input #excelFileInput type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" style="display: none;" />
+
+        @if (!parseResult && !isParsingExcel) {
+          <div class="excel-dropzone" (click)="excelFileInput.click()">
+            <i nz-icon nzType="file-excel" style="font-size: 48px; color: #52c41a; margin-bottom: 12px;"></i>
+            <p style="font-size: 16px; font-weight: 600; margin: 0; color: #262626;">Hacé clic aquí para seleccionar tu planilla Excel (.xlsx)</p>
+            <p style="font-size: 13px; color: #8c8c8c; margin-top: 6px;">
+              Formato esperado: Columnas <strong>Fecha</strong>, <strong>Tipo</strong> (opcional), <strong>Descripcion</strong>, <strong>Importe</strong>, <strong>Socio / Vendedor</strong> y <strong>Observaciones</strong>.
+            </p>
+            <button nz-button nzType="dashed" (click)="$event.stopPropagation(); downloadTemplate()" style="margin-top: 10px;">
+              <i nz-icon nzType="download"></i> Descargar Planilla Modelo
+            </button>
+          </div>
+        }
+
+        @if (isParsingExcel) {
+          <div style="text-align: center; padding: 40px 0;">
+            <nz-spin nzTip="Leyendo y validando planilla Excel..."></nz-spin>
+          </div>
+        }
+
+        @if (parseResult) {
+          <!-- Resumen de Parseo -->
+          <div style="background: #fafafa; border: 1px solid #d9d9d9; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+            <div>
+              <strong style="font-size: 15px; color: #1f2937;">
+                <i nz-icon nzType="file-excel" style="color: #52c41a; margin-right: 6px;"></i>
+                {{ parseResult.fileName }}
+              </strong>
+              <div style="margin-top: 4px; font-size: 13px; color: #595959;">
+                Filas detectadas: <strong>{{ parseResult.totalRows }}</strong> |
+                Válidas: <strong style="color: #52c41a;">{{ parseResult.validRowsCount }}</strong>
+                @if (parseResult.invalidRowsCount > 0) {
+                  | Con observaciones: <strong style="color: #faad14;">{{ parseResult.invalidRowsCount }}</strong>
+                }
+              </div>
+            </div>
+
+            <div style="text-align: right; display: flex; gap: 16px; align-items: center;">
+              @if (parseResult.totalExpenseAmount > 0) {
+                <div>
+                  <div style="font-size: 11px; color: #8c8c8c;">Total Gastos:</div>
+                  <div style="font-size: 16px; font-weight: 700; color: #cf1322;">
+                    {{ formatAmount(parseResult.totalExpenseAmount) }}
+                  </div>
+                </div>
+              }
+              @if (parseResult.totalIncomeAmount > 0) {
+                <div>
+                  <div style="font-size: 11px; color: #8c8c8c;">Total Ventas:</div>
+                  <div style="font-size: 16px; font-weight: 700; color: #3f8600;">
+                    {{ formatAmount(parseResult.totalIncomeAmount) }}
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Alerta de Compradores no reconocidos en personas -->
+          @if (parseResult.unmatchedBuyers.length > 0) {
+            <nz-alert
+              nzType="warning"
+              nzShowIcon
+              [nzMessage]="'Socios/Vendedores sin coincidencia en el ámbito (' + parseResult.unmatchedBuyers.length + ')'"
+              [nzDescription]="'Los siguientes socios/actores no están registrados como personas en este ámbito: ' + parseResult.unmatchedBuyers.join(', ') + '. Los registros se guardarán igualmente y el nombre figurará en las notas.'"
+              style="margin-bottom: 16px;">
+            </nz-alert>
+          }
+
+          <!-- Tabla de Previsualización -->
+          <nz-table #previewTable [nzData]="parseResult.rows" [nzPageSize]="6" nzSize="small" [nzScroll]="{ y: '260px' }" nzBordered>
+            <thead>
+              <tr>
+                <th nzWidth="55px">Fila</th>
+                <th nzWidth="105px">Tipo</th>
+                <th nzWidth="105px">Fecha</th>
+                <th>Concepto</th>
+                <th nzWidth="120px">Importe</th>
+                <th>Socio / Vendedor</th>
+                <th nzWidth="85px">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of previewTable.data; track row.rowIndex) {
+                <tr [style.background]="row.isValid ? 'inherit' : '#fffbe6'">
+                  <td style="text-align: center; color: #8c8c8c;">{{ row.rowIndex }}</td>
+                  <td>
+                    <nz-tag
+                      [nzColor]="row.trx_type === 'INGRESO' ? 'green' : 'red'"
+                      style="cursor: pointer; user-select: none;"
+                      nz-tooltip
+                      nzTooltipTitle="Hacé clic para alternar entre GASTO y VENTA"
+                      (click)="toggleRowType(row)">
+                      <i nz-icon [nzType]="row.trx_type === 'INGRESO' ? 'arrow-down' : 'arrow-up'"></i>
+                      {{ row.trx_type === 'INGRESO' ? 'VENTA' : 'GASTO' }}
+                    </nz-tag>
+                  </td>
+                  <td>{{ row.dateFormatted }}</td>
+                  <td><strong>{{ row.concept }}</strong></td>
+                  <td>
+                    <span [class.expense-amount]="row.trx_type === 'EGRESO'" [class.income-amount]="row.trx_type === 'INGRESO'">
+                      {{ formatAmount(row.amount) }}
+                    </span>
+                  </td>
+                  <td>
+                    @if (row.prs_uuidactor) {
+                      <nz-tag nzColor="blue">{{ row.actorName }}</nz-tag>
+                    } @else if (row.rawBuyer) {
+                      <nz-tag nzColor="orange">{{ row.rawBuyer }} (Nota)</nz-tag>
+                    } @else {
+                      <span class="text-muted">-</span>
+                    }
+                  </td>
+                  <td>
+                    @if (row.isValid) {
+                      <nz-tag nzColor="success">Válido</nz-tag>
+                    } @else {
+                      <nz-tag nzColor="warning" nz-tooltip [nzTooltipTitle]="row.errors.join(' ')">Atención</nz-tag>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </nz-table>
+
+          <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <button nz-button nzType="link" (click)="excelFileInput.click()" style="padding-left: 0;">
+              <i nz-icon nzType="swap"></i> Elegir otro archivo
+            </button>
+            <span style="font-size: 12px; color: #8c8c8c;">
+              Se ignorarán filas con errores bloqueantes de concepto o monto cero.
+            </span>
+          </div>
+        }
+      </div>
+    </ng-container>
+
+    <ng-template #modalFooter>
+      <button nz-button nzType="default" (click)="closeImportModal()">Cancelar</button>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="confirmBulkImport()"
+        [nzLoading]="isImporting"
+        [disabled]="!parseResult || parseResult.validRowsCount === 0">
+        <i nz-icon nzType="check"></i>
+        Confirmar e Importar {{ parseResult?.validRowsCount || 0 }} Movimientos
+      </button>
+    </ng-template>
+  </nz-modal>
 </div>

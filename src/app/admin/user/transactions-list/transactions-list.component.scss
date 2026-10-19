@@ -126,4 +126,26 @@
   .text-muted {
     color: #9ca3af;
   }
+
+  .excel-dropzone {
+    border: 2px dashed #b7eb8f;
+    background: #f6ffed;
+    border-radius: 8px;
+    padding: 36px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      border-color: #52c41a;
+      background: #f0f9eb;
+    }
+  }
+
+  .import-modal-content {
+    .expense-amount {
+      color: #cf1322;
+      font-weight: 600;
+    }
+  }
 }
