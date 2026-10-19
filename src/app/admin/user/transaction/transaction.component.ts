@@ -192,16 +192,25 @@ export class TransactionComponent implements OnInit {
   }
 
   /**
+  /**
+   * Obtiene el identificador del usuario autenticado actual o el usuario por defecto del sistema.
+   *
+   * @returns Identificador UUID del usuario.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+  }
+
+  /**
    * Loads user scopes and initializes the default `scp_uuid` selection.
    *
    * @param defaultScopeUuid Optional scope UUID from query parameters.
    */
   loadScopes(defaultScopeUuid?: string | null): void {
-    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
-    if (!usr_uuid) return;
+    const usr_uuid = this.currentUserId;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
-        if (response.success && response.data.length > 0) {
+        if (response.success && response.data && response.data.length > 0) {
           this.scopes = response.data;
           if (!this.form.get('scp_uuid')?.value) {
             const hasValidDefault = defaultScopeUuid && defaultScopeUuid !== 'ALL' && this.scopes.some(s => s.scp_uuid === defaultScopeUuid);
@@ -237,11 +246,10 @@ export class TransactionComponent implements OnInit {
    * Loads the user's cards/accounts for the source and target account selectors.
    */
   loadCards(): void {
-    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
-    if (!usr_uuid) return;
+    const usr_uuid = this.currentUserId;
     this._cardsService.getCards(usr_uuid).subscribe({
       next: (response: any) => {
-        if (response.success) {
+        if (response.success && response.data) {
           this.cards = response.data.map((c: any) => {
             const scopeTag = c.scp?.scp_name ? ` (${c.scp.scp_name})` : '';
             const identifier = c.crd_last4digits ? ` (**** ${c.crd_last4digits})` : (c.crd_cbualias ? ` (${c.crd_cbualias})` : '');
@@ -301,7 +309,7 @@ export class TransactionComponent implements OnInit {
     }
 
     this.isLoading = true;
-    const usr_uuid = this._sessionService.getIdentity()?.usr_uuid;
+    const usr_uuid = this.currentUserId;
     const rawValue = this.form.getRawValue();
     const payload = {
       ...rawValue,
