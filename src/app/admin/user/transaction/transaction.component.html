@@ -99,8 +99,9 @@
       </nz-row>
 
       <!-- Fuente de Dinero y Destino (si es Transferencia) -->
+      <!-- Cuenta de Dinero (Origen y Destino si es transferencia) -->
       <nz-row [nzGutter]="24">
-        <nz-col [nzSpan]="24" [nzMd]="form.get('trx_type')?.value === 'TRANSFERENCIA' ? 12 : 12">
+        <nz-col [nzSpan]="24" [nzMd]="form.get('trx_type')?.value === 'TRANSFERENCIA' ? 12 : 24">
           <nz-form-item>
             <nz-form-label nzFor="crd_uuid" [nzSpan]="24">Cuenta Origen / Fuente de Dinero</nz-form-label>
             <nz-form-control [nzSpan]="24">
@@ -127,13 +128,17 @@
             </nz-form-item>
           </nz-col>
         }
+      </nz-row>
 
-        @if (form.get('trx_type')?.value !== 'TRANSFERENCIA') {
+      <!-- Personas Involucradas (Contraparte Externa y Actor Interno) -->
+      @if (form.get('trx_type')?.value !== 'TRANSFERENCIA') {
+        <nz-row [nzGutter]="24">
+          <!-- Contraparte Externa (Cliente o Proveedor) -->
           <nz-col [nzSpan]="24" [nzMd]="12">
             <nz-form-item>
-              <nz-form-label nzFor="prs_uuid" [nzSpan]="24">Persona / Vendedor / Socio / Cliente</nz-form-label>
+              <nz-form-label nzFor="prs_uuid" [nzSpan]="24">{{ counterpartyLabel }}</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-select formControlName="prs_uuid" placeholder="Seleccione o busque persona" nzSize="large" nzAllowClear nzShowSearch>
+                <nz-select formControlName="prs_uuid" [nzPlaceHolder]="counterpartyPlaceholder" nzSize="large" nzAllowClear nzShowSearch>
                   @for (person of persons; track person.prs_uuid) {
                     <nz-option [nzValue]="person.prs_uuid" [nzLabel]="person.prs_name + ' (' + person.prs_type + ')'"></nz-option>
                   }
@@ -141,11 +146,25 @@
               </nz-form-control>
             </nz-form-item>
           </nz-col>
-        }
-      </nz-row>
 
-      <!-- Comisión del Vendedor (solo para INGRESOS / VENTAS) -->
-      @if (form.get('trx_type')?.value === 'INGRESO' && form.get('prs_uuid')?.value) {
+          <!-- Actor Interno / Responsable (Vendedor o Pagador) -->
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label nzFor="prs_uuidactor" [nzSpan]="24">{{ actorLabel }}</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="prs_uuidactor" [nzPlaceHolder]="actorPlaceholder" nzSize="large" nzAllowClear nzShowSearch>
+                  @for (person of persons; track person.prs_uuid) {
+                    <nz-option [nzValue]="person.prs_uuid" [nzLabel]="person.prs_name + ' (' + person.prs_type + ')'"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      }
+
+      <!-- Comisión del Vendedor (solo para INGRESOS / VENTAS cuando hay vendedor o persona asociada) -->
+      @if (form.get('trx_type')?.value === 'INGRESO' && (form.get('prs_uuidactor')?.value || form.get('prs_uuid')?.value)) {
         <nz-row [nzGutter]="24" style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 6px; margin-bottom: 24px;">
           <nz-col [nzSpan]="24" [nzMd]="12">
             <nz-form-item>

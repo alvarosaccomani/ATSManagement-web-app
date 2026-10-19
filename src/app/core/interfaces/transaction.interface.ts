@@ -27,10 +27,14 @@ export interface TransactionInterface {
     target_crduuid?: string | null;
     /** Concepto breve o descripción de la transacción. */
     trx_concept: string;
-    /** UUID opcional de la persona o contacto asociado (por ejemplo, vendedor o cliente). */
+    /** UUID opcional de la persona o contacto asociado (por ejemplo, cliente en una venta o proveedor en una compra). */
     prs_uuid?: string | null;
-    /** Relación de persona poblada opcionalmente. */
+    /** Relación de persona o contraparte externa poblada opcionalmente. */
     prs?: PersonInterface;
+    /** UUID opcional del actor interno o responsable (por ejemplo, vendedor que realizó la venta o socio que pagó). */
+    prs_uuidactor?: string | null;
+    /** Relación del actor interno o responsable poblada opcionalmente. */
+    actor?: PersonInterface;
     /** Porcentaje de comisión opcional aplicado a la transacción. */
     trx_commissionrate?: number | null;
     /** Monto de comisión calculado opcionalmente devengado en la transacción. */

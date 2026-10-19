@@ -109,11 +109,16 @@
             </td>
             <td>
               @if (data.prs) {
-                <nz-tag nzColor="blue">
-                  <i nz-icon nzType="user" style="margin-right: 4px;"></i>{{ data.prs.prs_name }} ({{ data.prs.prs_type }})
+                <nz-tag nzColor="blue" nz-tooltip [nzTooltipTitle]="data.trx_type === 'INGRESO' ? 'Cliente' : 'Proveedor / Tercero'">
+                  <i nz-icon nzType="user" style="margin-right: 4px;"></i>{{ data.prs.prs_name }}
                 </nz-tag>
-              } @else {
-
+              }
+              @if (data.actor) {
+                <nz-tag nzColor="green" [style.margin-top.px]="data.prs ? 4 : 0" nz-tooltip [nzTooltipTitle]="data.trx_type === 'INGRESO' ? 'Vendedor' : 'Socio Pagador'">
+                  <i nz-icon nzType="idcard" style="margin-right: 4px;"></i>{{ data.actor.prs_name }}
+                </nz-tag>
+              }
+              @if (!data.prs && !data.actor) {
                 <span class="text-muted">-</span>
               }
             </td>

@@ -69,6 +69,7 @@
             <th>Fecha</th>
             <th>Ámbito</th>
             <th>Concepto / Venta</th>
+            <th>Cliente</th>
             <th>Monto Venta</th>
             <th>% Comisión</th>
             <th>Ganancia Vendedor</th>
@@ -84,6 +85,10 @@
               </nz-tag>
             </td>
             <td><strong>{{ s.trx_concept }}</strong></td>
+            <td>
+              <span *ngIf="s.prs">{{ s.prs.prs_name }}</span>
+              <span *ngIf="!s.prs" class="text-muted">-</span>
+            </td>
             <td><strong>{{ formatAmount(s.trx_amount) }}</strong></td>
             <td>
               <nz-tag nzColor="orange">{{ s.trx_commissionrate ? (s.trx_commissionrate + '%') : '-' }}</nz-tag>

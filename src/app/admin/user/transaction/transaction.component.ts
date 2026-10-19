@@ -108,6 +108,7 @@ export class TransactionComponent implements OnInit {
       crd_uuid: [null],
       target_crduuid: [null],
       prs_uuid: [null],
+      prs_uuidactor: [null],
       trx_commissionrate: [null, [Validators.min(0), Validators.max(100)]],
       trx_commissionamount: [null, [Validators.min(0)]],
       trx_notes: ['']
@@ -132,6 +133,12 @@ export class TransactionComponent implements OnInit {
         targetCtrl?.setValue(null);
       }
       targetCtrl?.updateValueAndValidity();
+
+      // Clear commission if movement is not an INGRESO
+      if (type !== 'INGRESO') {
+        this.form.get('trx_commissionrate')?.setValue(null);
+        this.form.get('trx_commissionamount')?.setValue(null);
+      }
     });
 
     // Load persons when scope changes
@@ -141,9 +148,19 @@ export class TransactionComponent implements OnInit {
       }
     });
 
-    // When person changes, prefill commission rate if available and type is INGRESO
+    // When internal actor/seller changes, prefill commission rate if available and type is INGRESO
+    this.form.get('prs_uuidactor')?.valueChanges.subscribe(prs_uuidactor => {
+      if (prs_uuidactor && this.form.get('trx_type')?.value === 'INGRESO') {
+        const selectedPerson = this.persons.find(p => p.prs_uuid === prs_uuidactor);
+        if (selectedPerson && selectedPerson.prs_commissionrate != null && !this.form.get('trx_commissionrate')?.value) {
+          this.form.get('trx_commissionrate')?.setValue(selectedPerson.prs_commissionrate);
+        }
+      }
+    });
+
+    // Fallback: If prs_uuid changes, type is INGRESO and no actor was specified, prefill commission rate
     this.form.get('prs_uuid')?.valueChanges.subscribe(prs_uuid => {
-      if (prs_uuid && this.form.get('trx_type')?.value === 'INGRESO') {
+      if (prs_uuid && this.form.get('trx_type')?.value === 'INGRESO' && !this.form.get('prs_uuidactor')?.value) {
         const selectedPerson = this.persons.find(p => p.prs_uuid === prs_uuid);
         if (selectedPerson && selectedPerson.prs_commissionrate != null && !this.form.get('trx_commissionrate')?.value) {
           this.form.get('trx_commissionrate')?.setValue(selectedPerson.prs_commissionrate);
@@ -351,6 +368,54 @@ export class TransactionComponent implements OnInit {
    */
   onCancel(): void {
     this.router.navigate(['/admin/user/transactions']);
+  }
+
+  /**
+   * Gets the dynamic label for the external counterparty select input based on transaction type.
+   *
+   * @returns "Cliente / A quién se vendió" for `INGRESO`, "Proveedor / A quién se compró" for `EGRESO`.
+   */
+  get counterpartyLabel(): string {
+    const type = this.form.get('trx_type')?.value;
+    if (type === 'INGRESO') return 'Cliente / A quién se vendió';
+    if (type === 'EGRESO') return 'Proveedor / Comercio (a quién se compró)';
+    return 'Persona / Contraparte Externa';
+  }
+
+  /**
+   * Gets the dynamic placeholder for the external counterparty select input based on transaction type.
+   *
+   * @returns Placeholder string tailored to client, supplier, or general contact.
+   */
+  get counterpartyPlaceholder(): string {
+    const type = this.form.get('trx_type')?.value;
+    if (type === 'INGRESO') return 'Seleccione o busque cliente';
+    if (type === 'EGRESO') return 'Seleccione comercio o proveedor';
+    return 'Seleccione o busque persona';
+  }
+
+  /**
+   * Gets the dynamic label for the internal actor/responsible select input based on transaction type.
+   *
+   * @returns "Vendedor / Quién realizó la venta" for `INGRESO`, "Pagador / Socio que puso el dinero" for `EGRESO`.
+   */
+  get actorLabel(): string {
+    const type = this.form.get('trx_type')?.value;
+    if (type === 'INGRESO') return 'Vendedor / Quién realizó la venta';
+    if (type === 'EGRESO') return 'Pagador / Socio que puso el dinero';
+    return 'Actor Interno / Responsable';
+  }
+
+  /**
+   * Gets the dynamic placeholder for the internal actor/responsible select input based on transaction type.
+   *
+   * @returns Placeholder string tailored to seller or paying partner.
+   */
+  get actorPlaceholder(): string {
+    const type = this.form.get('trx_type')?.value;
+    if (type === 'INGRESO') return 'Seleccione vendedor comisionista';
+    if (type === 'EGRESO') return 'Seleccione socio o pagador';
+    return 'Seleccione actor responsable';
   }
 
   /** Currency display formatter function for `nz-input-number`. */
