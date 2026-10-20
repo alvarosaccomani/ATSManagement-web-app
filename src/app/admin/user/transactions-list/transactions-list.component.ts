@@ -507,19 +507,41 @@ export class TransactionsListComponent implements OnInit {
 
   /**
    * Toggles a single row's transaction type between `'EGRESO'` and `'INGRESO'` in the preview table,
-   * updating overall income and expense aggregates.
+   * reevaluating consistency errors and updating overall aggregates.
    *
    * @param row Parsed expense row to toggle.
    */
   toggleRowType(row: ParsedExpenseRow): void {
     row.trx_type = row.trx_type === 'EGRESO' ? 'INGRESO' : 'EGRESO';
+
+    if (row.trx_type === 'EGRESO') {
+      row.errors = row.errors.filter(e => !e.includes('Inconsistencia contable'));
+    } else {
+      const EXPENSE_KEYWORDS = /compra|filamento|repuesto|arreglo|reparaci[oó]n|hotend|service|cuota\s+m[aá]quina|dominio|pinturer[ií]a|pinzas|chip|busto|cajas\s+para\s+despacho|pack\s+religioso|tarjetas\s+isa|pendrive|stl/i;
+      if (EXPENSE_KEYWORDS.test(row.concept || '') || /compr[oó]|me\s+lo\s+cobro|puse\s+bono|gasto/i.test(row.notes || '')) {
+        if (!row.errors.some(e => e.includes('Inconsistencia contable'))) {
+          row.errors.push('Inconsistencia contable: El concepto o notas corresponden a un GASTO/COMPRA pero la fila está como INGRESO.');
+        }
+      }
+    }
+
+    const isBlockingError = (e: string) =>
+      !e.includes('se conservará en notas') &&
+      !e.startsWith('Aviso:') &&
+      !e.startsWith('Corrección');
+
+    row.isValid = row.errors.filter(isBlockingError).length === 0;
+
     if (this.parseResult) {
+      this.parseResult.validRowsCount = this.parseResult.rows.filter(r => r.isValid).length;
+      this.parseResult.invalidRowsCount = this.parseResult.rows.filter(r => !r.isValid).length;
       this.parseResult.totalExpenseAmount = this.parseResult.rows
         .filter(r => r.isValid && r.trx_type === 'EGRESO')
         .reduce((acc, r) => acc + r.amount, 0);
       this.parseResult.totalIncomeAmount = this.parseResult.rows
         .filter(r => r.isValid && r.trx_type === 'INGRESO')
         .reduce((acc, r) => acc + r.amount, 0);
+      this.parseResult.totalAmount = this.parseResult.totalExpenseAmount + this.parseResult.totalIncomeAmount;
     }
   }
 
