@@ -181,6 +181,22 @@ export class TransactionComponent implements OnInit {
     this.form.get('trx_amount')?.valueChanges.subscribe(() => calculateCommission());
     this.form.get('trx_commissionrate')?.valueChanges.subscribe(() => calculateCommission());
 
+    // Regla de Blindaje Contable: Si es EGRESO y no tiene cuenta de origen, el socio pagador es obligatorio
+    const updateActorValidation = () => {
+      const type = this.form.get('trx_type')?.value;
+      const crd = this.form.get('crd_uuid')?.value;
+      const actorCtrl = this.form.get('prs_uuidactor');
+      if (type === 'EGRESO' && !crd) {
+        actorCtrl?.setValidators([Validators.required]);
+      } else {
+        actorCtrl?.clearValidators();
+      }
+      actorCtrl?.updateValueAndValidity({ emitEvent: false });
+    };
+
+    this.form.get('trx_type')?.valueChanges.subscribe(() => updateActorValidation());
+    this.form.get('crd_uuid')?.valueChanges.subscribe(() => updateActorValidation());
+
     const queryScope = this.route.snapshot.queryParamMap.get('scp_uuid');
 
     this.loadCards();
@@ -424,6 +440,38 @@ export class TransactionComponent implements OnInit {
     if (type === 'INGRESO') return 'Seleccione vendedor comisionista';
     if (type === 'EGRESO') return 'Seleccione socio o pagador';
     return 'Seleccione actor responsable';
+  }
+
+  /**
+   * Determina si el movimiento es un gasto que no sale de cuentas bancarias/caja,
+   * lo que implica aporte directo de fondos por parte de un socio (genera crédito/deuda a su favor).
+   */
+  get isPartnerExpenseWithoutAccount(): boolean {
+    return this.form.get('trx_type')?.value === 'EGRESO' && !this.form.get('crd_uuid')?.value;
+  }
+
+  /**
+   * Determina si el movimiento es un reintegro de dinero desde una cuenta del negocio
+   * hacia un socio registrado, cancelando el pasivo sin duplicar costos en el Estado de Resultados.
+   */
+  get isPartnerReimbursement(): boolean {
+    const isExpense = this.form.get('trx_type')?.value === 'EGRESO';
+    const hasAccount = !!this.form.get('crd_uuid')?.value;
+    const counterparty = this.form.get('prs_uuid')?.value;
+    if (!isExpense || !hasAccount || !counterparty) return false;
+    const person = this.persons.find(p => p.prs_uuid === counterparty);
+    return !!person && (person.prs_type || '').toUpperCase().includes('SOCIO');
+  }
+
+  /**
+   * Lista de personas filtrando la razón social o nombre del ámbito para impedir
+   * que la empresa misma sea seleccionada erróneamente como persona física o socia.
+   */
+  get filteredActors(): PersonInterface[] {
+    const activeScope = this.scopes.find(s => s.scp_uuid === this.form.get('scp_uuid')?.value);
+    const scopeName = activeScope?.scp_name?.trim().toLowerCase();
+    if (!scopeName) return this.persons;
+    return this.persons.filter(p => p.prs_name.trim().toLowerCase() !== scopeName);
   }
 
   /** Currency display formatter function for `nz-input-number`. */

@@ -110,6 +110,16 @@
                   <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
                 }
               </nz-select>
+              @if (isPartnerExpenseWithoutAccount) {
+                <div style="margin-top: 6px; font-size: 12px; color: #d46b08;">
+                  <i nz-icon nzType="info-circle"></i> Sin cuenta seleccionada: El gasto se registrará como aporte personal del socio (generando crédito a su favor).
+                </div>
+              }
+              @if (isPartnerReimbursement) {
+                <div style="margin-top: 6px; font-size: 12px; color: #1890ff;">
+                  <i nz-icon nzType="safety-certificate"></i> Reintegro a socio: Cancela deuda pendiente con el socio sin duplicar costos en el Estado de Resultados.
+                </div>
+              }
             </nz-form-control>
           </nz-form-item>
         </nz-col>
@@ -150,10 +160,12 @@
           <!-- Actor Interno / Responsable (Vendedor o Pagador) -->
           <nz-col [nzSpan]="24" [nzMd]="12">
             <nz-form-item>
-              <nz-form-label nzFor="prs_uuidactor" [nzSpan]="24">{{ actorLabel }}</nz-form-label>
-              <nz-form-control [nzSpan]="24">
+              <nz-form-label nzFor="prs_uuidactor" [nzSpan]="24" [nzRequired]="isPartnerExpenseWithoutAccount">
+                {{ actorLabel }}
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Debe seleccionar qué socio pagó el gasto de su dinero">
                 <nz-select formControlName="prs_uuidactor" [nzPlaceHolder]="actorPlaceholder" nzSize="large" nzAllowClear nzShowSearch>
-                  @for (person of persons; track person.prs_uuid) {
+                  @for (person of filteredActors; track person.prs_uuid) {
                     <nz-option [nzValue]="person.prs_uuid" [nzLabel]="person.prs_name + ' (' + person.prs_type + ')'"></nz-option>
                   }
                 </nz-select>
