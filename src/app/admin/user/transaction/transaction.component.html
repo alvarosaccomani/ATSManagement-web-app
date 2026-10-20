@@ -115,9 +115,40 @@
                   <i nz-icon nzType="info-circle"></i> Sin cuenta seleccionada: El gasto se registrará como aporte personal del socio (generando crédito a su favor).
                 </div>
               }
+
+              <!-- Caja de Movimiento Espejo: Pago de gasto de negocio con cuenta personal -->
+              @if (isPersonalCardInSharedScope) {
+                <div style="background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 8px; padding: 12px 16px; margin-top: 10px;">
+                  <label nz-checkbox [(ngModel)]="createMirrorTransaction" [ngModelOptions]="{standalone: true}">
+                    <strong style="color: #0050b3;">Vincular con {{ selectedCardScopeName }} (Movimiento Espejo)</strong>
+                  </label>
+                  <div style="font-size: 12px; color: #595959; margin-top: 6px; line-height: 1.4;">
+                    <i nz-icon nzType="info-circle" style="color: #1890ff; margin-right: 4px;"></i>
+                    Esta cuenta pertenece a <strong>{{ selectedCardScopeName }}</strong>. Se creará automáticamente la salida de dinero en tu cuenta bancaria como <em>"Préstamo a {{ currentScopeName }}"</em> (sin computarlo como gasto de vida personal) y se registrará la deuda de {{ currentScopeName }} a tu favor.
+                  </div>
+                </div>
+              }
+
+              <!-- Caja de Movimiento Espejo: Reintegro de negocio a cuenta personal -->
               @if (isPartnerReimbursement) {
-                <div style="margin-top: 6px; font-size: 12px; color: #1890ff;">
-                  <i nz-icon nzType="safety-certificate"></i> Reintegro a socio: Cancela deuda pendiente con el socio sin duplicar costos en el Estado de Resultados.
+                <div style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 16px; margin-top: 10px;">
+                  <label nz-checkbox [(ngModel)]="createReimbursementMirror" [ngModelOptions]="{standalone: true}">
+                    <strong style="color: #237804;">Acreditar ingreso espejo en mi cuenta Personal</strong>
+                  </label>
+                  <div style="font-size: 12px; color: #595959; margin-top: 4px; margin-bottom: 8px; line-height: 1.4;">
+                    <i nz-icon nzType="safety-certificate" style="color: #52c41a; margin-right: 4px;"></i>
+                    Reintegro a socio detectado: Cancela deuda pendiente con el socio sin duplicar costos operativos.
+                  </div>
+                  @if (createReimbursementMirror) {
+                    <div style="margin-top: 6px;">
+                      <label style="font-size: 12px; color: #262626; display: block; margin-bottom: 4px;">Cuenta Personal donde recibís el dinero:</label>
+                      <nz-select [(ngModel)]="reimbursementTargetCardUuid" [ngModelOptions]="{standalone: true}" placeholder="Seleccione su cuenta personal" nzSize="default" style="width: 100%;">
+                        @for (card of personalCards; track card.value) {
+                          <nz-option [nzValue]="card.value" [nzLabel]="card.label"></nz-option>
+                        }
+                      </nz-select>
+                    </div>
+                  }
                 </div>
               }
             </nz-form-control>

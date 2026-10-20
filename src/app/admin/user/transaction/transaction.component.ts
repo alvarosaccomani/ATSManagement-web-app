@@ -13,6 +13,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PersonInterface } from '../../../core/interfaces/person.interface';
@@ -49,7 +50,8 @@ import { formatterDollar, parserDollar } from '../../../core/utils/currency-form
     NzSelectModule,
     NzDatePickerModule,
     NzInputNumberModule,
-    NzRadioModule
+    NzRadioModule,
+    NzCheckboxModule
   ],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.scss'
@@ -70,6 +72,13 @@ export class TransactionComponent implements OnInit {
   persons: PersonInterface[] = [];
   /** Available cards/accounts for source and target account selection. */
   cards: any[] = [];
+
+  /** Controla si se crea el movimiento espejo en el ámbito personal al pagar un gasto de negocio con cuenta personal. */
+  createMirrorTransaction = true;
+  /** Controla si se acredita automáticamente el reintegro como ingreso espejo en la cuenta personal. */
+  createReimbursementMirror = true;
+  /** UUID de la cuenta personal elegida como destino al cobrar un reintegro. */
+  reimbursementTargetCardUuid: string | null = null;
 
   /** Reference to the concept `<input>` element for auto-focusing in fast batch-entry mode. */
   @ViewChild('conceptInput') conceptInput!: ElementRef;
@@ -271,7 +280,9 @@ export class TransactionComponent implements OnInit {
             const identifier = c.crd_last4digits ? ` (**** ${c.crd_last4digits})` : (c.crd_cbualias ? ` (${c.crd_cbualias})` : '');
             return {
               value: c.crd_uuid,
-              label: `${c.crd_alias || c.tycrd?.tycrd_name || 'Cuenta / Tarjeta'}${identifier}${scopeTag}`
+              label: `${c.crd_alias || c.tycrd?.tycrd_name || 'Cuenta / Tarjeta'}${identifier}${scopeTag}`,
+              scp_uuid: c.scp_uuid,
+              scopeName: c.scp?.scp_name || ''
             };
           });
 
@@ -333,6 +344,119 @@ export class TransactionComponent implements OnInit {
     };
 
     if (!this.isEditing) {
+      // Caso 1: Pago de gasto de negocio con cuenta personal + Movimiento Espejo
+      if (this.isPersonalCardInSharedScope && this.createMirrorTransaction) {
+        const selectedCard = this.cards.find(c => c.value === rawValue.crd_uuid);
+        const businessPayload = {
+          ...payload,
+          crd_uuid: null,
+          trx_notes: rawValue.trx_notes
+            ? `${rawValue.trx_notes} | Pagado con cuenta personal: ${selectedCard?.label}. Pendiente de reintegro.`
+            : `Pagado con cuenta personal: ${selectedCard?.label}. Pendiente de reintegro.`
+        };
+
+        const personalPayload = {
+          scp_uuid: selectedCard?.scp_uuid,
+          usr_uuidcreator: usr_uuid,
+          trx_type: 'EGRESO',
+          trx_datetime: rawValue.trx_datetime,
+          trx_concept: `Préstamo / Pago a cuenta de ${this.currentScopeName}: ${rawValue.trx_concept}`,
+          trx_amount: rawValue.trx_amount,
+          trx_currency: rawValue.trx_currency || 'ARS',
+          crd_uuid: rawValue.crd_uuid,
+          target_crduuid: null,
+          prs_uuid: null,
+          prs_uuidactor: null,
+          trx_notes: `Movimiento espejo: Salida bancaria por gasto operativo de ${this.currentScopeName}. Pendiente de reintegro.`
+        };
+
+        this._transactionsService.saveBulkTransactions([businessPayload, personalPayload]).subscribe({
+          next: (response) => {
+            this.isLoading = false;
+            if (response.success) {
+              this._messageService.success(
+                'Movimientos Vinculados Registrados',
+                `Se registró el gasto en ${this.currentScopeName} y el débito bancario como préstamo en ${this.selectedCardScopeName}.`,
+                () => {
+                  if (andLoadAnother) {
+                    this.form.get('trx_concept')?.reset('');
+                    this.form.get('trx_amount')?.reset(null);
+                    this.form.get('trx_notes')?.reset('');
+                    setTimeout(() => this.conceptInput?.nativeElement?.focus(), 100);
+                  } else {
+                    this.router.navigate(['/admin/user/transactions']);
+                  }
+                }
+              );
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudieron registrar los movimientos vinculados');
+            }
+          },
+          error: (error) => {
+            this.isLoading = false;
+            console.error(error);
+            this._messageService.error('Error', error?.error?.error || 'Hubo un problema al guardar los movimientos vinculados');
+          }
+        });
+        return;
+      }
+
+      // Caso 2: Reintegro a socio + Acreditación espejo en ámbito Personal
+      if (this.isPartnerReimbursement && this.createReimbursementMirror && this.reimbursementTargetCardUuid) {
+        const businessPayload = {
+          ...payload,
+          trx_notes: rawValue.trx_notes
+            ? `${rawValue.trx_notes} | Reintegro de fondos personales.`
+            : 'Reintegro de fondos personales al socio. Cancela deuda con socio.'
+        };
+
+        const personalPayload = {
+          scp_uuid: this.personalScope?.scp_uuid,
+          usr_uuidcreator: usr_uuid,
+          trx_type: 'INGRESO',
+          trx_datetime: rawValue.trx_datetime,
+          trx_concept: `Cobro reintegro de ${this.currentScopeName}: ${rawValue.trx_concept}`,
+          trx_amount: rawValue.trx_amount,
+          trx_currency: rawValue.trx_currency || 'ARS',
+          crd_uuid: this.reimbursementTargetCardUuid,
+          target_crduuid: null,
+          prs_uuid: null,
+          prs_uuidactor: null,
+          trx_notes: `Movimiento espejo: Acreditación de reintegro de fondos de ${this.currentScopeName}.`
+        };
+
+        this._transactionsService.saveBulkTransactions([businessPayload, personalPayload]).subscribe({
+          next: (response) => {
+            this.isLoading = false;
+            if (response.success) {
+              this._messageService.success(
+                'Reintegro Registrado',
+                `Se canceló la deuda en ${this.currentScopeName} y se acreditó el ingreso en tu cuenta personal.`,
+                () => {
+                  if (andLoadAnother) {
+                    this.form.get('trx_concept')?.reset('');
+                    this.form.get('trx_amount')?.reset(null);
+                    this.form.get('trx_notes')?.reset('');
+                    setTimeout(() => this.conceptInput?.nativeElement?.focus(), 100);
+                  } else {
+                    this.router.navigate(['/admin/user/transactions']);
+                  }
+                }
+              );
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudieron registrar los movimientos vinculados');
+            }
+          },
+          error: (error) => {
+            this.isLoading = false;
+            console.error(error);
+            this._messageService.error('Error', error?.error?.error || 'Hubo un problema al guardar los movimientos vinculados');
+          }
+        });
+        return;
+      }
+
+      // Caso Estándar: Creación individual
       this._transactionsService.saveTransaction(payload).subscribe({
         next: (response) => {
           this.isLoading = false;
@@ -472,6 +596,57 @@ export class TransactionComponent implements OnInit {
     const scopeName = activeScope?.scp_name?.trim().toLowerCase();
     if (!scopeName) return this.persons;
     return this.persons.filter(p => p.prs_name.trim().toLowerCase() !== scopeName);
+  }
+
+  /** Ámbito contable actualmente seleccionado en el formulario. */
+  get currentScope(): ScopeInterface | undefined {
+    const scp_uuid = this.form.get('scp_uuid')?.value;
+    return this.scopes.find(s => s.scp_uuid === scp_uuid);
+  }
+
+  /** Nombre del ámbito activo para visualización en textos y confirmaciones. */
+  get currentScopeName(): string {
+    return this.currentScope?.scp_name || 'el ámbito';
+  }
+
+  /** Ámbito personal del usuario actual (no compartido o denominado 'Personal'). */
+  get personalScope(): ScopeInterface | undefined {
+    return this.scopes.find(s => !s.scp_isshared || s.scp_name.toLowerCase().includes('personal'));
+  }
+
+  /** Nombre del ámbito personal. */
+  get personalScopeName(): string {
+    return this.personalScope?.scp_name || 'Personal';
+  }
+
+  /** Lista de cuentas bancarias/tarjetas pertenecientes al ámbito personal. */
+  get personalCards(): any[] {
+    const pScope = this.personalScope;
+    if (!pScope) return this.cards;
+    return this.cards.filter(c => c.scp_uuid === pScope.scp_uuid);
+  }
+
+  /**
+   * Detecta si en un gasto de un ámbito compartido (ej: negocio) se seleccionó
+   * una cuenta o tarjeta que pertenece al ámbito personal o a un ámbito distinto.
+   */
+  get isPersonalCardInSharedScope(): boolean {
+    if (this.form.get('trx_type')?.value !== 'EGRESO') return false;
+    const currentScpUuid = this.form.get('scp_uuid')?.value;
+    const selectedCrdUuid = this.form.get('crd_uuid')?.value;
+    if (!currentScpUuid || !selectedCrdUuid) return false;
+
+    const selectedCard = this.cards.find(c => c.value === selectedCrdUuid);
+    if (!selectedCard || !selectedCard.scp_uuid) return false;
+
+    return selectedCard.scp_uuid !== currentScpUuid;
+  }
+
+  /** Nombre del ámbito de la cuenta seleccionada. */
+  get selectedCardScopeName(): string {
+    const selectedCrdUuid = this.form.get('crd_uuid')?.value;
+    const selectedCard = this.cards.find(c => c.value === selectedCrdUuid);
+    return selectedCard?.scopeName || 'Ámbito Personal';
   }
 
   /** Currency display formatter function for `nz-input-number`. */
