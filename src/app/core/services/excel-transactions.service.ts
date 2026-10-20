@@ -333,6 +333,11 @@ export class ExcelTransactionsService {
             const rawAccount = accountIdx !== -1 ? String(row[accountIdx] || '').trim() : '';
             const rawNotes = notesIdx !== -1 ? String(row[notesIdx] || '').trim() : '';
 
+            // Constantes heurísticas para detección de inconsistencias contables
+            const EXPENSE_KEYWORDS = /compra|filamento|repuesto|arreglo|reparaci[oó]n|hotend|service|cuota\s+m[aá]quina|dominio|pinturer[ií]a|pinzas|chip|busto|cajas\s+para\s+despacho|pack\s+religioso|tarjetas\s+isa|pendrive|stl/i;
+            const EXPENSE_NOTES = /compr[oó]|me\s+lo\s+cobro|puse\s+bono|gasto|factura|salio\s+mas\s+barato|se\s+saco\s+de/i;
+            const BARTER_KEYWORDS = /se\s+pag[oó]\s+con|canje|trueque|pago\s+con\s+los\s+san\s+jose/i;
+
             // 1. Determinar Tipo de Movimiento (EGRESO vs INGRESO)
             let trx_type: 'EGRESO' | 'INGRESO' = 'EGRESO';
             if (rawTypeVal.includes('VENTA') || rawTypeVal.includes('INGRESO') || rawTypeVal.includes('INCOME')) {
@@ -353,6 +358,16 @@ export class ExcelTransactionsService {
                   trx_type = 'EGRESO';
                 }
               }
+            }
+
+            // Validación Heurística: ¿Compra o gasto clasificado como Ingreso?
+            if (trx_type === 'INGRESO' && (EXPENSE_KEYWORDS.test(rawDesc) || EXPENSE_NOTES.test(rawNotes))) {
+              errors.push('Inconsistencia contable: El concepto o notas corresponden a un GASTO/COMPRA pero la fila está como INGRESO.');
+            }
+
+            // Validación Heurística: Asientos de canje / trueque
+            if (BARTER_KEYWORDS.test(rawDesc) || BARTER_KEYWORDS.test(rawNotes)) {
+              errors.push('Asiento de canje/trueque detectado: Los canjes en especies no deben registrarse como movimientos monetarios de caja.');
             }
 
             // 2. Parsear Fecha
@@ -377,29 +392,59 @@ export class ExcelTransactionsService {
             // 5. Mapear Actor Interno (Socio Pagador en gasto o Vendedor en venta)
             let prs_uuidactor: string | null = null;
             let actorName = '';
+            let matchedPerson: PersonInterface | undefined;
             if (rawBuyer) {
-              const matchedPerson = this.findPersonByName(rawBuyer, persons);
-              if (matchedPerson) {
-                prs_uuidactor = matchedPerson.prs_uuid;
-                actorName = matchedPerson.prs_name;
+              // Prevenir que el nombre genérico del ámbito/empresa figure como socio físico
+              if (rawBuyer.toUpperCase() === 'ISA3D' || rawBuyer.toUpperCase() === 'ATS') {
+                errors.push(`"${rawBuyer}" es la entidad del ámbito y no debe figurar como socio pagador individual.`);
               } else {
-                unmatchedBuyersSet.add(rawBuyer);
-                actorName = rawBuyer;
-                errors.push(`Persona "${rawBuyer}" no existe en el ámbito (se conservará en notas).`);
+                matchedPerson = this.findPersonByName(rawBuyer, persons);
+                if (matchedPerson) {
+                  prs_uuidactor = matchedPerson.prs_uuid;
+                  actorName = matchedPerson.prs_name;
+                } else {
+                  unmatchedBuyersSet.add(rawBuyer);
+                  actorName = rawBuyer;
+                  errors.push(`Persona "${rawBuyer}" no existe en el ámbito (se conservará en notas).`);
+                }
               }
             }
 
             // 6. Mapear Contraparte Externa (Proveedor en gasto o Cliente en venta)
             let prs_uuid: string | null = null;
             let supplierName = '';
+            let matchedSupplier: PersonInterface | undefined;
             if (rawSupplier) {
-              const matchedSupplier = this.findPersonByName(rawSupplier, persons);
+              matchedSupplier = this.findPersonByName(rawSupplier, persons);
               if (matchedSupplier) {
                 prs_uuid = matchedSupplier.prs_uuid;
                 supplierName = matchedSupplier.prs_name;
               } else {
                 supplierName = rawSupplier;
               }
+            }
+
+            // Detección de roles invertidos o socios mal ubicados
+            const isPartner = (p?: PersonInterface): boolean => !!p && (p.prs_type || '').toUpperCase().includes('SOCIO');
+
+            // Caso A: Gasto donde el socio quedó en Proveedor y el comercio en Socio
+            if (trx_type === 'EGRESO' && matchedSupplier && isPartner(matchedSupplier) && !isPartner(matchedPerson)) {
+              // Invertir automáticamente para normalizar la imputación
+              const tempId = prs_uuid;
+              const tempName = supplierName;
+              prs_uuidactor = tempId;
+              actorName = tempName;
+              prs_uuid = matchedPerson ? matchedPerson.prs_uuid : null;
+              supplierName = rawBuyer;
+              errors.push(`Aviso: Roles normalizados (el socio "${actorName}" se reubicó como pagador y "${supplierName}" como comercio).`);
+            }
+            // Caso B: Venta donde el socio quedó en Cliente en lugar de Vendedor
+            else if (trx_type === 'INGRESO' && matchedSupplier && isPartner(matchedSupplier) && !matchedPerson) {
+              prs_uuidactor = matchedSupplier.prs_uuid;
+              actorName = matchedSupplier.prs_name;
+              prs_uuid = null;
+              supplierName = '';
+              errors.push(`Aviso: El socio "${actorName}" fue reubicado como vendedor en lugar de cliente.`);
             }
 
             // 7. Mapear Cuenta
@@ -417,7 +462,17 @@ export class ExcelTransactionsService {
               }
             }
 
-            const isValid = errors.filter(e => !e.includes('se conservará en notas')).length === 0;
+            // Validación Contable: Gasto sin cuenta bancaria ni caja debe tener socio pagador
+            if (trx_type === 'EGRESO' && !crd_uuid && !prs_uuidactor) {
+              errors.push('Gasto sin cuenta/caja de origen: Debe indicar qué socio aportó el dinero.');
+            }
+
+            const isBlockingError = (e: string) =>
+              !e.includes('se conservará en notas') &&
+              !e.startsWith('Aviso:') &&
+              !e.startsWith('Corrección');
+
+            const isValid = errors.filter(isBlockingError).length === 0;
             if (isValid) {
               validCount++;
               totalSum += amountNum;
@@ -451,6 +506,62 @@ export class ExcelTransactionsService {
               accountName,
               notes: rawNotes
             });
+          }
+
+          // Segunda pasada heurística: Detección global de asientos espejo en la planilla
+          const BARTER_PAIR_REGEX = /se\s+pag[oó]\s+con|canje|trueque|pago\s+con\s+los\s+san\s+jose/i;
+          for (let i = 0; i < parsedRows.length; i++) {
+            const rowA = parsedRows[i];
+            for (let j = i + 1; j < parsedRows.length; j++) {
+              const rowB = parsedRows[j];
+              if (
+                rowA.dateFormatted === rowB.dateFormatted &&
+                Math.abs(rowA.amount - rowB.amount) < 0.01 &&
+                rowA.trx_type !== rowB.trx_type
+              ) {
+                const combinedNotes = (rowA.notes + ' ' + rowB.notes + ' ' + rowA.concept + ' ' + rowB.concept).toLowerCase();
+                if (
+                  rowA.concept.toLowerCase().trim() === rowB.concept.toLowerCase().trim() ||
+                  BARTER_PAIR_REGEX.test(combinedNotes)
+                ) {
+                  const mirrorMsgA = `Asiento espejo ficticio detectado con fila ${rowB.rowIndex} (${rowB.trx_type} $${rowB.amount}).`;
+                  if (!rowA.errors.includes(mirrorMsgA)) {
+                    rowA.errors.push(mirrorMsgA);
+                  }
+                  const mirrorMsgB = `Asiento espejo ficticio detectado con fila ${rowA.rowIndex} (${rowA.trx_type} $${rowA.amount}).`;
+                  if (!rowB.errors.includes(mirrorMsgB)) {
+                    rowB.errors.push(mirrorMsgB);
+                  }
+                }
+              }
+            }
+          }
+
+          // Recalcular conteos y validez tras la segunda pasada
+          validCount = 0;
+          invalidCount = 0;
+          totalSum = 0;
+          totalExpense = 0;
+          totalIncome = 0;
+
+          const isBlockingErrorFinal = (e: string) =>
+            !e.includes('se conservará en notas') &&
+            !e.startsWith('Aviso:') &&
+            !e.startsWith('Corrección');
+
+          for (const row of parsedRows) {
+            row.isValid = row.errors.filter(isBlockingErrorFinal).length === 0;
+            if (row.isValid) {
+              validCount++;
+              totalSum += row.amount;
+              if (row.trx_type === 'INGRESO') {
+                totalIncome += row.amount;
+              } else {
+                totalExpense += row.amount;
+              }
+            } else {
+              invalidCount++;
+            }
           }
 
           resolve({
