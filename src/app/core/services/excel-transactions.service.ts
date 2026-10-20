@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { PersonInterface } from '../interfaces/person.interface';
 import { ScopeInterface } from '../interfaces/scope.interface';
+import { TransactionInterface } from '../interfaces/transaction.interface';
 
 /**
  * Representa una fila individual procesada a partir de una planilla Excel de gastos.
@@ -156,6 +157,92 @@ export class ExcelTransactionsService {
     // Nombre de archivo contextual
     const scopeSuffix = scope?.scp_name ? `_${scope.scp_name.toLowerCase().replace(/\s+/g, '_')}` : '';
     const fileName = `plantilla_gastos${scopeSuffix}.xlsx`;
+
+    XLSX.writeFile(wb, fileName);
+  }
+
+  /**
+   * Exporta un listado de transacciones a una planilla Excel (.xlsx) estructurada y formateada.
+   *
+   * @param transactions Arreglo de transacciones a exportar.
+   * @param scopeName Nombre del ámbito actual para el título y nombre de archivo.
+   * @param cards Lista opcional de tarjetas/cuentas del usuario para resolver el nombre del medio de pago.
+   */
+  public exportTransactionsToExcel(
+    transactions: TransactionInterface[],
+    scopeName: string = 'Todos',
+    cards: any[] = []
+  ): void {
+    const cardMap = new Map<string, string>();
+    cards.forEach(c => {
+      if (c.value && c.label) cardMap.set(c.value, c.label);
+      if (c.crd_uuid && (c.crd_alias || c.label)) cardMap.set(c.crd_uuid, c.crd_alias || c.label);
+    });
+
+    const wb = XLSX.utils.book_new();
+
+    const headers = [
+      'Fecha',
+      'Tipo',
+      'Ámbito',
+      'Concepto / Comercio',
+      'Importe',
+      'Moneda',
+      'Cuenta / Fuente',
+      'Proveedor / Cliente',
+      'Socio / Vendedor',
+      'Notas'
+    ];
+
+    const dataRows = transactions.map(t => {
+      let dateFormatted = '';
+      if (t.trx_datetime) {
+        const d = new Date(t.trx_datetime);
+        if (!isNaN(d.getTime())) {
+          dateFormatted = this.formatDateDisplay(d);
+        }
+      }
+
+      const accountLabel = t.crd_uuid ? (cardMap.get(t.crd_uuid) || '') : '';
+      const scopeLabel = t.scp?.scp_name || '';
+      const counterparty = t.prs?.prs_name || '';
+      const actor = t.actor?.prs_name || '';
+
+      return [
+        dateFormatted,
+        t.trx_type,
+        scopeLabel,
+        t.trx_concept,
+        t.trx_amount,
+        t.trx_currency || 'ARS',
+        accountLabel,
+        counterparty,
+        actor,
+        t.trx_notes || ''
+      ];
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...dataRows]);
+
+    ws['!cols'] = [
+      { wch: 14 }, // Fecha
+      { wch: 16 }, // Tipo
+      { wch: 20 }, // Ámbito
+      { wch: 35 }, // Concepto
+      { wch: 16 }, // Importe
+      { wch: 10 }, // Moneda
+      { wch: 25 }, // Cuenta
+      { wch: 25 }, // Proveedor / Cliente
+      { wch: 25 }, // Socio / Vendedor
+      { wch: 40 }  // Notas
+    ];
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Movimientos');
+
+    const cleanScope = scopeName.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+    const today = new Date();
+    const dateSuffix = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+    const fileName = `movimientos_${cleanScope}_${dateSuffix}.xlsx`;
 
     XLSX.writeFile(wb, fileName);
   }
