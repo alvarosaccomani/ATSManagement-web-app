@@ -78,4 +78,51 @@ export class ScopesService {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     return this._http.delete(`${environment.apiUrl}scope/${scp_uuid}`, { headers });
   }
+
+  /**
+   * Obtiene la lista de usuarios asignados/miembros de un ámbito con sus roles.
+   *
+   * @param scp_uuid UUID del ámbito.
+   * @returns Observable con la lista de miembros del ámbito.
+   */
+  public getScopeUsers(scp_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get(`${environment.apiUrl}scope-users/${scp_uuid}`, { headers });
+  }
+
+  /**
+   * Asigna o vincula un usuario a un ámbito con un rol específico.
+   *
+   * @param scp_uuid UUID del ámbito.
+   * @param usr_uuid UUID del usuario a asignar.
+   * @param scpu_role Rol a asignar ('ADMIN', 'MEMBER', 'VIEWER').
+   * @returns Observable con el resultado de la asignación.
+   */
+  public addScopeUser(scp_uuid: string, usr_uuid: string, scpu_role: string = 'MEMBER'): Observable<any> {
+    const params = JSON.stringify({ scp_uuid, usr_uuid, scpu_role });
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.post(`${environment.apiUrl}scope-user`, params, { headers });
+  }
+
+  /**
+   * Desvincula o remueve a un usuario de un ámbito.
+   *
+   * @param scp_uuid UUID del ámbito.
+   * @param usr_uuid UUID del usuario a desvincular.
+   * @returns Observable con el resultado de la eliminación.
+   */
+  public removeScopeUser(scp_uuid: string, usr_uuid: string): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.delete(`${environment.apiUrl}scope-user/${scp_uuid}/${usr_uuid}`, { headers });
+  }
+
+  /**
+   * Obtiene la lista de todos los usuarios registrados en el sistema para poder agregarlos como miembros.
+   *
+   * @returns Observable con la lista de usuarios del sistema.
+   */
+  public getAllUsers(): Observable<any> {
+    const headers = new HttpHeaders().set('content-type', 'application/json');
+    return this._http.get(`${environment.apiUrl}users`, { headers });
+  }
 }
