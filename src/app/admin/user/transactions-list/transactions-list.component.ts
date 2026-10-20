@@ -418,6 +418,39 @@ export class TransactionsListComponent implements OnInit {
   }
 
   /**
+   * Exporta las transacciones actualmente filtradas a una planilla Excel (.xlsx).
+   */
+  exportToExcel(): void {
+    if (!this.filteredTransactions || this.filteredTransactions.length === 0) {
+      this._messageService.error('Sin datos', 'No hay movimientos para exportar con los filtros actuales.');
+      return;
+    }
+
+    const activeScope = this.scopes.find(s => s.scp_uuid === this.selectedScopeUuid);
+    const scopeName = activeScope ? activeScope.scp_name : 'Todos';
+
+    if (!this.userCards || this.userCards.length === 0) {
+      const usr_uuid = this.currentUserId;
+      this._cardsService.getCards(usr_uuid).subscribe({
+        next: (res: any) => {
+          const cards = (res.success && res.data)
+            ? res.data.map((c: any) => ({
+                value: c.crd_uuid,
+                label: c.crd_alias || c.tycrd?.tycrd_name || 'Cuenta'
+              }))
+            : [];
+          this._excelService.exportTransactionsToExcel(this.filteredTransactions, scopeName, cards);
+        },
+        error: () => {
+          this._excelService.exportTransactionsToExcel(this.filteredTransactions, scopeName, []);
+        }
+      });
+    } else {
+      this._excelService.exportTransactionsToExcel(this.filteredTransactions, scopeName, this.userCards);
+    }
+  }
+
+  /**
    * Opens the bulk Excel import modal dialog and prepares references.
    */
   openImportModal(): void {
