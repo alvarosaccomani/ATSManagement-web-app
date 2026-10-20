@@ -61,5 +61,133 @@
         </button>
       </div>
     </form>
+
+    <!-- Sección de Miembros y Usuarios del Ámbito (solo en modo edición) -->
+    @if (isEditing) {
+      <nz-divider></nz-divider>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <h3 style="margin: 0; font-size: 18px; color: #1f2937;">
+            <i nz-icon nzType="team" style="color: #1890ff; margin-right: 8px;"></i>
+            Miembros y Usuarios del Ámbito
+          </h3>
+          <span style="font-size: 13px; color: #8c8c8c;">
+            Usuarios con acceso y permisos sobre las transacciones de este ámbito
+          </span>
+        </div>
+        @if (form.get('scp_isshared')?.value) {
+          <button nz-button nzType="primary" (click)="openAddMemberModal()">
+            <i nz-icon nzType="user-add"></i> Agregar Miembro
+          </button>
+        }
+      </div>
+
+      @if (!form.get('scp_isshared')?.value) {
+        <nz-alert
+          nzType="info"
+          nzShowIcon
+          nzMessage="Ámbito Personal y Privado"
+          nzDescription="Este ámbito está configurado como privado (solo accesible por el propietario). Para permitir que otros usuarios del sistema colaboren, activá el switch 'Ámbito Compartido'."
+          style="margin-bottom: 16px;">
+        </nz-alert>
+      }
+
+      <nz-table #membersTable [nzData]="scopeUsers" [nzLoading]="isLoadingMembers" nzSize="small" nzBordered [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th nzWidth="140px">Rol</th>
+            <th nzWidth="140px">Fecha</th>
+            <th nzWidth="90px" style="text-align: center;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (member of membersTable.data; track member.usr_uuid) {
+            <tr>
+              <td>
+                <strong>{{ member.user?.usr_name || 'Usuario' }} {{ member.user?.usr_surname || '' }}</strong>
+                @if (member.usr_uuid === currentUserId) {
+                  <nz-tag nzColor="cyan" style="margin-left: 6px;">Vos</nz-tag>
+                }
+              </td>
+              <td>{{ member.user?.usr_email || '-' }}</td>
+              <td>
+                <nz-tag [nzColor]="getRoleColor(member.scpu_role)">
+                  {{ getRoleLabel(member.scpu_role) }}
+                </nz-tag>
+              </td>
+              <td>{{ member.scpu_createdat | date:'dd/MM/yyyy' }}</td>
+              <td style="text-align: center;">
+                @if (member.scpu_role !== 'OWNER' && member.usr_uuid !== currentUserId) {
+                  <button
+                    nz-button
+                    nzType="text"
+                    nzDanger
+                    nz-tooltip
+                    nzTooltipTitle="Desvincular del ámbito"
+                    (click)="onRemoveMember(member.usr_uuid, member.user?.usr_name || 'este usuario')">
+                    <i nz-icon nzType="delete"></i>
+                  </button>
+                } @else {
+                  <span style="color: #bfbfbf; font-size: 12px;">-</span>
+                }
+              </td>
+            </tr>
+          }
+          @if (scopeUsers.length === 0 && !isLoadingMembers) {
+            <tr>
+              <td colspan="5" style="text-align: center; color: #8c8c8c; padding: 16px;">
+                No hay miembros asignados a este ámbito.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    }
+
+    <!-- Modal para Agregar Miembro -->
+    <nz-modal
+      [(nzVisible)]="isAddMemberModalVisible"
+      nzTitle="Agregar Miembro al Ámbito"
+      (nzOnCancel)="isAddMemberModalVisible = false"
+      (nzOnOk)="confirmAddMember()"
+      [nzOkLoading]="isSavingMember"
+      nzOkText="Vincular Usuario"
+      nzCancelText="Cancelar">
+      <ng-container *nzModalContent>
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-weight: 600; margin-bottom: 6px;">Seleccionar Usuario Registrado:</label>
+          <nz-select
+            [(ngModel)]="selectedUserUuidToAdd"
+            nzPlaceHolder="Buscar por nombre o email..."
+            nzShowSearch
+            style="width: 100%;"
+            nzSize="large">
+            @for (user of usersEligibleToAdd; track user.usr_uuid) {
+              <nz-option
+                [nzValue]="user.usr_uuid"
+                [nzLabel]="user.usr_name + (user.usr_surname ? ' ' + user.usr_surname : '') + ' (' + user.usr_email + ')'">
+              </nz-option>
+            }
+          </nz-select>
+          @if (usersEligibleToAdd.length === 0) {
+            <div style="font-size: 12px; color: #8c8c8c; margin-top: 4px;">
+              Todos los usuarios registrados ya forman parte de este ámbito o no hay otros usuarios.
+            </div>
+          }
+        </div>
+
+        <div>
+          <label style="display: block; font-weight: 600; margin-bottom: 6px;">Rol en el Ámbito:</label>
+          <nz-select [(ngModel)]="selectedRoleToAdd" style="width: 100%;" nzSize="large">
+            <nz-option nzValue="ADMIN" nzLabel="Administrador (Acceso total al ámbito)"></nz-option>
+            <nz-option nzValue="MEMBER" nzLabel="Miembro (Carga y visualización de registros)"></nz-option>
+            <nz-option nzValue="VIEWER" nzLabel="Observador (Solo lectura de movimientos)"></nz-option>
+          </nz-select>
+        </div>
+      </ng-container>
+    </nz-modal>
   </div>
 </nz-spin>

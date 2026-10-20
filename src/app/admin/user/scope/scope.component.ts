@@ -9,8 +9,16 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { ScopesService } from '../../../core/services/scopes.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -29,7 +37,14 @@ import { MessageService } from '../../../core/services/message.service';
     NzButtonModule,
     NzIconModule,
     NzSpinModule,
-    NzSwitchModule
+    NzSwitchModule,
+    NzTableModule,
+    NzTagModule,
+    NzSelectModule,
+    NzModalModule,
+    NzDividerModule,
+    NzAlertModule,
+    NzToolTipModule
   ],
   templateUrl: './scope.component.html',
   styleUrl: './scope.component.scss'
@@ -44,6 +59,21 @@ export class ScopeComponent implements OnInit {
   /** UUID of the scope being edited, or `null` when creating a new scope. */
   scp_uuid: string | null = null;
 
+  /** Lista de miembros/usuarios vinculados a este ámbito. */
+  scopeUsers: any[] = [];
+  /** Lista completa de usuarios registrados en el sistema para invitar. */
+  availableUsers: any[] = [];
+  /** Indica si se están cargando los miembros. */
+  isLoadingMembers = false;
+  /** Visibilidad del modal para agregar un miembro. */
+  isAddMemberModalVisible = false;
+  /** UUID del usuario seleccionado para agregar. */
+  selectedUserUuidToAdd: string | null = null;
+  /** Rol seleccionado para el nuevo miembro ('ADMIN', 'MEMBER', 'VIEWER'). */
+  selectedRoleToAdd: string = 'MEMBER';
+  /** Indica si se está guardando la membresía. */
+  isSavingMember = false;
+
   /**
    * Initializes the scope form component.
    *
@@ -51,6 +81,7 @@ export class ScopeComponent implements OnInit {
    * @param route Activated route used to extract `scp_uuid`.
    * @param router Angular `Router` instance.
    * @param _scopesService Service for scope CRUD operations.
+   * @param _sessionService Service for extracting current session identity.
    * @param _messageService Service for displaying modal notifications.
    */
   constructor(
@@ -58,6 +89,7 @@ export class ScopeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService
   ) {
     this.form = this.fb.group({
@@ -71,6 +103,11 @@ export class ScopeComponent implements OnInit {
     });
   }
 
+  /** Gets current authenticated user UUID. */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+  }
+
   /**
    * Checks route parameters for `scp_uuid` and loads existing scope data if editing.
    */
@@ -80,6 +117,129 @@ export class ScopeComponent implements OnInit {
 
     if (this.isEditing) {
       this.loadScope(this.scp_uuid!);
+      this.loadScopeUsers(this.scp_uuid!);
+    }
+  }
+
+  /**
+   * Carga los miembros asignados al ámbito.
+   */
+  loadScopeUsers(scp_uuid: string): void {
+    this.isLoadingMembers = true;
+    this._scopesService.getScopeUsers(scp_uuid).subscribe({
+      next: (response: any) => {
+        this.isLoadingMembers = false;
+        if (response.success && response.data) {
+          this.scopeUsers = response.data;
+        }
+      },
+      error: (error: any) => {
+        this.isLoadingMembers = false;
+        console.error('Error al cargar miembros del ámbito:', error);
+      }
+    });
+  }
+
+  /**
+   * Abre el modal para agregar un miembro y carga los usuarios del sistema si aún no se obtuvieron.
+   */
+  openAddMemberModal(): void {
+    this.selectedUserUuidToAdd = null;
+    this.selectedRoleToAdd = 'MEMBER';
+    this.isAddMemberModalVisible = true;
+    if (this.availableUsers.length === 0) {
+      this._scopesService.getAllUsers().subscribe({
+        next: (response: any) => {
+          if (response.success && response.data) {
+            this.availableUsers = response.data;
+          }
+        },
+        error: (error: any) => console.error('Error al cargar usuarios:', error)
+      });
+    }
+  }
+
+  /** Lista de usuarios del sistema que aún no son miembros de este ámbito. */
+  get usersEligibleToAdd(): any[] {
+    const existingUuids = new Set(this.scopeUsers.map(su => su.usr_uuid));
+    return this.availableUsers.filter(u => !existingUuids.has(u.usr_uuid));
+  }
+
+  /**
+   * Guarda la asignación del nuevo miembro en el ámbito.
+   */
+  confirmAddMember(): void {
+    if (!this.selectedUserUuidToAdd) {
+      this._messageService.error('Usuario requerido', 'Por favor seleccione el usuario a vincular.');
+      return;
+    }
+    this.isSavingMember = true;
+    this._scopesService.addScopeUser(this.scp_uuid!, this.selectedUserUuidToAdd, this.selectedRoleToAdd).subscribe({
+      next: (response: any) => {
+        this.isSavingMember = false;
+        if (response.success) {
+          this._messageService.success('Miembro Agregado', 'El usuario fue asignado al ámbito exitosamente.');
+          this.isAddMemberModalVisible = false;
+          this.loadScopeUsers(this.scp_uuid!);
+        } else {
+          this._messageService.error('Error', response.message || 'No se pudo agregar el miembro.');
+        }
+      },
+      error: (error: any) => {
+        this.isSavingMember = false;
+        console.error(error);
+        this._messageService.error('Error', error?.error?.error || 'Hubo un problema al agregar el miembro.');
+      }
+    });
+  }
+
+  /**
+   * Desvincula un miembro del ámbito con confirmación.
+   */
+  onRemoveMember(usr_uuid: string, userName: string): void {
+    this._messageService.confirm(
+      '¿Desvincular miembro?',
+      `¿Está seguro de remover a "${userName}" de este ámbito? Perderá el acceso a sus movimientos y datos.`,
+      () => {
+        this.isLoadingMembers = true;
+        this._scopesService.removeScopeUser(this.scp_uuid!, usr_uuid).subscribe({
+          next: (response: any) => {
+            this.isLoadingMembers = false;
+            if (response.success) {
+              this._messageService.success('Miembro Desvinculado', 'El usuario fue removido del ámbito.');
+              this.loadScopeUsers(this.scp_uuid!);
+            } else {
+              this._messageService.error('Error', response.message || 'No se pudo desvincular el miembro.');
+            }
+          },
+          error: (error: any) => {
+            this.isLoadingMembers = false;
+            console.error(error);
+            this._messageService.error('Error', error?.error?.error || 'Hubo un problema al desvincular el miembro.');
+          }
+        });
+      }
+    );
+  }
+
+  /** Retorna el color distintivo según el rol. */
+  getRoleColor(role: string): string {
+    switch ((role || '').toUpperCase()) {
+      case 'OWNER': return 'gold';
+      case 'ADMIN': return 'blue';
+      case 'MEMBER': return 'green';
+      default: return 'default';
+    }
+  }
+
+  /** Retorna el nombre legible del rol. */
+  getRoleLabel(role: string): string {
+    switch ((role || '').toUpperCase()) {
+      case 'OWNER': return 'Propietario';
+      case 'ADMIN': return 'Administrador';
+      case 'MEMBER': return 'Miembro';
+      case 'VIEWER': return 'Observador';
+      default: return role;
     }
   }
 
@@ -127,7 +287,7 @@ export class ScopeComponent implements OnInit {
     }
     const payload = {
       ...rawValue,
-      usr_uuidowner: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+      usr_uuidowner: this.currentUserId
     };
 
     if (!this.isEditing) {
