@@ -411,51 +411,92 @@ export class ExcelTransactionsService {
    */
   private parseExcelDate(val: any): Date | null {
     if (!val && val !== 0) return null;
+
+    // 1. Si ya es una instancia de Date (generada por XLSX o JS)
     if (val instanceof Date && !isNaN(val.getTime())) {
-      return val;
+      return new Date(val.getUTCFullYear(), val.getUTCMonth(), val.getUTCDate(), 12, 0, 0);
     }
 
-    // Número serial de Excel (ej: 46116)
+    // 2. Si es número serial de Excel (ej: 46116)
     const num = Number(val);
-    if (!isNaN(num) && num > 30000 && num < 70000) {
-      // Excel epoch: días desde 30/12/1899 considerando el bug de año bisiesto 1900
-      const utcDays = Math.floor(num - 25569);
-      const utcValue = utcDays * 86400 * 1000;
-      const dateInfo = new Date(utcValue);
-      // Corregir zona horaria local
-      return new Date(dateInfo.getFullYear(), dateInfo.getMonth(), dateInfo.getDate());
+    if (!isNaN(num) && num > 20000 && num < 80000) {
+      try {
+        const parsed = XLSX.SSF.parse_date_code(num);
+        if (parsed && parsed.y && parsed.m && parsed.d) {
+          return new Date(parsed.y, parsed.m - 1, parsed.d, 12, 0, 0);
+        }
+      } catch (err) {
+        // continúa a string fallback
+      }
     }
 
-    // Cadena de texto: intentar DD/MM/AAAA o MM/DD/AAAA o ISO
+    // 3. Si es cadena de texto (ej: "15/04/2026", "4/15/2026", "2026-04-15", "15/04/26")
     const str = String(val).trim();
-    if (str.includes('/') || str.includes('-')) {
-      const parts = str.split(/[\/\-]/);
+    if (str.includes('/') || str.includes('-') || str.includes('.')) {
+      const parts = str.split(/[\/\-\.]/);
       if (parts.length === 3) {
-        let day: number, month: number, year: number;
-        if (parts[0].length === 4) {
-          // AAAA-MM-DD
-          year = parseInt(parts[0], 10);
-          month = parseInt(parts[1], 10) - 1;
-          day = parseInt(parts[2], 10);
-        } else if (parseInt(parts[0], 10) > 12) {
-          // DD/MM/AAAA
-          day = parseInt(parts[0], 10);
-          month = parseInt(parts[1], 10) - 1;
-          year = parseInt(parts[2], 10);
-        } else {
-          // Podría ser M/D/YYYY o D/M/YYYY
-          month = parseInt(parts[0], 10) - 1;
-          day = parseInt(parts[1], 10);
-          year = parseInt(parts[2], 10);
+        const p0 = parseInt(parts[0], 10);
+        const p1 = parseInt(parts[1], 10);
+        const p2 = parseInt(parts[2], 10);
+
+        if (isNaN(p0) || isNaN(p1) || isNaN(p2)) return null;
+
+        let year: number;
+        let month: number;
+        let day: number;
+
+        // Caso A: AAAA-MM-DD o AAAA/MM/DD (año de 4 dígitos al inicio)
+        if (parts[0].length === 4 || p0 > 1000) {
+          year = p0;
+          month = p1 - 1;
+          day = p2;
         }
-        if (year < 100) year += 2000;
-        const d = new Date(year, month, day);
+        // Caso B: DD/MM/AAAA o MM/DD/AAAA (año de 4 dígitos al final)
+        else if (parts[2].length === 4 || p2 > 1000) {
+          year = p2;
+          if (p0 > 12 && p1 <= 12) {
+            day = p0;
+            month = p1 - 1;
+          } else if (p1 > 12 && p0 <= 12) {
+            month = p0 - 1;
+            day = p1;
+          } else {
+            // Por defecto en Argentina y español: DD/MM/AAAA (primer número es el día)
+            day = p0;
+            month = p1 - 1;
+          }
+        }
+        // Caso C: año de 2 dígitos (ej: 15/04/26 o 26/04/15)
+        else {
+          if (p0 <= 31 && p2 <= 99) {
+            year = p2 < 100 ? (p2 < 50 ? 2000 + p2 : 1900 + p2) : p2;
+            if (p0 > 12 && p1 <= 12) {
+              day = p0;
+              month = p1 - 1;
+            } else if (p1 > 12 && p0 <= 12) {
+              month = p0 - 1;
+              day = p1;
+            } else {
+              day = p0;
+              month = p1 - 1;
+            }
+          } else {
+            year = p0 < 100 ? (p0 < 50 ? 2000 + p0 : 1900 + p0) : p0;
+            month = p1 - 1;
+            day = p2;
+          }
+        }
+
+        const d = new Date(year, month, day, 12, 0, 0);
         if (!isNaN(d.getTime())) return d;
       }
     }
 
     const fallback = new Date(val);
-    return isNaN(fallback.getTime()) ? null : fallback;
+    if (!isNaN(fallback.getTime())) {
+      return new Date(fallback.getFullYear(), fallback.getMonth(), fallback.getDate(), 12, 0, 0);
+    }
+    return null;
   }
 
   /**
