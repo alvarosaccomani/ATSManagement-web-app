@@ -14,7 +14,7 @@
         Descargar Modelo
       </button>
 
-      <button nz-button nzType="default" (click)="openImportModal()" nzSize="large" nz-tooltip nzTooltipTitle="Importar planilla Excel de gastos">
+      <button nz-button nzType="default" (click)="openImportModal()" nzSize="large" [disabled]="!hasScopes" nz-tooltip [nzTooltipTitle]="!hasScopes ? 'Debes configurar o tener un ámbito contable asignado' : 'Importar planilla Excel de gastos'">
         <i nz-icon nzType="file-excel"></i>
         Importar Excel
       </button>
@@ -24,13 +24,50 @@
         Exportar Excel
       </button>
 
-      <button nz-button nzType="primary" (click)="newTransaction()" nzSize="large">
+      <button nz-button nzType="primary" (click)="newTransaction()" nzSize="large" [disabled]="!hasScopes" [nz-tooltip]="!hasScopes ? 'Debes configurar o tener un ámbito contable asignado' : null">
         <i nz-icon nzType="plus"></i>
         Cargar Gasto / Movimiento
       </button>
     </div>
   </div>
 
+  <!-- ALERTA / ESTADO VACÍO CUANDO EL USUARIO NO TIENE ÁMBITOS ASIGNADOS -->
+  @if (!isLoading && !hasScopes) {
+    <nz-alert
+      nzType="warning"
+      nzShowIcon
+      [nzMessage]="noScopesTitle"
+      [nzDescription]="noScopesDescription"
+      style="margin-bottom: 24px; border-radius: 8px;">
+      <ng-template #noScopesTitle>
+        <span style="font-weight: 600;">No tienes ámbitos contables asignados</span>
+      </ng-template>
+      <ng-template #noScopesDescription>
+        <div style="margin-top: 8px;">
+          <p style="margin-bottom: 14px; color: #595959; line-height: 1.5;">
+            Para consultar o registrar movimientos financieros (ingresos, egresos y transferencias), tu usuario debe contar con al menos un ámbito contable asignado (ej: Personal, Hogar, Empresa).
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button nz-button nzType="primary" routerLink="/admin/user/scope/new">
+              <i nz-icon nzType="plus-circle"></i> Configurar Nuevo Ámbito
+            </button>
+            <button nz-button nzType="default" routerLink="/admin/user/scopes">
+              <i nz-icon nzType="appstore"></i> Ver Mis Ámbitos
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </nz-alert>
+
+    <div style="padding: 60px 0; text-align: center; background: #ffffff; border-radius: 10px; border: 1px dashed #e2e8f0; margin-bottom: 24px;">
+      <nz-empty
+        nzNotFoundImage="simple"
+        [nzNotFoundContent]="'Sin ámbitos contables activos. Configure un ámbito para comenzar a registrar movimientos.'">
+      </nz-empty>
+    </div>
+  }
+
+  @if (hasScopes) {
   <nz-card class="filter-card">
     <div class="filter-row">
       <div class="filter-item">
@@ -150,6 +187,7 @@
         }
       </tbody>
     </nz-table>
+  }
   }
 
   <!-- Modal de Importación Masiva de Gastos y Ventas -->

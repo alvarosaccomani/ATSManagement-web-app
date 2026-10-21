@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -15,6 +15,7 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 import { TransactionInterface } from '../../../core/interfaces/transaction.interface';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
@@ -51,7 +52,9 @@ import { MessageService } from '../../../core/services/message.service';
     NzSegmentedModule,
     NzToolTipModule,
     NzModalModule,
-    NzAlertModule
+    NzAlertModule,
+    NzEmptyModule,
+    RouterModule
   ],
   templateUrl: './transactions-list.component.html',
   styleUrl: './transactions-list.component.scss'
@@ -125,12 +128,19 @@ export class TransactionsListComponent implements OnInit {
   }
 
   /**
-   * Obtiene el identificador del usuario autenticado actual o el usuario por defecto del sistema.
+   * Obtiene el identificador del usuario autenticado actual desde la sesión.
    *
    * @returns Identificador UUID del usuario.
    */
   get currentUserId(): string {
-    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
+
+  /**
+   * Indica si el usuario cuenta con ámbitos contables reales configurados o asignados.
+   */
+  get hasScopes(): boolean {
+    return this.scopes.filter(s => s.scp_uuid !== 'ALL').length > 0;
   }
 
   /**
@@ -168,6 +178,15 @@ export class TransactionsListComponent implements OnInit {
    */
   loadScopes(): void {
     const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.isLoading = false;
+      this.scopes = [];
+      this.transactions = [];
+      this.filteredTransactions = [];
+      return;
+    }
+
+    this.isLoading = true;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data && response.data.length > 0) {
@@ -181,12 +200,22 @@ export class TransactionsListComponent implements OnInit {
           };
           this.scopes = [allOption, ...response.data];
           this.selectedScopeUuid = 'ALL';
+          this.loadTransactions();
+        } else {
+          this.scopes = [];
+          this.selectedScopeUuid = '';
+          this.transactions = [];
+          this.filteredTransactions = [];
+          this.isLoading = false;
         }
-        this.loadTransactions();
       },
       error: (error) => {
         console.error('Error al cargar ámbitos:', error);
-        this.loadTransactions();
+        this.scopes = [];
+        this.selectedScopeUuid = '';
+        this.transactions = [];
+        this.filteredTransactions = [];
+        this.isLoading = false;
       }
     });
   }
@@ -195,7 +224,12 @@ export class TransactionsListComponent implements OnInit {
    * Fetches transactions matching `selectedScopeUuid` and `selectedType` from {@link TransactionsService}.
    */
   loadTransactions(): void {
-    if (!this.selectedScopeUuid) return;
+    if (!this.selectedScopeUuid || !this.hasScopes) {
+      this.isLoading = false;
+      this.transactions = [];
+      this.filteredTransactions = [];
+      return;
+    }
     this.isLoading = true;
     const typeFilter = this.selectedType === 'ALL' ? undefined : this.selectedType;
     this._transactionsService.getTransactions(this.selectedScopeUuid, typeFilter).subscribe({
@@ -275,6 +309,10 @@ export class TransactionsListComponent implements OnInit {
    * Navigates to the new transaction form (`/admin/user/transaction/new`), passing the active scope if selected.
    */
   newTransaction(): void {
+    if (!this.hasScopes) {
+      this._messageService.error('Ámbito Requerido', 'Debes configurar o tener asignado al menos un ámbito contable antes de cargar movimientos.');
+      return;
+    }
     const queryParams = (this.selectedScopeUuid && this.selectedScopeUuid !== 'ALL')
       ? { scp_uuid: this.selectedScopeUuid }
       : {};
