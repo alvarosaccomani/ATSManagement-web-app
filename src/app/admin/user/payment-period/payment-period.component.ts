@@ -20,6 +20,7 @@ import { PeriodsService } from '../../../core/services/periods.service';
 import { PaymentMethodsService } from '../../../core/services/payment-methods.service';
 import { PaymentPeriodsStatusService } from '../../../core/services/payment-periods-status.service';
 import { PaymentPeriodsService } from '../../../core/services/payment-periods.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
@@ -104,6 +105,7 @@ export class PaymentPeriodComponent implements OnInit {
     private _paymentMethodsService: PaymentMethodsService,
     private _paymentPeriodsStatusService: PaymentPeriodsStatusService,
     private _paymentPeriodsService: PaymentPeriodsService,
+    private _sessionService: SessionService,
     private _messageService: MessageService
   ) {
     this.form = this.fb.group({
@@ -116,6 +118,13 @@ export class PaymentPeriodComponent implements OnInit {
       per_uuid: ['', Validators.required],
       crd_uuid: [{ value: '', disabled: true }]
     });
+  }
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -188,8 +197,15 @@ export class PaymentPeriodComponent implements OnInit {
    * @returns void
    */
   loadPeriodsData(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.cards = [];
+      this.periods = [];
+      this.isLoading = false;
+      return;
+    }
     this.isLoading = true;
-    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe({
+    this._cardsService.getCards(usr_uuid).subscribe({
       next: (cardResponse: any) => {
         if (cardResponse.success) {
           const cardsData = cardResponse.data;
@@ -208,7 +224,7 @@ export class PaymentPeriodComponent implements OnInit {
           const relatedMap: { [key: string]: RelatedData } = {};
 
           cardsData.forEach((card: any) => {
-            this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid).subscribe({
+            this._periodsService.getPedriods(usr_uuid, card.crd_uuid).subscribe({
               next: (periodResponse: any) => {
                 if (periodResponse.success) {
                   periodResponse.data.forEach((p: any) => {
@@ -254,8 +270,10 @@ export class PaymentPeriodComponent implements OnInit {
    * @returns void
    */
   loadPayment(crd_uuid: string, per_uuid: string, payp_uuid: string): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading = true;
-    this._paymentPeriodsService.getPaymentPeriodById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', crd_uuid, per_uuid, payp_uuid).subscribe({
+    this._paymentPeriodsService.getPaymentPeriodById(usr_uuid, crd_uuid, per_uuid, payp_uuid).subscribe({
       next: (response: any) => {
         this.isLoading = false;
         if (response.success) {
@@ -315,7 +333,7 @@ export class PaymentPeriodComponent implements OnInit {
     const rawValue = this.form.getRawValue();
     const payload = {
       ...rawValue,
-      usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+      usr_uuid: this.currentUserId
     };
 
     if (!this.isEditing) {
