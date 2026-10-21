@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -12,10 +12,13 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PersonsService } from '../../../core/services/persons.service';
 import { ScopesService } from '../../../core/services/scopes.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -33,6 +36,7 @@ import { MessageService } from '../../../core/services/message.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     NzFormModule,
     NzInputModule,
     NzButtonModule,
@@ -41,7 +45,9 @@ import { MessageService } from '../../../core/services/message.service';
     NzSelectModule,
     NzSwitchModule,
     NzInputNumberModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzAlertModule,
+    NzToolTipModule
   ],
   templateUrl: './person.component.html',
   styleUrl: './person.component.scss'
@@ -76,6 +82,7 @@ export class PersonComponent implements OnInit {
    * @param router Instancia de `Router` de Angular.
    * @param _personsService Servicio para operaciones CRUD de personas.
    * @param _scopesService Servicio para obtener los ámbitos del usuario.
+   * @param _sessionService Servicio para obtener la identidad de sesión activa.
    * @param _messageService Servicio para mostrar notificaciones modales.
    */
   constructor(
@@ -84,6 +91,7 @@ export class PersonComponent implements OnInit {
     private router: Router,
     private _personsService: PersonsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService
   ) {
     this.form = this.fb.group({
@@ -97,6 +105,13 @@ export class PersonComponent implements OnInit {
       usr_uuidlinked: [null],
       prs_active: [true]
     });
+  }
+
+  /**
+   * Obtiene el identificador del usuario autenticado actual desde la sesión activa.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -125,7 +140,11 @@ export class PersonComponent implements OnInit {
    * @param defaultScopeUuid UUID de ámbito opcional pasado mediante parámetros de consulta.
    */
   loadScopes(defaultScopeUuid?: string | null): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.scopes = [];
+      return;
+    }
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
@@ -134,7 +153,13 @@ export class PersonComponent implements OnInit {
             const initialScope = defaultScopeUuid || this.scopes[0].scp_uuid;
             this.form.get('scp_uuid')?.setValue(initialScope);
           }
+        } else {
+          this.scopes = [];
         }
+      },
+      error: (err) => {
+        console.error('Error al cargar ámbitos en persona:', err);
+        this.scopes = [];
       }
     });
   }
@@ -185,6 +210,17 @@ export class PersonComponent implements OnInit {
 
     const selectedTypes = this.typeOptions.filter(opt => opt.checked).map(opt => opt.value);
     const prs_type = selectedTypes.length > 0 ? selectedTypes.join(',') : 'OTRO';
+
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this._messageService.error('Sesión Requerida', 'No se pudo identificar al usuario activo.');
+      return;
+    }
+
+    if (this.scopes.length === 0) {
+      this._messageService.error('Ámbito Requerido', 'No tienes ámbitos contables disponibles para asociar el contacto.');
+      return;
+    }
 
     this.isLoading = true;
     const rawData = this.form.getRawValue();
