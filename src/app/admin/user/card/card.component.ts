@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,6 +13,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { TypeCardInterface } from '../../../core/interfaces/type-card';
 import { BrandCardInterface } from '../../../core/interfaces/brand-card';
 import { BankInterface } from '../../../core/interfaces/bank';
@@ -51,7 +53,10 @@ import { SessionService } from '../../../core/services/session.service';
     NzSelectModule,
     NzDatePickerModule,
     NzSwitchModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzAlertModule,
+    NzToolTipModule,
+    RouterModule
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
@@ -397,9 +402,20 @@ export class CardComponent implements OnInit {
       return;
     }
 
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this._messageService.error('Sesión Requerida', 'No se pudo identificar al usuario activo.');
+      return;
+    }
+
+    if (this.scopes.length === 0) {
+      this._messageService.error('Ámbito Requerido', 'No tienes ámbitos contables disponibles para asociar la cuenta o tarjeta.');
+      return;
+    }
+
     this.isLoading = true;
     const rawValue = this.form.getRawValue();
-    rawValue.usr_uuid = this.currentUserId;
+    rawValue.usr_uuid = usr_uuid;
 
     if (this.isCash) {
       rawValue.crd_maskedcardnumber = null;
