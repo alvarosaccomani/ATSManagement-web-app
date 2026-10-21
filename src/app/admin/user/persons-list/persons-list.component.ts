@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -11,11 +11,14 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 import { PersonInterface } from '../../../core/interfaces/person.interface';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PersonsService } from '../../../core/services/persons.service';
 import { ScopesService } from '../../../core/services/scopes.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -28,6 +31,7 @@ import { MessageService } from '../../../core/services/message.service';
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     NzTableModule,
     NzButtonModule,
     NzIconModule,
@@ -35,7 +39,9 @@ import { MessageService } from '../../../core/services/message.service';
     NzSpinModule,
     NzCardModule,
     NzSelectModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzAlertModule,
+    NzEmptyModule
   ],
   templateUrl: './persons-list.component.html',
   styleUrl: './persons-list.component.scss'
@@ -70,15 +76,31 @@ export class PersonsListComponent implements OnInit {
    *
    * @param _personsService Servicio para consultar y eliminar personas.
    * @param _scopesService Servicio para consultar los ámbitos del usuario.
+   * @param _sessionService Servicio para obtener la identidad de la sesión activa.
    * @param _messageService Servicio para mostrar notificaciones modales.
    * @param _router Instancia de `Router` de Angular.
    */
   constructor(
     private _personsService: PersonsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService,
     private _router: Router
   ) {}
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
+
+  /**
+   * Indica si el usuario cuenta con ámbitos disponibles.
+   */
+  get hasScopes(): boolean {
+    return this.scopes.length > 0;
+  }
 
   /**
    * Carga los ámbitos y contactos al iniciar el componente.
@@ -91,17 +113,35 @@ export class PersonsListComponent implements OnInit {
    * Obtiene los ámbitos del usuario, selecciona el primer ámbito por defecto y carga sus contactos.
    */
   loadScopes(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.scopes = [];
+      this.persons = [];
+      this.filteredPersons = [];
+      return;
+    }
+    this.isLoading = true;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
           this.scopes = response.data;
           this.selectedScopeUuid = this.scopes[0].scp_uuid;
           this.loadPersons();
+        } else {
+          this.scopes = [];
+          this.selectedScopeUuid = '';
+          this.persons = [];
+          this.filteredPersons = [];
+          this.isLoading = false;
         }
       },
       error: (error) => {
-        console.error(error);
+        console.error('Error al cargar ámbitos en personas:', error);
+        this.scopes = [];
+        this.selectedScopeUuid = '';
+        this.persons = [];
+        this.filteredPersons = [];
+        this.isLoading = false;
         this._messageService.error('Error', 'No se pudieron cargar los ámbitos.');
       }
     });
@@ -184,6 +224,10 @@ export class PersonsListComponent implements OnInit {
    * Navega al formulario de nueva persona (`/admin/user/person/new`), pasando el `scp_uuid` activo.
    */
   newPerson(): void {
+    if (!this.hasScopes) {
+      this._messageService.error('Ámbito Requerido', 'Debes configurar o tener asignado al menos un ámbito contable antes de crear un contacto.');
+      return;
+    }
     this._router.navigate(['/admin/user/person/new'], {
       queryParams: { scp_uuid: this.selectedScopeUuid }
     });
