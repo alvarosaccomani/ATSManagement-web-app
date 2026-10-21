@@ -17,6 +17,7 @@ import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { CommissionsService } from '../../../core/services/commissions.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { MessageService } from '../../../core/services/message.service';
+import { SessionService } from '../../../core/services/session.service';
 
 /**
  * Seller commissions settlement and tracking component (`<app-seller-commissions>`)
@@ -47,8 +48,6 @@ import { MessageService } from '../../../core/services/message.service';
 export class SellerCommissionsComponent implements OnInit {
   /** Indicates whether commission metrics are currently loading. */
   isLoading = false;
-  /** Active user UUID. */
-  usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
   /** Currently selected scope filter (`'ALL'` by default). */
   selectedScopeUuid: string = 'ALL';
   /** Available scopes for the filter dropdown. */
@@ -61,13 +60,22 @@ export class SellerCommissionsComponent implements OnInit {
    *
    * @param _commissionsService Service for querying seller commission summaries.
    * @param _scopesService Service for querying user scopes.
+   * @param _sessionService Service for extracting active session identity.
    * @param _messageService Service for displaying modal error messages.
    */
   constructor(
     private _commissionsService: CommissionsService,
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService
   ) {}
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get usr_uuid(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
 
   /**
    * Loads scopes and commission data on component initialization.
@@ -80,6 +88,7 @@ export class SellerCommissionsComponent implements OnInit {
    * Fetches user scopes, prepends `'ALL'`, and loads the initial commission summary.
    */
   loadScopes(): void {
+    if (!this.usr_uuid) return;
     this._scopesService.getScopes(this.usr_uuid).subscribe({
       next: (response) => {
         if (response.success) {
@@ -102,6 +111,7 @@ export class SellerCommissionsComponent implements OnInit {
    * Fetches the seller commission summary for `selectedScopeUuid` via {@link CommissionsService.getSellerCommissions}.
    */
   loadCommissions(): void {
+    if (!this.usr_uuid) return;
     this.isLoading = true;
     this._commissionsService.getSellerCommissions(this.usr_uuid, this.selectedScopeUuid).subscribe({
       next: (response) => {
