@@ -105,7 +105,7 @@ export class ScopeComponent implements OnInit {
 
   /** Gets current authenticated user UUID. */
   get currentUserId(): string {
-    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -280,6 +280,12 @@ export class ScopeComponent implements OnInit {
       return;
     }
 
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this._messageService.error('Sesión Requerida', 'No se pudo identificar al usuario activo.');
+      return;
+    }
+
     this.isLoading = true;
     const rawValue = this.form.getRawValue();
     if (!this.isEditing) {
@@ -287,7 +293,7 @@ export class ScopeComponent implements OnInit {
     }
     const payload = {
       ...rawValue,
-      usr_uuidowner: this.currentUserId
+      usr_uuidowner: usr_uuid
     };
 
     if (!this.isEditing) {
