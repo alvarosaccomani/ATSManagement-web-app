@@ -18,6 +18,7 @@ import { StatusPeriodInterface } from '../../../core/interfaces/status-period';
 import { CardsService } from '../../../core/services/cards.service';
 import { PeriodsService } from '../../../core/services/periods.service';
 import { StatusPeriodsService } from '../../../core/services/status-periods.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
@@ -93,6 +94,7 @@ export class PeriodComponent implements OnInit {
     private _cardsService: CardsService,
     private _periodsService: PeriodsService,
     private _statusPeriodsService: StatusPeriodsService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {
@@ -111,6 +113,13 @@ export class PeriodComponent implements OnInit {
   }
 
   /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
+
+  /**
    * Gancho del ciclo de vida ejecutado al inicializar el componente.
    * @returns void
    */
@@ -125,9 +134,9 @@ export class PeriodComponent implements OnInit {
       this.loadPeriod();
     } else {
       this.form.patchValue({
-        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d',
-        crd_uuid: '1'
-      })
+        usr_uuid: this.currentUserId,
+        crd_uuid: this.cardId || ''
+      });
       this.form.get('per_uuid')?.disable();
     }
 
@@ -148,9 +157,11 @@ export class PeriodComponent implements OnInit {
    * @returns void
    */
   loadPeriod(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading = true;
 
-    this._periodsService.getPeriodById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.cardId!, this.periodId!).subscribe(
+    this._periodsService.getPeriodById(usr_uuid, this.cardId!, this.periodId!).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -215,9 +226,15 @@ export class PeriodComponent implements OnInit {
    * @returns void
    */
   loadCards(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.cards = [];
+      this.isLoading = false;
+      return;
+    }
     this.isLoading = true;
 
-    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
+    this._cardsService.getCards(usr_uuid).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -273,7 +290,11 @@ export class PeriodComponent implements OnInit {
     this.isLoading = true;
 
     if(!this.isEditing) {
-      this._periodsService.savePeriod(this.form.getRawValue()).subscribe({
+      const payload = {
+        ...this.form.getRawValue(),
+        usr_uuid: this.currentUserId
+      };
+      this._periodsService.savePeriod(payload).subscribe({
         next: response => {
           this.isLoading = false;
           if(response.success) {
