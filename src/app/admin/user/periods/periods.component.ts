@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PeriodInterface } from '../../../core/interfaces/period';
 import { PeriodsService } from '../../../core/services/periods.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -66,9 +67,17 @@ export class PeriodsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _periodsService: PeriodsService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {}
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
 
   /**
    * Gancho del ciclo de vida ejecutado al inicializar el componente.
@@ -83,8 +92,15 @@ export class PeriodsComponent implements OnInit {
    * @returns void
    */
   loadPeriods(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.periods = [];
+      this.total = 0;
+      this.loading = false;
+      return;
+    }
     this.loading = true;
-    this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', '1').subscribe(
+    this._periodsService.getPedriods(usr_uuid, '1').subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
