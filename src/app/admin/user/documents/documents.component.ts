@@ -24,6 +24,7 @@ import { TreesService } from '../../../core/services/trees.service';
 import { ScopesService } from '../../../core/services/scopes.service';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PendingVouchersService } from '../../../core/services/pending-vouchers.service';
+import { SessionService } from '../../../core/services/session.service';
 
 /**
  * Espacio de trabajo de digitalización de documentos, captura por cámara WebRTC, preprocesamiento de imágenes y OCR/IA (`<app-documents>`)
@@ -94,16 +95,27 @@ export class DocumentsComponent {
     private _treesService: TreesService,
     private _scopesService: ScopesService,
     private ocrService: OcrService,
+    private _sessionService: SessionService,
     private _pendingVouchersService: PendingVouchersService
   ) { }
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
 
   /**
    * Loads scopes, the hierarchical card tree, and pending vouchers on component initialization.
    */
   ngOnInit(): void {
     this.loadScopes();
-    this.getCardsTree('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.selectedScopeUuid);
-    this.getPendingVocuhers('7a067c90-bf5b-45d1-8f07-91b578e2d54d');
+    const usrUuid = this.currentUserId;
+    if (usrUuid) {
+      this.getCardsTree(usrUuid, this.selectedScopeUuid);
+      this.getPendingVocuhers(usrUuid);
+    }
 
     this.pendingVouchers = this.pendingVouchers.map((item: any) => ({
       ...item,
@@ -137,7 +149,8 @@ export class DocumentsComponent {
    * Loads the user's scopes and prepends the `'ALL'` filter option.
    */
   public loadScopes(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
@@ -163,7 +176,10 @@ export class DocumentsComponent {
    */
   public onScopeChange(scopeUuid: string): void {
     this.selectedScopeUuid = scopeUuid;
-    this.getCardsTree('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.selectedScopeUuid);
+    const usrUuid = this.currentUserId;
+    if (usrUuid) {
+      this.getCardsTree(usrUuid, this.selectedScopeUuid);
+    }
   }
 
   /**
@@ -260,7 +276,7 @@ export class DocumentsComponent {
    */
   private addDocumentToList(name: string, path: string) {
     this.isLoading = true;
-    const newDoc: PendingVoucherInterface = { usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d', pevou_uuid: '', pevou_name: name, pevou_image: path };
+    const newDoc: PendingVoucherInterface = { usr_uuid: this.currentUserId, pevou_uuid: '', pevou_name: name, pevou_image: path };
     this._pendingVouchersService.savePendingVoucher(newDoc).subscribe(
       (response: any) => {
         if(response.success) {
