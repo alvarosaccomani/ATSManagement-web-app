@@ -28,6 +28,7 @@
 
   @if (!loading && payments.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="payments"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (payment of payments; track payment.payp_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ payment.payp_uuid }}</td>
             <td>
               <nz-tag nzColor="blue">
@@ -105,6 +107,74 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <strong class="amount" style="font-size: 16px;">{{ formatAmount(payment.payp_amountpaid) }}</strong>
+                  </div>
+                  <div class="card-header-badge">
+                    <nz-tag [nzColor]="getStatusColor(payment.payps.payps_name)">
+                      <i nz-icon [nzType]="getStatusIcon(payment.payps.payps_name)" nzTheme="fill"></i>
+                      <strong>{{ formatStatusName(payment.payps.payps_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-field-row">
+                    <span class="field-label">Fecha de Pago</span>
+                    <span class="field-value">{{ formatDateTime(payment.payp_paymentdate) }}</span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Método</span>
+                    <span class="field-value">
+                      <nz-tag [nzColor]="getMethodColor(payment.paym.paym_name)">
+                        <i nz-icon [nzType]="getMethodIcon(payment.paym.paym_name)" nzTheme="outline"></i>
+                        {{ formatMethodName(payment.paym.paym_name) }}
+                      </nz-tag>
+                    </span>
+                  </div>
+
+                  @if (payment.payp_paymentreference) {
+                    <div class="card-field-row">
+                      <span class="field-label">Referencia</span>
+                      <span class="field-value" style="font-family: monospace;">{{ payment.payp_paymentreference }}</span>
+                    </div>
+                  }
+
+                  <div class="card-field-row">
+                    <span class="field-label">Registrado</span>
+                    <span class="field-value">{{ formatDateTime(payment.payp_createdat) }}</span>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(payment)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editPayment(payment)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  @if (payment.payps.payps_name.toLowerCase() === 'procesado') {
+                    <button nz-button nzSize="small" nzDanger (click)="rejectPayment(payment)">
+                      <i nz-icon nzType="close-circle"></i> Rechazar
+                    </button>
+                    <button nz-button nzSize="small" nzType="primary" (click)="confirmPayment(payment)">
+                      <i nz-icon nzType="check-circle"></i> Confirmar
+                    </button>
+                  }
+                  <button nz-button nzSize="small" nzDanger (click)="deletePayment(payment)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

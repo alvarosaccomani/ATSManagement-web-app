@@ -28,6 +28,7 @@
 
   @if (!loading && typeOperations.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="typeOperations"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (opType of typeOperations; track opType.tyop_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ opType.tyop_uuid }}</td>
             <td>
               <nz-tag [nzColor]="getTypeOperationColor(opType.tyop_name)">
@@ -80,6 +82,56 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <nz-tag [nzColor]="getTypeOperationColor(opType.tyop_name)">
+                      <i nz-icon [nzType]="getTypeOperationIcon(opType.tyop_name)" nzTheme="outline"></i>
+                      <strong>{{ formatTypeOperationName(opType.tyop_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ opType.tyop_uuid }}</span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (opType.tyop_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ opType.tyop_description }}</span>
+                    </div>
+                  }
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ opType.tyop_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                  @if (opType.tyop_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ opType.tyop_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(opType)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editTypeOperation(opType)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteTypeOperation(opType)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

@@ -93,7 +93,7 @@
         </nz-alert>
       }
 
-      <nz-table #membersTable [nzData]="scopeUsers" [nzLoading]="isLoadingMembers" nzSize="small" nzBordered [nzShowPagination]="false">
+      <nz-table #membersTable class="management-grid" [nzData]="scopeUsers" [nzLoading]="isLoadingMembers" nzSize="small" nzBordered [nzShowPagination]="false">
         <thead>
           <tr>
             <th>Usuario</th>
@@ -105,7 +105,8 @@
         </thead>
         <tbody>
           @for (member of membersTable.data; track member.usr_uuid) {
-            <tr>
+            <!-- Desktop Row -->
+            <tr class="desktop-row">
               <td>
                 <strong>{{ member.user?.usr_name || 'Usuario' }} {{ member.user?.usr_surname || '' }}</strong>
                 @if (member.usr_uuid === currentUserId) {
@@ -133,6 +134,51 @@
                 } @else {
                   <span style="color: #bfbfbf; font-size: 12px;">-</span>
                 }
+              </td>
+            </tr>
+
+            <!-- Mobile Card Row -->
+            <tr class="mobile-row">
+              <td colspan="5">
+                <div class="management-card">
+                  <div class="card-header">
+                    <div class="card-main-title">
+                      <strong>{{ member.user?.usr_name || 'Usuario' }} {{ member.user?.usr_surname || '' }}</strong>
+                      @if (member.usr_uuid === currentUserId) {
+                        <nz-tag nzColor="cyan" style="margin-left: 6px;">Vos</nz-tag>
+                      }
+                    </div>
+                    <div class="card-header-badge">
+                      <nz-tag [nzColor]="getRoleColor(member.scpu_role)">
+                        {{ getRoleLabel(member.scpu_role) }}
+                      </nz-tag>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="card-field-row">
+                      <span class="field-label">Email</span>
+                      <span class="field-value">{{ member.user?.usr_email || '-' }}</span>
+                    </div>
+
+                    <div class="card-field-row">
+                      <span class="field-label">Asignado el</span>
+                      <span class="field-value">{{ member.scpu_createdat | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                  </div>
+
+                  @if (member.scpu_role !== 'OWNER' && member.usr_uuid !== currentUserId) {
+                    <div class="card-footer">
+                      <button
+                        nz-button
+                        nzSize="small"
+                        nzDanger
+                        (click)="onRemoveMember(member.usr_uuid, member.user?.usr_name || 'este usuario')">
+                        <i nz-icon nzType="delete"></i> Desvincular
+                      </button>
+                    </div>
+                  }
+                </div>
               </td>
             </tr>
           }

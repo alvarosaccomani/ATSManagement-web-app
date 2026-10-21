@@ -28,6 +28,7 @@
 
   @if (!loading && installmentStatuses.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="installmentStatuses"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (status of installmentStatuses; track status.voufs_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ status.voufs_uuid }}</td>
             <td>
               <nz-tag [nzColor]="getStatusColor(status.voufs_name)">
@@ -80,6 +82,56 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <nz-tag [nzColor]="getStatusColor(status.voufs_name)">
+                      <i nz-icon [nzType]="getStatusIcon(status.voufs_name)" nzTheme="fill"></i>
+                      <strong>{{ formatStatusName(status.voufs_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ status.voufs_uuid }}</span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (status.voufs_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ status.voufs_description }}</span>
+                    </div>
+                  }
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ status.voufs_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                  @if (status.voufs_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ status.voufs_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(status)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editInstallmentStatus(status)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteInstallmentStatus(status)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

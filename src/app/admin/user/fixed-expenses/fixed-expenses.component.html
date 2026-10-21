@@ -195,7 +195,8 @@
       [nzPageSize]="15"
       nzShowPagination
       nzShowSizeChanger
-      class="fixed-expenses-table">
+      [nzScroll]="{ x: '900px' }"
+      class="fixed-expenses-table management-grid">
       <thead>
         <tr>
           <th>Gasto / Servicio</th>
@@ -209,7 +210,8 @@
       </thead>
       <tbody>
         @for (item of fixedExpensesTable.data; track item.fex_uuid) {
-          <tr [class.row-paid]="item.status === 'PAID'">
+          <!-- Desktop Row -->
+          <tr class="desktop-row" [class.row-paid]="item.status === 'PAID'">
             <!-- Nombre y Notas -->
             <td>
               <div class="item-name-cell">
@@ -321,6 +323,124 @@
                   nz-tooltip="Dar de baja gasto fijo">
                   <i nz-icon nzType="delete"></i>
                 </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td colspan="7">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    {{ item.fex_name }}
+                  </div>
+                  <div class="card-header-badge">
+                    @if (item.status === 'PAID') {
+                      <nz-tag nzColor="success">
+                        <i nz-icon nzType="check-circle"></i> PAGADO
+                      </nz-tag>
+                    } @else {
+                      <nz-tag nzColor="warning">
+                        <i nz-icon nzType="clock-circle"></i> PENDIENTE
+                      </nz-tag>
+                    }
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-field-row">
+                    <span class="field-label">Monto Estimado</span>
+                    <span class="field-value">
+                      <strong>{{ formatAmount(item.fex_referenceamount) }}</strong>
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Vencimiento</span>
+                    <span class="field-value">
+                      <i nz-icon nzType="calendar" style="margin-right: 4px;"></i>Día {{ item.fex_dueday }}
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Modalidad</span>
+                    <span class="field-value">
+                      @if (item.fex_isautodebit) {
+                        <nz-tag nzColor="processing">
+                          <i nz-icon nzType="sync"></i> Débito
+                        </nz-tag>
+                      } @else {
+                        <nz-tag nzColor="default">
+                          <i nz-icon nzType="check-square"></i> Manual
+                        </nz-tag>
+                      }
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Categoría</span>
+                    <span class="field-value">
+                      <nz-tag [nzColor]="getCategoryColor(item.fex_category)">
+                        {{ item.fex_category || 'GENERAL' }}
+                      </nz-tag>
+                    </span>
+                  </div>
+
+                  @if (item.status === 'PAID' && item.paid_transaction) {
+                    <div class="card-field-row">
+                      <span class="field-label">Pago Registrado</span>
+                      <span class="field-value metric-income">
+                        {{ formatAmount(item.paid_transaction.trx_amount) }} ({{ item.paid_transaction.trx_datetime | date:'dd/MM' }})
+                      </span>
+                    </div>
+                  }
+
+                  @if (item.fex_notes) {
+                    <div class="card-field-row">
+                      <span class="field-label">Notas</span>
+                      <span class="field-value text-muted">{{ item.fex_notes }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  @if (item.status === 'PENDING') {
+                    <button 
+                      nz-button 
+                      nzType="primary" 
+                      nzSize="small" 
+                      (click)="openPaymentModal(item)">
+                      <i nz-icon [nzType]="item.fex_isautodebit ? 'sync' : 'dollar-circle'"></i>
+                      {{ item.fex_isautodebit ? 'Confirmar Débito' : 'Pagar' }}
+                    </button>
+                  } @else {
+                    <button 
+                      nz-button 
+                      nzType="default" 
+                      nzSize="small" 
+                      (click)="openPaymentModal(item)">
+                      <i nz-icon nzType="plus"></i> Pago Extra
+                    </button>
+                  }
+
+                  <button 
+                    nz-button 
+                    nzType="default" 
+                    nzSize="small" 
+                    (click)="openEditModal(item)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+
+                  <button 
+                    nz-button 
+                    nzType="default" 
+                    nzDanger 
+                    nzSize="small" 
+                    (click)="deleteExpense(item)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
               </div>
             </td>
           </tr>

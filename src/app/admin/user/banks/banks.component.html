@@ -25,6 +25,7 @@
 
   @if (!loading && banks.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="banks"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -37,7 +38,6 @@
       nzTableLayout="fixed"
       [nzScroll]="{ x: '850px' }"
     >
-
       <thead>
         <tr>
           @for (column of listOfColumns; track column.key) {
@@ -49,7 +49,8 @@
       </thead>
       <tbody>
         @for (bank of banks; track bank.ban_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ bank.ban_uuid }}</td>
             <td><strong>{{ bank.ban_name }}</strong></td>
             <td>{{ bank.ban_description }}</td>
@@ -68,6 +69,49 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <i nz-icon nzType="bank" nzTheme="outline" style="margin-right: 6px;"></i>
+                    {{ bank.ban_name }}
+                  </div>
+                  <div class="card-header-badge">
+                    <nz-tag nzColor="blue">Banco</nz-tag>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (bank.ban_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ bank.ban_description }}</span>
+                    </div>
+                  }
+
+                  <div class="card-field-row">
+                    <span class="field-label">Fecha Creación</span>
+                    <span class="field-value text-muted">{{ bank.ban_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(bank)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editBank(bank)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteBank(bank)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

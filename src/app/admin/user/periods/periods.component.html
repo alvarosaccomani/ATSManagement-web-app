@@ -28,6 +28,8 @@
 
   @if (!loading && periods.length > 0) {
     <nz-table
+      class="analytical-grid"
+      [nzScroll]="{ x: '1000px' }"
       [nzData]="periods"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -41,8 +43,8 @@
     >
       <thead>
         <tr>
-          @for (column of listOfColumns; track column.key) {
-            <th [nzWidth]="column.width">
+          @for (column of listOfColumns; track column.key; let first = $first) {
+            <th [nzWidth]="column.width" [class.sticky-col-first]="first">
               {{ column.title }}
             </th>
           }
@@ -51,7 +53,7 @@
       <tbody>
         @for (period of periods; track period.per_uuid) {
           <tr>
-            <td>{{ period.per_uuid }}</td>
+            <td class="sticky-col-first" style="font-family: monospace;">{{ period.per_uuid }}</td>
             <td>
               <strong>{{ formatPeriodNumber(period.per_periodnumber) }}</strong>
             </td>

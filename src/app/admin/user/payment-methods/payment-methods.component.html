@@ -28,6 +28,7 @@
 
   @if (!loading && paymentMethods.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="paymentMethods"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (method of paymentMethods; track method.paym_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ method.paym_uuid }}</td>
             <td>
               <nz-tag [nzColor]="getMethodColor(method.paym_name)">
@@ -80,6 +82,56 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <nz-tag [nzColor]="getMethodColor(method.paym_name)">
+                      <i nz-icon [nzType]="getMethodIcon(method.paym_name)" nzTheme="outline"></i>
+                      <strong>{{ formatMethodName(method.paym_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ method.paym_uuid }}</span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (method.paym_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ method.paym_description }}</span>
+                    </div>
+                  }
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ method.paym_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                  @if (method.paym_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ method.paym_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(method)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editPaymentMethod(method)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deletePaymentMethod(method)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

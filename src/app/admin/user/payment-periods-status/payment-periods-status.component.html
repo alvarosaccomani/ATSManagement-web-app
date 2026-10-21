@@ -28,6 +28,7 @@
 
   @if (!loading && paymentPeriodStatuses.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="paymentPeriodStatuses"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (status of paymentPeriodStatuses; track status.payps_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ status.payps_uuid }}</td>
             <td>
               <nz-tag [nzColor]="getStatusColor(status.payps_name)">
@@ -80,6 +82,68 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <!-- Header: Estado con tag + ID -->
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <nz-tag [nzColor]="getStatusColor(status.payps_name)">
+                      <i nz-icon [nzType]="getStatusIcon(status.payps_name)" nzTheme="fill"></i>
+                      <strong>{{ formatStatusName(status.payps_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ status.payps_uuid }}</span>
+                  </div>
+                </div>
+
+                <!-- Body: Descripción y fechas -->
+                <div class="card-body">
+                  <div class="card-field-row">
+                    <span class="field-label">Descripción</span>
+                    <span class="field-value">
+                      @if (status.payps_description) {
+                        {{ status.payps_description }}
+                      } @else {
+                        <span class="no-description text-muted">Sin descripción</span>
+                      }
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ status.payps_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+
+                  @if (status.payps_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ status.payps_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <!-- Footer: Acciones -->
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(status)">
+                    <i nz-icon nzType="eye" nzTheme="outline"></i>
+                    Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editPaymentPeriodStatus(status)">
+                    <i nz-icon nzType="edit" nzTheme="outline"></i>
+                    Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deletePaymentPeriodStatus(status)">
+                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                    Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

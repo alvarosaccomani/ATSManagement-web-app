@@ -28,6 +28,7 @@
 
   @if (!loading && voucherStatuses.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="voucherStatuses"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (status of voucherStatuses; track status.vous_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ status.vous_uuid }}</td>
             <td>
               <nz-tag [nzColor]="getStatusColor(status.vous_name)">
@@ -80,6 +82,56 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <nz-tag [nzColor]="getStatusColor(status.vous_name)">
+                      <i nz-icon [nzType]="getStatusIcon(status.vous_name)" nzTheme="fill"></i>
+                      <strong>{{ formatStatusName(status.vous_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ status.vous_uuid }}</span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (status.vous_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ status.vous_description }}</span>
+                    </div>
+                  }
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ status.vous_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                  @if (status.vous_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ status.vous_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(status)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editVoucherStatus(status)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteVoucherStatus(status)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

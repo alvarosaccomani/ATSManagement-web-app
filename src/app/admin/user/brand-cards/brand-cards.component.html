@@ -1,6 +1,9 @@
 <div class="card-brand-list-container">
   <div class="header">
-    <h2>Marcas de Tarjetas</h2>
+    <h2>
+      <i nz-icon nzType="idcard" nzTheme="outline" style="margin-right: 8px;"></i>
+      Marcas de Tarjetas
+    </h2>
     <button nz-button nzType="primary" (click)="createBrandCard()">
       <i nz-icon nzType="plus"></i>
       Nueva Marca
@@ -25,6 +28,7 @@
 
   @if (!loading && brandCards.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="brandCards"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -47,10 +51,11 @@
       </thead>
       <tbody>
         @for (brandCard of brandCards; track brandCard.brcrd_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ brandCard.brcrd_uuid }}</td>
             <td><strong>{{ brandCard.brcrd_name }}</strong></td>
-            <td>{{ brandCard.brcrd_description }}</td>
+            <td>{{ brandCard.brcrd_description || '-' }}</td>
             <td>{{ brandCard.brcrd_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ brandCard.brcrd_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
             <td class="actions">
@@ -66,6 +71,53 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <strong>{{ brandCard.brcrd_name }}</strong>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ brandCard.brcrd_uuid }}</span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (brandCard.brcrd_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ brandCard.brcrd_description }}</span>
+                    </div>
+                  }
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ brandCard.brcrd_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                  @if (brandCard.brcrd_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ brandCard.brcrd_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(brandCard)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editBrandCard(brandCard)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteBrandCard(brandCard)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

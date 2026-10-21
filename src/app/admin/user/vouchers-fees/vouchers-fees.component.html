@@ -28,6 +28,7 @@
 
   @if (!loading && installments.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="installments"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (installment of installments; track installment.vouf_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ installment.vouf_uuid }}</td>
             <td>
               <nz-tag nzColor="blue">
@@ -101,6 +103,66 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <nz-tag nzColor="blue">
+                      <strong>Cuota {{ installment.vouf_quotanumber }}</strong>
+                    </nz-tag>
+                    <span class="amount" style="font-size: 15px; margin-left: 8px;">{{ formatAmount(installment.vouf_quotaamount) }}</span>
+                  </div>
+                  <div class="card-header-badge">
+                    <nz-tag [nzColor]="getStatusColor(installment.voufs.voufs_name)">
+                      <i nz-icon [nzType]="getStatusIcon(installment.voufs.voufs_name)" nzTheme="fill"></i>
+                      <strong>{{ formatStatusName(installment.voufs.voufs_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-field-row">
+                    <span class="field-label">Vencimiento</span>
+                    <span class="field-value">{{ formatDate(installment.vouf_quotaduedate) }}</span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Plazo</span>
+                    <span class="field-value">
+                      <nz-tag [nzColor]="getDaysLeft(installment.vouf_quotaduedate).color">
+                        {{ getDaysLeft(installment.vouf_quotaduedate).text }}
+                      </nz-tag>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(installment)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editInstallment(installment)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  @if (installment.voufs.voufs_name.toLowerCase() === 'pendiente') {
+                    <button nz-button nzSize="small" nzType="primary" (click)="markAsPaid(installment)">
+                      <i nz-icon nzType="check-circle"></i> Pagar
+                    </button>
+                  }
+                  @if (installment.voufs.voufs_name.toLowerCase() === 'pagado') {
+                    <button nz-button nzSize="small" nzDanger (click)="markAsPending(installment)">
+                      <i nz-icon nzType="rollback"></i> Revertir
+                    </button>
+                  }
+                  <button nz-button nzSize="small" nzDanger (click)="deleteInstallment(installment)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

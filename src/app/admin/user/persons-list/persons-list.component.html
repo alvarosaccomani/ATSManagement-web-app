@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <nz-table #basicTable [nzData]="filteredPersons" [nzBordered]="true" [nzScroll]="{ x: '850px' }">
+      <nz-table #basicTable class="management-grid" [nzData]="filteredPersons" [nzBordered]="true" [nzScroll]="{ x: '850px' }">
         <thead>
           <tr>
             <th>Nombre / Razón Social</th>
@@ -87,30 +87,92 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of basicTable.data">
-            <td><strong>{{ data.prs_name }}</strong></td>
-            <td>
-              <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" class="person-tag">
-                {{ t }}
-              </nz-tag>
-            </td>
-            <td>{{ data.prs_phone || '-' }}</td>
-            <td>{{ data.prs_email || '-' }}</td>
-            <td>{{ data.prs_taxid || '-' }}</td>
-            <td>
-              <nz-tag [nzColor]="data.prs_active ? 'success' : 'error'">
-                {{ data.prs_active ? 'Activo' : 'Inactivo' }}
-              </nz-tag>
-            </td>
-            <td>
-              <button nz-button nzType="text" (click)="editPerson(data)" nz-tooltip nzTooltipTitle="Editar">
-                <i nz-icon nzType="edit"></i>
-              </button>
-              <button nz-button nzType="text" nzDanger (click)="deletePerson(data)" nz-tooltip nzTooltipTitle="Eliminar">
-                <i nz-icon nzType="delete"></i>
-              </button>
-            </td>
-          </tr>
+          @for (data of basicTable.data; track data.prs_uuid) {
+            <!-- Desktop Row -->
+            <tr class="desktop-row">
+              <td><strong>{{ data.prs_name }}</strong></td>
+              <td>
+                <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" class="person-tag">
+                  {{ t }}
+                </nz-tag>
+              </td>
+              <td>{{ data.prs_phone || '-' }}</td>
+              <td>{{ data.prs_email || '-' }}</td>
+              <td>{{ data.prs_taxid || '-' }}</td>
+              <td>
+                <nz-tag [nzColor]="data.prs_active ? 'success' : 'error'">
+                  {{ data.prs_active ? 'Activo' : 'Inactivo' }}
+                </nz-tag>
+              </td>
+              <td>
+                <button nz-button nzType="text" (click)="editPerson(data)" nz-tooltip nzTooltipTitle="Editar">
+                  <i nz-icon nzType="edit"></i>
+                </button>
+                <button nz-button nzType="text" nzDanger (click)="deletePerson(data)" nz-tooltip nzTooltipTitle="Eliminar">
+                  <i nz-icon nzType="delete"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Mobile Card Row -->
+            <tr class="mobile-row">
+              <td colspan="7">
+                <div class="management-card">
+                  <div class="card-header">
+                    <div class="card-main-title">
+                      <i nz-icon nzType="user" style="margin-right: 6px;"></i>{{ data.prs_name }}
+                    </div>
+                    <div class="card-header-badge">
+                      <nz-tag [nzColor]="data.prs_active ? 'success' : 'error'">
+                        {{ data.prs_active ? 'Activo' : 'Inactivo' }}
+                      </nz-tag>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="card-field-row">
+                      <span class="field-label">Tipo</span>
+                      <span class="field-value">
+                        <nz-tag *ngFor="let t of splitTypes(data.prs_type)" [nzColor]="getTypeTagColor(t)" class="person-tag">
+                          {{ t }}
+                        </nz-tag>
+                      </span>
+                    </div>
+
+                    @if (data.prs_phone) {
+                      <div class="card-field-row">
+                        <span class="field-label">Teléfono</span>
+                        <span class="field-value">{{ data.prs_phone }}</span>
+                      </div>
+                    }
+
+                    @if (data.prs_email) {
+                      <div class="card-field-row">
+                        <span class="field-label">Email</span>
+                        <span class="field-value">{{ data.prs_email }}</span>
+                      </div>
+                    }
+
+                    @if (data.prs_taxid) {
+                      <div class="card-field-row">
+                        <span class="field-label">Identificación / CUIT</span>
+                        <span class="field-value">{{ data.prs_taxid }}</span>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="card-footer">
+                    <button nz-button nzType="default" nzSize="small" (click)="editPerson(data)">
+                      <i nz-icon nzType="edit"></i> Editar
+                    </button>
+                    <button nz-button nzType="default" nzDanger nzSize="small" (click)="deletePerson(data)">
+                      <i nz-icon nzType="delete"></i> Eliminar
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          }
         </tbody>
       </nz-table>
     }

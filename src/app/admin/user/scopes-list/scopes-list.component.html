@@ -1,52 +1,121 @@
 <nz-spin [nzSpinning]="isLoading">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-    <h2>Ámbitos (Contextos / Espacios)</h2>
-    <button nz-button nzType="primary" (click)="newScope()">
-      <nz-icon nzType="plus" /> Nuevo Ámbito
-    </button>
-  </div>
+  <div class="page-container-inner">
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">
+          <i nz-icon nzType="environment" nzTheme="outline"></i>
+          Ámbitos (Contextos / Espacios)
+        </h2>
+        <p class="page-subtitle">Organización y separación de gastos personales, laborales o compartidos</p>
+      </div>
+      <div class="header-controls">
+        <button nz-button nzType="primary" (click)="newScope()">
+          <i nz-icon nzType="plus"></i> Nuevo Ámbito
+        </button>
+      </div>
+    </div>
 
-  <nz-table #basicTable [nzData]="scopes" [nzBordered]="true">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Color</th>
-        <th>Compartido</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>
-          <span *ngIf="data.scp_color" [style.background-color]="data.scp_color" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px;"></span>
-          <strong>{{ data.scp_name }}</strong>
-        </td>
-        <td>{{ data.scp_description || '-' }}</td>
-        <td>
-          <nz-tag *ngIf="data.scp_color" [nzColor]="data.scp_color">{{ data.scp_color }}</nz-tag>
-          <span *ngIf="!data.scp_color">-</span>
-        </td>
-        <td>
-          <nz-tag [nzColor]="data.scp_isshared ? 'blue' : 'default'">
-            {{ data.scp_isshared ? 'Sí' : 'No' }}
-          </nz-tag>
-        </td>
-        <td>
-          <nz-tag [nzColor]="data.scp_active ? 'green' : 'red'">
-            {{ data.scp_active ? 'Activo' : 'Inactivo' }}
-          </nz-tag>
-        </td>
-        <td>
-          <button nz-button nzType="text" (click)="editScope(data)" nz-tooltip nzTooltipTitle="Editar">
-            <nz-icon nzType="edit" />
-          </button>
-          <button nz-button nzType="text" nzDanger (click)="deleteScope(data)" nz-tooltip nzTooltipTitle="Eliminar">
-            <nz-icon nzType="delete" />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+    <nz-table #basicTable class="management-grid" [nzData]="scopes" [nzBordered]="true" [nzScroll]="{ x: '750px' }">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Color</th>
+          <th>Compartido</th>
+          <th>Estado</th>
+          <th nzWidth="110px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of basicTable.data; track data.scp_uuid) {
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
+            <td>
+              <span *ngIf="data.scp_color" [style.background-color]="data.scp_color" class="color-dot"></span>
+              <strong>{{ data.scp_name }}</strong>
+            </td>
+            <td>{{ data.scp_description || '-' }}</td>
+            <td>
+              <nz-tag *ngIf="data.scp_color" [nzColor]="data.scp_color">{{ data.scp_color }}</nz-tag>
+              <span *ngIf="!data.scp_color">-</span>
+            </td>
+            <td>
+              <nz-tag [nzColor]="data.scp_isshared ? 'blue' : 'default'">
+                {{ data.scp_isshared ? 'Sí' : 'No' }}
+              </nz-tag>
+            </td>
+            <td>
+              <nz-tag [nzColor]="data.scp_active ? 'success' : 'error'">
+                {{ data.scp_active ? 'Activo' : 'Inactivo' }}
+              </nz-tag>
+            </td>
+            <td>
+              <button nz-button nzType="text" (click)="editScope(data)" nz-tooltip nzTooltipTitle="Editar">
+                <i nz-icon nzType="edit"></i>
+              </button>
+              <button nz-button nzType="text" nzDanger (click)="deleteScope(data)" nz-tooltip nzTooltipTitle="Eliminar">
+                <i nz-icon nzType="delete"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td colspan="6">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <span *ngIf="data.scp_color" [style.background-color]="data.scp_color" class="color-dot"></span>
+                    {{ data.scp_name }}
+                  </div>
+                  <div class="card-header-badge">
+                    <nz-tag [nzColor]="data.scp_active ? 'success' : 'error'">
+                      {{ data.scp_active ? 'Activo' : 'Inactivo' }}
+                    </nz-tag>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (data.scp_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ data.scp_description }}</span>
+                    </div>
+                  }
+
+                  <div class="card-field-row">
+                    <span class="field-label">Tipo Ámbito</span>
+                    <span class="field-value">
+                      <nz-tag [nzColor]="data.scp_isshared ? 'blue' : 'default'">
+                        <i nz-icon [nzType]="data.scp_isshared ? 'bank' : 'user'" style="margin-right: 4px;"></i>
+                        {{ data.scp_isshared ? 'Compartido / Empresa' : 'Personal' }}
+                      </nz-tag>
+                    </span>
+                  </div>
+
+                  @if (data.scp_color) {
+                    <div class="card-field-row">
+                      <span class="field-label">Color de Identificación</span>
+                      <span class="field-value">
+                        <nz-tag [nzColor]="data.scp_color">{{ data.scp_color }}</nz-tag>
+                      </span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="editScope(data)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteScope(data)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </div>
 </nz-spin>

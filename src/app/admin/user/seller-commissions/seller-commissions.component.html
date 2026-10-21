@@ -63,10 +63,10 @@
 
     <!-- Sales Table -->
     <nz-card nzTitle="Listado de Ventas y Comisiones">
-      <nz-table #salesTable [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: '850px' }">
+      <nz-table #salesTable class="analytical-grid" [nzData]="summary?.sales || []" [nzPageSize]="10" nzShowPagination nzBordered [nzScroll]="{ x: '850px' }">
         <thead>
           <tr>
-            <th>Fecha</th>
+            <th class="sticky-col-first" nzWidth="120px">Fecha</th>
             <th>Ámbito</th>
             <th>Concepto / Venta</th>
             <th>Cliente</th>
@@ -78,7 +78,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let s of salesTable.data">
-            <td>{{ s.trx_datetime | date:'dd/MM/yyyy' }}</td>
+            <td class="sticky-col-first">{{ s.trx_datetime | date:'dd/MM/yyyy' }}</td>
             <td>
               <nz-tag *ngIf="s.scp" [nzColor]="s.scp.scp_color || 'blue'">
                 {{ s.scp.scp_name }}

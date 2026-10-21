@@ -28,6 +28,7 @@
 
   @if (!loading && vouchers.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="vouchers"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -50,7 +51,8 @@
       </thead>
       <tbody>
         @for (voucher of vouchers; track voucher.vou_uuid) {
-          <tr>
+          <!-- DESKTOP ROW -->
+          <tr class="desktop-row">
             <td>{{ voucher.vou_uuid }}</td>
             <td>
               <div class="transaction-info">
@@ -113,6 +115,100 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- MOBILE CARD ROW -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <!-- Header: Comercio + Estado -->
+                <div class="card-header">
+                  <div class="card-main-title">
+                    {{ voucher.vou_commercename }}
+                    @if (voucher.vou_commercecategory) {
+                      <div class="text-secondary" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                        {{ voucher.vou_commercecategory }}
+                      </div>
+                    }
+                  </div>
+                  <div class="card-header-badge">
+                    <nz-tag [nzColor]="getVoucherStatusColor(voucher.vous.vous_name)">
+                      <strong>{{ formatVoucherStatusName(voucher.vous.vous_name) }}</strong>
+                    </nz-tag>
+                  </div>
+                </div>
+
+                <!-- Body: Datos secundarios clave -->
+                <div class="card-body">
+                  <div class="card-field-row">
+                    <span class="field-label">Monto</span>
+                    <span class="field-value">
+                      <strong class="amount" style="font-size: 15px;">{{ formatAmount(voucher.vou_amount, voucher.vou_currency) }}</strong>
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Fecha/Hora</span>
+                    <span class="field-value">{{ formatDateTime(voucher.vou_datetime) }}</span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Operación</span>
+                    <span class="field-value">
+                      <nz-tag [nzColor]="getOperationTypeColor(voucher.tyop.tyop_name)">
+                        <i nz-icon [nzType]="getOperationTypeIcon(voucher.tyop.tyop_name)" nzTheme="outline"></i>
+                        {{ formatOperationTypeName(voucher.tyop.tyop_name) }}
+                      </nz-tag>
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Cuotas</span>
+                    <span class="field-value">
+                      <nz-tag [nzColor]="voucher.vou_installments ? 'orange' : 'default'">
+                        {{ formatInstallments(voucher) }}
+                      </nz-tag>
+                    </span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Autorización</span>
+                    <span class="field-value" style="font-family: monospace;">{{ voucher.vou_authorizationnumber }}</span>
+                  </div>
+
+                  <div class="card-field-row">
+                    <span class="field-label">Transacción</span>
+                    <span class="field-value" style="font-family: monospace;">{{ voucher.vou_transactionnumber }}</span>
+                  </div>
+                </div>
+
+                <!-- Footer: Acciones -->
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(voucher)">
+                    <i nz-icon nzType="eye" nzTheme="outline"></i>
+                    Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editVoucher(voucher)">
+                    <i nz-icon nzType="edit" nzTheme="outline"></i>
+                    Editar
+                  </button>
+                  @if (voucher.vous.vous_name.toLowerCase() === 'pendiente') {
+                    <button nz-button nzSize="small" nzDanger (click)="rejectVoucher(voucher)">
+                      <i nz-icon nzType="close-circle" nzTheme="outline"></i>
+                      Rechazar
+                    </button>
+                    <button nz-button nzSize="small" nzType="primary" (click)="confirmVoucher(voucher)">
+                      <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+                      Confirmar
+                    </button>
+                  }
+                  <button nz-button nzSize="small" nzDanger (click)="deleteVoucher(voucher)">
+                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                    Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

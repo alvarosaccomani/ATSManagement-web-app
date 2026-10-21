@@ -1,6 +1,9 @@
 <div class="card-type-list-container">
   <div class="header">
-    <h2>Tipos de Tarjetas</h2>
+    <h2>
+      <i nz-icon nzType="credit-card" nzTheme="outline" style="margin-right: 8px;"></i>
+      Tipos de Tarjetas
+    </h2>
     <button nz-button nzType="primary" (click)="createTypeCard()">
       <i nz-icon nzType="plus"></i>
       Nuevo Tipo
@@ -25,6 +28,7 @@
 
   @if (!loading && typeCards.length > 0) {
     <nz-table
+      class="management-grid"
       [nzData]="typeCards"
       [nzPageSize]="pageSize"
       [nzPageIndex]="pageIndex"
@@ -47,10 +51,11 @@
       </thead>
       <tbody>
         @for (typeCard of typeCards; track typeCard.tycrd_uuid) {
-          <tr>
+          <!-- Desktop Row -->
+          <tr class="desktop-row">
             <td>{{ typeCard.tycrd_uuid }}</td>
             <td><strong>{{ typeCard.tycrd_name }}</strong></td>
-            <td>{{ typeCard.tycrd_description }}</td>
+            <td>{{ typeCard.tycrd_description || '-' }}</td>
             <td>{{ typeCard.tycrd_createdat | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ typeCard.tycrd_updatedat | date:'dd/MM/yyyy HH:mm' }}</td>
             <td class="actions">
@@ -66,6 +71,53 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 Eliminar
               </button>
+            </td>
+          </tr>
+
+          <!-- Mobile Card Row -->
+          <tr class="mobile-row">
+            <td [colSpan]="listOfColumns.length">
+              <div class="management-card">
+                <div class="card-header">
+                  <div class="card-main-title">
+                    <strong>{{ typeCard.tycrd_name }}</strong>
+                  </div>
+                  <div class="card-header-badge">
+                    <span class="text-secondary" style="font-size: 12px; font-family: monospace;">#{{ typeCard.tycrd_uuid }}</span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  @if (typeCard.tycrd_description) {
+                    <div class="card-field-row">
+                      <span class="field-label">Descripción</span>
+                      <span class="field-value">{{ typeCard.tycrd_description }}</span>
+                    </div>
+                  }
+                  <div class="card-field-row">
+                    <span class="field-label">Creado</span>
+                    <span class="field-value">{{ typeCard.tycrd_createdat | date:'dd/MM/yyyy HH:mm' }}</span>
+                  </div>
+                  @if (typeCard.tycrd_updatedat) {
+                    <div class="card-field-row">
+                      <span class="field-label">Actualizado</span>
+                      <span class="field-value">{{ typeCard.tycrd_updatedat | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer">
+                  <button nz-button nzSize="small" nzType="default" (click)="viewDetails(typeCard)">
+                    <i nz-icon nzType="eye"></i> Ver
+                  </button>
+                  <button nz-button nzSize="small" nzType="default" (click)="editTypeCard(typeCard)">
+                    <i nz-icon nzType="edit"></i> Editar
+                  </button>
+                  <button nz-button nzSize="small" nzDanger (click)="deleteTypeCard(typeCard)">
+                    <i nz-icon nzType="delete"></i> Eliminar
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         }

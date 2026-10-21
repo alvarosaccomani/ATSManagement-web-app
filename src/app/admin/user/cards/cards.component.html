@@ -87,6 +87,8 @@
 
     @if (!loading && cards.length > 0) {
       <nz-table
+        #cardsTable
+        class="management-grid"
         [nzData]="cards"
         [nzPageSize]="pageSize"
         [nzPageIndex]="pageIndex"
@@ -97,6 +99,7 @@
         (nzPageIndexChange)="onPageIndexChange($event)"
         nzBordered
         nzTableLayout="fixed"
+        [nzScroll]="{ x: '1000px' }"
       >
         <thead>
           <tr>
@@ -109,7 +112,8 @@
         </thead>
         <tbody>
           @for (card of cards; track card.crd_uuid) {
-            <tr>
+            <!-- Desktop Row -->
+            <tr class="desktop-row">
               <td>{{ card.crd_uuid }}</td>
               <td>
                 <nz-tag [nzColor]="card.scp?.scp_color || '#108ee9'">
@@ -174,6 +178,96 @@
                   <i nz-icon nzType="delete" nzTheme="outline"></i>
                   Eliminar
                 </button>
+              </td>
+            </tr>
+
+            <!-- Mobile Card Row -->
+            <tr class="mobile-row">
+              <td [colSpan]="listOfColumns.length">
+                <div class="management-card">
+                  <div class="card-header">
+                    <div class="card-main-title">
+                      <i nz-icon [nzType]="card.tycrd?.tycrd_name?.toLowerCase()?.includes('efectivo') ? 'wallet' : (card.crd_last4digits ? 'credit-card' : 'bank')" nzTheme="outline" style="margin-right: 6px;"></i>
+                      {{ card.crd_alias || 'Cuenta / Tarjeta' }}
+                      <span *ngIf="card.crd_last4digits" style="font-weight: 400; font-size: 13.5px; color: #595959;">({{ formatCardNumber(card.crd_last4digits) }})</span>
+                    </div>
+                    <div class="card-header-badge">
+                      @if (card.crd_active) {
+                        <nz-tag nzColor="success">
+                          <i nz-icon nzType="check-circle" nzTheme="fill"></i> Activa
+                        </nz-tag>
+                      } @else {
+                        <nz-tag nzColor="error">
+                          <i nz-icon nzType="close-circle" nzTheme="fill"></i> Inactiva
+                        </nz-tag>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="card-field-row">
+                      <span class="field-label">Ámbito</span>
+                      <span class="field-value">
+                        <nz-tag [nzColor]="card.scp?.scp_color || '#108ee9'">
+                          <i nz-icon [nzType]="card.scp?.scp_isshared ? 'bank' : 'user'" style="margin-right: 4px;"></i>
+                          {{ card.scp?.scp_name || 'Personal' }}
+                        </nz-tag>
+                      </span>
+                    </div>
+
+                    <div class="card-field-row">
+                      <span class="field-label">Tipo / Marca</span>
+                      <span class="field-value">
+                        <nz-tag [nzColor]="getCardTypeColor(card.tycrd?.tycrd_name)">
+                          {{ card.tycrd?.tycrd_name || 'General' }}
+                        </nz-tag>
+                        <nz-tag *ngIf="card.brcrd?.brcrd_name" [nzColor]="getCardBrandColor(card.brcrd?.brcrd_name)">
+                          {{ card.brcrd?.brcrd_name }}
+                        </nz-tag>
+                      </span>
+                    </div>
+
+                    @if (card.ban?.ban_name) {
+                      <div class="card-field-row">
+                        <span class="field-label">Banco</span>
+                        <span class="field-value">{{ card.ban?.ban_name }}</span>
+                      </div>
+                    }
+
+                    @if (card.crd_cbualias || card.crd_cbucvu) {
+                      <div class="card-field-row">
+                        <span class="field-label">CBU / Alias</span>
+                        <span class="field-value">{{ card.crd_cbualias || card.crd_cbucvu }}</span>
+                      </div>
+                    }
+
+                    @if (card.crd_creditlimit) {
+                      <div class="card-field-row">
+                        <span class="field-label">Límite</span>
+                        <span class="field-value"><strong>{{ formatCreditLimit(card.crd_creditlimit) }}</strong></span>
+                      </div>
+                    }
+
+                    @if (card.crd_expirationdate) {
+                      <div class="card-field-row">
+                        <span class="field-label">Vencimiento</span>
+                        <span class="field-value">{{ formatExpirationDate(card.crd_expirationdate) }}</span>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="card-footer">
+                    <button nz-button nzSize="small" nzType="default" (click)="viewDetails(card)">
+                      <i nz-icon nzType="eye"></i> Ver
+                    </button>
+                    <button nz-button nzSize="small" nzType="default" (click)="editCard(card)">
+                      <i nz-icon nzType="edit"></i> Editar
+                    </button>
+                    <button nz-button nzSize="small" nzDanger (click)="deleteCard(card)">
+                      <i nz-icon nzType="delete"></i> Eliminar
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
           }

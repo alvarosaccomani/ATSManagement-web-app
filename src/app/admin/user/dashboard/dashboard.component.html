@@ -126,10 +126,10 @@
             <button nz-button nzType="link" (click)="newScope()">+ Crear Ámbito</button>
           </ng-template>
 
-          <nz-table #scopeTable [nzData]="summary?.scopes_summary || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '450px' }">
+          <nz-table #scopeTable class="analytical-grid" [nzData]="summary?.scopes_summary || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '450px' }">
             <thead>
               <tr>
-                <th>Ámbito</th>
+                <th class="sticky-col-first" nzWidth="140px">Ámbito</th>
                 <th>Ingresos</th>
                 <th>Egresos</th>
                 <th>Balance</th>
@@ -137,7 +137,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of scopeTable.data">
-                <td>
+                <td class="sticky-col-first">
                   <span *ngIf="item.scp_color" [style.background-color]="item.scp_color" class="color-dot"></span>
                   <strong>{{ item.scp_name }}</strong>
                 </td>
@@ -157,10 +157,10 @@
       <!-- Recent Activity Table -->
       <div nz-col [nzXs]="24" [nzLg]="14">
         <nz-card nzTitle="Últimos Movimientos Registrados">
-          <nz-table #recentTable [nzData]="summary?.recent_transactions || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '600px' }">
+          <nz-table #recentTable class="analytical-grid" [nzData]="summary?.recent_transactions || []" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x: '600px' }">
             <thead>
               <tr>
-                <th>Fecha</th>
+                <th class="sticky-col-first" nzWidth="130px">Fecha</th>
                 <th>Tipo</th>
                 <th>Concepto</th>
                 <th>Monto</th>
@@ -169,7 +169,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let t of recentTable.data">
-                <td>{{ t.trx_datetime | date:'dd/MM/yyyy' }}</td>
+                <td class="sticky-col-first">{{ t.trx_datetime | date:'dd/MM/yyyy' }}</td>
                 <td>
                   <nz-tag [nzColor]="getTypeColor(t.trx_type)">
                     {{ t.trx_type }}

@@ -6,6 +6,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BankInterface } from '../../../core/interfaces/bank';
 import { BanksService } from '../../../core/services/banks.service';
@@ -24,7 +25,8 @@ import { MessageService } from '../../../core/services/message.service';
     NzButtonModule,
     NzIconModule,
     NzEmptyModule,
-    NzSpinModule
+    NzSpinModule,
+    NzTagModule
   ],
   templateUrl: './banks.component.html',
   styleUrl: './banks.component.scss'
