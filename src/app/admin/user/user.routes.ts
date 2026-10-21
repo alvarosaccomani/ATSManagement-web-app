@@ -38,6 +38,7 @@ import { PersonsListComponent } from './persons-list/persons-list.component';
 import { PersonComponent } from './person/person.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SellerCommissionsComponent } from './seller-commissions/seller-commissions.component';
+import { FixedExpensesComponent } from './fixed-expenses/fixed-expenses.component';
 
 /**
  * Rutas del espacio de trabajo del usuario bajo `/admin/user`.
@@ -94,6 +95,7 @@ export const USER_ROUTES: Routes = [
             { path: 'payment-period/new', component: PaymentPeriodComponent },
             { path: 'payment-period/edit/:crd_uuid/:per_uuid/:payp_uuid', component: PaymentPeriodComponent },
             { path: 'transactions', component: TransactionsListComponent },
+            { path: 'fixed-expenses', component: FixedExpensesComponent },
             { path: 'transaction/new', component: TransactionComponent },
             { path: 'transaction/edit/:trx_uuid', component: TransactionComponent },
             { path: 'scopes', component: ScopesListComponent },
