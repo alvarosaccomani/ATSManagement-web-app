@@ -118,3 +118,27 @@ Desglosa cada operación comisionable mostrando:
 - **Monto de Venta (`trx_amount`)**
 - **% Aplicado (`prs_commissionrate`)**
 - **Comisión Ganada (`trx_commissionamount`)** destacada en una insignia verde para facilitar el control de pago.
+
+---
+
+## 6. Gastos Fijos y Servicios Recurrentes (`/admin/user/fixed-expenses`)
+
+El módulo de **Gastos Fijos y Servicios Recurrentes** permite planificar, monitorear y liquidar todos los servicios mensuales (luz, gas, internet, alquiler, suscripciones de software, impuestos recurrentes, seguros, sueldos).
+
+### 6.1. Características Principales
+- **Plantillas Mensuales Paramétricas**: Cada gasto fijo define su día habitual de vencimiento (1 a 31), monto de referencia, categoría, cuenta/tarjeta predeterminada y contacto/proveedor.
+- **Soporte de Débito Automático**: Distingue visualmente entre servicios con débito automático en cuenta/tarjeta y servicios con pago manual.
+- **Importe Variable Mes a Mes**: Al momento de liquidar el gasto en el mes en curso, el usuario puede ingresar el importe exacto de la factura de ese período; al confirmarse, se genera el movimiento contable real de egreso (`EGRESO`) y se actualiza el monto de referencia para el mes siguiente.
+- **Navegación Mensual Histórica y Futura**: Permite alternar entre meses anteriores y futuros mediante los botones de navegación (`<`, `>`) o volver instantáneamente al mes en curso.
+- **Indicadores Clave (KPIs)**:
+  - **Presupuesto Mensual Estimado**: Total presupuestado para el mes activo según importes de referencia.
+  - **Abonado Real**: Suma de pagos efectivamente liquidados durante el período.
+  - **Saldo Pendiente**: Monto restante por cancelar o debitar.
+  - **Cumplimiento del Mes**: Barra de progreso porcentual y conteo de servicios pagados vs pendientes.
+
+### 6.2. Flujo de Liquidación de Pagos
+1. Desde la tabla del mes activo, presionar el botón **Pagar** o **Confirmar Débito** en la fila del servicio pendiente.
+2. En el modal emergente, el sistema precarga el monto de referencia y la cuenta predeterminada.
+3. Ajustar el monto real abonado, la fecha efectiva del pago y las notas (número de factura o comprobante).
+4. Al hacer clic en **Confirmar Pago**, el sistema registra la transacción de egreso contable en el libro de caja vinculada al gasto fijo (`fex_uuid`) y actualiza la regla para el próximo ciclo.
+

@@ -118,3 +118,21 @@ Breaks down each commissionable operation showing:
 - **Sale Amount (`trx_amount`)**
 - **Applied % (`prs_commissionrate`)**
 - **Commission Earned (`trx_commissionamount`)** highlighted in a green badge to facilitate payment control.
+
+---
+
+## 6. Fixed Expenses & Recurring Services (`/admin/user/fixed-expenses`)
+
+The **Fixed Expenses and Recurring Services** module allows planning, monitoring, and settling monthly recurring overhead (utilities, rent, software subscriptions, taxes, payroll, insurance).
+
+### 6.1. Key Capabilities
+- **Parametric Monthly Templates**: Each fixed expense defines its typical due day (1-31), reference amount, category, default payment card/account, and vendor/contact.
+- **Auto-Debit Support**: Clearly distinguishes between bank/card automatic debits and manual pay obligations.
+- **Dynamic Monthly Amounts**: At settlement time, users can enter the actual invoice amount for the current period. When confirmed, a real cash-flow `EGRESO` transaction is posted and the template reference amount is updated for the next cycle.
+- **Period Navigation**: Switch between previous and upcoming months via `<` and `>` controls or return instantly to the current month.
+- **Financial KPIs**:
+  - **Estimated Budget**: Total expected recurring cost for the active month.
+  - **Settled / Paid**: Sum of payments actually recorded for the period.
+  - **Pending Balance**: Remaining amount left to settle or debit.
+  - **Monthly Completion**: Percentage progress bar and count of settled vs pending services.
+

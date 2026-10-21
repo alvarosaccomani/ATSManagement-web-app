@@ -118,3 +118,21 @@ Detalha cada operação comissionável exibindo:
 - **Valor da Venda (`trx_amount`)**
 - **% Aplicado (`prs_commissionrate`)**
 - **Comissão Ganha (`trx_commissionamount`)** destacada em um selo verde para facilitar o controle de pagamento.
+
+---
+
+## 6. Despesas Fixas e Serviços Recorrentes (`/admin/user/fixed-expenses`)
+
+O módulo de **Despesas Fixas e Serviços Recorrentes** permite planejar, monitorar e liquidar todos os serviços mensais (energia, gás, internet, aluguel, assinaturas de software, impostos periódicos, seguros, salários).
+
+### 6.1. Funcionalidades Principais
+- **Modelos Mensais Paramétricos**: Cada despesa fixa define o dia de vencimento (1 a 31), valor de referência, categoria, conta/cartão padrão e fornecedor/contato.
+- **Suporte a Débito Automático**: Distingue visualmente despesas com débito automático bancário/cartão daquelas com pagamento manual.
+- **Valor Variável Mês a Mês**: Ao liquidar a despesa no mês em curso, o usuário pode informar o valor real da fatura daquele período; ao confirmar, gera-se a movimentação contábil real de saída (`EGRESO`) e o valor de referência é atualizado para o próximo ciclo.
+- **Navegação Periódica**: Alternância entre meses anteriores e futuros (`<`, `>`) e retorno imediato ao mês corrente.
+- **Indicadores Chave (KPIs)**:
+  - **Orçamento Mensal Estimado**: Total orçado para o mês ativo.
+  - **Total Pago Real**: Soma dos pagamentos liquidados no período.
+  - **Saldo Pendente**: Valor restante para quitar ou debitar.
+  - **Conclusão do Mês**: Barra de progresso percentual e contagem de serviços pagos vs pendentes.
+
