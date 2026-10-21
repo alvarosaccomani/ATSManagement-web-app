@@ -20,6 +20,7 @@ import { PeriodsService } from '../../../core/services/periods.service';
 import { VouchersService } from '../../../core/services/vouchers.service';
 import { VouchersFeeStatusService } from '../../../core/services/vouchers-fee-status.service';
 import { VouchersFeesService } from '../../../core/services/vouchers-fees.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
@@ -104,6 +105,7 @@ export class VoucherFeeComponent implements OnInit {
     private _vouchersService: VouchersService,
     private _vouchersFeeStatusService: VouchersFeeStatusService,
     private _vouchersFeesService: VouchersFeesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService
   ) {
     this.form = this.fb.group({
@@ -116,6 +118,13 @@ export class VoucherFeeComponent implements OnInit {
       crd_uuid: [{ value: '', disabled: true }],
       per_uuid: [{ value: '', disabled: true }]
     });
+  }
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -172,8 +181,16 @@ export class VoucherFeeComponent implements OnInit {
    * @returns void
    */
   loadVouchersData(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.cards = [];
+      this.periods = [];
+      this.vouchers = [];
+      this.isLoading = false;
+      return;
+    }
     this.isLoading = true;
-    this._cardsService.getCards('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe({
+    this._cardsService.getCards(usr_uuid).subscribe({
       next: (cardResponse: any) => {
         if (cardResponse.success) {
           const cardsData = cardResponse.data;
@@ -193,7 +210,7 @@ export class VoucherFeeComponent implements OnInit {
           const allPeriods: any[] = [];
 
           cardsData.forEach((card: any) => {
-            this._periodsService.getPedriods('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid).subscribe({
+            this._periodsService.getPedriods(usr_uuid, card.crd_uuid).subscribe({
               next: (periodResponse: any) => {
                 if (periodResponse.success) {
                   const periodsData = periodResponse.data;
@@ -216,7 +233,7 @@ export class VoucherFeeComponent implements OnInit {
                   }
 
                   periodsData.forEach((period: any) => {
-                    this._vouchersService.getVouchers('7a067c90-bf5b-45d1-8f07-91b578e2d54d', card.crd_uuid, period.per_uuid).subscribe({
+                    this._vouchersService.getVouchers(usr_uuid, card.crd_uuid, period.per_uuid).subscribe({
                       next: (voucherResponse: any) => {
                         if (voucherResponse.success) {
                           voucherResponse.data.forEach((v: any) => {
@@ -295,8 +312,10 @@ export class VoucherFeeComponent implements OnInit {
    * @returns void
    */
   loadInstallment(crd_uuid: string, per_uuid: string, vou_uuid: string, vouf_uuid: string): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading = true;
-    this._vouchersFeesService.getVoucherFeeById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', crd_uuid, per_uuid, vou_uuid, vouf_uuid).subscribe({
+    this._vouchersFeesService.getVoucherFeeById(usr_uuid, crd_uuid, per_uuid, vou_uuid, vouf_uuid).subscribe({
       next: (response: any) => {
         this.isLoading = false;
         if (response.success) {
@@ -363,7 +382,7 @@ export class VoucherFeeComponent implements OnInit {
     const rawValue = this.form.getRawValue();
     const payload = {
       ...rawValue,
-      usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
+      usr_uuid: this.currentUserId
     };
 
     if (!this.isEditing) {
