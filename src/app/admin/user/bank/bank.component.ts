@@ -10,6 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { BanksService } from '../../../core/services/banks.service';
+import { SessionService } from '../../../core/services/session.service';
 
 /**
  * Componente para crear y editar una entidad bancaria.
@@ -55,6 +56,7 @@ export class BankComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private _banksService: BanksService,
+    private _sessionService: SessionService,
     private message: NzMessageService
   ) {
     this.form = this.fb.group({
@@ -63,6 +65,13 @@ export class BankComponent implements OnInit {
       ban_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       ban_description: ['', [Validators.maxLength(255)]]
     });
+  }
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -77,8 +86,8 @@ export class BankComponent implements OnInit {
       this.loadBank();
     } else {
       this.form.patchValue({
-        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d'
-      })
+        usr_uuid: this.currentUserId
+      });
       // Para nuevo, deshabilitar el campo UUID ya que es autogenerado
       this.form.get('ban_uuid')?.disable();
     }
@@ -89,9 +98,11 @@ export class BankComponent implements OnInit {
    * @returns void
    */
   loadBank(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading = true;
 
-    this._banksService.getBankById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', this.bankId!).subscribe(
+    this._banksService.getBankById(usr_uuid, this.bankId!).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -136,7 +147,11 @@ export class BankComponent implements OnInit {
     this.isLoading = true;
 
     if(!this.isEditing) {
-      this._banksService.saveBank(this.form.getRawValue()).subscribe(
+      const payload = {
+        ...this.form.getRawValue(),
+        usr_uuid: this.currentUserId
+      };
+      this._banksService.saveBank(payload).subscribe(
         response => {
           if(response.success) {
             this.isLoading = false;
