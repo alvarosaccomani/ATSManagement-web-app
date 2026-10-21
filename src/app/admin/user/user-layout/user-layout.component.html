@@ -1,5 +1,5 @@
 <nz-layout class="app-layout">
-  <!-- Desktop Sidebar -->
+  <!-- Desktop Sidebar (>= 768px) -->
   <nz-sider
     class="app-sider desktop-sider"
     nzCollapsible
@@ -30,19 +30,33 @@
     nzPlacement="left"
     [nzClosable]="false"
     [nzBodyStyle]="{ padding: '0', background: '#001529' }"
-    [nzWidth]="260"
+    [nzWidth]="280"
+    [nzMaskClosable]="true"
+    [nzKeyboard]="true"
     (nzOnClose)="closeMobileDrawer()"
   >
     <ng-container *nzDrawerContent>
-      <div class="sidebar-logo">
-        <div class="logo-icon-wrapper">
-          <nz-icon nzType="wallet" nzTheme="outline" />
+      <div class="sidebar-logo drawer-header-logo">
+        <div class="logo-brand-group">
+          <div class="logo-icon-wrapper">
+            <nz-icon nzType="wallet" nzTheme="outline" />
+          </div>
+          <div class="logo-text-wrapper">
+            <span class="logo-title">ATS Management</span>
+            <span class="logo-subtitle">Menú Principal</span>
+          </div>
         </div>
-        <div class="logo-text-wrapper">
-          <span class="logo-title">ATS Management</span>
-          <span class="logo-subtitle">Finanzas & Control</span>
-        </div>
+        <button
+          nz-button
+          nzType="text"
+          class="drawer-close-btn"
+          (click)="closeMobileDrawer()"
+          aria-label="Cerrar menú"
+        >
+          <nz-icon nzType="close" />
+        </button>
       </div>
+
       <div class="sidebar-menu-wrapper">
         <app-nav-bar [isCollapsed]="false"></app-nav-bar>
       </div>
@@ -51,27 +65,60 @@
 
   <!-- Main Layout -->
   <nz-layout class="main-layout">
-    <!-- Header -->
+    <!-- Header / Top Bar -->
     <nz-header class="app-header">
       <div class="header-left">
+        <!-- Desktop: Collapse Trigger Button -->
         <button
+          *ngIf="!isMobile"
           nz-button
           nzType="text"
           class="collapse-trigger-btn"
           (click)="toggleSidebar()"
-          [nzTooltipTitle]="isMobile ? 'Menú' : (isCollapsed ? 'Expandir menú lateral' : 'Colapsar menú lateral')"
+          [nzTooltipTitle]="isCollapsed ? 'Expandir menú lateral' : 'Colapsar menú lateral'"
           nz-tooltip
+          aria-label="Alternar menú lateral"
         >
-          <nz-icon [nzType]="isMobile ? 'menu' : (isCollapsed ? 'menu-unfold' : 'menu-fold')" />
+          <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
         </button>
+
+        <!-- Mobile: Back Button on detail views, or Hamburger Menu on root views -->
+        <button
+          *ngIf="isMobile && isDetailView"
+          nz-button
+          nzType="text"
+          class="mobile-nav-btn mobile-back-btn"
+          (click)="goBack()"
+          aria-label="Volver a la lista"
+        >
+          <nz-icon nzType="arrow-left" />
+        </button>
+
+        <button
+          *ngIf="isMobile && !isDetailView"
+          nz-button
+          nzType="text"
+          class="mobile-nav-btn mobile-menu-btn"
+          (click)="toggleSidebar()"
+          aria-label="Abrir menú principal"
+        >
+          <nz-icon nzType="menu" />
+        </button>
+
+        <!-- Active View Contextual Title -->
+        <h1 class="header-current-title">{{ currentTitle }}</h1>
       </div>
 
+      <!-- Right Header Actions -->
       <div class="header-right">
         <div
           nz-dropdown
           [nzDropdownMenu]="userDropdown"
           nzPlacement="bottomRight"
           class="user-profile-badge"
+          role="button"
+          tabindex="0"
+          aria-label="Menú de usuario"
         >
           <nz-avatar nzIcon="user" class="header-avatar" nzSize="small"></nz-avatar>
           <span class="header-username">{{ userName }}</span>
@@ -100,6 +147,58 @@
         <router-outlet></router-outlet>
       </div>
     </nz-content>
+
+    <!-- Thumb-Friendly Mobile Bottom Navigation Bar (< 768px) -->
+    <nav class="mobile-bottom-nav" aria-label="Navegación principal inferior">
+      <a
+        [routerLink]="['/admin/user/dashboard']"
+        routerLinkActive="active"
+        class="bottom-nav-item"
+        aria-label="Ir a Inicio"
+      >
+        <nz-icon nzType="dashboard" nzTheme="outline" />
+        <span>Inicio</span>
+      </a>
+
+      <a
+        [routerLink]="['/admin/user/transactions']"
+        routerLinkActive="active"
+        class="bottom-nav-item"
+        aria-label="Ir a Movimientos"
+      >
+        <nz-icon nzType="wallet" nzTheme="outline" />
+        <span>Movimientos</span>
+      </a>
+
+      <a
+        [routerLink]="['/admin/user/fixed-expenses']"
+        routerLinkActive="active"
+        class="bottom-nav-item"
+        aria-label="Ir a Gastos Fijos"
+      >
+        <nz-icon nzType="schedule" nzTheme="outline" />
+        <span>Gastos Fijos</span>
+      </a>
+
+      <a
+        [routerLink]="['/admin/user/scopes']"
+        routerLinkActive="active"
+        class="bottom-nav-item"
+        aria-label="Ir a Ámbitos"
+      >
+        <nz-icon nzType="environment" nzTheme="outline" />
+        <span>Ámbitos</span>
+      </a>
+
+      <button
+        type="button"
+        class="bottom-nav-item bottom-nav-btn"
+        (click)="openMobileDrawer()"
+        aria-label="Abrir más opciones"
+      >
+        <nz-icon nzType="appstore" nzTheme="outline" />
+        <span>Más</span>
+      </button>
+    </nav>
   </nz-layout>
 </nz-layout>
-
