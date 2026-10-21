@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BankInterface } from '../../../core/interfaces/bank';
 import { BanksService } from '../../../core/services/banks.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -63,9 +64,17 @@ export class BanksComponent implements OnInit {
   constructor(
     private _router: Router,
     private _banksService: BanksService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {}
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
 
   /**
    * Gancho del ciclo de vida ejecutado al inicializar el componente.
@@ -80,8 +89,15 @@ export class BanksComponent implements OnInit {
    * @returns void
    */
   loadBanks(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.banks = [];
+      this.total = 0;
+      this.loading = false;
+      return;
+    }
     this.loading = true;
-    this._banksService.getBanks('7a067c90-bf5b-45d1-8f07-91b578e2d54d').subscribe(
+    this._banksService.getBanks(usr_uuid).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
