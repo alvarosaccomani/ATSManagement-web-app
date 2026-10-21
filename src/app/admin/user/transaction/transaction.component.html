@@ -11,6 +11,35 @@
 
   <nz-divider></nz-divider>
 
+  <!-- ALERTA SI NO POSEE ÁMBITOS CONTABLES -->
+  @if (!isLoading && scopes.length === 0) {
+    <nz-alert
+      nzType="warning"
+      nzShowIcon
+      [nzMessage]="noScopesTitle"
+      [nzDescription]="noScopesDescription"
+      style="margin-bottom: 24px; border-radius: 8px;">
+      <ng-template #noScopesTitle>
+        <span style="font-weight: 600;">No tienes ámbitos contables asignados</span>
+      </ng-template>
+      <ng-template #noScopesDescription>
+        <div style="margin-top: 8px;">
+          <p style="margin-bottom: 14px; color: #595959; line-height: 1.5;">
+            Para registrar ingresos, egresos o transferencias, tu usuario debe contar con al menos un ámbito contable asignado (ej: Personal, Hogar, Empresa).
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button nz-button nzType="primary" routerLink="/admin/user/scope/new">
+              <i nz-icon nzType="plus-circle"></i> Configurar Nuevo Ámbito
+            </button>
+            <button nz-button nzType="default" routerLink="/admin/user/scopes">
+              <i nz-icon nzType="appstore"></i> Ver Mis Ámbitos
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </nz-alert>
+  }
+
   @if (isLoading) {
     <div class="loading-container">
       <nz-spin nzTip="Guardando..."></nz-spin>
@@ -260,13 +289,13 @@
         </button>
 
         @if (!isEditing) {
-          <button nz-button nzType="default" type="button" (click)="onSubmit(true)" [nzLoading]="isLoading" nzSize="large" class="btn-batch">
+          <button nz-button nzType="default" type="button" (click)="onSubmit(true)" [nzLoading]="isLoading" [disabled]="scopes.length === 0" nzSize="large" class="btn-batch">
             <i nz-icon nzType="plus-circle"></i>
             Guardar y Cargar Otro (Modo Rápido Excel)
           </button>
         }
 
-        <button nz-button nzType="primary" type="submit" [nzLoading]="isLoading" nzSize="large">
+        <button nz-button nzType="primary" type="submit" [nzLoading]="isLoading" [disabled]="scopes.length === 0" nzSize="large">
           <i nz-icon nzType="save"></i>
           {{ isEditing ? 'Guardar Cambios' : 'Guardar y Finalizar' }}
         </button>

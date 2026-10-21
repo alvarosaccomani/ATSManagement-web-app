@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -14,6 +14,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PersonInterface } from '../../../core/interfaces/person.interface';
@@ -51,7 +53,10 @@ import { formatterDollar, parserDollar } from '../../../core/utils/currency-form
     NzDatePickerModule,
     NzInputNumberModule,
     NzRadioModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzAlertModule,
+    NzToolTipModule,
+    RouterModule
   ],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.scss'
@@ -218,12 +223,12 @@ export class TransactionComponent implements OnInit {
 
   /**
   /**
-   * Obtiene el identificador del usuario autenticado actual o el usuario por defecto del sistema.
+   * Obtiene el identificador del usuario autenticado actual desde la sesión activa.
    *
    * @returns Identificador UUID del usuario.
    */
   get currentUserId(): string {
-    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -233,6 +238,10 @@ export class TransactionComponent implements OnInit {
    */
   loadScopes(defaultScopeUuid?: string | null): void {
     const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.scopes = [];
+      return;
+    }
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
         if (response.success && response.data && response.data.length > 0) {
@@ -243,7 +252,13 @@ export class TransactionComponent implements OnInit {
             this.form.get('scp_uuid')?.setValue(initialScope);
             this.loadPersons(initialScope);
           }
+        } else {
+          this.scopes = [];
         }
+      },
+      error: (err) => {
+        console.error('Error al cargar ámbitos en transacción:', err);
+        this.scopes = [];
       }
     });
   }
@@ -335,8 +350,18 @@ export class TransactionComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
     const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this._messageService.error('Sesión Requerida', 'No se pudo identificar al usuario activo. Por favor inicie sesión nuevamente.');
+      return;
+    }
+
+    if (this.scopes.length === 0) {
+      this._messageService.error('Ámbito Requerido', 'No tienes ámbitos contables disponibles para asociar el movimiento.');
+      return;
+    }
+
+    this.isLoading = true;
     const rawValue = this.form.getRawValue();
     const payload = {
       ...rawValue,
