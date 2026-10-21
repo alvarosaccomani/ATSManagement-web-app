@@ -18,6 +18,7 @@ import { VoucherStateInterface } from '../../../core/interfaces/voucher-state';
 import { TypeOperationsService } from '../../../core/services/type-operations.service';
 import { VouchersStatesService } from '../../../core/services/vouchers-states.service';
 import { VouchersService } from '../../../core/services/vouchers.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 import { formatterDollar, parserDollar } from '../../../core/utils/currency-format';
 
@@ -97,6 +98,7 @@ export class VoucherComponent implements OnInit {
     private _typeOperationsService: TypeOperationsService,
     private _vouchersStatesService: VouchersStatesService,
     private _vouchersService: VouchersService,
+    private _sessionService: SessionService,
     private message: NzMessageService,
     private _messageService: MessageService
   ) {
@@ -123,6 +125,13 @@ export class VoucherComponent implements OnInit {
   }
 
   /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
+
+  /**
    * Reads route parameters, loads operation types and voucher states, and sets up dynamic
    * installment count validators when `vou_installments` changes.
    */
@@ -138,10 +147,10 @@ export class VoucherComponent implements OnInit {
       this.loadVoucher();
     } else {
       this.form.patchValue({
-        usr_uuid: '7a067c90-bf5b-45d1-8f07-91b578e2d54d',
+        usr_uuid: this.currentUserId,
         crd_uuid: this.cardId,
         per_uuid: this.periodId
-      })
+      });
       this.form.get('vou_uuid')?.disable();
     }
 
@@ -163,11 +172,13 @@ export class VoucherComponent implements OnInit {
    * Fetches an existing voucher record by its composite identifiers and populates the form.
    */
   loadVoucher(): void {
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) return;
     this.isLoading = true;
     const cid = this.cardId || '1';
     const pid = this.periodId || '1';
 
-    this._vouchersService.getVocuherById('7a067c90-bf5b-45d1-8f07-91b578e2d54d', cid, pid, this.voucherId!).subscribe(
+    this._vouchersService.getVocuherById(usr_uuid, cid, pid, this.voucherId!).subscribe(
       (response: any) => {
         if(response.success) {
           console.info(response.data);
@@ -299,6 +310,7 @@ export class VoucherComponent implements OnInit {
 
     const payload = {
       ...rawValue,
+      usr_uuid: this.currentUserId,
       fees
     };
 
