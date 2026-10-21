@@ -451,6 +451,26 @@
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="templateForm" nzLayout="vertical">
         <nz-row [nzGutter]="[16, 20]">
+          <!-- Ámbito Contable -->
+          <nz-col [nzSpan]="24">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24" nzRequired>Ámbito / Contexto Contable</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione un ámbito contable">
+                <nz-select formControlName="scp_uuid" placeholder="Seleccione el ámbito (Personal, ISA3D, etc.)" style="width: 100%;">
+                  @for (scope of scopes; track scope.scp_uuid) {
+                    <nz-option 
+                      [nzValue]="scope.scp_uuid" 
+                      [nzLabel]="scope.scp_name" 
+                      [nzCustomContent]="true">
+                      <i nz-icon [nzType]="scope.scp_isshared ? 'bank' : 'user'" style="margin-right: 6px;"></i>
+                      {{ scope.scp_name }}
+                    </nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
           <!-- Nombre del Servicio -->
           <nz-col [nzSpan]="24" [nzMd]="14">
             <nz-form-item style="margin-bottom: 0;">

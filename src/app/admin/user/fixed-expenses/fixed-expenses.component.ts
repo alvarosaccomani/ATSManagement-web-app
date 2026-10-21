@@ -189,6 +189,7 @@ export class FixedExpensesComponent implements OnInit {
 
     // Formulario de Plantilla de Gasto Fijo
     this.templateForm = this._fb.group({
+      scp_uuid: [null, [Validators.required]],
       fex_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       fex_category: ['SERVICIOS', [Validators.required]],
       fex_dueday: [10, [Validators.required, Validators.min(1), Validators.max(31)]],
@@ -200,6 +201,13 @@ export class FixedExpensesComponent implements OnInit {
       fex_isautodebit: [false],
       fex_autogenerate: [false],
       fex_notes: ['']
+    });
+
+    // Actualizar contactos cuando se cambia el ámbito en el modal
+    this.templateForm.get('scp_uuid')?.valueChanges.subscribe(scopeId => {
+      if (scopeId) {
+        this.loadScopeDependencies(scopeId);
+      }
     });
   }
 
@@ -238,11 +246,12 @@ export class FixedExpensesComponent implements OnInit {
   }
 
   /**
-   * Carga las personas y contactos vinculados al ámbito contable activo.
+   * Carga las personas y contactos vinculados al ámbito contable activo o seleccionado.
    */
-  public loadScopeDependencies(): void {
-    if (!this.selectedScopeUuid) return;
-    this._personsService.getPersons(this.selectedScopeUuid).subscribe({
+  public loadScopeDependencies(targetScopeUuid?: string): void {
+    const scopeUuid = targetScopeUuid || this.selectedScopeUuid;
+    if (!scopeUuid) return;
+    this._personsService.getPersons(scopeUuid).subscribe({
       next: (res) => {
         if (res.data) {
           this.persons = res.data;
@@ -493,7 +502,9 @@ export class FixedExpensesComponent implements OnInit {
   public openCreateModal(): void {
     this.isEditingTemplate = false;
     this.editingFexUuid = null;
+    const defaultScope = this.selectedScopeUuid || (this.scopes.length > 0 ? this.scopes[0].scp_uuid : null);
     this.templateForm.reset({
+      scp_uuid: defaultScope,
       fex_name: '',
       fex_category: 'SERVICIOS',
       fex_dueday: 10,
@@ -506,6 +517,9 @@ export class FixedExpensesComponent implements OnInit {
       fex_autogenerate: false,
       fex_notes: ''
     });
+    if (defaultScope) {
+      this.loadScopeDependencies(defaultScope);
+    }
     this.isTemplateModalVisible = true;
   }
 
@@ -516,6 +530,7 @@ export class FixedExpensesComponent implements OnInit {
     this.isEditingTemplate = true;
     this.editingFexUuid = item.fex_uuid;
     this.templateForm.reset({
+      scp_uuid: item.scp_uuid,
       fex_name: item.fex_name,
       fex_category: item.fex_category || 'SERVICIOS',
       fex_dueday: item.fex_dueday,
@@ -528,6 +543,9 @@ export class FixedExpensesComponent implements OnInit {
       fex_autogenerate: !!item.fex_autogenerate,
       fex_notes: item.fex_notes || ''
     });
+    if (item.scp_uuid) {
+      this.loadScopeDependencies(item.scp_uuid);
+    }
     this.isTemplateModalVisible = true;
   }
 
@@ -570,9 +588,16 @@ export class FixedExpensesComponent implements OnInit {
         }
       });
     } else {
+      const scopeToUse = formVal.scp_uuid || this.selectedScopeUuid;
+      if (!scopeToUse) {
+        this._messageService.error('Ámbito Requerido', 'Por favor seleccione el ámbito contable.');
+        this.isSaving = false;
+        return;
+      }
+
       const createPayload: FixedExpenseInputDTO = {
         ...formVal,
-        scp_uuid: this.selectedScopeUuid,
+        scp_uuid: scopeToUse,
         usr_uuid: this.getUsrUuid()
       };
 
