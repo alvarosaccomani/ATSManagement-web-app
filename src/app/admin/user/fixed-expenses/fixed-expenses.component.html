@@ -50,7 +50,13 @@
       </div>
 
       <!-- Botón Nuevo Gasto Fijo -->
-      <button nz-button nzType="primary" (click)="openCreateModal()" class="btn-create">
+      <button 
+        nz-button 
+        nzType="primary" 
+        (click)="openCreateModal()" 
+        [disabled]="scopes.length === 0"
+        [nz-tooltip]="scopes.length === 0 ? 'Debes configurar o tener un ámbito contable asignado para agregar gastos fijos' : null"
+        class="btn-create">
         <i nz-icon nzType="plus"></i> Nuevo Gasto Fijo
       </button>
     </div>
@@ -58,7 +64,44 @@
 
   <nz-divider></nz-divider>
 
-  <!-- TARJETAS DE KPIS FINANCIEROS -->
+  <!-- ALERTA / ESTADO VACÍO CUANDO EL USUARIO NO TIENE ÁMBITOS ASIGNADOS -->
+  @if (!isLoading && scopes.length === 0) {
+    <nz-alert
+      nzType="warning"
+      nzShowIcon
+      [nzMessage]="noScopesTitle"
+      [nzDescription]="noScopesDescription"
+      class="no-scopes-alert">
+      <ng-template #noScopesTitle>
+        <span class="no-scopes-title-text">No tienes ámbitos contables asignados</span>
+      </ng-template>
+      <ng-template #noScopesDescription>
+        <div class="no-scopes-body">
+          <p class="no-scopes-text">
+            Para registrar gastos fijos, controlar débitos automáticos y presupuestar gastos mensuales, tu usuario debe contar con al menos un ámbito contable propio o asignado (ej: Personal, Hogar, Empresa).
+          </p>
+          <div class="no-scopes-actions">
+            <button nz-button nzType="primary" routerLink="/admin/user/scope/new">
+              <i nz-icon nzType="plus-circle"></i> Configurar Nuevo Ámbito
+            </button>
+            <button nz-button nzType="default" routerLink="/admin/user/scopes" class="btn-scopes-list">
+              <i nz-icon nzType="appstore"></i> Ver Mis Ámbitos
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </nz-alert>
+
+    <div class="no-scopes-empty-state">
+      <nz-empty
+        nzNotFoundImage="simple"
+        [nzNotFoundContent]="'Sin ámbitos contables disponibles. Debe configurar o solicitar asignación a un ámbito contable.'">
+      </nz-empty>
+    </div>
+  }
+
+  @if (scopes.length > 0) {
+    <!-- TARJETAS DE KPIS FINANCIEROS -->
   <div class="kpi-grid">
     <nz-card [nzBordered]="false" class="kpi-card budgeted-card">
       <nz-statistic
@@ -296,6 +339,7 @@
       </tbody>
     </nz-table>
   </nz-card>
+  }
 
   <!-- ============================================================= -->
   <!-- MODAL: REGISTRAR PAGO / CONFIRMAR DÉBITO                     -->
@@ -456,7 +500,7 @@
             <nz-form-item style="margin-bottom: 0;">
               <nz-form-label [nzSpan]="24" nzRequired>Ámbito / Contexto Contable</nz-form-label>
               <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione un ámbito contable">
-                <nz-select formControlName="scp_uuid" placeholder="Seleccione el ámbito (Personal, ISA3D, etc.)" style="width: 100%;">
+                <nz-select formControlName="scp_uuid" nzPlaceHolder="Seleccione el ámbito (Personal, ISA3D, etc.)" style="width: 100%;">
                   @for (scope of scopes; track scope.scp_uuid) {
                     <nz-option 
                       [nzValue]="scope.scp_uuid" 
@@ -531,7 +575,7 @@
             <nz-form-item style="margin-bottom: 0;">
               <nz-form-label [nzSpan]="24">Cuenta o Tarjeta Predeterminada</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-select formControlName="crd_uuid" nzAllowClear placeholder="Seleccionar cuenta habitual" style="width: 100%;">
+                <nz-select formControlName="crd_uuid" nzAllowClear nzPlaceHolder="Seleccionar cuenta habitual" style="width: 100%;">
                   @for (card of cards; track card.crd_uuid) {
                     <nz-option 
                       [nzValue]="card.crd_uuid" 
@@ -548,7 +592,7 @@
             <nz-form-item style="margin-bottom: 0;">
               <nz-form-label [nzSpan]="24">Proveedor / Beneficiario</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-select formControlName="prs_uuid" nzAllowClear placeholder="Seleccionar proveedor habitual" style="width: 100%;">
+                <nz-select formControlName="prs_uuid" nzAllowClear nzPlaceHolder="Seleccionar proveedor habitual" style="width: 100%;">
                   @for (person of persons; track person.prs_uuid) {
                     <nz-option 
                       [nzValue]="person.prs_uuid" 

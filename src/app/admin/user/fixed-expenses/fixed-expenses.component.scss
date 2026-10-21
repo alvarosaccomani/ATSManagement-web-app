@@ -82,6 +82,50 @@
     }
   }
 
+  // Alerta cuando el usuario no posee ámbitos
+  .no-scopes-alert {
+    border-radius: 8px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    border: 1px solid #ffe58f;
+    background-color: #fffbe6;
+
+    .no-scopes-title-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #d48806;
+    }
+
+    .no-scopes-body {
+      margin-top: 8px;
+
+      .no-scopes-text {
+        color: #595959;
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+
+      .no-scopes-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+
+        .btn-scopes-list {
+          border-color: #d9d9d9;
+        }
+      }
+    }
+  }
+
+  .no-scopes-empty-state {
+    padding: 60px 0;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px dashed #e2e8f0;
+  }
+
   // Tarjetas KPI
   .kpi-grid {
     display: grid;

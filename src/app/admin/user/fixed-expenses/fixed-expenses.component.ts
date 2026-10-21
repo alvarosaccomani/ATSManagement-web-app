@@ -22,6 +22,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 import { FixedExpensesService } from '../../../core/services/fixed-expenses.service';
 import { ScopesService } from '../../../core/services/scopes.service';
@@ -70,7 +71,8 @@ import { PersonInterface } from '../../../core/interfaces/person.interface';
     NzDividerModule,
     NzDatePickerModule,
     NzAlertModule,
-    NzProgressModule
+    NzProgressModule,
+    NzEmptyModule
   ],
   templateUrl: './fixed-expenses.component.html',
   styleUrl: './fixed-expenses.component.scss'
@@ -171,7 +173,7 @@ export class FixedExpensesComponent implements OnInit {
    * Obtiene el identificador del usuario activo desde la sesión.
    */
   private getUsrUuid(): string {
-    return this._sessionService.getIdentity()?.usr_uuid || '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    return this._sessionService.getIdentity()?.usr_uuid || '';
   }
 
   /**
@@ -216,22 +218,34 @@ export class FixedExpensesComponent implements OnInit {
    */
   public loadInitialData(): void {
     const usrUuid = this.getUsrUuid();
+    if (!usrUuid) {
+      this.isLoading = false;
+      return;
+    }
+
     this.isLoading = true;
 
     this._scopesService.getScopes(usrUuid).subscribe({
       next: (res) => {
+        this.isLoading = false;
         if (res.success && res.data && res.data.length > 0) {
           this.scopes = res.data;
           this.selectedScopeUuid = this.scopes[0].scp_uuid;
           this.loadScopeDependencies();
           this.loadFixedExpenses();
         } else {
-          this.isLoading = false;
+          this.scopes = [];
+          this.selectedScopeUuid = '';
+          this.fixedExpenses = [];
+          this.filteredExpenses = [];
+          this.calculateKpis();
         }
       },
       error: (err) => {
         console.error('Error al cargar ámbitos contables:', err);
         this.isLoading = false;
+        this.scopes = [];
+        this.selectedScopeUuid = '';
       }
     });
 
@@ -459,6 +473,12 @@ export class FixedExpensesComponent implements OnInit {
       return;
     }
 
+    const usrUuid = this.getUsrUuid();
+    if (!usrUuid) {
+      this._messageService.error('Sesión requerida', 'No se pudo identificar al usuario activo.');
+      return;
+    }
+
     this.isSaving = true;
     const formVal = this.payForm.value;
     const payload: PayFixedExpenseDTO = {
@@ -467,7 +487,7 @@ export class FixedExpensesComponent implements OnInit {
       crd_uuid: formVal.crd_uuid || null,
       prs_uuidactor: formVal.prs_uuidactor || null,
       trx_notes: formVal.trx_notes || null,
-      usr_uuidcreator: this.getUsrUuid()
+      usr_uuidcreator: usrUuid
     };
 
     this._fixedExpensesService.payFixedExpense(this.selectedExpenseForPayment.fex_uuid, payload).subscribe({
@@ -500,9 +520,17 @@ export class FixedExpensesComponent implements OnInit {
    * Abre el modal para dar de alta un nuevo gasto fijo recurrente.
    */
   public openCreateModal(): void {
+    if (this.scopes.length === 0) {
+      this._messageService.error(
+        'Sin Ámbitos Disponibles',
+        'No tienes ningún ámbito contable asignado. Debes crear un ámbito o solicitar acceso a uno antes de registrar gastos fijos.'
+      );
+      return;
+    }
+
     this.isEditingTemplate = false;
     this.editingFexUuid = null;
-    const defaultScope = this.selectedScopeUuid || (this.scopes.length > 0 ? this.scopes[0].scp_uuid : null);
+    const defaultScope = this.selectedScopeUuid || this.scopes[0].scp_uuid;
     this.templateForm.reset({
       scp_uuid: defaultScope,
       fex_name: '',
@@ -517,9 +545,7 @@ export class FixedExpensesComponent implements OnInit {
       fex_autogenerate: false,
       fex_notes: ''
     });
-    if (defaultScope) {
-      this.loadScopeDependencies(defaultScope);
-    }
+    this.loadScopeDependencies(defaultScope);
     this.isTemplateModalVisible = true;
   }
 
@@ -595,10 +621,17 @@ export class FixedExpensesComponent implements OnInit {
         return;
       }
 
+      const usrUuid = this.getUsrUuid();
+      if (!usrUuid) {
+        this._messageService.error('Sesión requerida', 'No se pudo identificar al usuario activo.');
+        this.isSaving = false;
+        return;
+      }
+
       const createPayload: FixedExpenseInputDTO = {
         ...formVal,
         scp_uuid: scopeToUse,
-        usr_uuid: this.getUsrUuid()
+        usr_uuid: usrUuid
       };
 
       this._fixedExpensesService.createFixedExpense(createPayload).subscribe({
