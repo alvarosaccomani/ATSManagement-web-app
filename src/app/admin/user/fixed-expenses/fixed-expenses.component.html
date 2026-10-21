@@ -1,1 +1,599 @@
-<p>fixed-expenses works!</p>
+<div class="fixed-expenses-container">
+
+  <!-- ENCABEZADO Y CONTROLES PRINCIPALES -->
+  <div class="page-header">
+    <div class="title-area">
+      <h1>
+        <i nz-icon nzType="schedule" nzTheme="outline" class="title-icon"></i>
+        Gastos Fijos & Servicios Recurrentes
+      </h1>
+      <p class="subtitle">
+        Administración de servicios periódicos, control de vencimientos, débitos automáticos y presupuesto mensual.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <!-- Selector de Ámbito Contable -->
+      <div class="scope-selector">
+        <nz-select 
+          [(ngModel)]="selectedScopeUuid" 
+          (ngModelChange)="onScopeChange()" 
+          nzPlaceHolder="Seleccionar Ámbito"
+          class="scope-select">
+          @for (scope of scopes; track scope.scp_uuid) {
+            <nz-option 
+              [nzValue]="scope.scp_uuid" 
+              [nzLabel]="scope.scp_name" 
+              [nzCustomContent]="true">
+              <i nz-icon [nzType]="scope.scp_isshared ? 'bank' : 'user'" class="scope-icon"></i>
+              {{ scope.scp_name }}
+            </nz-option>
+          }
+        </nz-select>
+      </div>
+
+      <!-- Navegador de Mes / Período -->
+      <div class="period-navigator">
+        <button nz-button nzType="default" (click)="prevPeriod()" nz-tooltip="Mes anterior">
+          <i nz-icon nzType="left"></i>
+        </button>
+        <div class="period-display">
+          <i nz-icon nzType="calendar" class="calendar-icon"></i>
+          <span>{{ getPeriodLabel() }}</span>
+        </div>
+        <button nz-button nzType="default" (click)="nextPeriod()" nz-tooltip="Mes siguiente">
+          <i nz-icon nzType="right"></i>
+        </button>
+        <button nz-button nzType="dashed" (click)="resetToCurrentPeriod()" class="btn-current">
+          Mes Actual
+        </button>
+      </div>
+
+      <!-- Botón Nuevo Gasto Fijo -->
+      <button nz-button nzType="primary" (click)="openCreateModal()" class="btn-create">
+        <i nz-icon nzType="plus"></i> Nuevo Gasto Fijo
+      </button>
+    </div>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  <!-- TARJETAS DE KPIS FINANCIEROS -->
+  <div class="kpi-grid">
+    <nz-card [nzBordered]="false" class="kpi-card budgeted-card">
+      <nz-statistic
+        [nzValue]="totalBudgeted"
+        [nzTitle]="'Presupuesto Mensual Estimado'"
+        [nzPrefix]="'$ '"
+        [nzValueStyle]="{ color: '#1890ff', 'font-weight': '600' }">
+      </nz-statistic>
+      <div class="kpi-subtext">Total esperado a abonar en el mes</div>
+    </nz-card>
+
+    <nz-card [nzBordered]="false" class="kpi-card paid-card">
+      <nz-statistic
+        [nzValue]="totalPaid"
+        [nzTitle]="'Abonado Real'"
+        [nzPrefix]="'$ '"
+        [nzValueStyle]="{ color: '#52c41a', 'font-weight': '600' }">
+      </nz-statistic>
+      <div class="kpi-subtext">Egresos liquidados hasta el momento</div>
+    </nz-card>
+
+    <nz-card [nzBordered]="false" class="kpi-card pending-card">
+      <nz-statistic
+        [nzValue]="totalPending"
+        [nzTitle]="'Saldo Pendiente'"
+        [nzPrefix]="'$ '"
+        [nzValueStyle]="{ color: totalPending > 0 ? '#fa8c16' : '#52c41a', 'font-weight': '600' }">
+      </nz-statistic>
+      <div class="kpi-subtext">Faltante por registrar o debitar</div>
+    </nz-card>
+
+    <nz-card [nzBordered]="false" class="kpi-card progress-card">
+      <div class="progress-title">Cumplimiento del Mes</div>
+      <div class="progress-stats">
+        <span class="count-badge">{{ paidCount }} de {{ totalCount }}</span>
+        <span class="percent-label">{{ progressPercentage }}%</span>
+      </div>
+      <nz-progress 
+        [nzPercent]="progressPercentage" 
+        [nzStatus]="progressPercentage === 100 ? 'success' : 'active'" 
+        [nzStrokeColor]="progressPercentage === 100 ? '#52c41a' : '#1890ff'">
+      </nz-progress>
+    </nz-card>
+  </div>
+
+  <!-- BARRA DE FILTROS Y BÚSQUEDA -->
+  <div class="filter-bar">
+    <div class="search-input">
+      <nz-input-group [nzPrefix]="searchIcon">
+        <input 
+          type="text" 
+          nz-input 
+          placeholder="Buscar por servicio, categoría o nota..." 
+          [(ngModel)]="searchTerm" 
+          (ngModelChange)="applyFilters()" />
+      </nz-input-group>
+      <ng-template #searchIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+
+    <div class="filter-controls">
+      <!-- Filtro Estado -->
+      <nz-select 
+        [(ngModel)]="statusFilter" 
+        (ngModelChange)="applyFilters()" 
+        class="filter-select">
+        <nz-option nzValue="ALL" nzLabel="Todos los Estados"></nz-option>
+        <nz-option nzValue="PENDING" nzLabel="Solo Pendientes"></nz-option>
+        <nz-option nzValue="PAID" nzLabel="Solo Pagados"></nz-option>
+      </nz-select>
+
+      <!-- Filtro Modalidad Débito -->
+      <nz-select 
+        [(ngModel)]="debitFilter" 
+        (ngModelChange)="applyFilters()" 
+        class="filter-select">
+        <nz-option nzValue="ALL" nzLabel="Todas las Modalidades"></nz-option>
+        <nz-option nzValue="AUTODEBIT" nzLabel="Débito Automático"></nz-option>
+        <nz-option nzValue="MANUAL" nzLabel="Pago Manual"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+
+  <!-- TABLA DE GASTOS FIJOS -->
+  <nz-card [nzBordered]="false" class="table-card">
+    <nz-table
+      #fixedExpensesTable
+      [nzData]="filteredExpenses"
+      [nzLoading]="isLoading"
+      [nzPageSize]="15"
+      nzShowPagination
+      nzShowSizeChanger
+      class="fixed-expenses-table">
+      <thead>
+        <tr>
+          <th>Gasto / Servicio</th>
+          <th>Categoría</th>
+          <th>Vencimiento</th>
+          <th>Modalidad</th>
+          <th nzAlign="right">Monto Estimado</th>
+          <th nzAlign="center">Estado del Mes</th>
+          <th nzAlign="center" nzWidth="200px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of fixedExpensesTable.data; track item.fex_uuid) {
+          <tr [class.row-paid]="item.status === 'PAID'">
+            <!-- Nombre y Notas -->
+            <td>
+              <div class="item-name-cell">
+                <span class="fex-name">{{ item.fex_name }}</span>
+                @if (item.fex_notes) {
+                  <span class="fex-notes" [nz-tooltip]="item.fex_notes">
+                    <i nz-icon nzType="info-circle"></i> {{ item.fex_notes }}
+                  </span>
+                }
+              </div>
+            </td>
+
+            <!-- Categoría -->
+            <td>
+              <nz-tag [nzColor]="getCategoryColor(item.fex_category)">
+                {{ item.fex_category || 'GENERAL' }}
+              </nz-tag>
+            </td>
+
+            <!-- Día de Vencimiento -->
+            <td>
+              <span class="due-day">
+                <i nz-icon nzType="calendar"></i> Día {{ item.fex_dueday }}
+              </span>
+            </td>
+
+            <!-- Modalidad Débito Automático -->
+            <td>
+              @if (item.fex_isautodebit) {
+                <nz-tag nzColor="processing" class="tag-autodebit">
+                  <i nz-icon nzType="sync"></i> Débito Automático
+                </nz-tag>
+              } @else {
+                <nz-tag nzColor="default" class="tag-manual">
+                  <i nz-icon nzType="check-square"></i> Pago Manual
+                </nz-tag>
+              }
+            </td>
+
+            <!-- Monto de Referencia -->
+            <td nzAlign="right" class="amount-cell">
+              <strong>{{ formatAmount(item.fex_referenceamount) }}</strong>
+            </td>
+
+            <!-- Estado del Mes -->
+            <td nzAlign="center">
+              @if (item.status === 'PAID') {
+                <div class="paid-badge-container">
+                  <nz-tag nzColor="success" class="status-tag">
+                    <i nz-icon nzType="check-circle"></i> PAGADO
+                  </nz-tag>
+                  @if (item.paid_transaction) {
+                    <div class="paid-details">
+                      <span class="paid-amount">{{ formatAmount(item.paid_transaction.trx_amount) }}</span>
+                      <span class="paid-date">{{ item.paid_transaction.trx_datetime | date:'dd/MM' }}</span>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <nz-tag nzColor="warning" class="status-tag">
+                  <i nz-icon nzType="clock-circle"></i> PENDIENTE
+                </nz-tag>
+              }
+            </td>
+
+            <!-- Acciones -->
+            <td nzAlign="center">
+              <div class="action-buttons">
+                <!-- Botón Registrar Pago / Confirmar Débito -->
+                @if (item.status === 'PENDING') {
+                  <button 
+                    nz-button 
+                    nzType="primary" 
+                    nzSize="small" 
+                    class="btn-pay" 
+                    (click)="openPaymentModal(item)"
+                    [nz-tooltip]="item.fex_isautodebit ? 'Confirmar Débito Automático del mes' : 'Registrar pago del mes'">
+                    <i nz-icon [nzType]="item.fex_isautodebit ? 'sync' : 'dollar-circle'"></i>
+                    {{ item.fex_isautodebit ? 'Confirmar Débito' : 'Pagar' }}
+                  </button>
+                } @else {
+                  <button 
+                    nz-button 
+                    nzType="default" 
+                    nzSize="small" 
+                    (click)="openPaymentModal(item)"
+                    nz-tooltip="Registrar otro egreso o ajuste para este servicio">
+                    <i nz-icon nzType="plus"></i> Pago Extra
+                  </button>
+                }
+
+                <!-- Botón Editar Plantilla -->
+                <button 
+                  nz-button 
+                  nzType="text" 
+                  nzSize="small" 
+                  (click)="openEditModal(item)" 
+                  nz-tooltip="Editar regla de gasto fijo">
+                  <i nz-icon nzType="edit"></i>
+                </button>
+
+                <!-- Botón Eliminar Plantilla -->
+                <button 
+                  nz-button 
+                  nzType="text" 
+                  nzDanger 
+                  nzSize="small" 
+                  (click)="deleteExpense(item)" 
+                  nz-tooltip="Dar de baja gasto fijo">
+                  <i nz-icon nzType="delete"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="empty-cell">
+              <nz-alert
+                nzType="info"
+                nzMessage="No hay gastos fijos registrados"
+                nzDescription="Cree un nuevo gasto fijo para comenzar a monitorear sus servicios recurrentes y débitos automáticos."
+                nzShowIcon>
+              </nz-alert>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: REGISTRAR PAGO / CONFIRMAR DÉBITO                     -->
+  <!-- ============================================================= -->
+  <nz-modal
+    [(nzVisible)]="isPayModalVisible"
+    [nzTitle]="paymentModalTitle"
+    [nzFooter]="paymentModalFooter"
+    (nzOnCancel)="closePaymentModal()"
+    nzWidth="580px">
+    <ng-template #paymentModalTitle>
+      <div class="modal-title-custom">
+        <i nz-icon [nzType]="selectedExpenseForPayment?.fex_isautodebit ? 'sync' : 'dollar-circle'" class="modal-icon"></i>
+        <span>{{ selectedExpenseForPayment?.fex_isautodebit ? 'Confirmar Débito Automático' : 'Registrar Pago de Gasto Fijo' }}</span>
+      </div>
+    </ng-template>
+
+    <ng-container *nzModalContent>
+      @if (selectedExpenseForPayment) {
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #0f172a;">{{ selectedExpenseForPayment.fex_name }}</h3>
+            <nz-tag [nzColor]="getCategoryColor(selectedExpenseForPayment.fex_category)">
+              {{ selectedExpenseForPayment.fex_category || 'GENERAL' }}
+            </nz-tag>
+            @if (selectedExpenseForPayment.fex_isautodebit) {
+              <nz-tag nzColor="processing">
+                <i nz-icon nzType="sync"></i> Débito Automático
+              </nz-tag>
+            }
+          </div>
+          <p style="margin: 0; font-size: 0.85rem; color: #64748b;">
+            Período: <strong>{{ getPeriodLabel() }}</strong> &bull; Vencimiento habitual: <strong>Día {{ selectedExpenseForPayment.fex_dueday }}</strong>
+          </p>
+        </div>
+
+        <form nz-form [formGroup]="payForm" nzLayout="vertical">
+          <nz-row [nzGutter]="[16, 16]">
+            <!-- Monto Real Abonado -->
+            <nz-col [nzSpan]="24">
+              <nz-form-item style="margin-bottom: 0;">
+                <nz-form-label [nzSpan]="24" nzRequired>Importe Real Abonado ($)</nz-form-label>
+                <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese un importe válido mayor a 0">
+                  <nz-input-number
+                    formControlName="trx_amount"
+                    nzPlaceHolder="0.00"
+                    [nzMin]="0.01"
+                    [nzStep]="100"
+                    style="width: 100%;"
+                    nzSize="large">
+                  </nz-input-number>
+                </nz-form-control>
+                <span class="field-hint" style="display: block; margin-top: 6px; font-size: 0.75rem; color: #64748b;">
+                  Al confirmar, este valor actualizará el importe de referencia para el mes siguiente.
+                </span>
+              </nz-form-item>
+            </nz-col>
+
+            <!-- Fecha de Pago / Débito -->
+            <nz-col [nzSpan]="24">
+              <nz-form-item style="margin-bottom: 0;">
+                <nz-form-label [nzSpan]="24" nzRequired>Fecha del Pago / Débito</nz-form-label>
+                <nz-form-control [nzSpan]="24" nzErrorTip="Seleccione la fecha del pago">
+                  <nz-date-picker
+                    formControlName="trx_datetime"
+                    nzFormat="dd/MM/yyyy"
+                    style="width: 100%;"
+                    nzSize="large">
+                  </nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+
+            <!-- Cuenta / Tarjeta de Débito -->
+            <nz-col [nzSpan]="24">
+              <nz-form-item style="margin-bottom: 0;">
+                <nz-form-label [nzSpan]="24">Cuenta o Tarjeta de Pago</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <nz-select 
+                    formControlName="crd_uuid" 
+                    nzPlaceHolder="Seleccionar cuenta / tarjeta (opcional)"
+                    nzAllowClear
+                    style="width: 100%;"
+                    nzSize="large">
+                    @for (card of cards; track card.crd_uuid) {
+                      <nz-option 
+                        [nzValue]="card.crd_uuid" 
+                        [nzLabel]="card.crd_alias || ('**** ' + card.crd_last4digits)">
+                      </nz-option>
+                    }
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+
+            <!-- Socio Pagador (Opcional) -->
+            <nz-col [nzSpan]="24">
+              <nz-form-item style="margin-bottom: 0;">
+                <nz-form-label [nzSpan]="24">Socio Pagador (si se pagó de bolsillo)</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <nz-select 
+                    formControlName="prs_uuidactor" 
+                    nzPlaceHolder="Seleccionar socio (opcional)"
+                    nzAllowClear
+                    style="width: 100%;"
+                    nzSize="large">
+                    @for (person of persons; track person.prs_uuid) {
+                      <nz-option 
+                        [nzValue]="person.prs_uuid" 
+                        [nzLabel]="person.prs_name">
+                      </nz-option>
+                    }
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+
+            <!-- Observaciones / Nro de Factura -->
+            <nz-col [nzSpan]="24">
+              <nz-form-item style="margin-bottom: 0;">
+                <nz-form-label [nzSpan]="24">Notas / Número de Comprobante</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input nz-input formControlName="trx_notes" placeholder="Ej: Factura Nº 0001-923812, ticket débito" style="width: 100%;" />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
+        </form>
+      }
+    </ng-container>
+
+    <ng-template #paymentModalFooter>
+      <button nz-button nzType="default" (click)="closePaymentModal()">Cancelar</button>
+      <button 
+        nz-button 
+        nzType="primary" 
+        [nzLoading]="isSaving" 
+        (click)="submitPayment()">
+        <i nz-icon nzType="check"></i> Confirmar Pago
+      </button>
+    </ng-template>
+  </nz-modal>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: CREAR / EDITAR PLANTILLA DE GASTO FIJO                -->
+  <!-- ============================================================= -->
+  <nz-modal
+    [(nzVisible)]="isTemplateModalVisible"
+    [nzTitle]="isEditingTemplate ? 'Editar Gasto Fijo' : 'Nuevo Gasto Fijo / Recurrente'"
+    [nzFooter]="templateModalFooter"
+    (nzOnCancel)="closeTemplateModal()"
+    nzWidth="720px">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="templateForm" nzLayout="vertical">
+        <nz-row [nzGutter]="[16, 20]">
+          <!-- Nombre del Servicio -->
+          <nz-col [nzSpan]="24" [nzMd]="14">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24" nzRequired>Nombre del Gasto / Servicio</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese un nombre representativo (ej: Internet Fibra)">
+                <input nz-input formControlName="fex_name" placeholder="Ej: Alquiler, Luz Edesur, Sueldos..." style="width: 100%;" />
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <!-- Categoría -->
+          <nz-col [nzSpan]="24" [nzMd]="10">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24" nzRequired>Categoría</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="fex_category" style="width: 100%;">
+                  @for (cat of categories; track cat.value) {
+                    <nz-option [nzValue]="cat.value" [nzLabel]="cat.label"></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <!-- Día de Vencimiento -->
+          <nz-col [nzSpan]="24" [nzMd]="8">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24" nzRequired>Día Vencimiento (1-31)</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Día entre 1 y 31">
+                <nz-input-number 
+                  formControlName="fex_dueday" 
+                  [nzMin]="1" 
+                  [nzMax]="31" 
+                  [nzStep]="1" 
+                  style="width: 100%;">
+                </nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <!-- Monto Estimado de Referencia -->
+          <nz-col [nzSpan]="24" [nzMd]="16">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24" nzRequired>Monto de Referencia ($)</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Ingrese un monto estimado o el del último mes">
+                <nz-input-number 
+                  formControlName="fex_referenceamount" 
+                  [nzMin]="0" 
+                  [nzStep]="500" 
+                  style="width: 100%;">
+                </nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <!-- Cuenta o Tarjeta Habitual -->
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24">Cuenta o Tarjeta Predeterminada</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="crd_uuid" nzAllowClear placeholder="Seleccionar cuenta habitual" style="width: 100%;">
+                  @for (card of cards; track card.crd_uuid) {
+                    <nz-option 
+                      [nzValue]="card.crd_uuid" 
+                      [nzLabel]="card.crd_alias || ('**** ' + card.crd_last4digits)">
+                    </nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <!-- Contacto / Proveedor -->
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24">Proveedor / Beneficiario</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="prs_uuid" nzAllowClear placeholder="Seleccionar proveedor habitual" style="width: 100%;">
+                  @for (person of persons; track person.prs_uuid) {
+                    <nz-option 
+                      [nzValue]="person.prs_uuid" 
+                      [nzLabel]="person.prs_name">
+                    </nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+
+          <!-- Switches de Configuración -->
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; min-height: 96px; display: flex; flex-direction: column; justify-content: center;">
+              <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                <nz-switch formControlName="fex_isautodebit" style="margin-right: 14px;"></nz-switch>
+                <span style="font-size: 0.95rem; font-weight: 600; color: #1e293b;">Débito Automático</span>
+              </div>
+              <p style="margin: 0; font-size: 0.8rem; color: #64748b; line-height: 1.4; padding-left: 2px;">
+                El servicio se descuenta automáticamente en la cuenta bancaria o tarjeta.
+              </p>
+            </div>
+          </nz-col>
+
+          <nz-col [nzSpan]="24" [nzMd]="12">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; min-height: 96px; display: flex; flex-direction: column; justify-content: center;">
+              <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                <nz-switch formControlName="fex_autogenerate" style="margin-right: 14px;"></nz-switch>
+                <span style="font-size: 0.95rem; font-weight: 600; color: #1e293b;">Auto-generar egreso</span>
+              </div>
+              <p style="margin: 0; font-size: 0.8rem; color: #64748b; line-height: 1.4; padding-left: 2px;">
+                Crear egreso contable automáticamente al llegar la fecha si el importe no varía.
+              </p>
+            </div>
+          </nz-col>
+
+          <!-- Notas / Identificadores -->
+          <nz-col [nzSpan]="24">
+            <nz-form-item style="margin-bottom: 0;">
+              <nz-form-label [nzSpan]="24">Notas / Número de Cliente o Medidor</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <textarea 
+                  nz-input 
+                  formControlName="fex_notes" 
+                  rows="2" 
+                  placeholder="Ej: NIS 2938192, PagoFácil electrónico, usuario web..."
+                  style="width: 100%;">
+                </textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-col>
+        </nz-row>
+      </form>
+    </ng-container>
+
+    <ng-template #templateModalFooter>
+      <button nz-button nzType="default" (click)="closeTemplateModal()">Cancelar</button>
+      <button 
+        nz-button 
+        nzType="primary" 
+        [nzLoading]="isSaving" 
+        (click)="submitTemplate()">
+        <i nz-icon nzType="save"></i> {{ isEditingTemplate ? 'Guardar Cambios' : 'Crear Gasto Fijo' }}
+      </button>
+    </ng-template>
+  </nz-modal>
+
+</div>
