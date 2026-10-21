@@ -11,20 +11,61 @@
       </div>
 
       <div class="header-controls">
-        <nz-select [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-selector">
+        <nz-select *ngIf="hasScopes" [(ngModel)]="selectedScopeUuid" (ngModelChange)="onScopeChange($event)" class="scope-selector">
           <nz-option *ngFor="let s of scopes" [nzValue]="s.scp_uuid" [nzLabel]="s.scp_name" [nzCustomContent]="true">
             <i nz-icon [nzType]="s.scp_uuid === 'ALL' ? 'appstore' : (s.scp_isshared ? 'bank' : 'user')" style="margin-right: 6px;"></i>
             {{ s.scp_name }}
           </nz-option>
         </nz-select>
 
-
-        <button nz-button nzType="primary" (click)="newTransaction()">
+        <button 
+          nz-button 
+          nzType="primary" 
+          (click)="newTransaction()"
+          [disabled]="!hasScopes"
+          [nz-tooltip]="!hasScopes ? 'Debes configurar o tener un ámbito contable asignado' : null">
           <i nz-icon nzType="plus"></i> Nuevo Movimiento
         </button>
       </div>
     </div>
 
+    <!-- ALERTA / EMPTY STATE SI NO POSEE ÁMBITOS CONTABLES -->
+    @if (!isLoading && !hasScopes) {
+      <nz-alert
+        nzType="warning"
+        nzShowIcon
+        [nzMessage]="noScopesTitle"
+        [nzDescription]="noScopesDescription"
+        style="margin-bottom: 24px; border-radius: 8px;">
+        <ng-template #noScopesTitle>
+          <span style="font-weight: 600;">No tienes ámbitos contables asignados</span>
+        </ng-template>
+        <ng-template #noScopesDescription>
+          <div style="margin-top: 8px;">
+            <p style="margin-bottom: 14px; color: #595959; line-height: 1.5;">
+              Para consolidar saldos de caja, computar métricas financieras y registrar movimientos, tu usuario debe contar con al menos un ámbito contable asignado (ej: Personal, Hogar, Empresa).
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button nz-button nzType="primary" routerLink="/admin/user/scope/new">
+                <i nz-icon nzType="plus-circle"></i> Configurar Nuevo Ámbito
+              </button>
+              <button nz-button nzType="default" routerLink="/admin/user/scopes">
+                <i nz-icon nzType="appstore"></i> Ver Mis Ámbitos
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </nz-alert>
+
+      <div style="padding: 60px 0; text-align: center; background: #ffffff; border-radius: 10px; border: 1px dashed #e2e8f0; margin-bottom: 24px;">
+        <nz-empty
+          nzNotFoundImage="simple"
+          [nzNotFoundContent]="'Sin ámbitos contables activos. Configure un ámbito para visualizar métricas financieras.'">
+        </nz-empty>
+      </div>
+    }
+
+    @if (hasScopes) {
     <!-- KPIs Row -->
     <div nz-row [nzGutter]="[16, 16]" class="kpi-row">
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6">
@@ -151,6 +192,7 @@
         </nz-card>
       </div>
     </div>
+    }
   </div>
 </nz-spin>
 
