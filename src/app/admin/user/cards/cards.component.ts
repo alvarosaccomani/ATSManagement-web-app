@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,6 +7,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormsModule } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -30,13 +32,16 @@ import { SessionService } from '../../../core/services/session.service';
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     NzTableModule,
     NzButtonModule,
     NzIconModule,
     NzEmptyModule,
     NzSpinModule,
     NzTagModule,
-    NzSelectModule
+    NzSelectModule,
+    NzAlertModule,
+    NzToolTipModule
   ],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss'
@@ -98,6 +103,13 @@ export class CardsComponent implements OnInit {
   }
 
   /**
+   * Indica si el usuario cuenta con ámbitos contables configurados o asignados.
+   */
+  get hasScopes(): boolean {
+    return this.scopes.filter(s => s.scp_uuid !== 'ALL').length > 0;
+  }
+
+  /**
    * Inicializa el componente y carga los catálogos y registros iniciales.
    */
   ngOnInit(): void {
@@ -110,10 +122,14 @@ export class CardsComponent implements OnInit {
    */
   loadScopes(): void {
     const usr_uuid = this.currentUserId;
-    if (!usr_uuid) return;
+    if (!usr_uuid) {
+      this.scopes = [];
+      this.cards = [];
+      return;
+    }
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
-        if (response.success && response.data.length > 0) {
+        if (response.success && response.data && response.data.length > 0) {
           const allOption: ScopeInterface = {
             scp_uuid: 'ALL',
             scp_name: 'Todos los ámbitos',
@@ -123,7 +139,13 @@ export class CardsComponent implements OnInit {
             scp_color: '#108ee9'
           };
           this.scopes = [allOption, ...response.data];
+        } else {
+          this.scopes = [];
         }
+      },
+      error: (err) => {
+        console.error('Error al cargar ámbitos en tarjetas:', err);
+        this.scopes = [];
       }
     });
   }
@@ -248,6 +270,10 @@ export class CardsComponent implements OnInit {
    * Navega a la ruta de creación de nueva cuenta o tarjeta.
    */
   createCard(): void {
+    if (!this.hasScopes) {
+      this._messageService.error('Ámbito Requerido', 'Debes configurar o tener asignado al menos un ámbito contable antes de crear una cuenta o tarjeta.');
+      return;
+    }
     this._router.navigate(['/admin/user/card/new']);
   }
 

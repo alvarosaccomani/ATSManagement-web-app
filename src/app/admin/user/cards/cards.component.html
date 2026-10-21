@@ -6,6 +6,7 @@
     </h2>
     <div style="display: flex; gap: 12px; align-items: center;">
       <nz-select 
+        *ngIf="hasScopes"
         [(ngModel)]="selectedScopeUuid" 
         (ngModelChange)="onScopeChange($event)"
         style="min-width: 220px;" 
@@ -18,129 +19,173 @@
           </nz-option>
         }
       </nz-select>
-      <button nz-button nzType="primary" (click)="createCard()" nzSize="large">
+      <button 
+        nz-button 
+        nzType="primary" 
+        (click)="createCard()" 
+        [disabled]="!hasScopes"
+        [nz-tooltip]="!hasScopes ? 'Debes configurar o tener un ámbito contable asignado' : null"
+        nzSize="large">
         <i nz-icon nzType="plus"></i>
         Nueva Cuenta / Tarjeta
       </button>
     </div>
   </div>
 
-  @if (loading) {
-    <div class="loading-container">
-      <nz-spin nzTip="Cargando cuentas y tarjetas..."></nz-spin>
-    </div>
-  }
+  <!-- ALERTA / ESTADO VACÍO CUANDO EL USUARIO NO TIENE ÁMBITOS ASIGNADOS -->
+  @if (!loading && !hasScopes) {
+    <nz-alert
+      nzType="warning"
+      nzShowIcon
+      [nzMessage]="noScopesTitle"
+      [nzDescription]="noScopesDescription"
+      style="margin-bottom: 24px; border-radius: 8px;">
+      <ng-template #noScopesTitle>
+        <span style="font-weight: 600;">No tienes ámbitos contables asignados</span>
+      </ng-template>
+      <ng-template #noScopesDescription>
+        <div style="margin-top: 8px;">
+          <p style="margin-bottom: 14px; color: #595959; line-height: 1.5;">
+            Para dar de alta cuentas bancarias, billeteras virtuales, cajas de ahorro y tarjetas, tu usuario debe contar con al menos un ámbito contable asignado (ej: Personal, Hogar, Empresa).
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button nz-button nzType="primary" routerLink="/admin/user/scope/new">
+              <i nz-icon nzType="plus-circle"></i> Configurar Nuevo Ámbito
+            </button>
+            <button nz-button nzType="default" routerLink="/admin/user/scopes">
+              <i nz-icon nzType="appstore"></i> Ver Mis Ámbitos
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </nz-alert>
 
-  @if (!loading && cards.length === 0) {
-    <div class="empty-container">
+    <div style="padding: 60px 0; text-align: center; background: #ffffff; border-radius: 10px; border: 1px dashed #e2e8f0; margin-bottom: 24px;">
       <nz-empty
         nzNotFoundImage="simple"
-        nzNotFoundContent="No hay cuentas ni tarjetas registradas"
-        nzNotFoundFooter=""
-      ></nz-empty>
+        [nzNotFoundContent]="'Sin ámbitos contables activos. Configure un ámbito para comenzar a registrar cuentas y tarjetas.'">
+      </nz-empty>
     </div>
   }
 
-  @if (!loading && cards.length > 0) {
-    <nz-table
-      [nzData]="cards"
-      [nzPageSize]="pageSize"
-      [nzPageIndex]="pageIndex"
-      [nzTotal]="total"
-      nzShowSizeChanger
-      [nzPageSizeOptions]="[10, 20, 30]"
-      (nzPageSizeChange)="onPageSizeChange($event)"
-      (nzPageIndexChange)="onPageIndexChange($event)"
-      nzBordered
-      nzTableLayout="fixed"
-    >
-      <thead>
-        <tr>
-          @for (column of listOfColumns; track column.key) {
-            <th [nzWidth]="column.width">
-              {{ column.title }}
-            </th>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        @for (card of cards; track card.crd_uuid) {
-          <tr>
-            <td>{{ card.crd_uuid }}</td>
-            <td>
-              <nz-tag [nzColor]="card.scp?.scp_color || '#108ee9'">
-                <i nz-icon [nzType]="card.scp?.scp_isshared ? 'bank' : 'user'" style="margin-right: 4px;"></i>
-                {{ card.scp?.scp_name || 'Personal' }}
-              </nz-tag>
-            </td>
+  @if (hasScopes) {
+    @if (loading) {
+      <div class="loading-container">
+        <nz-spin nzTip="Cargando cuentas y tarjetas..."></nz-spin>
+      </div>
+    }
 
-            <td>
-              <div class="card-number">
-                <i nz-icon [nzType]="card.tycrd?.tycrd_name?.toLowerCase()?.includes('efectivo') ? 'wallet' : (card.crd_last4digits ? 'credit-card' : 'bank')" nzTheme="outline" style="margin-right: 6px;"></i>
-                <span *ngIf="card.crd_alias" style="font-weight: 600;">{{ card.crd_alias }}</span>
-                <span *ngIf="card.crd_last4digits" style="margin-left: 4px;">{{ formatCardNumber(card.crd_last4digits) }}</span>
-                <div *ngIf="card.crd_cbualias || card.crd_cbucvu" style="font-size: 11px; color: #8c8c8c;">
-                  <span *ngIf="card.crd_cbualias">Alias: {{ card.crd_cbualias }}</span>
-                  <span *ngIf="card.crd_cbucvu && !card.crd_cbualias">CBU: {{ card.crd_cbucvu }}</span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <nz-tag [nzColor]="getCardTypeColor(card.tycrd?.tycrd_name)">
-                {{ card.tycrd?.tycrd_name || 'Desconocido' }}
-              </nz-tag>
-            </td>
-            <td>
-              <nz-tag *ngIf="card.brcrd?.brcrd_name" [nzColor]="getCardBrandColor(card.brcrd?.brcrd_name)">
-                {{ card.brcrd?.brcrd_name }}
-              </nz-tag>
-              <span *ngIf="!card.brcrd?.brcrd_name">-</span>
-            </td>
-            <td>{{ card.ban?.ban_name || '-' }}</td>
-            <td>
-              <nz-tag *ngIf="card.crd_expirationdate" [nzColor]="isExpired(card.crd_expirationdate) ? 'red' : 'default'">
-                {{ formatExpirationDate(card.crd_expirationdate) }}
-              </nz-tag>
-              <span *ngIf="!card.crd_expirationdate">-</span>
-            </td>
-            <td>{{ formatCreditLimit(card.crd_creditlimit) }}</td>
-            <td>
-              @if (card.crd_active) {
-                <nz-tag nzColor="success">
-                  <i nz-icon nzType="check-circle" nzTheme="fill"></i>
-                  Activa
-                </nz-tag>
-              } @else {
-                <nz-tag nzColor="error">
-                  <i nz-icon nzType="close-circle" nzTheme="fill"></i>
-                  Inactiva
-                </nz-tag>
-              }
-            </td>
-            <td class="actions">
-              <button nz-button nzSize="small" nzType="link" (click)="viewDetails(card)">
-                <i nz-icon nzType="eye" nzTheme="outline"></i>
-                Ver
-              </button>
-              <button nz-button nzSize="small" nzType="link" (click)="editCard(card)">
-                <i nz-icon nzType="edit" nzTheme="outline"></i>
-                Editar
-              </button>
-              <button nz-button nzSize="small" nzDanger (click)="deleteCard(card)">
-                <i nz-icon nzType="delete" nzTheme="outline"></i>
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        }
-        @empty {
+    @if (!loading && cards.length === 0) {
+      <div class="empty-container">
+        <nz-empty
+          nzNotFoundImage="simple"
+          nzNotFoundContent="No hay cuentas ni tarjetas registradas"
+          nzNotFoundFooter=""
+        ></nz-empty>
+      </div>
+    }
+
+    @if (!loading && cards.length > 0) {
+      <nz-table
+        [nzData]="cards"
+        [nzPageSize]="pageSize"
+        [nzPageIndex]="pageIndex"
+        [nzTotal]="total"
+        nzShowSizeChanger
+        [nzPageSizeOptions]="[10, 20, 30]"
+        (nzPageSizeChange)="onPageSizeChange($event)"
+        (nzPageIndexChange)="onPageIndexChange($event)"
+        nzBordered
+        nzTableLayout="fixed"
+      >
+        <thead>
           <tr>
-            <td [colSpan]="listOfColumns.length" class="text-center">
-              No hay datos disponibles
-            </td>
+            @for (column of listOfColumns; track column.key) {
+              <th [nzWidth]="column.width">
+                {{ column.title }}
+              </th>
+            }
           </tr>
-        }
-      </tbody>
-    </nz-table>
+        </thead>
+        <tbody>
+          @for (card of cards; track card.crd_uuid) {
+            <tr>
+              <td>{{ card.crd_uuid }}</td>
+              <td>
+                <nz-tag [nzColor]="card.scp?.scp_color || '#108ee9'">
+                  <i nz-icon [nzType]="card.scp?.scp_isshared ? 'bank' : 'user'" style="margin-right: 4px;"></i>
+                  {{ card.scp?.scp_name || 'Personal' }}
+                </nz-tag>
+              </td>
+
+              <td>
+                <div class="card-number">
+                  <i nz-icon [nzType]="card.tycrd?.tycrd_name?.toLowerCase()?.includes('efectivo') ? 'wallet' : (card.crd_last4digits ? 'credit-card' : 'bank')" nzTheme="outline" style="margin-right: 6px;"></i>
+                  <span *ngIf="card.crd_alias" style="font-weight: 600;">{{ card.crd_alias }}</span>
+                  <span *ngIf="card.crd_last4digits" style="margin-left: 4px;">{{ formatCardNumber(card.crd_last4digits) }}</span>
+                  <div *ngIf="card.crd_cbualias || card.crd_cbucvu" style="font-size: 11px; color: #8c8c8c;">
+                    <span *ngIf="card.crd_cbualias">Alias: {{ card.crd_cbualias }}</span>
+                    <span *ngIf="card.crd_cbucvu && !card.crd_cbualias">CBU: {{ card.crd_cbucvu }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <nz-tag [nzColor]="getCardTypeColor(card.tycrd?.tycrd_name)">
+                  {{ card.tycrd?.tycrd_name || 'Desconocido' }}
+                </nz-tag>
+              </td>
+              <td>
+                <nz-tag *ngIf="card.brcrd?.brcrd_name" [nzColor]="getCardBrandColor(card.brcrd?.brcrd_name)">
+                  {{ card.brcrd?.brcrd_name }}
+                </nz-tag>
+                <span *ngIf="!card.brcrd?.brcrd_name">-</span>
+              </td>
+              <td>{{ card.ban?.ban_name || '-' }}</td>
+              <td>
+                <nz-tag *ngIf="card.crd_expirationdate" [nzColor]="isExpired(card.crd_expirationdate) ? 'red' : 'default'">
+                  {{ formatExpirationDate(card.crd_expirationdate) }}
+                </nz-tag>
+                <span *ngIf="!card.crd_expirationdate">-</span>
+              </td>
+              <td>{{ formatCreditLimit(card.crd_creditlimit) }}</td>
+              <td>
+                @if (card.crd_active) {
+                  <nz-tag nzColor="success">
+                    <i nz-icon nzType="check-circle" nzTheme="fill"></i>
+                    Activa
+                  </nz-tag>
+                } @else {
+                  <nz-tag nzColor="error">
+                    <i nz-icon nzType="close-circle" nzTheme="fill"></i>
+                    Inactiva
+                  </nz-tag>
+                }
+              </td>
+              <td class="actions">
+                <button nz-button nzSize="small" nzType="link" (click)="viewDetails(card)">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                  Ver
+                </button>
+                <button nz-button nzSize="small" nzType="link" (click)="editCard(card)">
+                  <i nz-icon nzType="edit" nzTheme="outline"></i>
+                  Editar
+                </button>
+                <button nz-button nzSize="small" nzDanger (click)="deleteCard(card)">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          }
+          @empty {
+            <tr>
+              <td [colSpan]="listOfColumns.length" class="text-center">
+                No hay datos disponibles
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    }
   }
 </div>
