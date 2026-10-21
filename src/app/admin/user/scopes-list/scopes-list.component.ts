@@ -13,6 +13,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { ScopesService } from '../../../core/services/scopes.service';
+import { SessionService } from '../../../core/services/session.service';
 import { MessageService } from '../../../core/services/message.service';
 
 /**
@@ -45,14 +46,23 @@ export class ScopesListComponent implements OnInit {
    * Initializes the scopes list component.
    *
    * @param _scopesService Service for fetching and deleting scopes.
+   * @param _sessionService Service for extracting active session identity.
    * @param _messageService Service for displaying confirmation and status modals.
    * @param _router Angular `Router` instance.
    */
   constructor(
     private _scopesService: ScopesService,
+    private _sessionService: SessionService,
     private _messageService: MessageService,
     private _router: Router
   ) {}
+
+  /**
+   * Obtiene el identificador del usuario activo desde la sesión.
+   */
+  get currentUserId(): string {
+    return this._sessionService.getIdentity()?.usr_uuid || '';
+  }
 
   /**
    * Loads the user's scopes when the component initializes.
@@ -65,7 +75,12 @@ export class ScopesListComponent implements OnInit {
    * Fetches all scopes for the user via {@link ScopesService.getScopes}.
    */
   loadScopes(): void {
-    const usr_uuid = '7a067c90-bf5b-45d1-8f07-91b578e2d54d';
+    const usr_uuid = this.currentUserId;
+    if (!usr_uuid) {
+      this.isLoading = false;
+      this.scopes = [];
+      return;
+    }
     this.isLoading = true;
     this._scopesService.getScopes(usr_uuid).subscribe({
       next: (response) => {
