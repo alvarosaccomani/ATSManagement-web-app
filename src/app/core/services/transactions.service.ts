@@ -22,19 +22,21 @@ export class TransactionsService {
   ) { }
 
   /**
-   * Retrieves all transactions for a given scope, optionally filtered by movement type.
+   * Retrieves transactions for a user within an authorized scope (or `'ALL'` authorized scopes),
+   * optionally filtered by movement type.
    *
-   * @param scp_uuid Unique identifier of the scope.
+   * @param usr_uuid Unique identifier of the user.
+   * @param scp_uuid Unique identifier of the scope (or `'ALL'`).
    * @param trx_type Optional movement type filter (`'INGRESO' | 'EGRESO' | 'TRANSFERENCIA'`).
    * @returns An observable emitting {@link TransactionResults}.
    */
-  public getTransactions(scp_uuid: string, trx_type?: string): Observable<TransactionResults> {
+  public getTransactions(usr_uuid: string, scp_uuid: string, trx_type?: string): Observable<TransactionResults> {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     let params = new HttpParams();
     if (trx_type) {
       params = params.set('trx_type', trx_type);
     }
-    return this._http.get<TransactionResults>(`${environment.apiUrl}transactions/${scp_uuid}`, { headers, params });
+    return this._http.get<TransactionResults>(`${environment.apiUrl}transactions/${usr_uuid}/${scp_uuid}`, { headers, params });
   }
 
   /**

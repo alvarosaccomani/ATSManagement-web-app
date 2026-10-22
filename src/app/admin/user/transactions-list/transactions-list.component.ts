@@ -232,7 +232,7 @@ export class TransactionsListComponent implements OnInit {
     }
     this.isLoading = true;
     const typeFilter = this.selectedType === 'ALL' ? undefined : this.selectedType;
-    this._transactionsService.getTransactions(this.selectedScopeUuid, typeFilter).subscribe({
+    this._transactionsService.getTransactions(this.currentUserId, this.selectedScopeUuid, typeFilter).subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response.success) {
