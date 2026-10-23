@@ -26,6 +26,7 @@ import { ScopesService } from '../../../core/services/scopes.service';
 import { ScopeInterface } from '../../../core/interfaces/scope.interface';
 import { PendingVouchersService } from '../../../core/services/pending-vouchers.service';
 import { SessionService } from '../../../core/services/session.service';
+import { StorageService } from '../../../core/services/storage.service';
 
 /**
  * Espacio de trabajo de digitalización de documentos, captura por cámara WebRTC, preprocesamiento de imágenes y OCR/IA (`<app-documents>`)
@@ -86,6 +87,8 @@ export class DocumentsComponent implements OnInit {
   public imageToEdit: string | null = null;
   /** Controls visibility of the fullscreen `<app-camera>` modal. */
   public isCameraActiveView = false;
+  /** Cache local de URLs prefirmadas para comprobantes privados almacenados en Cloudflare R2. */
+  public signedUrlCache: Map<string, string> = new Map<string, string>();
 
   /**
    * Initializes the documents component.
@@ -95,7 +98,9 @@ export class DocumentsComponent implements OnInit {
    * @param _treesService Service for fetching the cards/periods/vouchers hierarchy.
    * @param _scopesService Service for fetching user scopes.
    * @param ocrService Service for OpenCV image preprocessing and OCR events.
+   * @param _sessionService Service for session authentication identity.
    * @param _pendingVouchersService Service for managing pending vouchers.
+   * @param _storageService Service for Cloudflare R2 direct object storage uploads.
    */
   constructor(
     private modal: NzModalService,
@@ -104,7 +109,8 @@ export class DocumentsComponent implements OnInit {
     private _scopesService: ScopesService,
     private ocrService: OcrService,
     private _sessionService: SessionService,
-    private _pendingVouchersService: PendingVouchersService
+    private _pendingVouchersService: PendingVouchersService,
+    private _storageService: StorageService
   ) { }
 
   /**
@@ -297,35 +303,76 @@ export class DocumentsComponent implements OnInit {
    * @param file Uploaded file instance.
    * @returns `false` to prevent automatic HTTP upload by `nz-upload`.
    */
+  /**
+   * Intercepts file uploads in `nz-upload`, converts images for editing in `<app-image-editor>`,
+   * or uploads documents directly to Cloudflare R2 via presigned URLs.
+   *
+   * @param file Uploaded file instance.
+   * @returns `false` to prevent automatic HTTP upload by `nz-upload`.
+   */
   public beforeUpload = (file: NzUploadFile): boolean => {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      if (file.type?.startsWith('image/')) {
+    const rawFile = file as any;
+    if (file.type?.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
         this.imageToEdit = e.target.result;
         this.isEditorVisible = true;
-      } else {
-        this.addDocumentToList(file.name, e.target.result);
-      }
-    };
-    reader.readAsDataURL(file as any);
+      };
+      reader.readAsDataURL(rawFile);
+    } else {
+      this.isLoading = true;
+      this._storageService.uploadFile(rawFile, file.name, this.currentUserId, {
+        bucketType: 'private',
+        folder: 'documents',
+        contentType: file.type || 'application/octet-stream'
+      }).subscribe({
+        next: (data) => {
+          this.addDocumentToList(file.name, data.key);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Error subiendo documento a R2:', err);
+        }
+      });
+    }
     return false;
   };
 
   /**
-   * Saves the cropped/binarized image emitted by `<app-image-editor>` as a new pending voucher.
+   * Converts the cropped image from `<app-image-editor>` into a binary Blob,
+   * uploads it directly to Cloudflare R2, and persists only the storage key in PostgreSQL.
    *
    * @param croppedImage Processed Base64 image string.
    */
   public onEditorConfirm(croppedImage: string) {
-    this.addDocumentToList(`Ticket_${Date.now()}.png`, croppedImage);
     this.isEditorVisible = false;
+    this.isLoading = true;
+
+    const { blob, contentType } = this._storageService.dataUrlToBlob(croppedImage);
+    const fileName = `Ticket_${Date.now()}.png`;
+
+    this._storageService.uploadFile(blob, fileName, this.currentUserId, {
+      bucketType: 'private',
+      folder: 'vouchers',
+      contentType
+    }).subscribe({
+      next: (data) => {
+        // Guardamos en cache local para visualización inmediata sin roundtrip adicional
+        this.signedUrlCache.set(data.key, croppedImage);
+        this.addDocumentToList(fileName, data.key);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('Error subiendo imagen procesada a Cloudflare R2:', err);
+      }
+    });
   }
 
   /**
    * Persists a new pending voucher record via {@link PendingVouchersService.savePendingVoucher}.
    *
    * @param name File name for the pending voucher.
-   * @param path Base64 data URL of the voucher image/document.
+   * @param path Storage key in R2 or legacy Base64 data URL.
    */
   private addDocumentToList(name: string, path: string) {
     this.isLoading = true;
@@ -350,6 +397,7 @@ export class DocumentsComponent implements OnInit {
 
   /**
    * Normalizes the `pevou_image` property of a pending voucher into a valid URL or MIME-prefixed Base64 string.
+   * Resolves Cloudflare R2 private keys via Presigned URLs with local memory caching.
    *
    * @param item Pending voucher record.
    * @returns Normalized image or document source string.
@@ -357,8 +405,12 @@ export class DocumentsComponent implements OnInit {
   public normalizePath(item: PendingVoucherInterface): string {
     const { pevou_image, pevou_name } = item;
 
+    if (!pevou_image) {
+      return this.fallback;
+    }
+
     // Caso 1: Ya es una data URL (tiene prefijo MIME)
-    if (pevou_image.startsWith('') && pevou_image.includes(';base64,')) {
+    if (pevou_image.startsWith('data:')) {
       return pevou_image;
     }
 
@@ -370,16 +422,30 @@ export class DocumentsComponent implements OnInit {
       pevou_image.startsWith('./') ||
       pevou_image.startsWith('../')
     ) {
-      return pevou_image; // lo dejamos como URL
+      return pevou_image;
     }
 
-    // Caso 3: Es base64 SIN prefijo → lo convertimos a data URL
-    if (pevou_name) {
+    // Caso 3: Es una clave de objeto en Cloudflare R2
+    if (this.signedUrlCache.has(pevou_image)) {
+      return this.signedUrlCache.get(pevou_image)!;
+    }
+
+    // Solicitar URL temporal firmada para lectura en R2
+    this._storageService.getPresignedDownloadUrl(pevou_image).subscribe({
+      next: (response) => {
+        if (response.success && response.data?.downloadUrl) {
+          this.signedUrlCache.set(pevou_image, response.data.downloadUrl);
+        }
+      },
+      error: (err) => console.error('Error obteniendo Presigned URL de lectura:', err)
+    });
+
+    // Caso 4: Base64 heredado sin prefijo
+    if (pevou_image.length > 300) {
       return this.addMimeType(pevou_image, pevou_name);
     }
 
-    // Caso 4: No sabemos qué es → asumimos binario genérico
-    return `application/octet-stream;base64,${pevou_image}`;
+    return this.fallback;
   }
 
   /**
@@ -497,19 +563,64 @@ export class DocumentsComponent implements OnInit {
    *
    * @param item Pending voucher record to download.
    */
+  /**
+   * Triggers a browser download for the specified pending voucher file.
+   *
+   * @param item Pending voucher record to download.
+   */
   public downloadFile(item: PendingVoucherInterface): void {
-    const link = document.createElement('a');
-    link.href = item.pevou_image; // debe ser data URL válida
-    link.download = item.pevou_name || 'documento';
-    link.click();
+    const path = item.pevou_image;
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+      const link = document.createElement('a');
+      link.href = path;
+      link.download = item.pevou_name || 'documento';
+      link.click();
+      return;
+    }
+
+    // Si es una clave de Cloudflare R2, solicitar URL prefirmada
+    this._storageService.getPresignedDownloadUrl(path).subscribe({
+      next: (res) => {
+        const link = document.createElement('a');
+        link.href = res.data.downloadUrl;
+        link.download = item.pevou_name || 'documento';
+        link.target = '_blank';
+        link.click();
+      },
+      error: (err) => console.error('Error al descargar archivo desde R2:', err)
+    });
   }
 
   /**
    * Opens the side drawer (`<app-file-detail>`) to inspect the voucher image and run OCR/AI extraction.
+   * Resolves private Cloudflare R2 URLs prior to opening so the OCR engine has direct access.
    *
    * @param item Pending voucher record to inspect.
    */
   public viewFile(item: PendingVoucherInterface): void {
+    const path = item.pevou_image;
+    if (path && !path.startsWith('http://') && !path.startsWith('https://') && !path.startsWith('data:')) {
+      this.isLoading = true;
+      this._storageService.getPresignedDownloadUrl(path).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.openFileDetailDrawer({
+            ...item,
+            pevou_image: res.data.downloadUrl
+          });
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Error obteniendo URL firmada para visor:', err);
+          this.openFileDetailDrawer(item);
+        }
+      });
+    } else {
+      this.openFileDetailDrawer(item);
+    }
+  }
+
+  private openFileDetailDrawer(item: PendingVoucherInterface): void {
     this.drawerService.create({
       nzTitle: 'Detalles del archivo',
       nzContent: FileDetailComponent,
@@ -517,8 +628,8 @@ export class DocumentsComponent implements OnInit {
       nzWidth: '700px',
       nzBodyStyle: {
         padding: '0',
-        height: 'calc(100vh - 110px)', // ajusta según tu diseño (header + footer ≈ 110px)
-        overflow: 'hidden', // el scroll lo maneja el contenedor interno
+        height: 'calc(100vh - 110px)',
+        overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column'
       }
