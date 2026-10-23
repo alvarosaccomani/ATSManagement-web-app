@@ -1,6 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { SessionService } from '../services/session.service';
+import { environment } from '../../../environments/environment';
 
 /**
  * Interceptor HTTP que adjunta el token JWT Bearer a las solicitudes salientes.
@@ -29,7 +30,9 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     }
   }
 
-  if (token) {
+  // Solo adjuntar token JWT a las peticiones hacia nuestra propia API, nunca a Cloudflare R2 / AWS S3
+  const isApiUrl = req.url.startsWith(environment.apiUrl) || req.url.startsWith('/api/');
+  if (token && isApiUrl) {
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
