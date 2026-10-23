@@ -54,6 +54,48 @@
         </nz-form-control>
       </nz-form-item>
 
+      <nz-divider nzText="Reglas Heurísticas y Blindaje Contable" nzOrientation="left"></nz-divider>
+
+      <nz-form-item>
+        <nz-form-label nzTooltipTitle="Al importar transacciones desde Excel, infiere automáticamente si es INGRESO o EGRESO según las palabras del concepto">
+          Inferencia Automática de Tipos
+        </nz-form-label>
+        <nz-form-control>
+          <nz-switch formControlName="infer_type_from_concept"></nz-switch>
+          <span style="margin-left: 8px;">
+            {{ form.get('infer_type_from_concept')?.value ? 'Habilitada (aplica reglas heurísticas)' : 'Deshabilitada (respeta tipo estricto de la columna)' }}
+          </span>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzTooltipTitle="Palabras o insumos clave específicos de este ámbito que siempre indican un GASTO / EGRESO. Escriba y presione Enter para guardar cada término.">
+          Palabras Clave de Gastos / Egresos
+        </nz-form-label>
+        <nz-form-control>
+          <nz-select
+            formControlName="expense_keywords"
+            nzMode="tags"
+            [nzTokenSeparators]="[',']"
+            nzPlaceHolder="Ej: filamento, toner, flete, hosting (Enter para agregar)">
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzTooltipTitle="Palabras clave que identifican transacciones comerciales en especies o contraprestación que no involucran dinero físico.">
+          Palabras Clave de Canjes / Trueques
+        </nz-form-label>
+        <nz-form-control>
+          <nz-select
+            formControlName="barter_keywords"
+            nzMode="tags"
+            [nzTokenSeparators]="[',']"
+            nzPlaceHolder="Ej: canje, trueque, permuta (Enter para agregar)">
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px;">
         <button nz-button type="button" (click)="onCancel()">Cancelar</button>
         <button nz-button nzType="primary" type="submit" [nzLoading]="isLoading">

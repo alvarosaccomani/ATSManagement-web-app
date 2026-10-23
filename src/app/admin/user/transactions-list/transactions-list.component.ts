@@ -602,7 +602,15 @@ export class TransactionsListComponent implements OnInit {
    */
   private processFile(file: File): void {
     this.isParsingExcel = true;
-    this._excelService.parseExpenseExcel(file, this.importScopeUuid, this.scopePersons, this.userCards, this.importMovementType)
+    const activeScope = this.scopes.find(s => s.scp_uuid === this.importScopeUuid);
+    this._excelService.parseExpenseExcel(
+      file,
+      this.importScopeUuid,
+      this.scopePersons,
+      this.userCards,
+      this.importMovementType,
+      activeScope?.scp_settings
+    )
       .then((result) => {
         this.isParsingExcel = false;
         this.parseResult = result;

@@ -1,4 +1,17 @@
 /**
+ * Configuración heurística y reglas contables dinámicas asociadas a un ámbito.
+ */
+export interface ScopeSettings {
+    /** Palabras clave adicionales que identifican un concepto o nota como egreso/gasto. */
+    expense_keywords?: string[];
+    /** Palabras clave que identifican operaciones de canje o trueque en especies. */
+    barter_keywords?: string[];
+    /** Determina si se infiere automáticamente el tipo (INGRESO/EGRESO) según el texto del concepto. */
+    infer_type_from_concept?: boolean;
+    [key: string]: any;
+}
+
+/**
  * Representa un ámbito o contexto contable (por ejemplo, Personal, Hogar, Proyecto Comercial).
  */
 export interface ScopeInterface {
@@ -16,6 +29,8 @@ export interface ScopeInterface {
     scp_icon?: string | null;
     /** Identificador único del usuario propietario del ámbito. */
     usr_uuidowner: string;
+    /** Configuración dinámica de heurística y reglas contables del ámbito. */
+    scp_settings?: ScopeSettings;
     /** Indica si el ámbito se encuentra actualmente activo. */
     scp_active: boolean;
     /** Marca de tiempo ISO de cuando se creó el ámbito. */

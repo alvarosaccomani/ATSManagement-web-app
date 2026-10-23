@@ -99,7 +99,10 @@ export class ScopeComponent implements OnInit {
       scp_isshared: [false],
       scp_color: ['#1890ff'],
       scp_icon: [''],
-      scp_active: [true]
+      scp_active: [true],
+      expense_keywords: [[]],
+      barter_keywords: [[]],
+      infer_type_from_concept: [true]
     });
   }
 
@@ -253,8 +256,14 @@ export class ScopeComponent implements OnInit {
     this._scopesService.getScopeById(scp_uuid).subscribe({
       next: (response) => {
         this.isLoading = false;
-        if (response.success) {
-          this.form.patchValue(response.data);
+        if (response.success && response.data) {
+          const settings = response.data.scp_settings || {};
+          this.form.patchValue({
+            ...response.data,
+            expense_keywords: settings.expense_keywords || [],
+            barter_keywords: settings.barter_keywords || [],
+            infer_type_from_concept: settings.infer_type_from_concept !== false
+          });
         }
       },
       error: (error) => {
@@ -291,8 +300,14 @@ export class ScopeComponent implements OnInit {
     if (!this.isEditing) {
       delete rawValue.scp_uuid;
     }
+    const { expense_keywords, barter_keywords, infer_type_from_concept, ...restValues } = rawValue;
     const payload = {
-      ...rawValue,
+      ...restValues,
+      scp_settings: {
+        expense_keywords: expense_keywords || [],
+        barter_keywords: barter_keywords || [],
+        infer_type_from_concept: infer_type_from_concept !== false
+      },
       usr_uuidowner: usr_uuid
     };
 

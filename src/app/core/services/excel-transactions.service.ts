@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { PersonInterface } from '../interfaces/person.interface';
-import { ScopeInterface } from '../interfaces/scope.interface';
+import { ScopeInterface, ScopeSettings } from '../interfaces/scope.interface';
 import { TransactionInterface } from '../interfaces/transaction.interface';
 
 /**
@@ -262,7 +262,8 @@ export class ExcelTransactionsService {
     scopeUuid: string,
     persons: PersonInterface[],
     cards: any[],
-    defaultMovementType: 'AUTO' | 'EGRESO' | 'INGRESO' = 'EGRESO'
+    defaultMovementType: 'AUTO' | 'EGRESO' | 'INGRESO' = 'EGRESO',
+    scopeSettings?: ScopeSettings
   ): Promise<ExcelParseResult> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -316,6 +317,23 @@ export class ExcelTransactionsService {
           let totalExpense = 0;
           let totalIncome = 0;
 
+          // Heurísticas base del sistema (genéricas para cualquier ámbito)
+          const BASE_EXPENSE_KEYWORDS = ['compra', 'gasto', 'factura', 'service', 'reparacion', 'reparación', 'arreglo', 'cuota', 'dominio', 'honorarios'];
+          const BASE_EXPENSE_NOTES = ['compro', 'compró', 'me lo cobro', 'puse bono', 'gasto', 'factura', 'salio mas barato', 'salió más barato', 'se saco de'];
+          const BASE_BARTER_KEYWORDS = ['se pago con', 'se pagó con', 'canje', 'trueque'];
+
+          // Palabras clave dinámicas configuradas en el ámbito activo (JSONB scp_settings)
+          const customExpense = (scopeSettings?.expense_keywords || []).map(k => String(k).trim().toLowerCase()).filter(Boolean);
+          const customBarter = (scopeSettings?.barter_keywords || []).map(k => String(k).trim().toLowerCase()).filter(Boolean);
+
+          const allExpenseTerms = Array.from(new Set([...BASE_EXPENSE_KEYWORDS, ...customExpense]));
+          const allBarterTerms = Array.from(new Set([...BASE_BARTER_KEYWORDS, ...customBarter]));
+
+          const buildRegex = (terms: string[]) => terms.length > 0 ? new RegExp(terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'i') : null;
+          const dynamicExpenseRegex = buildRegex(allExpenseTerms);
+          const dynamicExpenseNotesRegex = buildRegex(BASE_EXPENSE_NOTES);
+          const dynamicBarterRegex = buildRegex(allBarterTerms);
+
           for (let r = headerRowIndex + 1; r < rawRows.length; r++) {
             const row = rawRows[r];
             // Ignorar filas totalmente vacías
@@ -332,11 +350,6 @@ export class ExcelTransactionsService {
             const rawSupplier = supplierIdx !== -1 ? String(row[supplierIdx] || '').trim() : '';
             const rawAccount = accountIdx !== -1 ? String(row[accountIdx] || '').trim() : '';
             const rawNotes = notesIdx !== -1 ? String(row[notesIdx] || '').trim() : '';
-
-            // Constantes heurísticas para detección de inconsistencias contables
-            const EXPENSE_KEYWORDS = /compra|filamento|repuesto|arreglo|reparaci[oó]n|hotend|service|cuota\s+m[aá]quina|dominio|pinturer[ií]a|pinzas|chip|busto|cajas\s+para\s+despacho|pack\s+religioso|tarjetas\s+isa|pendrive|stl/i;
-            const EXPENSE_NOTES = /compr[oó]|me\s+lo\s+cobro|puse\s+bono|gasto|factura|salio\s+mas\s+barato|se\s+saco\s+de/i;
-            const BARTER_KEYWORDS = /se\s+pag[oó]\s+con|canje|trueque|pago\s+con\s+los\s+san\s+jose/i;
 
             // 1. Determinar Tipo de Movimiento (EGRESO vs INGRESO)
             let trx_type: 'EGRESO' | 'INGRESO' = 'EGRESO';
@@ -361,12 +374,14 @@ export class ExcelTransactionsService {
             }
 
             // Validación Heurística: ¿Compra o gasto clasificado como Ingreso?
-            if (trx_type === 'INGRESO' && (EXPENSE_KEYWORDS.test(rawDesc) || EXPENSE_NOTES.test(rawNotes))) {
+            // Si el concepto empieza explícitamente con "venta", "cobro", etc., no es contradicción (evita falsos positivos al vender insumos)
+            const isExplicitSale = /^(venta|cobro|ingreso|liquidaci[oó]n)(\s|$)/i.test(rawDesc.trim());
+            if (trx_type === 'INGRESO' && !isExplicitSale && ((dynamicExpenseRegex && dynamicExpenseRegex.test(rawDesc)) || (dynamicExpenseNotesRegex && dynamicExpenseNotesRegex.test(rawNotes)))) {
               errors.push('Inconsistencia contable: El concepto o notas corresponden a un GASTO/COMPRA pero la fila está como INGRESO.');
             }
 
             // Validación Heurística: Asientos de canje / trueque
-            if (BARTER_KEYWORDS.test(rawDesc) || BARTER_KEYWORDS.test(rawNotes)) {
+            if (dynamicBarterRegex && (dynamicBarterRegex.test(rawDesc) || dynamicBarterRegex.test(rawNotes))) {
               errors.push('Asiento de canje/trueque detectado: Los canjes en especies no deben registrarse como movimientos monetarios de caja.');
             }
 
@@ -509,7 +524,7 @@ export class ExcelTransactionsService {
           }
 
           // Segunda pasada heurística: Detección global de asientos espejo en la planilla
-          const BARTER_PAIR_REGEX = /se\s+pag[oó]\s+con|canje|trueque|pago\s+con\s+los\s+san\s+jose/i;
+          const BARTER_PAIR_REGEX = dynamicBarterRegex || /se\s+pag[oó]\s+con|canje|trueque/i;
           for (let i = 0; i < parsedRows.length; i++) {
             const rowA = parsedRows[i];
             for (let j = i + 1; j < parsedRows.length; j++) {
