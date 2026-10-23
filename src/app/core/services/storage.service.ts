@@ -113,7 +113,7 @@ export class StorageService {
   public dataUrlToBlob(dataUrl: string): { blob: Blob; contentType: string } {
     const arr = dataUrl.split(',');
     const mimeMatch = arr[0].match(/:(.*?);/);
-    const contentType = mimeMatch ? mimeMatch[1] : 'image/png';
+    const contentType = mimeMatch ? mimeMatch[1] : 'image/webp';
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);

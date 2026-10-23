@@ -171,7 +171,7 @@ export class ImageEditorComponent {
             // data[i+3] is Alpha (keep it)
           }
           ctx.putImageData(imageData, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
+          resolve(canvas.toDataURL('image/webp', 0.85));
         } else {
           resolve(base64); // Fallback
         }

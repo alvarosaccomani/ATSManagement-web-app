@@ -349,7 +349,7 @@ export class DocumentsComponent implements OnInit {
     this.isLoading = true;
 
     const { blob, contentType } = this._storageService.dataUrlToBlob(croppedImage);
-    const fileName = `Ticket_${Date.now()}.png`;
+    const fileName = `Ticket_${Date.now()}.webp`;
 
     this._storageService.uploadFile(blob, fileName, this.currentUserId, {
       bucketType: 'private',
@@ -464,6 +464,7 @@ export class DocumentsComponent implements OnInit {
     const ext = name.split('.').pop()?.toLowerCase() || '';
     const mimeMap: Record<string, string> = {
       pdf: 'application/pdf',
+      webp: 'image/webp',
       png: 'image/png',
       jpg: 'image/jpeg',
       jpeg: 'image/jpeg',
@@ -490,7 +491,7 @@ export class DocumentsComponent implements OnInit {
     const getTypeFromExtension = (str: string): 'image' | 'pdf' | 'doc' | 'xls' | 'other' => {
       const lower = str.toLowerCase();
       if (lower.endsWith('.pdf')) return 'pdf';
-      if (/\.(jpg|jpeg|png|gif)$/i.test(lower)) return 'image';
+      if (/\.(jpg|jpeg|png|gif|webp)$/i.test(lower)) return 'image';
       if (/\.(doc|docx)$/i.test(lower)) return 'doc';
       if (/\.(xls|xlsx)$/i.test(lower)) return 'xls';
       return 'other';
